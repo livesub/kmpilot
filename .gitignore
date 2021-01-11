@@ -1,0 +1,7 @@
+phpmyadmin/
+portal/install
+portal/data/session/
+portal/data/tmp/
+portal/data/cache/
+portal/data/log/
+portal/data/member_image/
