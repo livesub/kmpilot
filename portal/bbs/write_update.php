@@ -142,7 +142,7 @@ if ($w == '' || $w == 'u') {
         alert('관리자만 공지할 수 있습니다.');
     }
 
-    //회원 자신이 쓴글을 수정할 경우 공지가 풀리는 경우가 있음 
+    //회원 자신이 쓴글을 수정할 경우 공지가 풀리는 경우가 있음
     if($w =='u' && !$is_admin && $board['bo_notice'] && in_array($wr['wr_id'], $notice_array)){
         $notice = 1;
     }
@@ -203,10 +203,11 @@ if ($w == '' || $w == 'u') {
 
 $is_use_captcha = ((($board['bo_use_captcha'] && $w !== 'u') || $is_guest) && !$is_admin) ? 1 : 0;
 
+/*
 if ($is_use_captcha && !chk_captcha()) {
     alert('자동등록방지 숫자가 틀렸습니다.');
 }
-
+*/
 if ($w == '' || $w == 'r') {
     if (isset($_SESSION['ss_datetime'])) {
         if ($_SESSION['ss_datetime'] >= (G5_SERVER_TIME - $config['cf_delay_sec']) && !$is_admin)
@@ -543,7 +544,7 @@ if(isset($_FILES['bf_file']['name']) && is_array($_FILES['bf_file']['name'])) {
             if ($w == 'u') {
                 // 존재하는 파일이 있다면 삭제합니다.
                 $row = sql_fetch(" select * from {$g5['board_file_table']} where bo_table = '$bo_table' and wr_id = '$wr_id' and bf_no = '$i' ");
-                
+
                 if(isset($row['bf_file']) && $row['bf_file']){
                     $delete_file = run_replace('delete_file_path', G5_DATA_PATH.'/file/'.$bo_table.'/'.str_replace('../', '', $row['bf_file']), $row);
                     if( file_exists($delete_file) ){
