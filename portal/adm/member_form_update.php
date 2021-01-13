@@ -43,25 +43,25 @@ if ($msg = valid_mb_nick($mb_nick))     alert($msg, "", true, true);
 
 $posts = array();
 $check_keys = array(
-'mb_name',
-'mb_homepage',
-'mb_tel',
-'mb_addr1',
-'mb_addr2',
-'mb_addr3',
-'mb_addr_jibeon',
-'mb_signature',
-'mb_leave_date',
-'mb_intercept_date',
-'mb_mailling',
-'mb_sms',
-'mb_open',
-'mb_profile',
-'mb_level'
+    'mb_name',
+    'mb_homepage',
+    'mb_tel',
+    'mb_addr1',
+    'mb_addr2',
+    'mb_addr3',
+    'mb_addr_jibeon',
+    'mb_signature',
+    'mb_leave_date',
+    'mb_intercept_date',
+    'mb_mailling',
+    'mb_sms',
+    'mb_open',
+    'mb_profile',
+    'mb_level'
 );
 
 for($i=1;$i<=10;$i++){
-    $check_keys[] = 'mb_'.$i; 
+    $check_keys[] = 'mb_'.$i;
 }
 
 foreach( $check_keys as $key ){
@@ -111,10 +111,10 @@ if ($w == '')
         alert('이미 존재하는 회원아이디입니다.\\nＩＤ : '.$mb['mb_id'].'\\n이름 : '.$mb['mb_name'].'\\n닉네임 : '.$mb['mb_nick'].'\\n메일 : '.$mb['mb_email']);
 
     // 닉네임중복체크
-    $sql = " select mb_id, mb_name, mb_nick, mb_email from {$g5['member_table']} where mb_nick = '{$mb_nick}' ";
-    $row = sql_fetch($sql);
-    if (isset($row['mb_id']) && $row['mb_id'])
-        alert('이미 존재하는 닉네임입니다.\\nＩＤ : '.$row['mb_id'].'\\n이름 : '.$row['mb_name'].'\\n닉네임 : '.$row['mb_nick'].'\\n메일 : '.$row['mb_email']);
+//    $sql = " select mb_id, mb_name, mb_nick, mb_email from {$g5['member_table']} where mb_nick = '{$mb_nick}' ";
+//    $row = sql_fetch($sql);
+//    if (isset($row['mb_id']) && $row['mb_id'])
+//        alert('이미 존재하는 닉네임입니다.\\nＩＤ : '.$row['mb_id'].'\\n이름 : '.$row['mb_name'].'\\n닉네임 : '.$row['mb_nick'].'\\n메일 : '.$row['mb_email']);
 
     // 이메일중복체크
     $sql = " select mb_id, mb_name, mb_nick, mb_email from {$g5['member_table']} where mb_email = '{$mb_email}' ";
@@ -141,10 +141,10 @@ else if ($w == 'u')
         alert($mb['mb_id'].' : 로그인 중인 관리자 레벨은 수정 할 수 없습니다.');
 
     // 닉네임중복체크
-    $sql = " select mb_id, mb_name, mb_nick, mb_email from {$g5['member_table']} where mb_nick = '{$mb_nick}' and mb_id <> '$mb_id' ";
-    $row = sql_fetch($sql);
-    if (isset($row['mb_id']) && $row['mb_id'])
-        alert('이미 존재하는 닉네임입니다.\\nＩＤ : '.$row['mb_id'].'\\n이름 : '.$row['mb_name'].'\\n닉네임 : '.$row['mb_nick'].'\\n메일 : '.$row['mb_email']);
+//    $sql = " select mb_id, mb_name, mb_nick, mb_email from {$g5['member_table']} where mb_nick = '{$mb_nick}' and mb_id <> '$mb_id' ";
+//    $row = sql_fetch($sql);
+//    if (isset($row['mb_id']) && $row['mb_id'])
+//        alert('이미 존재하는 닉네임입니다.\\nＩＤ : '.$row['mb_id'].'\\n이름 : '.$row['mb_name'].'\\n닉네임 : '.$row['mb_nick'].'\\n메일 : '.$row['mb_email']);
 
     // 이메일중복체크
     $sql = " select mb_id, mb_name, mb_nick, mb_email from {$g5['member_table']} where mb_email = '{$mb_email}' and mb_id <> '$mb_id' ";
@@ -198,7 +198,7 @@ if( $w == '' || $w == 'u' ){
 
             move_uploaded_file($_FILES['mb_icon']['tmp_name'], $dest_path);
             chmod($dest_path, G5_FILE_PERMISSION);
-            
+
             if (file_exists($dest_path)) {
                 $size = @getimagesize($dest_path);
                 if ($size[0] > $config['cf_member_icon_width'] || $size[1] > $config['cf_member_icon_height']) {
@@ -219,7 +219,7 @@ if( $w == '' || $w == 'u' ){
             }
         }
     }
-    
+
     $mb_img_dir = G5_DATA_PATH.'/member_image/';
     if( !is_dir($mb_img_dir) ){
         @mkdir($mb_img_dir, G5_DIR_PERMISSION);
@@ -236,13 +236,13 @@ if( $w == '' || $w == 'u' ){
         if (!preg_match($image_regex, $_FILES['mb_img']['name'])) {
             alert($_FILES['mb_img']['name'] . '은(는) 이미지 파일이 아닙니다.');
         }
-        
+
         if (preg_match($image_regex, $_FILES['mb_img']['name'])) {
             @mkdir($mb_img_dir, G5_DIR_PERMISSION);
             @chmod($mb_img_dir, G5_DIR_PERMISSION);
-            
+
             $dest_path = $mb_img_dir.'/'.$mb_icon_img;
-            
+
             move_uploaded_file($_FILES['mb_img']['tmp_name'], $dest_path);
             chmod($dest_path, G5_FILE_PERMISSION);
 
@@ -271,3 +271,4 @@ if( $w == '' || $w == 'u' ){
 run_event('admin_member_form_update', $w, $mb_id);
 
 goto_url('./member_form.php?'.$qstr.'&amp;w=u&amp;mb_id='.$mb_id, false);
+//goto_url('./member_list.php', false);

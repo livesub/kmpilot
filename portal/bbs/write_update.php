@@ -92,7 +92,7 @@ if ($w == 'u' || $w == 'r') {
 
 // 외부에서 글을 등록할 수 있는 버그가 존재하므로 비밀글은 사용일 경우에만 가능해야 함
 if (!$is_admin && !$board['bo_use_secret'] && (stripos($_POST['html'], 'secret') !== false || stripos($_POST['secret'], 'secret') !== false || stripos($_POST['mail'], 'secret') !== false)) {
-	alert('비밀글 미사용 게시판 이므로 비밀글로 등록할 수 없습니다.');
+    alert('비밀글 미사용 게시판 이므로 비밀글로 등록할 수 없습니다.');
 }
 
 $secret = '';
@@ -531,7 +531,7 @@ if(isset($_FILES['bf_file']['name']) && is_array($_FILES['bf_file']['name'])) {
             $timg = @getimagesize($tmp_file);
             // image type
             if ( preg_match("/\.({$config['cf_image_extension']})$/i", $filename) ||
-                 preg_match("/\.({$config['cf_flash_extension']})$/i", $filename) ) {
+                preg_match("/\.({$config['cf_flash_extension']})$/i", $filename) ) {
                 if ($timg['2'] < 1 || $timg['2'] > 16)
                     continue;
             }
@@ -543,7 +543,7 @@ if(isset($_FILES['bf_file']['name']) && is_array($_FILES['bf_file']['name'])) {
             if ($w == 'u') {
                 // 존재하는 파일이 있다면 삭제합니다.
                 $row = sql_fetch(" select * from {$g5['board_file_table']} where bo_table = '$bo_table' and wr_id = '$wr_id' and bf_no = '$i' ");
-                
+
                 if(isset($row['bf_file']) && $row['bf_file']){
                     $delete_file = run_replace('delete_file_path', G5_DATA_PATH.'/file/'.$bo_table.'/'.str_replace('../', '', $row['bf_file']), $row);
                     if( file_exists($delete_file) ){

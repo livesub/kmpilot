@@ -34,11 +34,11 @@ if(!$mb_id)
 $mb_password    = isset($_POST['mb_password']) ? trim($_POST['mb_password']) : '';
 $mb_password_re = isset($_POST['mb_password_re']) ? trim($_POST['mb_password_re']) : '';
 $mb_name        = isset($_POST['mb_name']) ? trim($_POST['mb_name']) : '';
-$mb_nick        = isset($_POST['mb_nick']) ? trim($_POST['mb_nick']) : '';
+//$mb_nick        = isset($_POST['mb_nick']) ? trim($_POST['mb_nick']) : '';
 $mb_email       = isset($_POST['mb_email']) ? trim($_POST['mb_email']) : '';
 $mb_sex         = isset($_POST['mb_sex'])           ? trim($_POST['mb_sex'])         : "";
 $mb_birth       = isset($_POST['mb_birth'])         ? trim($_POST['mb_birth'])       : "";
-$mb_homepage    = isset($_POST['mb_homepage'])      ? trim($_POST['mb_homepage'])    : "";
+//$mb_homepage    = isset($_POST['mb_homepage'])      ? trim($_POST['mb_homepage'])    : "";
 $mb_tel         = isset($_POST['mb_tel'])           ? trim($_POST['mb_tel'])         : "";
 $mb_hp          = isset($_POST['mb_hp'])            ? trim($_POST['mb_hp'])          : "";
 $mb_zip1        = isset($_POST['mb_zip'])           ? substr(trim($_POST['mb_zip']), 0, 3) : "";
@@ -99,13 +99,13 @@ if ($w == '' || $w == 'u') {
         alert('비밀번호가 일치하지 않습니다.');
 
     if ($msg = empty_mb_name($mb_name))       alert($msg, "", true, true);
-    if ($msg = empty_mb_nick($mb_nick))     alert($msg, "", true, true);
+    //if ($msg = empty_mb_nick($mb_nick))     alert($msg, "", true, true);
     if ($msg = empty_mb_email($mb_email))   alert($msg, "", true, true);
     if ($msg = reserve_mb_id($mb_id))       alert($msg, "", true, true);
-    if ($msg = reserve_mb_nick($mb_nick))   alert($msg, "", true, true);
+    //if ($msg = reserve_mb_nick($mb_nick))   alert($msg, "", true, true);
     // 이름에 한글명 체크를 하지 않는다.
     //if ($msg = valid_mb_name($mb_name))     alert($msg, "", true, true);
-    if ($msg = valid_mb_nick($mb_nick))     alert($msg, "", true, true);
+    //if ($msg = valid_mb_nick($mb_nick))     alert($msg, "", true, true);
     if ($msg = valid_mb_email($mb_email))   alert($msg, "", true, true);
     if ($msg = prohibit_mb_email($mb_email))alert($msg, "", true, true);
 
@@ -151,7 +151,7 @@ if ($w == '' || $w == 'u') {
 
     run_event('register_form_update_valid', $w, $mb_id, $mb_nick, $mb_email);
 
-    if ($msg = exist_mb_nick($mb_nick, $mb_id))     alert($msg, "", true, true);
+    //if ($msg = exist_mb_nick($mb_nick, $mb_id))     alert($msg, "", true, true);
     if ($msg = exist_mb_email($mb_email, $mb_id))   alert($msg, "", true, true);
 }
 
@@ -202,13 +202,13 @@ if ($config['cf_cert_use'] && $cert_type && $md5_cert_no) {
     }
 }
 //===============================================================
-
+// mb_nick = '{$mb_nick}', 빈칸에 위치 시키면 원래 코드
 if ($w == '') {
     $sql = " insert into {$g5['member_table']}
                 set mb_id = '{$mb_id}',
                      mb_password = '".get_encrypt_string($mb_password)."',
                      mb_name = '{$mb_name}',
-                     mb_nick = '{$mb_nick}',
+                     
                      mb_nick_date = '".G5_TIME_YMD."',
                      mb_email = '{$mb_email}',
                      mb_homepage = '{$mb_homepage}',
@@ -315,9 +315,9 @@ if ($w == '') {
     if ($mb_password)
         $sql_password = " , mb_password = '".get_encrypt_string($mb_password)."' ";
 
-    $sql_nick_date = "";
-    if ($mb_nick_default != $mb_nick)
-        $sql_nick_date =  " , mb_nick_date = '".G5_TIME_YMD."' ";
+//    $sql_nick_date = "";
+//    if ($mb_nick_default != $mb_nick)
+//        $sql_nick_date =  " , mb_nick_date = '".G5_TIME_YMD."' ";
 
     $sql_open_date = "";
     if ($mb_open_default != $mb_open)
@@ -327,9 +327,9 @@ if ($w == '') {
     $sql_email_certify = '';
     if ($old_email != $mb_email && $config['cf_use_email_certify'])
         $sql_email_certify = " , mb_email_certify = '' ";
-
+    //mb_nick = '{$mb_nick}', 닉네임 업데이트 X set 옆에 다시 붙히면 원래 코드
     $sql = " update {$g5['member_table']}
-                set mb_nick = '{$mb_nick}',
+                set 
                     mb_mailling = '{$mb_mailling}',
                     mb_sms = '{$mb_sms}',
                     mb_open = '{$mb_open}',
@@ -355,12 +355,13 @@ if ($w == '') {
                     mb_9 = '{$mb_9}',
                     mb_10 = '{$mb_10}'
                     {$sql_password}
-                    {$sql_nick_date}
+                    
                     {$sql_open_date}
                     {$sql_email_certify}
                     {$sql_certify}
               where mb_id = '$mb_id' ";
     sql_query($sql);
+    //{$sql_nick_date} 빈칸에 다시넣으면 된다.
 }
 
 

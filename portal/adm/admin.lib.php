@@ -209,10 +209,19 @@ function get_member_level_select($name, $start_id=0, $end_id=10, $selected="", $
     if ($event) $str .= " $event";
     $str .= ">\n";
     for ($i=$start_id; $i<=$end_id; $i++) {
+        if($i == $start_id || $i == $end_id || $i == 5 || $i == 9){
+        $permissionName = null;
+        switch ($i) {
+            case 1: $permissionName  = "user"; break;
+            case 5: $permissionName  = "admin"; break;
+            case 9: $permissionName  = "super admin"; break;
+            case 10: $permissionName  = "yongsanzip"; break;
+        }
         $str .= '<option value="'.$i.'"';
         if ($i == $selected)
             $str .= ' selected="selected"';
-        $str .= ">{$i}</option>\n";
+        $str .= ">{$permissionName}</option>\n";
+        }
     }
     $str .= "</select>\n";
     return $str;
@@ -235,6 +244,11 @@ function get_member_id_select($name, $level, $selected="", $event="")
     }
     $str .= '</select>';
     return $str;
+}
+
+// 학력사항을 SELECT 형식으로 얻음
+function get_grade_value_select(){
+
 }
 
 // php8 버전 호환 권한 검사 함수

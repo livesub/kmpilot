@@ -83,19 +83,19 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 	                <span class="tooltip">아이핀 본인확인 후에는 이름이 자동 입력되고 휴대폰 본인확인 후에는 이름과 휴대폰번호가 자동 입력되어 수동으로 입력할수 없게 됩니다.</span>
 	                <?php } ?>
 	            </li>
-	            <?php if ($req_nick) {  ?>
-	            <li>
-	                <label for="reg_mb_nick">
-	                	닉네임<strong class="sound_only">필수</strong>
-	                	<button type="button" class="tooltip_icon"><i class="fa fa-question-circle-o" aria-hidden="true"></i><span class="sound_only">설명보기</span></button>
-						<span class="tooltip">공백없이 한글,영문,숫자만 입력 가능 (한글2자, 영문4자 이상)<br> 닉네임을 바꾸시면 앞으로 <?php echo (int)$config['cf_nick_modify'] ?>일 이내에는 변경 할 수 없습니다.</span>
-	                </label>
-	                
-                    <input type="hidden" name="mb_nick_default" value="<?php echo isset($member['mb_nick'])?get_text($member['mb_nick']):''; ?>">
-                    <input type="text" name="mb_nick" value="<?php echo isset($member['mb_nick'])?get_text($member['mb_nick']):''; ?>" id="reg_mb_nick" required class="frm_input required nospace full_input" size="10" maxlength="20" placeholder="닉네임">
-                    <span id="msg_mb_nick"></span>	                
-	            </li>
-	            <?php }  ?>
+<!--	            --><?php //if ($req_nick) {  ?>
+<!--	            <li>-->
+<!--	                <label for="reg_mb_nick">-->
+<!--	                	닉네임<strong class="sound_only">필수</strong>-->
+<!--	                	<button type="button" class="tooltip_icon"><i class="fa fa-question-circle-o" aria-hidden="true"></i><span class="sound_only">설명보기</span></button>-->
+<!--						<span class="tooltip">공백없이 한글,영문,숫자만 입력 가능 (한글2자, 영문4자 이상)<br> 닉네임을 바꾸시면 앞으로 --><?php //echo (int)$config['cf_nick_modify'] ?><!--일 이내에는 변경 할 수 없습니다.</span>-->
+<!--	                </label>-->
+<!--	                -->
+<!--                    <input type="hidden" name="mb_nick_default" value="--><?php //echo isset($member['mb_nick'])?get_text($member['mb_nick']):''; ?><!--">-->
+<!--                    <input type="text" name="mb_nick" value="--><?php //echo isset($member['mb_nick'])?get_text($member['mb_nick']):''; ?><!--" id="reg_mb_nick" required class="frm_input required nospace full_input" size="10" maxlength="20" placeholder="닉네임">-->
+<!--                    <span id="msg_mb_nick"></span>	                -->
+<!--	            </li>-->
+<!--	            --><?php //}  ?>
 	
 	            <li>
 	                <label for="reg_mb_email">E-mail<strong class="sound_only">필수</strong>
@@ -130,8 +130,10 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 				</li>
 				<li>
 	            <?php if ($config['cf_use_hp'] || $config['cf_cert_hp']) {  ?>
-	                <label for="reg_mb_hp">휴대폰번호<?php if ($config['cf_req_hp']) { ?><strong class="sound_only">필수</strong><?php } ?></label>
-	                
+	                <label for="reg_mb_hp">휴대폰번호<?php if ($config['cf_req_hp']) { ?><strong class="sound_only">필수</strong><?php } ?>
+                        <button type="button" class="tooltip_icon"><i class="fa fa-question-circle-o" aria-hidden="true"></i><span class="sound_only">설명보기</span></button>
+                        <span class="tooltip">-없이 작성해주세요</span>
+                    </label>
 	                <input type="text" name="mb_hp" value="<?php echo get_text($member['mb_hp']) ?>" id="reg_mb_hp" <?php echo ($config['cf_req_hp'])?"required":""; ?> class="frm_input full_input <?php echo ($config['cf_req_hp'])?"required":""; ?>" maxlength="20" placeholder="휴대폰번호">
 	                <?php if ($config['cf_cert_use'] && $config['cf_cert_hp']) { ?>
 	                <input type="hidden" name="old_mb_hp" value="<?php echo get_text($member['mb_hp']) ?>">
@@ -164,15 +166,15 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 	        <ul>
 	            <?php if ($config['cf_use_signature']) {  ?>
 	            <li>
-	                <label for="reg_mb_signature">서명<?php if ($config['cf_req_signature']){ ?><strong class="sound_only">필수</strong><?php } ?></label>
-	                <textarea name="mb_signature" id="reg_mb_signature" <?php echo $config['cf_req_signature']?"required":""; ?> class="<?php echo $config['cf_req_signature']?"required":""; ?>"   placeholder="서명"><?php echo $member['mb_signature'] ?></textarea>
+	                <label for="reg_mb_signature">경력사항<?php if ($config['cf_req_signature']){ ?><strong class="sound_only">필수</strong><?php } ?></label>
+	                <textarea name="mb_signature" id="reg_mb_signature" <?php echo $config['cf_req_signature']?"required":""; ?> class="<?php echo $config['cf_req_signature']?"required":""; ?>"   placeholder="경력사항"><?php echo $member['mb_signature'] ?></textarea>
 	            </li>
 	            <?php }  ?>
-	
+
 	            <?php if ($config['cf_use_profile']) {  ?>
 	            <li>
-	                <label for="reg_mb_profile">자기소개</label>
-	                <textarea name="mb_profile" id="reg_mb_profile" <?php echo $config['cf_req_profile']?"required":""; ?> class="<?php echo $config['cf_req_profile']?"required":""; ?>" placeholder="자기소개"><?php echo $member['mb_profile'] ?></textarea>
+	                <label for="reg_mb_profile">기타사항</label>
+	                <textarea name="mb_profile" id="reg_mb_profile" <?php echo $config['cf_req_profile']?"required":""; ?> class="<?php echo $config['cf_req_profile']?"required":""; ?>" placeholder="기타사항"><?php echo $member['mb_profile'] ?></textarea>
 	            </li>
 	            <?php }  ?>
 	
@@ -213,6 +215,9 @@ gif, jpg, png파일만 가능하며 용량 <?php echo number_format($config['cf_
 	            
 	            </li>
 	            <?php } ?>
+                <li class="">
+                    <?php echo get_member_level_select("mb_level[$i]", 1, $member['mb_level'], $row['mb_level']) ?>
+                </li>
 
 	            <li class="chk_box">
 		        	<input type="checkbox" name="mb_mailling" value="1" id="reg_mb_mailling" <?php echo ($w=='' || $member['mb_mailling'])?'checked':''; ?> class="selec_chk">

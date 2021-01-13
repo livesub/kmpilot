@@ -190,6 +190,9 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
 <div class="tbl_frm01 tbl_wrap">
     <table>
     <caption><?php echo $g5['title']; ?></caption>
+
+
+
     <colgroup>
         <col class="grid_4">
         <col>
@@ -209,20 +212,20 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     <tr>
         <th scope="row"><label for="mb_name">이름(실명)<strong class="sound_only">필수</strong></label></th>
         <td><input type="text" name="mb_name" value="<?php echo $mb['mb_name'] ?>" id="mb_name" required class="required frm_input" size="15"  maxlength="20"></td>
-        <th scope="row"><label for="mb_nick">닉네임<strong class="sound_only">필수</strong></label></th>
-        <td><input type="text" name="mb_nick" value="<?php echo $mb['mb_nick'] ?>" id="mb_nick" required class="required frm_input" size="15"  maxlength="20"></td>
+<!--        <th scope="row"><label for="mb_nick">닉네임<strong class="sound_only">필수</strong></label></th>-->
+<!--        <td><input type="text" name="mb_nick" value="--><?php //echo $mb['mb_nick'] ?><!--" id="mb_nick" required class="required frm_input" size="15"  maxlength="20"></td>-->
     </tr>
     <tr>
         <th scope="row"><label for="mb_level">회원 권한</label></th>
         <td><?php echo get_member_level_select('mb_level', 1, $member['mb_level'], $mb['mb_level']) ?></td>
-        <th scope="row">포인트</th>
-        <td><a href="./point_list.php?sfl=mb_id&amp;stx=<?php echo $mb['mb_id'] ?>" target="_blank"><?php echo number_format($mb['mb_point']) ?></a> 점</td>
+<!--        <th scope="row">포인트</th>-->
+<!--        <td><a href="./point_list.php?sfl=mb_id&amp;stx=--><?php //echo $mb['mb_id'] ?><!--" target="_blank">--><?php //echo number_format($mb['mb_point']) ?><!--</a> 점</td>-->
     </tr>
     <tr>
         <th scope="row"><label for="mb_email">E-mail<strong class="sound_only">필수</strong></label></th>
         <td><input type="text" name="mb_email" value="<?php echo $mb['mb_email'] ?>" id="mb_email" maxlength="100" required class="required frm_input email" size="30"></td>
-        <th scope="row"><label for="mb_homepage">홈페이지</label></th>
-        <td><input type="text" name="mb_homepage" value="<?php echo $mb['mb_homepage'] ?>" id="mb_homepage" class="frm_input" maxlength="255" size="15"></td>
+<!--        <th scope="row"><label for="mb_homepage">홈페이지</label></th>-->
+<!--        <td><input type="text" name="mb_homepage" value="--><?php //echo $mb['mb_homepage'] ?><!--" id="mb_homepage" class="frm_input" maxlength="255" size="15"></td>-->
     </tr>
     <tr>
         <th scope="row"><label for="mb_hp">휴대폰번호</label></th>
@@ -231,29 +234,29 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
         <td><input type="text" name="mb_tel" value="<?php echo $mb['mb_tel'] ?>" id="mb_tel" class="frm_input" size="15" maxlength="20"></td>
     </tr>
     <tr>
-        <th scope="row">본인확인방법</th>
-        <td colspan="3">
-            <input type="radio" name="mb_certify_case" value="ipin" id="mb_certify_ipin" <?php if($mb['mb_certify'] == 'ipin') echo 'checked="checked"'; ?>>
-            <label for="mb_certify_ipin">아이핀</label>
-            <input type="radio" name="mb_certify_case" value="hp" id="mb_certify_hp" <?php if($mb['mb_certify'] == 'hp') echo 'checked="checked"'; ?>>
-            <label for="mb_certify_hp">휴대폰</label>
-        </td>
+<!--        <th scope="row">본인확인방법</th>-->
+<!--        <td colspan="3">-->
+<!--            <input type="radio" name="mb_certify_case" value="ipin" id="mb_certify_ipin" --><?php //if($mb['mb_certify'] == 'ipin') echo 'checked="checked"'; ?>
+<!--            <label for="mb_certify_ipin">아이핀</label>-->
+<!--            <input type="radio" name="mb_certify_case" value="hp" id="mb_certify_hp" --><?php //if($mb['mb_certify'] == 'hp') echo 'checked="checked"'; ?>
+<!--            <label for="mb_certify_hp">휴대폰</label>-->
+<!--        </td>-->
     </tr>
     <tr>
-        <th scope="row">본인확인</th>
-        <td>
-            <input type="radio" name="mb_certify" value="1" id="mb_certify_yes" <?php echo $mb_certify_yes; ?>>
-            <label for="mb_certify_yes">예</label>
-            <input type="radio" name="mb_certify" value="" id="mb_certify_no" <?php echo $mb_certify_no; ?>>
-            <label for="mb_certify_no">아니오</label>
-        </td>
-        <th scope="row">성인인증</th>
-        <td>
-            <input type="radio" name="mb_adult" value="1" id="mb_adult_yes" <?php echo $mb_adult_yes; ?>>
-            <label for="mb_adult_yes">예</label>
-            <input type="radio" name="mb_adult" value="0" id="mb_adult_no" <?php echo $mb_adult_no; ?>>
-            <label for="mb_adult_no">아니오</label>
-        </td>
+<!--        <th scope="row">본인확인</th>-->
+<!--        <td>-->
+<!--            <input type="radio" name="mb_certify" value="1" id="mb_certify_yes" --><?php //echo $mb_certify_yes; ?>
+<!--            <label for="mb_certify_yes">예</label>-->
+<!--            <input type="radio" name="mb_certify" value="" id="mb_certify_no" --><?php //echo $mb_certify_no; ?>
+<!--            <label for="mb_certify_no">아니오</label>-->
+<!--        </td>-->
+<!--        <th scope="row">성인인증</th>-->
+<!--        <td>-->
+<!--            <input type="radio" name="mb_adult" value="1" id="mb_adult_yes" --><?php //echo $mb_adult_yes; ?>
+<!--            <label for="mb_adult_yes">예</label>-->
+<!--            <input type="radio" name="mb_adult" value="0" id="mb_adult_no" --><?php //echo $mb_adult_no; ?>
+<!--            <label for="mb_adult_no">아니오</label>-->
+<!--        </td>-->
     </tr>
     <tr>
         <th scope="row">주소</th>
@@ -272,21 +275,21 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="mb_icon">회원아이콘</label></th>
-        <td colspan="3">
-            <?php echo help('이미지 크기는 <strong>넓이 '.$config['cf_member_icon_width'].'픽셀 높이 '.$config['cf_member_icon_height'].'픽셀</strong>로 해주세요.') ?>
-            <input type="file" name="mb_icon" id="mb_icon">
-            <?php
-            $mb_dir = substr($mb['mb_id'],0,2);
-            $icon_file = G5_DATA_PATH.'/member/'.$mb_dir.'/'.get_mb_icon_name($mb['mb_id']).'.gif';
-            if (file_exists($icon_file)) {
-                $icon_url = str_replace(G5_DATA_PATH, G5_DATA_URL, $icon_file);
-                $icon_filemtile = (defined('G5_USE_MEMBER_IMAGE_FILETIME') && G5_USE_MEMBER_IMAGE_FILETIME) ? '?'.filemtime($icon_file) : '';
-                echo '<img src="'.$icon_url.$icon_filemtile.'" alt="">';
-                echo '<input type="checkbox" id="del_mb_icon" name="del_mb_icon" value="1">삭제';
-            }
-            ?>
-        </td>
+<!--        <th scope="row"><label for="mb_icon">회원아이콘</label></th>-->
+<!--        <td colspan="3">-->
+<!--            --><?php //echo help('이미지 크기는 <strong>넓이 '.$config['cf_member_icon_width'].'픽셀 높이 '.$config['cf_member_icon_height'].'픽셀</strong>로 해주세요.') ?>
+<!--            <input type="file" name="mb_icon" id="mb_icon">-->
+<!--            --><?php
+//            $mb_dir = substr($mb['mb_id'],0,2);
+//            $icon_file = G5_DATA_PATH.'/member/'.$mb_dir.'/'.get_mb_icon_name($mb['mb_id']).'.gif';
+//            if (file_exists($icon_file)) {
+//                $icon_url = str_replace(G5_DATA_PATH, G5_DATA_URL, $icon_file);
+//                $icon_filemtile = (defined('G5_USE_MEMBER_IMAGE_FILETIME') && G5_USE_MEMBER_IMAGE_FILETIME) ? '?'.filemtime($icon_file) : '';
+//                echo '<img src="'.$icon_url.$icon_filemtile.'" alt="">';
+//                echo '<input type="checkbox" id="del_mb_icon" name="del_mb_icon" value="1">삭제';
+//            }
+//            ?>
+<!--        </td>-->
     </tr>
     <tr>
         <th scope="row"><label for="mb_img">회원이미지</label></th>
@@ -376,21 +379,21 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     <?php } ?>
 
     <tr>
-        <th scope="row"><label for="mb_leave_date">탈퇴일자</label></th>
-        <td>
-            <input type="text" name="mb_leave_date" value="<?php echo $mb['mb_leave_date'] ?>" id="mb_leave_date" class="frm_input" maxlength="8">
-            <input type="checkbox" value="<?php echo date("Ymd"); ?>" id="mb_leave_date_set_today" onclick="if (this.form.mb_leave_date.value==this.form.mb_leave_date.defaultValue) {
-this.form.mb_leave_date.value=this.value; } else { this.form.mb_leave_date.value=this.form.mb_leave_date.defaultValue; }">
-            <label for="mb_leave_date_set_today">탈퇴일을 오늘로 지정</label>
-        </td>
-        <th scope="row">접근차단일자</th>
-        <td>
-            <input type="text" name="mb_intercept_date" value="<?php echo $mb['mb_intercept_date'] ?>" id="mb_intercept_date" class="frm_input" maxlength="8">
-            <input type="checkbox" value="<?php echo date("Ymd"); ?>" id="mb_intercept_date_set_today" onclick="if
-(this.form.mb_intercept_date.value==this.form.mb_intercept_date.defaultValue) { this.form.mb_intercept_date.value=this.value; } else {
-this.form.mb_intercept_date.value=this.form.mb_intercept_date.defaultValue; }">
-            <label for="mb_intercept_date_set_today">접근차단일을 오늘로 지정</label>
-        </td>
+<!--        <th scope="row"><label for="mb_leave_date">탈퇴일자</label></th>-->
+<!--        <td>-->
+<!--            <input type="text" name="mb_leave_date" value="--><?php //echo $mb['mb_leave_date'] ?><!--" id="mb_leave_date" class="frm_input" maxlength="8">-->
+<!--            <input type="checkbox" value="--><?php //echo date("Ymd"); ?><!--" id="mb_leave_date_set_today" onclick="if (this.form.mb_leave_date.value==this.form.mb_leave_date.defaultValue) {-->
+<!--this.form.mb_leave_date.value=this.value; } else { this.form.mb_leave_date.value=this.form.mb_leave_date.defaultValue; }">-->
+<!--            <label for="mb_leave_date_set_today">탈퇴일을 오늘로 지정</label>-->
+<!--        </td>-->
+<!--        <th scope="row">접근차단일자</th>-->
+<!--        <td>-->
+<!--            <input type="text" name="mb_intercept_date" value="--><?php //echo $mb['mb_intercept_date'] ?><!--" id="mb_intercept_date" class="frm_input" maxlength="8">-->
+<!--            <input type="checkbox" value="--><?php //echo date("Ymd"); ?><!--" id="mb_intercept_date_set_today" onclick="if-->
+<!--(this.form.mb_intercept_date.value==this.form.mb_intercept_date.defaultValue) { this.form.mb_intercept_date.value=this.value; } else {-->
+<!--this.form.mb_intercept_date.value=this.form.mb_intercept_date.defaultValue; }">-->
+<!--            <label for="mb_intercept_date_set_today">접근차단일을 오늘로 지정</label>-->
+<!--        </td>-->
     </tr>
 
     <?php
@@ -483,12 +486,12 @@ this.form.mb_intercept_date.value=this.form.mb_intercept_date.defaultValue; }">
     run_event('admin_member_form_add', $mb, $w, 'table');
     ?>
 
-    <?php for ($i=1; $i<=10; $i++) { ?>
-    <tr>
-        <th scope="row"><label for="mb_<?php echo $i ?>">여분 필드 <?php echo $i ?></label></th>
-        <td colspan="3"><input type="text" name="mb_<?php echo $i ?>" value="<?php echo $mb['mb_'.$i] ?>" id="mb_<?php echo $i ?>" class="frm_input" size="30" maxlength="255"></td>
-    </tr>
-    <?php } ?>
+<!--    --><?php //for ($i=1; $i<=10; $i++) { ?>
+<!--    <tr>-->
+<!--        <th scope="row"><label for="mb_--><?php //echo $i ?><!--">여분 필드 --><?php //echo $i ?><!--</label></th>-->
+<!--        <td colspan="3"><input type="text" name="mb_--><?php //echo $i ?><!--" value="--><?php //echo $mb['mb_'.$i] ?><!--" id="mb_--><?php //echo $i ?><!--" class="frm_input" size="30" maxlength="255"></td>-->
+<!--    </tr>-->
+<!--    --><?php //} ?>
 
     </tbody>
     </table>
