@@ -69,7 +69,19 @@ if (defined('G5_IS_ADMIN')) {
 <script>
 // 자바스크립트에서 사용하는 전역변수 선언
 var g5_url       = "<?php echo G5_URL ?>";
-var g5_bbs_url   = "<?php echo G5_BBS_URL ?>";
+<?php
+//관리자 페이지에서 제어 할때 때문에 제어
+if(strpos($PHP_SELF,"adm")){
+?>
+    var g5_bbs_url   = "<?php echo G5_ADMIN_BBS_URL ?>";
+<?php
+}else{
+?>
+    var g5_bbs_url   = "<?php echo G5_BBS_URL ?>";
+<?php
+}
+?>
+
 var g5_is_member = "<?php echo isset($is_member)?$is_member:''; ?>";
 var g5_is_admin  = "<?php echo isset($is_admin)?$is_admin:''; ?>";
 var g5_is_mobile = "<?php echo G5_IS_MOBILE ?>";

@@ -142,7 +142,7 @@ if ($w == '' || $w == 'u') {
         alert('관리자만 공지할 수 있습니다.');
     }
 
-    //회원 자신이 쓴글을 수정할 경우 공지가 풀리는 경우가 있음 
+    //회원 자신이 쓴글을 수정할 경우 공지가 풀리는 경우가 있음
     if($w =='u' && !$is_admin && $board['bo_notice'] && in_array($wr['wr_id'], $notice_array)){
         $notice = 1;
     }
@@ -203,10 +203,11 @@ if ($w == '' || $w == 'u') {
 
 $is_use_captcha = ((($board['bo_use_captcha'] && $w !== 'u') || $is_guest) && !$is_admin) ? 1 : 0;
 
+/*
 if ($is_use_captcha && !chk_captcha()) {
     alert('자동등록방지 숫자가 틀렸습니다.');
 }
-
+*/
 if ($w == '' || $w == 'r') {
     if (isset($_SESSION['ss_datetime'])) {
         if ($_SESSION['ss_datetime'] >= (G5_SERVER_TIME - $config['cf_delay_sec']) && !$is_admin)
