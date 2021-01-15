@@ -41,4 +41,5 @@ $g5['new_win_table'] = G5_TABLE_PREFIX.'new_win'; // 새창 테이블
 $g5['edu_new_win_table'] = G5_TABLE_PREFIX.'edu_new_win'; // edu 새창 테이블
 $g5['menu_table'] = G5_TABLE_PREFIX.'menu'; // 메뉴관리 테이블
 $g5['social_profile_table'] = G5_TABLE_PREFIX.'member_social_profiles'; // 소셜 로그인 테이블
+$g5['group_member_check_table'] = G5_TABLE_PREFIX.'group_member_check'; // 특정 게시판에 특정 그룹이 들어올 경우 저장하는 테이블
 ?>

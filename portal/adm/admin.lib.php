@@ -199,6 +199,23 @@ function get_theme_config_value($dir, $key='*')
     return $tconfig;
 }
 
+// 회원권한을 SELECT 형식으로 얻음
+function get_gallery_count_select($name, $start_id=0, $end_id=10, $selected="", $event="")
+{
+    global $g5;
+
+    $str = "\n<select id=\"{$name}\" name=\"{$name}\"";
+    if ($event) $str .= " $event";
+    $str .= ">\n";
+    for ($i=$start_id; $i<=$end_id; $i++) {
+        $str .= '<option value="'.$i.'"';
+        if ($i == $selected)
+            $str .= ' selected="selected"';
+        $str .= ">{$i}</option>\n";
+    }
+    $str .= "</select>\n";
+    return $str;
+}
 
 // 회원권한을 SELECT 형식으로 얻음
 function get_member_level_select($name, $start_id=0, $end_id=10, $selected="", $event="")
@@ -209,12 +226,13 @@ function get_member_level_select($name, $start_id=0, $end_id=10, $selected="", $
     if ($event) $str .= " $event";
     $str .= ">\n";
     for ($i=$start_id; $i<=$end_id; $i++) {
-        if($i == $start_id || $i == $end_id || $i == 5 || $i == 9){
+        if($i == $start_id || $i == $end_id || $i == 5 || $i == 9 ||$i ==2){
         $permissionName = null;
         switch ($i) {
-            case 1: $permissionName  = "user"; break;
-            case 5: $permissionName  = "admin"; break;
-            case 9: $permissionName  = "super admin"; break;
+            case 1: $permissionName  = "비회원"; break;
+            case 2: $permissionName = "회원"; break;
+            case 5: $permissionName  = "관리자"; break;
+            case 9: $permissionName  = "최고관리자"; break;
             case 10: $permissionName  = "yongsanzip"; break;
         }
         $str .= '<option value="'.$i.'"';
@@ -249,6 +267,122 @@ function get_member_id_select($name, $level, $selected="", $event="")
 // 학력사항을 SELECT 형식으로 얻음
 function get_grade_value_select(){
 
+}
+//회원 성별을 SELECT 형식으로 얻음
+function get_member_sex_select($name, $start_id=0, $end_id=10, $selected="", $event=""){
+
+    global $g5;
+
+    $str = "\n<select id=\"{$name}\" name=\"{$name}\"";
+    if ($event) $str .= " $event";
+    $str .= ">\n";
+    for ($i=$start_id; $i<=$end_id; $i++) {
+        if($i == 1){
+            $value = "남";
+        }else if($i == 2){
+            $value = "여";
+        }
+        $str .= '<option value="'.$value.'"';
+        if ($i == $selected)
+            $str .= ' selected="selected"';
+        $str .= ">{$value}</option>\n";
+    }
+    $str .= "</select>\n";
+    return $str;
+}
+
+//도선구를 SELECT 형식으로 얻음
+function get_doseongu_select($name, $start_id=0, $end_id=10, $selected="", $event=""){
+
+    global $g5;
+
+    $str = "\n<select id=\"{$name}\" name=\"{$name}\"";
+    if ($event) $str .= " $event";
+    $str .= ">\n";
+    for ($i=$start_id; $i<=$end_id; $i++) {
+        switch ($i){
+            case 1: $value = "인천항"; break;
+            case 2: $value = "부산항"; break;
+            case 3: $value = "여수항"; break;
+            case 4: $value = "울산항"; break;
+            case 5: $value = "대산항"; break;
+        }
+        $str .= '<option value="'.$value.'"';
+        if ($value == $selected)
+            $str .= ' selected="selected"';
+        $str .= ">{$value}</option>\n";
+    }
+    $str .= "</select>\n";
+    return $str;
+}
+
+//면허종류를 SELECT 형식으로 얻음
+function get_license_select($name, $start_id=0, $end_id=10, $selected="", $event=""){
+
+    global $g5;
+
+    $str = "\n<select id=\"{$name}\" name=\"{$name}\"";
+    if ($event) $str .= " $event";
+    $str .= ">\n";
+    for ($i=$start_id; $i<=$end_id; $i++) {
+        switch ($i){
+            case 1: $value = "1종"; break;
+            case 2: $value = "2종"; break;
+            case 3: $value = "3종"; break;
+        }
+        $str .= '<option value="'.$value.'"';
+        if ($value == $selected)
+            $str .= ' selected="selected"';
+        $str .= ">{$value}</option>\n";
+    }
+    $str .= "</select>\n";
+    return $str;
+}
+
+//해심재결 해당여부를 SELECT 형식으로 얻음
+function get_applicable_or_not_select($name, $start_id=0, $end_id=10, $selected="", $event=""){
+
+    global $g5;
+
+    $str = "\n<select id=\"{$name}\" name=\"{$name}\"";
+    if ($event) $str .= " $event";
+    $str .= ">\n";
+    for ($i=$start_id; $i<=$end_id; $i++) {
+        switch ($i){
+            case 1: $value = "해심"; break;
+            case 2: $value = "재결"; break;
+            case 3: $value = "심의중"; break;
+        }
+        $str .= '<option value="'.$value.'"';
+        if ($value == $selected)
+            $str .= ' selected="selected"';
+        $str .= ">{$value}</option>\n";
+    }
+    $str .= "</select>\n";
+    return $str;
+}
+
+//징계여부를 SELECT 형식으로 얻음
+function get_punishment_select($name, $start_id=0, $end_id=10, $selected="", $event=""){
+
+    global $g5;
+
+    $str = "\n<select id=\"{$name}\" name=\"{$name}\"";
+    if ($event) $str .= " $event";
+    $str .= ">\n";
+    for ($i=$start_id; $i<=$end_id; $i++) {
+        switch ($i){
+            case 1: $value = "경고"; break;
+            case 2: $value = "정직"; break;
+            case 3: $value = "면허취소"; break;
+        }
+        $str .= '<option value="'.$value.'"';
+        if ($value == $selected)
+            $str .= ' selected="selected"';
+        $str .= ">{$value}</option>\n";
+    }
+    $str .= "</select>\n";
+    return $str;
 }
 
 // php8 버전 호환 권한 검사 함수

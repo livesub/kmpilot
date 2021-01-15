@@ -23,7 +23,8 @@ jQuery(function($){
         firstDay: 0,
         isRTL: false,
         showMonthAfterYear: true,
-        yearSuffix: ""
+        yearSuffix: "",
+        yearRange: "-100:+0" //연도 범위 설정
     };
 	$.datepicker.setDefaults($.datepicker.regional["ko"]);
 });

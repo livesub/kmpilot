@@ -88,7 +88,7 @@ $colspan = 16;
     <option value="mb_point"<?php echo get_selected($sfl, "mb_point"); ?>>포인트</option>
     <option value="mb_datetime"<?php echo get_selected($sfl, "mb_datetime"); ?>>가입일시</option>
     <option value="mb_ip"<?php echo get_selected($sfl, "mb_ip"); ?>>IP</option>
-    <option value="mb_recommend"<?php echo get_selected($sfl, "mb_recommend"); ?>>추천인</option>
+    <option value="mb_recommend"<?php echo get_selected($sfl, "mb_recommend"); ?>>추천인</option> -->
 </select>
 <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
 <input type="text" name="stx" value="<?php echo $stx ?>" id="stx" required class="required frm_input">
@@ -120,27 +120,34 @@ $colspan = 16;
             <label for="chkall" class="sound_only">회원 전체</label>
             <input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
         </th>
-        <th scope="col" id="mb_list_id" colspan="2"><?php echo subject_sort_link('mb_id') ?>아이디</a></th>
-        <th scope="col" rowspan="2" id="mb_list_cert"><?php echo subject_sort_link('mb_certify', '', 'desc') ?>본인확인</a></th>
-        <th scope="col" id="mb_list_mailc"><?php echo subject_sort_link('mb_email_certify', '', 'desc') ?>메일인증</a></th>
-        <th scope="col" id="mb_list_open"><?php echo subject_sort_link('mb_open', '', 'desc') ?>정보공개</a></th>
-        <th scope="col" id="mb_list_mailr"><?php echo subject_sort_link('mb_mailling', '', 'desc') ?>메일수신</a></th>
+        <th scope="col" id="mb_list_id" colspan=""><?php echo subject_sort_link('mb_id') ?>아이디</a></th>
+        <th scope="col" id="mb_list_name"><?php echo subject_sort_link('mb_name') ?>이름</a></th>
         <th scope="col" id="mb_list_auth">상태</th>
+        <th scope="col" id="mb_list_auth"><?php echo subject_sort_link('mb_intercept_date', '', 'desc') ?>접근차단</a></th>
         <th scope="col" id="mb_list_mobile">휴대폰</th>
+        <th scope="col" id="mb_list_tel">전화번호</th>
         <th scope="col" id="mb_list_lastcall"><?php echo subject_sort_link('mb_today_login', '', 'desc') ?>최종접속</a></th>
-        <th scope="col" id="mb_list_grp">접근그룹</th>
-        <th scope="col" rowspan="2" id="mb_list_mng">관리</th>
+        <th scope="col" rowspan="" colspan="2" id="mb_list_mng">관리</th>
+<!--        <th scope="col" rowspan="2" id="mb_list_cert">--><?php //echo subject_sort_link('mb_certify', '', 'desc') ?><!--본인확인</a></th>-->
+<!--        <th scope="col" id="mb_list_mailc" rowspan="2">--><?php //echo subject_sort_link('mb_email_certify', '', 'desc') ?><!--메일인증</a></th>-->
+<!--        <th scope="col" id="mb_list_open">--><?php //echo subject_sort_link('mb_open', '', 'desc') ?><!--정보공개</a></th>-->
+<!--        <th scope="col" id="mb_list_mailr">--><?php //echo subject_sort_link('mb_mailling', '', 'desc') ?><!--메일수신</a></th>-->
+
+
+
+<!--        <th scope="col" id="mb_list_grp">접근그룹</th>-->
+
     </tr>
     <tr>
-        <th scope="col" id="mb_list_name"><?php echo subject_sort_link('mb_name') ?>이름</a></th>
-        <th scope="col" id="mb_list_nick"><?php echo subject_sort_link('mb_nick') ?>닉네임</a></th>
-        <th scope="col" id="mb_list_sms"><?php echo subject_sort_link('mb_sms', '', 'desc') ?>SMS수신</a></th>
-        <th scope="col" id="mb_list_adultc"><?php echo subject_sort_link('mb_adult', '', 'desc') ?>성인인증</a></th>
-        <th scope="col" id="mb_list_auth"><?php echo subject_sort_link('mb_intercept_date', '', 'desc') ?>접근차단</a></th>
-        <th scope="col" id="mb_list_deny"><?php echo subject_sort_link('mb_level', '', 'desc') ?>권한</a></th>
-        <th scope="col" id="mb_list_tel">전화번호</th>
-        <th scope="col" id="mb_list_join"><?php echo subject_sort_link('mb_datetime', '', 'desc') ?>가입일</a></th>
-        <th scope="col" id="mb_list_point"><?php echo subject_sort_link('mb_point', '', 'desc') ?> 포인트</a></th>
+
+<!--        <th scope="col" id="mb_list_nick">--><?php //echo subject_sort_link('mb_nick') ?><!--닉네임</a></th>-->
+<!--        <th scope="col" id="mb_list_sms">--><?php //echo subject_sort_link('mb_sms', '', 'desc') ?><!--SMS수신</a></th>-->
+<!--        <th scope="col" id="mb_list_adultc">--><?php //echo subject_sort_link('mb_adult', '', 'desc') ?><!--성인인증</a></th>-->
+
+<!--        <th scope="col" id="mb_list_deny">--><?php //echo subject_sort_link('mb_level', '', 'desc') ?><!--권한</a></th>-->
+<!---->
+<!--        <th scope="col" id="mb_list_join">--><?php //echo subject_sort_link('mb_datetime', '', 'desc') ?><!--가입일</a></th>-->
+<!--        <th scope="col" id="mb_list_point">--><?php //echo subject_sort_link('mb_point', '', 'desc') ?><!-- 포인트</a></th>-->
     </tr>
     </thead>
     <tbody>
@@ -206,25 +213,25 @@ $colspan = 16;
     ?>
 
     <tr class="<?php echo $bg; ?>">
-        <td headers="mb_list_chk" class="td_chk" rowspan="2">
+        <td headers="mb_list_chk" class="td_chk" rowspan="">
             <input type="hidden" name="mb_id[<?php echo $i ?>]" value="<?php echo $row['mb_id'] ?>" id="mb_id_<?php echo $i ?>">
             <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo get_text($row['mb_name']); ?> <?php echo get_text($row['mb_nick']); ?>님</label>
             <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>">
         </td>
-        <td headers="mb_list_id" colspan="2" class="td_name sv_use">
+        <td headers="mb_list_id" colspan="" class="td_name sv_use">
             <?php echo $mb_id ?>
             <?php
             //소셜계정이 있다면
             if(function_exists('social_login_link_account')){
                 if( $my_social_accounts = social_login_link_account($row['mb_id'], false, 'get_data') ){
-                    
+
                     echo '<div class="member_social_provider sns-wrap-over sns-wrap-32">';
                     foreach( (array) $my_social_accounts as $account){     //반복문
                         if( empty($account) || empty($account['provider']) ) continue;
-                        
+
                         $provider = strtolower($account['provider']);
                         $provider_name = social_get_provider_service_name($provider);
-                        
+
                         echo '<span class="sns-icon sns-'.$provider.'" title="'.$provider_name.'">';
                         echo '<span class="ico"></span>';
                         echo '<span class="txt">'.$provider_name.'</span>';
@@ -235,58 +242,60 @@ $colspan = 16;
             }
             ?>
         </td>
-        <td headers="mb_list_cert"  rowspan="2" class="td_mbcert">
-            <input type="radio" name="mb_certify[<?php echo $i; ?>]" value="ipin" id="mb_certify_ipin_<?php echo $i; ?>" <?php echo $row['mb_certify']=='ipin'?'checked':''; ?>>
-            <label for="mb_certify_ipin_<?php echo $i; ?>">아이핀</label><br>
-            <input type="radio" name="mb_certify[<?php echo $i; ?>]" value="hp" id="mb_certify_hp_<?php echo $i; ?>" <?php echo $row['mb_certify']=='hp'?'checked':''; ?>>
-            <label for="mb_certify_hp_<?php echo $i; ?>">휴대폰</label>
-        </td>
-        <td headers="mb_list_mailc"><?php echo preg_match('/[1-9]/', $row['mb_email_certify'])?'<span class="txt_true">Yes</span>':'<span class="txt_false">No</span>'; ?></td>
-        <td headers="mb_list_open">
-            <label for="mb_open_<?php echo $i; ?>" class="sound_only">정보공개</label>
-            <input type="checkbox" name="mb_open[<?php echo $i; ?>]" <?php echo $row['mb_open']?'checked':''; ?> value="1" id="mb_open_<?php echo $i; ?>">
-        </td>
-        <td headers="mb_list_mailr">
-            <label for="mb_mailling_<?php echo $i; ?>" class="sound_only">메일수신</label>
-            <input type="checkbox" name="mb_mailling[<?php echo $i; ?>]" <?php echo $row['mb_mailling']?'checked':''; ?> value="1" id="mb_mailling_<?php echo $i; ?>">
-        </td>
+        <td headers="mb_list_name" class="td_mbname"><?php echo get_text($row['mb_name']); ?></td>
+<!--        <td headers="mb_list_cert"  rowspan="2" class="td_mbcert">-->
+<!---->
+<!--        </td>-->
+<!--        <td headers="mb_list_mailc">--><?php //echo preg_match('/[1-9]/', $row['mb_email_certify'])?'<span class="txt_true">Yes</span>':'<span class="txt_false">No</span>'; ?><!--</td>-->
+<!--        <td headers="mb_list_open">-->
+<!--            <label for="mb_open_--><?php //echo $i; ?><!--" class="sound_only">정보공개</label>-->
+<!--            <input type="checkbox" name="mb_open[--><?php //echo $i; ?><!--]" --><?php //echo $row['mb_open']?'checked':''; ?><!-- value="1" id="mb_open_--><?php //echo $i; ?><!--">-->
+<!--        </td>-->
+<!--        <td headers="mb_list_mailr">-->
+<!--            <label for="mb_mailling_--><?php //echo $i; ?><!--" class="sound_only">메일수신</label>-->
+<!--            <input type="checkbox" name="mb_mailling[--><?php //echo $i; ?><!--]" --><?php //echo $row['mb_mailling']?'checked':''; ?><!-- value="1" id="mb_mailling_--><?php //echo $i; ?><!--">-->
+<!--        </td>-->
         <td headers="mb_list_auth" class="td_mbstat">
             <?php
             if ($leave_msg || $intercept_msg) echo $leave_msg.' '.$intercept_msg;
             else echo "정상";
             ?>
         </td>
-        <td headers="mb_list_mobile" class="td_tel"><?php echo get_text($row['mb_hp']); ?></td>
-        <td headers="mb_list_lastcall" class="td_date"><?php echo substr($row['mb_today_login'],2,8); ?></td>
-        <td headers="mb_list_grp" class="td_numsmall"><?php echo $group ?></td>
-        <td headers="mb_list_mng" rowspan="2" class="td_mng td_mng_s"><?php echo $s_mod ?><?php echo $s_grp ?></td>
-    </tr>
-    <tr class="<?php echo $bg; ?>">
-        <td headers="mb_list_name" class="td_mbname"><?php echo get_text($row['mb_name']); ?></td>
-        <td headers="mb_list_nick" class="td_name sv_use"><div><?php echo $mb_nick ?></div></td>
-        
-        <td headers="mb_list_sms">
-            <label for="mb_sms_<?php echo $i; ?>" class="sound_only">SMS수신</label>
-            <input type="checkbox" name="mb_sms[<?php echo $i; ?>]" <?php echo $row['mb_sms']?'checked':''; ?> value="1" id="mb_sms_<?php echo $i; ?>">
-        </td>
-        <td headers="mb_list_adultc">
-            <label for="mb_adult_<?php echo $i; ?>" class="sound_only">성인인증</label>
-            <input type="checkbox" name="mb_adult[<?php echo $i; ?>]" <?php echo $row['mb_adult']?'checked':''; ?> value="1" id="mb_adult_<?php echo $i; ?>">
-        </td>
         <td headers="mb_list_deny">
             <?php if(empty($row['mb_leave_date'])){ ?>
-            <input type="checkbox" name="mb_intercept_date[<?php echo $i; ?>]" <?php echo $row['mb_intercept_date']?'checked':''; ?> value="<?php echo $intercept_date ?>" id="mb_intercept_date_<?php echo $i ?>" title="<?php echo $intercept_title ?>">
-            <label for="mb_intercept_date_<?php echo $i; ?>" class="sound_only">접근차단</label>
+                <input type="checkbox" name="mb_intercept_date[<?php echo $i; ?>]" <?php echo $row['mb_intercept_date']?'checked':''; ?> value="<?php echo $intercept_date ?>" id="mb_intercept_date_<?php echo $i ?>" title="<?php echo $intercept_title ?>">
+                <label for="mb_intercept_date_<?php echo $i; ?>" class="sound_only">접근차단</label>
             <?php } ?>
         </td>
-        <td headers="mb_list_auth" class="td_mbstat">
-            <?php echo get_member_level_select("mb_level[$i]", 1, $member['mb_level'], $row['mb_level']) ?>
-        </td>
+        <td headers="mb_list_mobile" class="td_tel"><?php echo get_text($row['mb_hp']); ?></td>
         <td headers="mb_list_tel" class="td_tel"><?php echo get_text($row['mb_tel']); ?></td>
-        <td headers="mb_list_join" class="td_date"><?php echo substr($row['mb_datetime'],2,8); ?></td>
-        <td headers="mb_list_point" class="td_num"><a href="point_list.php?sfl=mb_id&amp;stx=<?php echo $row['mb_id'] ?>"><?php echo number_format($row['mb_point']) ?></a></td>
-
+        <td headers="mb_list_lastcall" class="td_date"><?php echo substr($row['mb_today_login'],2,8); ?></td>
+<!--        <td headers="mb_list_auth" class="td_mbstat">-->
+<!--            --><?php //echo get_member_level_select("mb_level[$i]", 1, $member['mb_level'], $row['mb_level']) ?>
+<!--        </td>-->
+<!--        <td headers="mb_list_grp" class="td_numsmall">--><?php //echo $group ?><!--</td>-->
+        <td headers="mb_list_mng" rowspan="" class="td_mng td_mng_s"><?php echo $s_mod ?></td>
+        <td headers="mb_list_mng" rowspan="" class="td_mng td_mng_s"><?php echo $s_grp ?></td>
     </tr>
+<!--    <tr class="--><?php //echo $bg; ?><!--">-->
+
+<!--        <td headers="mb_list_nick" class="td_name sv_use"><div>--><?php //echo $mb_nick ?><!--</div></td>-->
+        
+<!--        <td headers="mb_list_sms">-->
+<!--            <label for="mb_sms_--><?php //echo $i; ?><!--" class="sound_only">SMS수신</label>-->
+<!--            <input type="checkbox" name="mb_sms[--><?php //echo $i; ?><!--]" --><?php //echo $row['mb_sms']?'checked':''; ?><!-- value="1" id="mb_sms_--><?php //echo $i; ?><!--">-->
+<!--        </td>-->
+<!--        <td headers="mb_list_adultc">-->
+<!--            <label for="mb_adult_--><?php //echo $i; ?><!--" class="sound_only">성인인증</label>-->
+<!--            <input type="checkbox" name="mb_adult[--><?php //echo $i; ?><!--]" --><?php //echo $row['mb_adult']?'checked':''; ?><!-- value="1" id="mb_adult_--><?php //echo $i; ?><!--">-->
+<!--        </td>-->
+
+
+
+<!--        <td headers="mb_list_join" class="td_date">--><?php //echo substr($row['mb_datetime'],2,8); ?><!--</td>-->
+<!--        <td headers="mb_list_point" class="td_num"><a href="point_list.php?sfl=mb_id&amp;stx=--><?php //echo $row['mb_id'] ?><!--">--><?php //echo number_format($row['mb_point']) ?><!--</a></td>-->
+
+<!--    </tr>-->
 
     <?php
     }

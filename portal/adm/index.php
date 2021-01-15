@@ -228,84 +228,84 @@ $colspan = 5;
 </section>
 
 <?php
-$sql_common = " from {$g5['point_table']} ";
-$sql_search = " where (1) ";
-$sql_order = " order by po_id desc ";
-
-$sql = " select count(*) as cnt {$sql_common} {$sql_search} {$sql_order} ";
-$row = sql_fetch($sql);
-$total_count = $row['cnt'];
-
-$sql = " select * {$sql_common} {$sql_search} {$sql_order} limit {$new_point_rows} ";
-$result = sql_query($sql);
-
-$colspan = 7;
-?>
-
-<section>
-    <h2>최근 포인트 발생내역</h2>
-    <div class="local_desc02 local_desc">
-        전체 <?php echo number_format($total_count) ?> 건 중 <?php echo $new_point_rows ?>건 목록
-    </div>
-
-    <div class="tbl_head01 tbl_wrap">
-        <table>
-        <caption>최근 포인트 발생내역</caption>
-        <thead>
-        <tr>
-            <th scope="col">회원아이디</th>
-            <th scope="col">이름</th>
-            <th scope="col">닉네임</th>
-            <th scope="col">일시</th>
-            <th scope="col">포인트 내용</th>
-            <th scope="col">포인트</th>
-            <th scope="col">포인트합</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php
-        $row2['mb_id'] = '';
-        for ($i=0; $row=sql_fetch_array($result); $i++)
-        {
-            if ($row2['mb_id'] != $row['mb_id'])
-            {
-                $sql2 = " select mb_id, mb_name, mb_nick, mb_email, mb_homepage, mb_point from {$g5['member_table']} where mb_id = '{$row['mb_id']}' ";
-                $row2 = sql_fetch($sql2);
-            }
-
-            $mb_nick = get_sideview($row['mb_id'], $row2['mb_nick'], $row2['mb_email'], $row2['mb_homepage']);
-
-            $link1 = $link2 = "";
-            if (!preg_match("/^\@/", $row['po_rel_table']) && $row['po_rel_table'])
-            {
-                $link1 = '<a href="'.get_pretty_url($row['po_rel_table'], $row['po_rel_id']).'" target="_blank">';
-                $link2 = '</a>';
-            }
-        ?>
-
-        <tr>
-            <td class="td_mbid"><a href="./point_list.php?sfl=mb_id&amp;stx=<?php echo $row['mb_id'] ?>"><?php echo $row['mb_id'] ?></a></td>
-            <td class="td_mbname"><?php echo get_text($row2['mb_name']); ?></td>
-            <td class="td_name sv_use"><div><?php echo $mb_nick ?></div></td>
-            <td class="td_datetime"><?php echo $row['po_datetime'] ?></td>
-            <td><?php echo $link1.$row['po_content'].$link2 ?></td>
-            <td class="td_numbig"><?php echo number_format($row['po_point']) ?></td>
-            <td class="td_numbig"><?php echo number_format($row['po_mb_point']) ?></td>
-        </tr>
-
-        <?php
-        }
-
-        if ($i == 0)
-            echo '<tr><td colspan="'.$colspan.'" class="empty_table">자료가 없습니다.</td></tr>';
-        ?>
-        </tbody>
-        </table>
-    </div>
-
-    <div class="btn_list03 btn_list">
-        <a href="./point_list.php">포인트내역 전체보기</a>
-    </div>
+//$sql_common = " from {$g5['point_table']} ";
+//$sql_search = " where (1) ";
+//$sql_order = " order by po_id desc ";
+//
+//$sql = " select count(*) as cnt {$sql_common} {$sql_search} {$sql_order} ";
+//$row = sql_fetch($sql);
+//$total_count = $row['cnt'];
+//
+//$sql = " select * {$sql_common} {$sql_search} {$sql_order} limit {$new_point_rows} ";
+//$result = sql_query($sql);
+//
+//$colspan = 7;
+//?>
+<!---->
+<!--<section>-->
+<!--    <h2>최근 포인트 발생내역</h2>-->
+<!--    <div class="local_desc02 local_desc">-->
+<!--        전체 --><?php //echo number_format($total_count) ?><!-- 건 중 --><?php //echo $new_point_rows ?><!--건 목록-->
+<!--    </div>-->
+<!---->
+<!--    <div class="tbl_head01 tbl_wrap">-->
+<!--        <table>-->
+<!--        <caption>최근 포인트 발생내역</caption>-->
+<!--        <thead>-->
+<!--        <tr>-->
+<!--            <th scope="col">회원아이디</th>-->
+<!--            <th scope="col">이름</th>-->
+<!--            <th scope="col">닉네임</th>-->
+<!--            <th scope="col">일시</th>-->
+<!--            <th scope="col">포인트 내용</th>-->
+<!--            <th scope="col">포인트</th>-->
+<!--            <th scope="col">포인트합</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--        --><?php
+//        $row2['mb_id'] = '';
+//        for ($i=0; $row=sql_fetch_array($result); $i++)
+//        {
+//            if ($row2['mb_id'] != $row['mb_id'])
+//            {
+//                $sql2 = " select mb_id, mb_name, mb_nick, mb_email, mb_homepage, mb_point from {$g5['member_table']} where mb_id = '{$row['mb_id']}' ";
+//                $row2 = sql_fetch($sql2);
+//            }
+//
+//            $mb_nick = get_sideview($row['mb_id'], $row2['mb_nick'], $row2['mb_email'], $row2['mb_homepage']);
+//
+//            $link1 = $link2 = "";
+//            if (!preg_match("/^\@/", $row['po_rel_table']) && $row['po_rel_table'])
+//            {
+//                $link1 = '<a href="'.get_pretty_url($row['po_rel_table'], $row['po_rel_id']).'" target="_blank">';
+//                $link2 = '</a>';
+//            }
+//        ?>
+<!---->
+<!--        <tr>-->
+<!--            <td class="td_mbid"><a href="./point_list.php?sfl=mb_id&amp;stx=--><?php //echo $row['mb_id'] ?><!--">--><?php //echo $row['mb_id'] ?><!--</a></td>-->
+<!--            <td class="td_mbname">--><?php //echo get_text($row2['mb_name']); ?><!--</td>-->
+<!--            <td class="td_name sv_use"><div>--><?php //echo $mb_nick ?><!--</div></td>-->
+<!--            <td class="td_datetime">--><?php //echo $row['po_datetime'] ?><!--</td>-->
+<!--            <td>--><?php //echo $link1.$row['po_content'].$link2 ?><!--</td>-->
+<!--            <td class="td_numbig">--><?php //echo number_format($row['po_point']) ?><!--</td>-->
+<!--            <td class="td_numbig">--><?php //echo number_format($row['po_mb_point']) ?><!--</td>-->
+<!--        </tr>-->
+<!---->
+<!--        --><?php
+//        }
+//
+//        if ($i == 0)
+//            echo '<tr><td colspan="'.$colspan.'" class="empty_table">자료가 없습니다.</td></tr>';
+//        ?>
+<!--        </tbody>-->
+<!--        </table>-->
+<!--    </div>-->
+<!---->
+<!--    <div class="btn_list03 btn_list">-->
+<!--        <a href="./point_list.php">포인트내역 전체보기</a>-->
+<!--    </div>-->
 </section>
 
 <?php

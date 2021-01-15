@@ -14,7 +14,7 @@ check_demo();
 $g5['title'] = '회원메일 테스트';
 
 $name = get_text($member['mb_name']);
-$nick = $member['mb_nick'];
+//$nick = $member['mb_nick'];
 $mb_id = $member['mb_id'];
 $email = $member['mb_email'];
 $ma_id = isset($_REQUEST['ma_id']) ? (int) $_REQUEST['ma_id'] : 0;
@@ -26,14 +26,16 @@ $subject = $ma['ma_subject'];
 
 $content = $ma['ma_content'];
 $content = preg_replace("/{이름}/", $name, $content);
-$content = preg_replace("/{닉네임}/", $nick, $content);
+//$content = preg_replace("/{닉네임}/", $nick, $content);
 $content = preg_replace("/{회원아이디}/", $mb_id, $content);
 $content = preg_replace("/{이메일}/", $email, $content);
 
 $mb_md5 = md5($member['mb_id'].$member['mb_email'].$member['mb_datetime']);
 
 $content = $content . '<p>더 이상 정보 수신을 원치 않으시면 [<a href="'.G5_BBS_URL.'/email_stop.php?mb_id='.$mb_id.'&amp;mb_md5='.$mb_md5.'" target="_blank">수신거부</a>] 해 주십시오.</p>';
-
+if(isset($_FILES["files"])){
+    mailer($config['cf_title'], $member['mb_email'], $member['mb_email'], $subject, $content, 1, $_FILES["files"]);
+}
 mailer($config['cf_title'], $member['mb_email'], $member['mb_email'], $subject, $content, 1);
 
-alert($member['mb_nick'].'('.$member['mb_email'].')님께 테스트 메일을 발송하였습니다. 확인하여 주십시오.');
+alert($member['mb_name'].'('.$member['mb_email'].')님께 테스트 메일을 발송하였습니다. 확인하여 주십시오.');

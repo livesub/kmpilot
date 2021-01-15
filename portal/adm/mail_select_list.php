@@ -10,8 +10,8 @@ $sql_common = " from {$g5['member_table']} ";
 $sql_where = " where (1) ";
 
 // 회원ID ..에서 ..까지
-if ($mb_id1 != 1)
-    $sql_where .= " and mb_id between '{$mb_id1_from}' and '{$mb_id1_to}' ";
+//if ($mb_id1 != 1)
+//    $sql_where .= " and mb_id between '{$mb_id1_from}' and '{$mb_id1_to}' ";
 
 // E-mail에 특정 단어 포함
 if ($mb_email != "")
@@ -21,8 +21,8 @@ if ($mb_email != "")
 if ($mb_mailling != "")
     $sql_where .= " and mb_mailling = '{$mb_mailling}' ";
 
-// 권한
-$sql_where .= " and mb_level between '{$mb_level_from}' and '{$mb_level_to}' ";
+//// 권한
+//$sql_where .= " and mb_level between '{$mb_level_from}' and '{$mb_level_to}' ";
 
 // 게시판그룹회원
 if ($gr_id) {

@@ -87,17 +87,17 @@ include_once('./admin.head.php');
             </select>
         </td>
     </tr>
-    <tr>
-        <th scope="row"><?php if ($is_admin == 'super') { ?><label for="gr_admin"><?php } ?>그룹 관리자<?php if ($is_admin == 'super') { ?></label><?php } ?></th>
-        <td>
-            <?php
-            if ($is_admin == 'super')
-                echo '<input type="text" id="gr_admin" name="gr_admin" class="frm_input" value="'.$gr['gr_admin'].'" maxlength="20">';
-            else
-                echo '<input type="hidden" id="gr_admin" name="gr_admin" value="'.$gr['gr_admin'].'">'.$gr['gr_admin'];
-            ?>
-        </td>
-    </tr>
+<!--    <tr>-->
+<!--        <th scope="row">--><?php //if ($is_admin == 'super') { ?><!--<label for="gr_admin">--><?php //} ?><!--그룹 관리자--><?php //if ($is_admin == 'super') { ?><!--</label>--><?php //} ?><!--</th>-->
+<!--        <td>-->
+<!--            --><?php
+//            if ($is_admin == 'super')
+//                echo '<input type="text" id="gr_admin" name="gr_admin" class="frm_input" value="'.$gr['gr_admin'].'" maxlength="20">';
+//            else
+//                echo '<input type="hidden" id="gr_admin" name="gr_admin" value="'.$gr['gr_admin'].'">'.$gr['gr_admin'];
+//            ?>
+<!--        </td>-->
+<!--    </tr>-->
     <tr>
         <th scope="row"><label for="gr_use_access">접근회원사용</label></th>
         <td>
@@ -117,17 +117,17 @@ include_once('./admin.head.php');
             ?>
         </td>
     </tr>
-    <?php for ($i=1;$i<=10;$i++) { ?>
-    <tr>
-        <th scope="row">여분필드<?php echo $i ?></th>
-        <td class="td_extra">
-            <label for="gr_<?php echo $i ?>_subj">여분필드 <?php echo $i ?> 제목</label>
-            <input type="text" name="gr_<?php echo $i ?>_subj" value="<?php echo isset($group['gr_'.$i.'_subj']) ? get_text($group['gr_'.$i.'_subj']) : ''; ?>" id="gr_<?php echo $i ?>_subj" class="frm_input">
-            <label for="gr_<?php echo $i ?>">여분필드 <?php echo $i ?> 내용</label>
-            <input type="text" name="gr_<?php echo $i ?>" value="<?php echo isset($gr['gr_'.$i]) ? get_sanitize_input($gr['gr_'.$i]) : ''; ?>" id="gr_<?php echo $i ?>" class="frm_input">
-        </td>
-    </tr>
-    <?php } ?>
+<!--    --><?php //for ($i=1;$i<=10;$i++) { ?>
+<!--    <tr>-->
+<!--        <th scope="row">여분필드--><?php //echo $i ?><!--</th>-->
+<!--        <td class="td_extra">-->
+<!--            <label for="gr_--><?php //echo $i ?><!--_subj">여분필드 --><?php //echo $i ?><!-- 제목</label>-->
+<!--            <input type="text" name="gr_--><?php //echo $i ?><!--_subj" value="--><?php //echo isset($group['gr_'.$i.'_subj']) ? get_text($group['gr_'.$i.'_subj']) : ''; ?><!--" id="gr_--><?php //echo $i ?><!--_subj" class="frm_input">-->
+<!--            <label for="gr_--><?php //echo $i ?><!--">여분필드 --><?php //echo $i ?><!-- 내용</label>-->
+<!--            <input type="text" name="gr_--><?php //echo $i ?><!--" value="--><?php //echo isset($gr['gr_'.$i]) ? get_sanitize_input($gr['gr_'.$i]) : ''; ?><!--" id="gr_--><?php //echo $i ?><!--" class="frm_input">-->
+<!--        </td>-->
+<!--    </tr>-->
+<!--    --><?php //} ?>
     </tbody>
     </table>
 </div>

@@ -37,14 +37,15 @@ $mb_zip1 = substr($mb_zip, 0, 3);
 $mb_zip2 = substr($mb_zip, 3);
 
 $mb_email = isset($_POST['mb_email']) ? get_email_address(trim($_POST['mb_email'])) : '';
-$mb_nick = isset($_POST['mb_nick']) ? trim(strip_tags($_POST['mb_nick'])) : '';
+//$mb_nick = isset($_POST['mb_nick']) ? trim(strip_tags($_POST['mb_nick'])) : '';
 
-if ($msg = valid_mb_nick($mb_nick))     alert($msg, "", true, true);
+//if ($msg = valid_mb_nick($mb_nick))     alert($msg, "", true, true);
+
 
 $posts = array();
 $check_keys = array(
     'mb_name',
-    'mb_homepage',
+    'mb_birth',
     'mb_tel',
     'mb_addr1',
     'mb_addr2',
@@ -57,7 +58,18 @@ $check_keys = array(
     'mb_sms',
     'mb_open',
     'mb_profile',
-    'mb_level'
+    'mb_level',
+    'mb_doseongu',
+    'mb_lead_code',
+    'mb_license_mean',
+    'mb_first_license_day',
+    'mb_license_renewal_day',
+    'mb_validity_day_from',
+    'mb_validity_day_to',
+    'mb_license_ext_day_from',
+    'mb_license_ext_day_to',
+    'mb_applicable_or_not',
+    'mb_punishment',
 );
 
 for($i=1;$i<=10;$i++){
@@ -70,14 +82,15 @@ foreach( $check_keys as $key ){
 
 $mb_memo = isset($_POST['mb_memo']) ? $_POST['mb_memo'] : '';
 
+//텍스트 값을 date 값으로 변환
+//$mb_birth = change_text_to_date($posts['mb_birth']);
+
 $sql_common = "  mb_name = '{$posts['mb_name']}',
-                 mb_nick = '{$mb_nick}',
                  mb_email = '{$mb_email}',
-                 mb_homepage = '{$posts['mb_homepage']}',
                  mb_tel = '{$posts['mb_tel']}',
                  mb_hp = '{$mb_hp}',
                  mb_certify = '{$mb_certify}',
-                 mb_adult = '{$mb_adult}',
+                 mb_birth = '{$posts['mb_birth']}',
                  mb_zip1 = '$mb_zip1',
                  mb_zip2 = '$mb_zip2',
                  mb_addr1 = '{$posts['mb_addr1']}',
@@ -88,27 +101,28 @@ $sql_common = "  mb_name = '{$posts['mb_name']}',
                  mb_leave_date = '{$posts['mb_leave_date']}',
                  mb_intercept_date='{$posts['mb_intercept_date']}',
                  mb_memo = '{$mb_memo}',
-                 mb_mailling = '{$posts['mb_mailling']}',
+                 mb_mailling = '1',
                  mb_sms = '{$posts['mb_sms']}',
                  mb_open = '{$posts['mb_open']}',
                  mb_profile = '{$posts['mb_profile']}',
                  mb_level = '{$posts['mb_level']}',
-                 mb_1 = '{$posts['mb_1']}',
-                 mb_2 = '{$posts['mb_2']}',
-                 mb_3 = '{$posts['mb_3']}',
-                 mb_4 = '{$posts['mb_4']}',
-                 mb_5 = '{$posts['mb_5']}',
-                 mb_6 = '{$posts['mb_6']}',
-                 mb_7 = '{$posts['mb_7']}',
-                 mb_8 = '{$posts['mb_8']}',
-                 mb_9 = '{$posts['mb_9']}',
-                 mb_10 = '{$posts['mb_10']}' ";
+                 mb_doseongu = '{$posts['mb_doseongu']}',
+                 mb_lead_code = '{$posts['mb_lead_code']}',
+                 mb_license_mean = '{$posts['mb_license_mean']}',
+                 mb_first_license_day = '{$posts['mb_first_license_day']}',
+                 mb_license_renewal_day = '{$posts['mb_license_renewal_day']}',
+                 mb_validity_day_from = '{$posts['mb_validity_day_from']}',
+                 mb_validity_day_to = '{$posts['mb_validity_day_to']}',
+                 mb_license_ext_day_from = '{$posts['mb_license_ext_day_from']}',
+                 mb_license_ext_day_to = '{$posts['mb_license_ext_day_to']}',
+                 mb_applicable_or_not = '{$posts['mb_applicable_or_not']}',
+                 mb_punishment = '{$posts['mb_punishment']}' ";
 
 if ($w == '')
 {
     $mb = get_member($mb_id);
     if (isset($mb['mb_id']) && $mb['mb_id'])
-        alert('이미 존재하는 회원아이디입니다.\\nＩＤ : '.$mb['mb_id'].'\\n이름 : '.$mb['mb_name'].'\\n닉네임 : '.$mb['mb_nick'].'\\n메일 : '.$mb['mb_email']);
+        alert('이미 존재하는 회원아이디입니다.\\nＩＤ : '.$mb['mb_id'].'\\n이름 : '.$mb['mb_name'].'\\n메일 : '.$mb['mb_email']);
 
     // 닉네임중복체크
 //    $sql = " select mb_id, mb_name, mb_nick, mb_email from {$g5['member_table']} where mb_nick = '{$mb_nick}' ";
@@ -120,7 +134,7 @@ if ($w == '')
     $sql = " select mb_id, mb_name, mb_nick, mb_email from {$g5['member_table']} where mb_email = '{$mb_email}' ";
     $row = sql_fetch($sql);
     if (isset($row['mb_id']) && $row['mb_id'])
-        alert('이미 존재하는 이메일입니다.\\nＩＤ : '.$row['mb_id'].'\\n이름 : '.$row['mb_name'].'\\n닉네임 : '.$row['mb_nick'].'\\n메일 : '.$row['mb_email']);
+        alert('이미 존재하는 이메일입니다.\\nＩＤ : '.$row['mb_id'].'\\n이름 : '.$row['mb_name'].'\\n메일 : '.$row['mb_email']);
 
     sql_query(" insert into {$g5['member_table']} set mb_id = '{$mb_id}', mb_password = '".get_encrypt_string($mb_password)."', mb_datetime = '".G5_TIME_YMDHIS."', mb_ip = '{$_SERVER['REMOTE_ADDR']}', mb_email_certify = '".G5_TIME_YMDHIS."', {$sql_common} ");
 }
@@ -150,7 +164,7 @@ else if ($w == 'u')
     $sql = " select mb_id, mb_name, mb_nick, mb_email from {$g5['member_table']} where mb_email = '{$mb_email}' and mb_id <> '$mb_id' ";
     $row = sql_fetch($sql);
     if (isset($row['mb_id']) && $row['mb_id'])
-        alert('이미 존재하는 이메일입니다.\\nＩＤ : '.$row['mb_id'].'\\n이름 : '.$row['mb_name'].'\\n닉네임 : '.$row['mb_nick'].'\\n메일 : '.$row['mb_email']);
+        alert('이미 존재하는 이메일입니다.\\nＩＤ : '.$row['mb_id'].'\\n이름 : '.$row['mb_name'].'\\n메일 : '.$row['mb_email']);
 
     if ($mb_password)
         $sql_password = " , mb_password = '".get_encrypt_string($mb_password)."' ";
@@ -175,50 +189,50 @@ else
 if( $w == '' || $w == 'u' ){
 
     $mb_dir = substr($mb_id,0,2);
-    $mb_icon_img = get_mb_icon_name($mb_id).'.gif';
+    $mb_license_img = get_mb_icon_name($mb_id).'.gif';
 
     // 회원 아이콘 삭제
-    if (isset($del_mb_icon) && $del_mb_icon)
-        @unlink(G5_DATA_PATH.'/member/'.$mb_dir.'/'.$mb_icon_img);
+//    if (isset($del_mb_icon) && $del_mb_icon)
+//        @unlink(G5_DATA_PATH.'/member/'.$mb_dir.'/'.$mb_license_img);
 
     $image_regex = "/(\.(gif|jpe?g|png))$/i";
 
     // 아이콘 업로드
-    if (isset($_FILES['mb_icon']) && is_uploaded_file($_FILES['mb_icon']['tmp_name'])) {
-        if (!preg_match($image_regex, $_FILES['mb_icon']['name'])) {
-            alert($_FILES['mb_icon']['name'] . '은(는) 이미지 파일이 아닙니다.');
-        }
-
-        if (preg_match($image_regex, $_FILES['mb_icon']['name'])) {
-            $mb_icon_dir = G5_DATA_PATH.'/member/'.$mb_dir;
-            @mkdir($mb_icon_dir, G5_DIR_PERMISSION);
-            @chmod($mb_icon_dir, G5_DIR_PERMISSION);
-
-            $dest_path = $mb_icon_dir.'/'.$mb_icon_img;
-
-            move_uploaded_file($_FILES['mb_icon']['tmp_name'], $dest_path);
-            chmod($dest_path, G5_FILE_PERMISSION);
-
-            if (file_exists($dest_path)) {
-                $size = @getimagesize($dest_path);
-                if ($size[0] > $config['cf_member_icon_width'] || $size[1] > $config['cf_member_icon_height']) {
-                    $thumb = null;
-                    if($size[2] === 2 || $size[2] === 3) {
-                        //jpg 또는 png 파일 적용
-                        $thumb = thumbnail($mb_icon_img, $mb_icon_dir, $mb_icon_dir, $config['cf_member_icon_width'], $config['cf_member_icon_height'], true, true);
-                        if($thumb) {
-                            @unlink($dest_path);
-                            rename($mb_icon_dir.'/'.$thumb, $dest_path);
-                        }
-                    }
-                    if( !$thumb ){
-                        // 아이콘의 폭 또는 높이가 설정값 보다 크다면 이미 업로드 된 아이콘 삭제
-                        @unlink($dest_path);
-                    }
-                }
-            }
-        }
-    }
+//    if (isset($_FILES['mb_icon']) && is_uploaded_file($_FILES['mb_icon']['tmp_name'])) {
+//        if (!preg_match($image_regex, $_FILES['mb_icon']['name'])) {
+//            alert($_FILES['mb_icon']['name'] . '은(는) 이미지 파일이 아닙니다.');
+//        }
+//
+//        if (preg_match($image_regex, $_FILES['mb_icon']['name'])) {
+//            $mb_icon_dir = G5_DATA_PATH.'/member/'.$mb_dir;
+//            @mkdir($mb_icon_dir, G5_DIR_PERMISSION);
+//            @chmod($mb_icon_dir, G5_DIR_PERMISSION);
+//
+//            $dest_path = $mb_icon_dir.'/'.$mb_license_img;
+//
+//            move_uploaded_file($_FILES['mb_icon']['tmp_name'], $dest_path);
+//            chmod($dest_path, G5_FILE_PERMISSION);
+//
+//            if (file_exists($dest_path)) {
+//                $size = @getimagesize($dest_path);
+//                if ($size[0] > $config['cf_member_icon_width'] || $size[1] > $config['cf_member_icon_height']) {
+//                    $thumb = null;
+//                    if($size[2] === 2 || $size[2] === 3) {
+//                        //jpg 또는 png 파일 적용
+//                        $thumb = thumbnail($mb_license_img, $mb_icon_dir, $mb_icon_dir, $config['cf_member_icon_width'], $config['cf_member_icon_height'], true, true);
+//                        if($thumb) {
+//                            @unlink($dest_path);
+//                            rename($mb_icon_dir.'/'.$thumb, $dest_path);
+//                        }
+//                    }
+//                    if( !$thumb ){
+//                        // 아이콘의 폭 또는 높이가 설정값 보다 크다면 이미 업로드 된 아이콘 삭제
+//                        @unlink($dest_path);
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     $mb_img_dir = G5_DATA_PATH.'/member_image/';
     if( !is_dir($mb_img_dir) ){
@@ -229,9 +243,9 @@ if( $w == '' || $w == 'u' ){
 
     // 회원 이미지 삭제
     if (isset($del_mb_img) && $del_mb_img)
-        @unlink($mb_img_dir.'/'.$mb_icon_img);
+        @unlink($mb_img_dir.'/'.$mb_license_img);
 
-    // 아이콘 업로드
+    // 회원 이미지 업로드
     if (isset($_FILES['mb_img']) && is_uploaded_file($_FILES['mb_img']['tmp_name'])) {
         if (!preg_match($image_regex, $_FILES['mb_img']['name'])) {
             alert($_FILES['mb_img']['name'] . '은(는) 이미지 파일이 아닙니다.');
@@ -241,7 +255,7 @@ if( $w == '' || $w == 'u' ){
             @mkdir($mb_img_dir, G5_DIR_PERMISSION);
             @chmod($mb_img_dir, G5_DIR_PERMISSION);
 
-            $dest_path = $mb_img_dir.'/'.$mb_icon_img;
+            $dest_path = $mb_img_dir.'/'.$mb_license_img;
 
             move_uploaded_file($_FILES['mb_img']['tmp_name'], $dest_path);
             chmod($dest_path, G5_FILE_PERMISSION);
@@ -252,10 +266,57 @@ if( $w == '' || $w == 'u' ){
                     $thumb = null;
                     if($size[2] === 2 || $size[2] === 3) {
                         //jpg 또는 png 파일 적용
-                        $thumb = thumbnail($mb_icon_img, $mb_img_dir, $mb_img_dir, $config['cf_member_img_width'], $config['cf_member_img_height'], true, true);
+                        $thumb = thumbnail($mb_license_img, $mb_img_dir, $mb_img_dir, $config['cf_member_img_width'], $config['cf_member_img_height'], true, true);
                         if($thumb) {
                             @unlink($dest_path);
                             rename($mb_img_dir.'/'.$thumb, $dest_path);
+                        }
+                    }
+                    if( !$thumb ){
+                        // 아이콘의 폭 또는 높이가 설정값 보다 크다면 이미 업로드 된 아이콘 삭제
+                        @unlink($dest_path);
+                    }
+                }
+            }
+        }
+    }
+    //최신 면허 사본 저장
+    $mb_license_dir = G5_DATA_PATH.'/member_license/';
+    if( !is_dir($mb_license_dir) ){
+        @mkdir($mb_license_dir, G5_DIR_PERMISSION);
+        @chmod($mb_license_dir, G5_DIR_PERMISSION);
+    }
+    $mb_license_dir .= substr($mb_id,0,2);
+
+    // 면허사본 삭제
+    if (isset($del_mb_license) && $del_mb_license)
+        @unlink($mb_license_dir.'/'.$mb_license_img);
+
+    // 아이콘 업로드
+    if (isset($_FILES['mb_license']) && is_uploaded_file($_FILES['mb_license']['tmp_name'])) {
+        if (!preg_match($image_regex, $_FILES['mb_license']['name'])) {
+            alert($_FILES['mb_license']['name'] . '은(는) 이미지 파일이 아닙니다.');
+        }
+
+        if (preg_match($image_regex, $_FILES['mb_license']['name'])) {
+            @mkdir($mb_license_dir, G5_DIR_PERMISSION);
+            @chmod($mb_license_dir, G5_DIR_PERMISSION);
+
+            $dest_path = $mb_license_dir.'/'.$mb_license_img;
+
+            move_uploaded_file($_FILES['mb_license']['tmp_name'], $dest_path);
+            chmod($dest_path, G5_FILE_PERMISSION);
+
+            if (file_exists($dest_path)) {
+                $size = @getimagesize($dest_path);
+                if ($size[0] > $config['cf_member_icon_width'] || $size[1] > $config['cf_member_icon_height']) {
+                    $thumb = null;
+                    if($size[2] === 2 || $size[2] === 3) {
+                        //jpg 또는 png 파일 적용
+                        $thumb = thumbnail($mb_license_img, $mb_license_dir, $mb_license_dir, $config['cf_member_icon_width'], $config['cf_member_icon_height'], true, true);
+                        if($thumb) {
+                            @unlink($dest_path);
+                            rename($mb_license_dir.'/'.$thumb, $dest_path);
                         }
                     }
                     if( !$thumb ){

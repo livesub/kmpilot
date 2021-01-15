@@ -99,14 +99,17 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             for ($i=0; $i<count($view['file']); $i++) {
                 if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view']) {
                     ?>
-                        <div id="pdf_viewer" style="height:400px">
-
-                        </div>
+                        <div id="pdf_viewer" style="height:400px"></div>
 <!--                --><?php //echo $view['file'][$i]['file'] ?><!--<br>-->
 <!--                --><?php //echo G5_DATA_URL; ?><!--<br>-->
-                <?php
-                session_start();
-                 $userid = get_session('ss_mb_id');  echo$userid?>
+                        <?php //session_start();
+                            $userid = get_session('ss_mb_id');
+                            if(get_member_group_check($userid, 4)) {
+                                if(!get_open_board_check($_GET["bo_table"],$userid, $_GET["wr_id"], 4)) {
+                                    echo insert_group_member_check($_GET["bo_table"], $userid, $_GET["wr_id"], 4);
+                                }
+                            }
+                        ?>
                         <script src="<?php echo G5_JS_URL; ?>/pdfobject.min.js"></script>
                         <script>PDFObject.embed("<?php echo G5_DATA_URL; ?>/file/officialDoc/<?php echo $view['file'][$i]['file'];?>","#pdf_viewer");</script>
                     <?php

@@ -17,7 +17,7 @@ $content = conv_content($se['ma_content'], 1) . "<hr size=0><p><span style='font
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<title><?php echo G5_VERSION ?> 메일발송 테스트</title>
+<title> 메일발송 테스트</title>
 </head>
 
 <body>

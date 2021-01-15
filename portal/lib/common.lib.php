@@ -770,6 +770,48 @@ function get_group($gr_id, $is_cache=false)
     return $cache[$key];
 }
 
+//접속한 멤버가 그 그룹인지 체크하는 함수
+function get_member_group_check($mb_id, $gr_id){
+    global $g5;
+    $sql = " select * from {$g5['group_member_table']} where mb_id = '$mb_id'and gr_id = '$gr_id' ";
+    //$sql = " select * from kmp_group_member where mb_id = '$mb_id'and gr_id = '$gr_id' ";
+    if(sql_fetch($sql)){
+        return true;
+        //echo $gr_id."그룹에 속한 유저";
+    }else{
+        return false;
+        //echo $gr_id."그룹에 속하지 않은 유저";
+    }
+}
+
+//특정 그룹이 특정 게시판에 들어왔을때 기록하는 함수
+function insert_group_member_check($bo_table, $mb_id, $wr_id, $gr_id){
+    global $g5;
+    $sql = " insert into {$g5['group_member_check_table']}
+                set mb_id = '$mb_id',
+                    bo_table = '".$bo_table."',
+                    wr_id = '".$wr_id."',
+                    gr_id = '".$gr_id."',
+                    gmc_date = '".G5_TIME_YMDHIS."'";
+
+    if(sql_query($sql)){
+        return "완료";
+    }else{
+        return "실패";
+    }
+}
+
+//특정게시판에 특정권한을 가진 user가 특정 글을 열람 했는지 확인하는 함수
+function get_open_board_check($bo_table, $mb_id, $wr_id, $gr_id){
+    global $g5;
+    $sql = " select * from {$g5['group_member_check_table']} where mb_id = '$mb_id'and bo_table= '$bo_table' and wr_id = '$wr_id' and gr_id = '$gr_id' ";
+    if(sql_fetch($sql)){
+        return true;
+    }else{
+        return false;
+    }
+}
+
 
 // 회원 정보를 얻는다.
 function get_member($mb_id, $fields='*', $is_cache=false)
