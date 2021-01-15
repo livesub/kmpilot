@@ -1,6 +1,12 @@
 <?php
-$sub_menu = "600000";    //게시판이 나타나야 하는 기본 메뉴
-if ($_GET['bo_table'] == 'notice') {
+//700 번데 게시판일 경우 게시판 네임을 계속 추가 해줘야함!!!
+if($_GET['bo_table'] == "edu_notice_kr" || $_GET['bo_table'] == "edu_notice_en" || $_GET['bo_table'] == "edu_board_kr" || $_GET['bo_table'] == "edu_board_en" || $_GET['bo_table'] == "edu_video_kr" || $_GET['bo_table'] == "edu_video_en" || $_GET['bo_table'] == "edu_normal_kr" || $_GET['bo_table'] == "edu_normal_en"){
+    $sub_menu = "700000";    //게시판이 나타나야 하는 기본 메뉴
+}else{
+    $sub_menu = "600000";    //게시판이 나타나야 하는 기본 메뉴
+}
+
+if ($_GET['bo_table'] == 'notice_kr') {
     $sub_menu = "600100";           //게시판이  지정된 메뉴 번호
 }
 

@@ -207,7 +207,11 @@ if($page_rows > 0) {
 
 g5_latest_cache_data($board['bo_table'], $list);
 
-$write_pages = get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, get_pretty_url($bo_table, '', $qstr.'&amp;page='));
+if(strpos($PHP_SELF,"adm") !== false) {
+    $write_pages = get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, short_url_clean(G5_ADMIN_BBS_URL.'/board.php?bo_table='.$bo_table.'&&amp;page='.$page.$qstr));
+}else{
+    $write_pages = get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, get_pretty_url($bo_table, '', $qstr.'&amp;page='));
+}
 
 $list_href = '';
 $prev_part_href = '';

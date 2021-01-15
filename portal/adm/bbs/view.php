@@ -8,16 +8,27 @@ if ($sop != 'and' && $sop != 'or')
 
 @include_once($board_skin_path.'/view.head.skin.php');
 
+
 $sql_search = "";
 // 검색이면
 if ($sca || $stx || $stx === '0') {
     // where 문을 얻음
     $sql_search = get_sql_search($sca, $sfl, $stx, $sop);
     $search_href = get_pretty_url($bo_table,'','&amp;page='.$page.$qstr);
-    $list_href = get_pretty_url($bo_table);
+
+    if(strpos($PHP_SELF,"adm") !== false) {
+        $list_href = short_url_clean(G5_ADMIN_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;page='.$page.$qstr);
+    }else{
+        $list_href = get_pretty_url($bo_table);
+    }
 } else {
     $search_href = '';
-    $list_href = get_pretty_url($bo_table,'',$qstr);
+    if(strpos($PHP_SELF,"adm") !== false) {
+        $list_href = short_url_clean(G5_ADMIN_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;page='.$page.$qstr);
+    }else{
+        $list_href = get_pretty_url($bo_table,'',$qstr);
+    }
+
 }
 
 if (!$board['bo_use_list_view']) {

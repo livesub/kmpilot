@@ -27,7 +27,7 @@ if($js != 'on' && $board['bo_download_point'] < 0) {
     $msg = $file['bf_source'].' 파일을 다운로드 하시면 포인트가 차감('.number_format($board['bo_download_point']).'점)됩니다.\\n포인트는 게시물당 한번만 차감되며 다음에 다시 다운로드 하셔도 중복하여 차감하지 않습니다.\\n그래도 다운로드 하시겠습니까?';
     $url1 = G5_BBS_URL.'/download.php?'.clean_query_string($_SERVER['QUERY_STRING'], false).'&js=on';
     $url2 = isset($_SERVER['HTTP_REFERER']) ? clean_xss_tags($_SERVER['HTTP_REFERER']) : '';
-    
+
     if( $url2 && stripos($url2, $_SERVER['REQUEST_URI']) !== false ){
         $url2 = G5_BBS_URL.'/board.php?'.clean_query_string($_SERVER['QUERY_STRING'], false);
     }
@@ -45,7 +45,8 @@ if ($member['mb_level'] < $board['bo_download_level']) {
         alert($alert_msg.'\\n회원이시라면 로그인 후 이용해 보십시오.', G5_BBS_URL.'/login.php?wr_id='.$wr_id.'&amp;'.$qstr.'&amp;url='.urlencode(get_pretty_url($bo_table, $wr_id)));
 }
 
-$filepath = G5_DATA_PATH.'/file/'.$bo_table.'/'.$file['bf_file'];
+//$filepath = G5_DATA_PATH.'/file/'.$bo_table.'/'.$file['bf_file'];
+$filepath = PORTAL_DATA_PATH.'/file/'.$bo_table.'/'.$file['bf_file'];
 $filepath = addslashes($filepath);
 $file_exist_check = (!is_file($filepath) || !file_exists($filepath)) ? false : true;
 
