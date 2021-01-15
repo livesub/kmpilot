@@ -41,4 +41,13 @@ $g5['new_win_table'] = G5_TABLE_PREFIX.'new_win'; // 새창 테이블
 $g5['edu_new_win_table'] = G5_TABLE_PREFIX.'edu_new_win'; // edu 새창 테이블
 $g5['menu_table'] = G5_TABLE_PREFIX.'menu'; // 메뉴관리 테이블
 $g5['social_profile_table'] = G5_TABLE_PREFIX.'member_social_profiles'; // 소셜 로그인 테이블
+
+
+//추가 테이블 정의
+$g5['pilot_license_renewal_table'] = G5_TABLE_PREFIX.'pilot_license_renewal'; // 도선사면허갱신
+$g5['pilot_mending_table'] = G5_TABLE_PREFIX.'pilot_mending'; // 도선사보수
+$g5['pilot_necessary_table'] = G5_TABLE_PREFIX.'pilot_necessary'; // 필수 도선사
+
+$g5['pilot_lecture_apply'] = G5_TABLE_PREFIX.'pilot_lecture_apply'; // 강의 수강신청및 수강 완료(도선사면허갱신/도선사보수/필수도선사 통합)
+
 ?>

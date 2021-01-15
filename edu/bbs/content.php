@@ -1,5 +1,6 @@
 <?php
 include_once('./_common.php');
+include_once(PORTAL_DATA_PATH."/dbconfig.php");
 
 $co_id = isset($_GET['co_id']) ? preg_replace('/[^a-z0-9_]/i', '', $_GET['co_id']) : 0;
 $co_seo_title = isset($_GET['co_seo_title']) ? clean_xss_tags($_GET['co_seo_title'], 1, 1) : '';
@@ -28,6 +29,9 @@ if($co_id == "")
     exit;
 }
 
+$g5['board_title'] = "도선사 면허 갱신 교육";
+
+$g5['title'] = $g5['board_title'];
 include_once(G5_PATH.'/head.php');
 include_once(G5_SKIN_PATH.'/'.$co_id.'.php');
 include_once(G5_PATH.'/tail.php');

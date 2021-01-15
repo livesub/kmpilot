@@ -3908,3 +3908,47 @@ function option_array_checked($option, $arr=array()){
 
     return $checked;
 }
+
+//유튜브 아이디 값만 추출하기
+function youtube_url($youtube){
+    $regExp = '/^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/';
+    preg_match($regExp, $youtube, $matches);
+    $youtube_id = $matches[7];
+
+    return $youtube_id;
+}
+
+//언어팩 적용 언어 판단
+switch ($_COOKIE['lang_change']) {
+    case 'en':
+        $lang_file = 'lang_en.php';
+        $lang_type = $_COOKIE['lang_change'];
+        break;
+    case 'kr':
+        $lang_file = 'lang_kr.php';
+        $lang_type = $_COOKIE['lang_change'];
+        break;
+    default:
+        $lang_file = 'lang_kr.php';
+        $lang_type = 'kr';
+}
+
+include_once G5_PATH.'/languages/'.$lang_file;
+
+//교육명 찾기
+function edu_name($type,$lang){
+    switch ($type) {
+        case 'pilot_license_renewal':
+            $dis_edu_name = $lang['lecture_title1'];
+            break;
+        case 'pilot_mending':
+            $dis_edu_name = $lang['lecture_title2'];
+            break;
+        case 'pilot_necessary':
+            $dis_edu_name = $lang['lecture_title3'];
+            break;
+        default:
+            $dis_edu_name = '문제 생겼음!!!';
+    }
+    return $dis_edu_name;
+}
