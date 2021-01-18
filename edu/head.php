@@ -49,6 +49,7 @@ $ajaxpage = G5_URL.'/lang_change.php';
             <li><a href="<?php echo G5_BBS_URL ?>/content.php?co_id=pilot_necessary_list"><font color="#ffffff"><?=$lang['lecture_title3']?></font></a></li>
             <li><a href="<?php echo G5_BBS_URL ?>/content.php?co_id=pilot_lecture_chk_list"><font color="#ffffff"><?=$lang['mypage_title1']?></font></a></li>
             <li><a href="<?php echo G5_BBS_URL ?>/content.php?co_id=pilot_certificates_issued_list"><font color="#ffffff"><?=$lang['mypage_title2']?></font></a></li>
+            <li><a href="<?php echo G5_BBS_URL ?>/content.php?co_id=pilot_mypage"><font color="#ffffff"><?=$lang['member_mypage']?></font></a></li>
         </ul>
     </div>
 

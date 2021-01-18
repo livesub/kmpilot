@@ -15,6 +15,7 @@ $lang['menu_movie'] = '동영상';
 $lang['member_modi'] = '정보수정';
 $lang['member_logout'] = '로그아웃';
 $lang['member_login'] = '로그인';
+$lang['member_mypage'] = '회원정보';
 
 //팝업 관련
 $lang['pop_time'] = '시간 동안 다시 열람하지 않습니다.';
@@ -41,12 +42,19 @@ $lang['lecture_start'] = '수강';
 $lang['lecture_no_start'] = ' 강의 시작 전입니다.';
 $lang['lecture_no_end'] = ' 강의가 종료 되었습니다.';
 $lang['lecture_complete'] = ' 수강을 완료 하셨습니다.';
+$lang['lecture_print'] = '발급하기';
+$lang['lecture_list'] = '목록';
+$lang['lecture_deed'] = '수 료 증 서';
+
 
 $lang['apply_confirm'] = ' 을/를 신청 하시겠습니까?';
 $lang['apply_ok'] = '정상적으로 신청 되었습니다.';
 
 $lang['cancel_confirm'] = ' 을/를 취소 하시겠습니까?';
 $lang['cancel_ok'] = '정상적으로 취소 되었습니다.';
+
+
+
 
 //마이페이지
 $lang['mypage_title1'] = '수강 확인';

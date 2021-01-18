@@ -48,6 +48,6 @@ $g5['pilot_license_renewal_table'] = G5_TABLE_PREFIX.'pilot_license_renewal'; //
 $g5['pilot_mending_table'] = G5_TABLE_PREFIX.'pilot_mending'; // 도선사보수
 $g5['pilot_necessary_table'] = G5_TABLE_PREFIX.'pilot_necessary'; // 필수 도선사
 
-$g5['pilot_lecture_apply'] = G5_TABLE_PREFIX.'pilot_lecture_apply'; // 강의 수강신청및 수강 완료(도선사면허갱신/도선사보수/필수도선사 통합)
+$g5['pilot_lecture_apply_table'] = G5_TABLE_PREFIX.'pilot_lecture_apply'; // 강의 수강신청및 수강 완료(도선사면허갱신/도선사보수/필수도선사 통합)
 
 ?>

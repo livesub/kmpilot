@@ -15,6 +15,7 @@ $lang['menu_movie'] = 'MOVIE';
 $lang['member_modi'] = 'Member_modify';
 $lang['member_logout'] = 'LOG OUT';
 $lang['member_login'] = 'LOG IN';
+$lang['member_mypage'] = 'eng회원정보';
 
 //팝업 관련
 $lang['pop_time'] = 'time old~~~~~';
@@ -41,6 +42,8 @@ $lang['lecture_start'] = 'eng수강';
 $lang['lecture_no_start'] = ' eng강의 시작 전입니다.';
 $lang['lecture_no_end'] = ' eng강의가 종료 되었습니다.';
 $lang['lecture_complete'] = ' eng수강을 완료 하셨습니다.';
+$lang['lecture_print'] = 'eng발급하기';
+$lang['lecture_list'] = 'eng목록';
 
 
 $lang['apply_confirm'] = ' eng을/를 신청 하시겠습니까?';
