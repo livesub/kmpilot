@@ -258,7 +258,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     </tr>
     <tr>
         <th scope="row"><label for="mb_doseongu">도선구</label></th>
-        <td><?php echo get_doseongu_select('mb_doseongu', 1, 5, $mb['mb_doseongu']) ?></td>
+        <td><?php echo get_doseongu_select('mb_doseongu', 1, 12, $mb['mb_doseongu']) ?></td>
         <th scope="row"><label for="mb_lead_code">도선약호</label></th>
         <td><input type="text" name="mb_lead_code" value="<?php echo $mb['mb_lead_code'] ?>" id="mb_tel" class="frm_input" size="15" maxlength="20"></td>
     </tr>
@@ -380,9 +380,9 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     </tr>
     <tr>
         <th scope="row"><label for="mb_applicable_or_not">해심재결 해당여부</label></th>
-        <td><?php echo get_applicable_or_not_select('mb_applicable_or_not', 1, 3, $mb['mb_applicable_or_not']) ?></td>
+        <td><?php echo get_applicable_or_not_select('mb_applicable_or_not', 0, 3, $mb['mb_applicable_or_not']) ?></td>
         <th scope="row"><label for="mb_punishment">징계 선택</label></th>
-        <td><?php echo get_punishment_select('mb_punishment', 1, 3, $mb['mb_punishment']) ?></td>
+        <td><?php echo get_punishment_select('mb_punishment', 0, 3, $mb['mb_punishment']) ?></td>
     </tr>
 <!--    <tr>-->
 <!--    -->
