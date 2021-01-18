@@ -7,6 +7,9 @@ if($is_member <> 1){
     exit;
 }
 
+$link_url = G5_SKIN_URL."/pilot_certificate_print.php";
+
+
 $sql = " select count(*) as cnt from ".$g5['pilot_lecture_apply_table']." where mb_id = '{$member['mb_id']}' and lecture_completion_status = 'Y' ";
 $row = sql_fetch($sql);
 $total_count = $row['cnt'];
@@ -42,7 +45,6 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     $edu_name = edu_name($row['lecture_type_table'],$lang);
     $row_subject = sql_fetch(" select subject from {$g5[$row[lecture_type_table].'_table']} where idx = '{$row[lecture_idx]}' ");
     $lecture_completion_date = explode(" ",$row['lecture_completion_date']);
-
 ?>
     <tr>
         <td><?=$virtual_num;?></td>
@@ -59,11 +61,19 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 <?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, '?'.$qstr.'&amp;page='); ?>
 </table>
 
+
+<form name="form_issued" id="form_issued" method="POST" action="<?=$link_url?>">
+    <input type="hidden" name="lecture_idx" id="lecture_idx" vlaue="">
+    <input type="hidden" name="lecture_type_table" id="lecture_type_table" vlaue="">
+</form>
+
 <script>
     function issued_chk(subject,lecture_idx,lecture_type_table){
         var subject_tmp = subject + " <?=$lang['issued_confirm']?>";
         if(confirm(subject_tmp)){
-alert(lecture_type_table);
+            $("#lecture_idx").val(lecture_idx);
+            $("#lecture_type_table").val(lecture_type_table);
+            $("#form_issued").submit();
         }else{
             return false;
         }

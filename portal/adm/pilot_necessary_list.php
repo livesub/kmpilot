@@ -66,7 +66,7 @@ $result = sql_query($sql);
     <tr>
         <td><input type="checkbox" id="chk_<?php echo $i ?>" name="chk[]" value="<?php echo $row['idx'] ?>"></td>
         <td><?=$virtual_num ?></td>
-        <td><?=$row[subject]?></td>
+        <td><a href="pilot_lecture_status_list.php?idx=<?=$row['idx'];?>&type=pilot_necessary&sub_menu=<?=$sub_menu?>"><?=$row[subject]?></a></td>
         <td><input type="button" class="btn btn_02" value="수정" onclick="location.href='pilot_necessary_regi.php?idx=<?=$row[idx]?>&w=u' "></td>
         <td><button class="btn btn_02">다운로드</button></td>
         <td><button class="btn btn_02">다운로드</button></td>

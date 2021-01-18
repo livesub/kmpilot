@@ -3952,3 +3952,9 @@ function edu_name($type,$lang){
     }
     return $dis_edu_name;
 }
+
+//날짜를 영문 표기 법으로 변경
+function date_change($val){
+    $date = date_create($val);
+    return date_format($date, "D. d, Y");
+}
