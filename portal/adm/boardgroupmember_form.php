@@ -32,7 +32,8 @@ $colspan = 4;
         <?php
         $sql = " select *
                     from {$g5['group_table']}
-                    where gr_use_access = 1 ";
+                    ";
+        //where gr_use_access = 1
         //if ($is_admin == 'group') {
         if ($is_admin != 'super')
             $sql .= " and gr_admin = '{$member['mb_id']}' ";

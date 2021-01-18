@@ -199,44 +199,6 @@ function get_theme_config_value($dir, $key='*')
     return $tconfig;
 }
 
-
-// 회원권한을 SELECT 형식으로 얻음
-function get_member_level_select($name, $start_id=0, $end_id=10, $selected="", $event="")
-{
-    global $g5;
-
-    $str = "\n<select id=\"{$name}\" name=\"{$name}\"";
-    if ($event) $str .= " $event";
-    $str .= ">\n";
-    for ($i=$start_id; $i<=$end_id; $i++) {
-        $str .= '<option value="'.$i.'"';
-        if ($i == $selected)
-            $str .= ' selected="selected"';
-        $str .= ">{$i}</option>\n";
-    }
-    $str .= "</select>\n";
-    return $str;
-}
-
-
-// 회원아이디를 SELECT 형식으로 얻음
-function get_member_id_select($name, $level, $selected="", $event="")
-{
-    global $g5;
-
-    $sql = " select mb_id from {$g5['member_table']} where mb_level >= '{$level}' ";
-    $result = sql_query($sql);
-    $str = '<select id="'.$name.'" name="'.$name.'" '.$event.'><option value="">선택안함</option>';
-    for ($i=0; $row=sql_fetch_array($result); $i++)
-    {
-        $str .= '<option value="'.$row['mb_id'].'"';
-        if ($row['mb_id'] == $selected) $str .= ' selected';
-        $str .= '>'.$row['mb_id'].'</option>';
-    }
-    $str .= '</select>';
-    return $str;
-}
-
 // php8 버전 호환 권한 검사 함수
 function auth_check_menu($auth, $sub_menu, $attr, $return=false) {
 

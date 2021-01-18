@@ -94,16 +94,16 @@ $colspan = 15;
         </th>
         <th scope="col"><?php echo subject_sort_link('a.gr_id') ?>그룹</a></th>
         <th scope="col"><?php echo subject_sort_link('bo_table') ?>TABLE</a></th>
-        <th scope="col"><?php echo subject_sort_link('bo_skin', '', 'desc') ?>스킨</a></th>
-        <th scope="col"><?php echo subject_sort_link('bo_mobile_skin', '', 'desc') ?>모바일<br>스킨</a></th>
+<!--        <th scope="col">--><?php //echo subject_sort_link('bo_skin', '', 'desc') ?><!--스킨</a></th>-->
+<!--        <th scope="col">--><?php //echo subject_sort_link('bo_mobile_skin', '', 'desc') ?><!--모바일<br>스킨</a></th>-->
         <th scope="col"><?php echo subject_sort_link('bo_subject') ?>제목</a></th>
-        <th scope="col">읽기P<span class="sound_only">포인트</span></th>
-        <th scope="col">쓰기P<span class="sound_only">포인트</span></th>
-        <th scope="col">댓글P<span class="sound_only">포인트</span></th>
-        <th scope="col">다운P<span class="sound_only">포인트</span></th>
-        <th scope="col"><?php echo subject_sort_link('bo_use_sns') ?>SNS<br>사용</a></th>
+<!--        <th scope="col">읽기P<span class="sound_only">포인트</span></th>-->
+<!--        <th scope="col">쓰기P<span class="sound_only">포인트</span></th>-->
+<!--        <th scope="col">댓글P<span class="sound_only">포인트</span></th>-->
+<!--        <th scope="col">다운P<span class="sound_only">포인트</span></th>-->
+<!--        <th scope="col">--><?php //echo subject_sort_link('bo_use_sns') ?><!--SNS<br>사용</a></th>-->
         <th scope="col"><?php echo subject_sort_link('bo_use_search') ?>검색<br>사용</a></th>
-        <th scope="col"><?php echo subject_sort_link('bo_order') ?>출력<br>순서</a></th>
+<!--        <th scope="col">--><?php //echo subject_sort_link('bo_order') ?><!--출력<br>순서</a></th>-->
         <th scope="col">접속기기</th>
         <th scope="col">관리</th>
     </tr>
@@ -133,46 +133,46 @@ $colspan = 15;
             <input type="hidden" name="board_table[<?php echo $i ?>]" value="<?php echo $row['bo_table'] ?>">
             <a href="<?php echo G5_ADMIN_URL.'/bbs/board.php?bo_table='.$row['bo_table'] ?>"><?php echo $row['bo_table'] ?></a>
         </td>
-        <td>
-            <label for="bo_skin_<?php echo $i; ?>" class="sound_only">스킨</label>
-            <?php echo get_skin_select('board', 'bo_skin_'.$i, "bo_skin[$i]", $row['bo_skin']); ?>
-        </td>
-        <td>
-            <label for="bo_mobile_skin_<?php echo $i; ?>" class="sound_only">모바일 스킨</label>
-            <?php echo get_mobile_skin_select('board', 'bo_mobile_skin_'.$i, "bo_mobile_skin[$i]", $row['bo_mobile_skin']); ?>
-        </td>
+<!--        <td>-->
+<!--            <label for="bo_skin_--><?php //echo $i; ?><!--" class="sound_only">스킨</label>-->
+<!--            --><?php //echo get_skin_select('board', 'bo_skin_'.$i, "bo_skin[$i]", $row['bo_skin']); ?>
+<!--        </td>-->
+<!--        <td>-->
+<!--            <label for="bo_mobile_skin_--><?php //echo $i; ?><!--" class="sound_only">모바일 스킨</label>-->
+<!--            --><?php //echo get_mobile_skin_select('board', 'bo_mobile_skin_'.$i, "bo_mobile_skin[$i]", $row['bo_mobile_skin']); ?>
+<!--        </td>-->
         <td>
             <label for="bo_subject_<?php echo $i; ?>" class="sound_only">게시판 제목<strong class="sound_only"> 필수</strong></label>
             <input type="text" name="bo_subject[<?php echo $i ?>]" value="<?php echo get_text($row['bo_subject']) ?>" id="bo_subject_<?php echo $i ?>" required class="required tbl_input bo_subject full_input" size="10">
         </td>
-        <td class="td_numsmall">
-            <label for="bo_read_point_<?php echo $i; ?>" class="sound_only">읽기 포인트</label>
-            <input type="text" name="bo_read_point[<?php echo $i ?>]" value="<?php echo $row['bo_read_point'] ?>" id="bo_read_point_<?php echo $i; ?>" class="tbl_input" size="2">
-        </td>
-        <td class="td_numsmall">
-            <label for="bo_write_point_<?php echo $i; ?>" class="sound_only">쓰기 포인트</label>
-            <input type="text" name="bo_write_point[<?php echo $i ?>]" value="<?php echo $row['bo_write_point'] ?>" id="bo_write_point_<?php echo $i; ?>" class="tbl_input" size="2">
-        </td>
-        <td class="td_numsmall">
-            <label for="bo_comment_point_<?php echo $i; ?>" class="sound_only">댓글 포인트</label>
-            <input type="text" name="bo_comment_point[<?php echo $i ?>]" value="<?php echo $row['bo_comment_point'] ?>" id="bo_comment_point_<?php echo $i; ?>" class="tbl_input" size="2">
-        </td>
-        <td class="td_numsmall">
-            <label for="bo_download_point_<?php echo $i; ?>" class="sound_only">다운<br>포인트</label>
-            <input type="text" name="bo_download_point[<?php echo $i ?>]" value="<?php echo $row['bo_download_point'] ?>" id="bo_download_point_<?php echo $i; ?>" class="tbl_input" size="2">
-        </td>
-        <td class="td_numsmall">
-            <label for="bo_use_sns_<?php echo $i; ?>" class="sound_only">SNS<br>사용</label>
-            <input type="checkbox" name="bo_use_sns[<?php echo $i ?>]" value="1" id="bo_use_sns_<?php echo $i ?>" <?php echo $row['bo_use_sns']?"checked":"" ?>>
-        </td>
+<!--        <td class="td_numsmall">-->
+<!--            <label for="bo_read_point_--><?php //echo $i; ?><!--" class="sound_only">읽기 포인트</label>-->
+<!--            <input type="text" name="bo_read_point[--><?php //echo $i ?><!--]" value="--><?php //echo $row['bo_read_point'] ?><!--" id="bo_read_point_--><?php //echo $i; ?><!--" class="tbl_input" size="2">-->
+<!--        </td>-->
+<!--        <td class="td_numsmall">-->
+<!--            <label for="bo_write_point_--><?php //echo $i; ?><!--" class="sound_only">쓰기 포인트</label>-->
+<!--            <input type="text" name="bo_write_point[--><?php //echo $i ?><!--]" value="--><?php //echo $row['bo_write_point'] ?><!--" id="bo_write_point_--><?php //echo $i; ?><!--" class="tbl_input" size="2">-->
+<!--        </td>-->
+<!--        <td class="td_numsmall">-->
+<!--            <label for="bo_comment_point_--><?php //echo $i; ?><!--" class="sound_only">댓글 포인트</label>-->
+<!--            <input type="text" name="bo_comment_point[--><?php //echo $i ?><!--]" value="--><?php //echo $row['bo_comment_point'] ?><!--" id="bo_comment_point_--><?php //echo $i; ?><!--" class="tbl_input" size="2">-->
+<!--        </td>-->
+<!--        <td class="td_numsmall">-->
+<!--            <label for="bo_download_point_--><?php //echo $i; ?><!--" class="sound_only">다운<br>포인트</label>-->
+<!--            <input type="text" name="bo_download_point[--><?php //echo $i ?><!--]" value="--><?php //echo $row['bo_download_point'] ?><!--" id="bo_download_point_--><?php //echo $i; ?><!--" class="tbl_input" size="2">-->
+<!--        </td>-->
+<!--        <td class="td_numsmall">-->
+<!--            <label for="bo_use_sns_--><?php //echo $i; ?><!--" class="sound_only">SNS<br>사용</label>-->
+<!--            <input type="checkbox" name="bo_use_sns[--><?php //echo $i ?><!--]" value="1" id="bo_use_sns_--><?php //echo $i ?><!--" --><?php //echo $row['bo_use_sns']?"checked":"" ?><!-->-->
+<!--        </td>-->
         <td class="td_numsmall">
             <label for="bo_use_search_<?php echo $i; ?>" class="sound_only">검색<br>사용</label>
             <input type="checkbox" name="bo_use_search[<?php echo $i ?>]" value="1" id="bo_use_search_<?php echo $i ?>" <?php echo $row['bo_use_search']?"checked":"" ?>>
         </td>
-        <td class="td_numsmall">
-            <label for="bo_order_<?php echo $i; ?>" class="sound_only">출력<br>순서</label>
-            <input type="text" name="bo_order[<?php echo $i ?>]" value="<?php echo $row['bo_order'] ?>" id="bo_order_<?php echo $i ?>" class="tbl_input" size="2">
-        </td>
+<!--        <td class="td_numsmall">-->
+<!--            <label for="bo_order_--><?php //echo $i; ?><!--" class="sound_only">출력<br>순서</label>-->
+<!--            <input type="text" name="bo_order[--><?php //echo $i ?><!--]" value="--><?php //echo $row['bo_order'] ?><!--" id="bo_order_--><?php //echo $i ?><!--" class="tbl_input" size="2">-->
+<!--        </td>-->
         <td class="td_mngsmall">
             <label for="bo_device_<?php echo $i; ?>" class="sound_only">접속기기</label>
             <select name="bo_device[<?php echo $i ?>]" id="bo_device_<?php echo $i ?>">

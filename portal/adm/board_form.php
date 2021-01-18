@@ -210,10 +210,11 @@ $pg_anchor = '<ul class="anchor">
     <li><a href="#anc_bo_auth">권한 설정</a></li>
     <li><a href="#anc_bo_function">기능 설정</a></li>
     <li><a href="#anc_bo_design">디자인/양식</a></li>
-    <li><a href="#anc_bo_point">포인트 설정</a></li>
-    <li><a href="#anc_bo_extra">여분필드</a></li>
+    
+    
 </ul>';
-
+//<li><a href="#anc_bo_point">포인트 설정</a></li>
+//<li><a href="#anc_bo_extra">여분필드</a></li> 위 빈칸에  추가시 화면에 표시된다.
 ?>
 
 <form name="fboardform" id="fboardform" action="./board_form_update.php" onsubmit="return fboardform_submit(this)" method="post" enctype="multipart/form-data">
@@ -1062,7 +1063,7 @@ $pg_anchor = '<ul class="anchor">
             <th scope="row"><label for="bo_gallery_cols">갤러리 이미지 수<strong class="sound_only">필수</strong></label></th>
             <td>
                 <?php echo help('갤러리 형식의 게시판 목록에서 이미지를 한줄에 몇장씩 보여 줄 것인지를 설정하는 값') ?>
-                <?php echo get_member_level_select('bo_gallery_cols', 1, 10, $board['bo_gallery_cols']); ?>
+                <?php echo get_gallery_count_select('bo_gallery_cols', 1, 10, $board['bo_gallery_cols']); ?>
             </td>
             <td class="td_grpset">
                 <input type="checkbox" name="chk_grp_gallery_cols" value="1" id="chk_grp_gallery_cols">
@@ -1228,113 +1229,113 @@ $pg_anchor = '<ul class="anchor">
 </section>
 
 
-<section id="anc_bo_point">
-    <h2 class="h2_frm">게시판 포인트 설정</h2>
-    <?php echo $pg_anchor ?>
+<!--<section id="anc_bo_point">-->
+<!--    <h2 class="h2_frm">게시판 포인트 설정</h2>-->
+<!--    --><?php //echo $pg_anchor ?>
+<!---->
+<!--    <div class="tbl_frm01 tbl_wrap">-->
+<!--        <table>-->
+<!--        <caption>게시판 포인트 설정</caption>-->
+<!--        <colgroup>-->
+<!--            <col class="grid_4">-->
+<!--            <col>-->
+<!--            <col class="grid_3">-->
+<!--        </colgroup>-->
+<!--        <tbody>-->
+<!--        <tr>-->
+<!--            <th scope="row"><label for="chk_grp_point">기본값으로 설정</label></th>-->
+<!--            <td colspan="2">-->
+<!--                --><?php //echo help('환경설정에 입력된 포인트로 설정') ?>
+<!--                <input type="checkbox" name="chk_grp_point" id="chk_grp_point" onclick="set_point(this.form)">-->
+<!--            </td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <th scope="row"><label for="bo_read_point">글읽기 포인트<strong class="sound_only">필수</strong></label></th>-->
+<!--            <td>-->
+<!--                <input type="text" name="bo_read_point" value="--><?php //echo $board['bo_read_point'] ?><!--" id="bo_read_point" required class="required frm_input" size="5">-->
+<!--            </td>-->
+<!--            <td class="td_grpset">-->
+<!--                <input type="checkbox" name="chk_grp_read_point" value="1" id="chk_grp_read_point">-->
+<!--                <label for="chk_grp_read_point">그룹적용</label>-->
+<!--                <input type="checkbox" name="chk_all_read_point" value="1" id="chk_all_read_point">-->
+<!--                <label for="chk_all_read_point">전체적용</label>-->
+<!--            </td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <th scope="row"><label for="bo_write_point">글쓰기 포인트<strong class="sound_only">필수</strong></label></th>-->
+<!--            <td>-->
+<!--                <input type="text" name="bo_write_point" value="--><?php //echo $board['bo_write_point'] ?><!--" id="bo_write_point" required class="required frm_input" size="5">-->
+<!--            </td>-->
+<!--            <td class="td_grpset">-->
+<!--                <input type="checkbox" name="chk_grp_write_point" value="1" id="chk_grp_write_point">-->
+<!--                <label for="chk_grp_write_point">그룹적용</label>-->
+<!--                <input type="checkbox" name="chk_all_write_point" value="1" id="chk_all_write_point">-->
+<!--                <label for="chk_all_write_point">전체적용</label>-->
+<!--            </td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <th scope="row"><label for="bo_comment_point">댓글쓰기 포인트<strong class="sound_only">필수</strong></label></th>-->
+<!--            <td>-->
+<!--                <input type="text" name="bo_comment_point" value="--><?php //echo $board['bo_comment_point'] ?><!--" id="bo_comment_point" required class="required frm_input" size="5">-->
+<!--            </td>-->
+<!--            <td class="td_grpset">-->
+<!--                <input type="checkbox" name="chk_grp_comment_point" value="1" id="chk_grp_comment_point">-->
+<!--                <label for="chk_grp_comment_point">그룹적용</label>-->
+<!--                <input type="checkbox" name="chk_all_comment_point" value="1" id="chk_all_comment_point">-->
+<!--                <label for="chk_all_comment_point">전체적용</label>-->
+<!--            </td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <th scope="row"><label for="bo_download_point">다운로드 포인트<strong class="sound_only">필수</strong></label></th>-->
+<!--            <td>-->
+<!--                <input type="text" name="bo_download_point" value="--><?php //echo $board['bo_download_point'] ?><!--" id="bo_download_point" required class="required frm_input" size="5">-->
+<!--            </td>-->
+<!--            <td class="td_grpset">-->
+<!--                <input type="checkbox" name="chk_grp_download_point" value="1" id="chk_grp_download_point">-->
+<!--                <label for="chk_grp_download_point">그룹적용</label>-->
+<!--                <input type="checkbox" name="chk_all_download_point" value="1" id="chk_all_download_point">-->
+<!--                <label for="chk_all_download_point">전체적용</label>-->
+<!--            </td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--        </table>-->
+<!--    </div>-->
+<!--</section>-->
 
-    <div class="tbl_frm01 tbl_wrap">
-        <table>
-        <caption>게시판 포인트 설정</caption>
-        <colgroup>
-            <col class="grid_4">
-            <col>
-            <col class="grid_3">
-        </colgroup>
-        <tbody>
-        <tr>
-            <th scope="row"><label for="chk_grp_point">기본값으로 설정</label></th>
-            <td colspan="2">
-                <?php echo help('환경설정에 입력된 포인트로 설정') ?>
-                <input type="checkbox" name="chk_grp_point" id="chk_grp_point" onclick="set_point(this.form)">
-            </td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="bo_read_point">글읽기 포인트<strong class="sound_only">필수</strong></label></th>
-            <td>
-                <input type="text" name="bo_read_point" value="<?php echo $board['bo_read_point'] ?>" id="bo_read_point" required class="required frm_input" size="5">
-            </td>
-            <td class="td_grpset">
-                <input type="checkbox" name="chk_grp_read_point" value="1" id="chk_grp_read_point">
-                <label for="chk_grp_read_point">그룹적용</label>
-                <input type="checkbox" name="chk_all_read_point" value="1" id="chk_all_read_point">
-                <label for="chk_all_read_point">전체적용</label>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="bo_write_point">글쓰기 포인트<strong class="sound_only">필수</strong></label></th>
-            <td>
-                <input type="text" name="bo_write_point" value="<?php echo $board['bo_write_point'] ?>" id="bo_write_point" required class="required frm_input" size="5">
-            </td>
-            <td class="td_grpset">
-                <input type="checkbox" name="chk_grp_write_point" value="1" id="chk_grp_write_point">
-                <label for="chk_grp_write_point">그룹적용</label>
-                <input type="checkbox" name="chk_all_write_point" value="1" id="chk_all_write_point">
-                <label for="chk_all_write_point">전체적용</label>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="bo_comment_point">댓글쓰기 포인트<strong class="sound_only">필수</strong></label></th>
-            <td>
-                <input type="text" name="bo_comment_point" value="<?php echo $board['bo_comment_point'] ?>" id="bo_comment_point" required class="required frm_input" size="5">
-            </td>
-            <td class="td_grpset">
-                <input type="checkbox" name="chk_grp_comment_point" value="1" id="chk_grp_comment_point">
-                <label for="chk_grp_comment_point">그룹적용</label>
-                <input type="checkbox" name="chk_all_comment_point" value="1" id="chk_all_comment_point">
-                <label for="chk_all_comment_point">전체적용</label>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="bo_download_point">다운로드 포인트<strong class="sound_only">필수</strong></label></th>
-            <td>
-                <input type="text" name="bo_download_point" value="<?php echo $board['bo_download_point'] ?>" id="bo_download_point" required class="required frm_input" size="5">
-            </td>
-            <td class="td_grpset">
-                <input type="checkbox" name="chk_grp_download_point" value="1" id="chk_grp_download_point">
-                <label for="chk_grp_download_point">그룹적용</label>
-                <input type="checkbox" name="chk_all_download_point" value="1" id="chk_all_download_point">
-                <label for="chk_all_download_point">전체적용</label>
-            </td>
-        </tr>
-        </tbody>
-        </table>
-    </div>
-</section>
+<!--<section id="anc_bo_extra">-->
+<!--    <h2 class="h2_frm">게시판 여분필드 설정</h2>-->
+<!--    --><?php //echo $pg_anchor ?>
 
-<section id="anc_bo_extra">
-    <h2 class="h2_frm">게시판 여분필드 설정</h2>
-    <?php echo $pg_anchor ?>
-
-    <div class="tbl_frm01 tbl_wrap">
-        <table>
-        <caption>게시판 여분필드 설정</caption>
-        <colgroup>
-            <col class="grid_4">
-            <col>
-            <col class="grid_3">
-        </colgroup>
-        <tbody>
-        <?php for ($i=1; $i<=10; $i++) { ?>
-        <tr>
-            <th scope="row">여분필드<?php echo $i ?></th>
-            <td class="td_extra">
-                <label for="bo_<?php echo $i ?>_subj">여분필드 <?php echo $i ?> 제목</label>
-                <input type="text" name="bo_<?php echo $i ?>_subj" id="bo_<?php echo $i ?>_subj" value="<?php echo get_text($board['bo_'.$i.'_subj']) ?>" class="frm_input">
-                <label for="bo_<?php echo $i ?>">여분필드 <?php echo $i ?> 값</label>
-                <input type="text" name="bo_<?php echo $i ?>" value="<?php echo get_text($board['bo_'.$i]) ?>" id="bo_<?php echo $i ?>" class="frm_input extra-value-input">
-            </td>
-            <td class="td_grpset">
-                <input type="checkbox" name="chk_grp_<?php echo $i ?>" value="1" id="chk_grp_<?php echo $i ?>">
-                <label for="chk_grp_<?php echo $i ?>">그룹적용</label>
-                <input type="checkbox" name="chk_all_<?php echo $i ?>" value="1" id="chk_all_<?php echo $i ?>">
-                <label for="chk_all_<?php echo $i ?>">전체적용</label>
-            </td>
-        </tr>
-        <?php } ?>
-        </tbody>
-        </table>
-    </div>
-</section>
+<!--    <div class="tbl_frm01 tbl_wrap">-->
+<!--        <table>-->
+<!--        <caption>게시판 여분필드 설정</caption>-->
+<!--        <colgroup>-->
+<!--            <col class="grid_4">-->
+<!--            <col>-->
+<!--            <col class="grid_3">-->
+<!--        </colgroup>-->
+<!--        <tbody>-->
+<!--        --><?php //for ($i=1; $i<=10; $i++) { ?>
+<!--        <tr>-->
+<!--            <th scope="row">여분필드--><?php //echo $i ?><!--</th>-->
+<!--            <td class="td_extra">-->
+<!--                <label for="bo_--><?php //echo $i ?><!--_subj">여분필드 --><?php //echo $i ?><!-- 제목</label>-->
+<!--                <input type="text" name="bo_--><?php //echo $i ?><!--_subj" id="bo_--><?php //echo $i ?><!--_subj" value="--><?php //echo get_text($board['bo_'.$i.'_subj']) ?><!--" class="frm_input">-->
+<!--                <label for="bo_--><?php //echo $i ?><!--">여분필드 --><?php //echo $i ?><!-- 값</label>-->
+<!--                <input type="text" name="bo_--><?php //echo $i ?><!--" value="--><?php //echo get_text($board['bo_'.$i]) ?><!--" id="bo_--><?php //echo $i ?><!--" class="frm_input extra-value-input">-->
+<!--            </td>-->
+<!--            <td class="td_grpset">-->
+<!--                <input type="checkbox" name="chk_grp_--><?php //echo $i ?><!--" value="1" id="chk_grp_--><?php //echo $i ?><!--">-->
+<!--                <label for="chk_grp_--><?php //echo $i ?><!--">그룹적용</label>-->
+<!--                <input type="checkbox" name="chk_all_--><?php //echo $i ?><!--" value="1" id="chk_all_--><?php //echo $i ?><!--">-->
+<!--                <label for="chk_all_--><?php //echo $i ?><!--">전체적용</label>-->
+<!--            </td>-->
+<!--        </tr>-->
+<!--        --><?php //} ?>
+<!--        </tbody>-->
+<!--        </table>-->
+<!--    </div>-->
+<!--</section>-->
 
 
 <div class="btn_fixed_top">

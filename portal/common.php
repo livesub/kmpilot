@@ -334,7 +334,7 @@ if (isset($_REQUEST['spt']))  { // search part (검색 파트[구간])
     $spt = '';
 }
 
-if (isset($_REQUEST['page'])) { // 리스트 페이지
+if (isset($_REQUEST['page'])) { // 리스트 페이지지
     $page = (int)$_REQUEST['page'];
     if ($page)
         $qstr .= '&amp;page=' . urlencode($page);
@@ -423,7 +423,7 @@ if (isset($_SESSION['ss_mb_id']) && $_SESSION['ss_mb_id']) { // 로그인중이�
                     if ($row['mb_intercept_date'] == '' &&
                         $row['mb_leave_date'] == '' &&
                         (!$config['cf_use_email_certify'] || preg_match('/[1-9]/', $row['mb_email_certify'])) ) {
-                        // 세션에 회원아이디를 저장하여 로그인으로 간주
+                        // 세션에 회원아이디를 저장하여 로그인으로 간주인
                         set_session('ss_mb_id', $tmp_mb_id);
 
                         // 페이지를 재실행

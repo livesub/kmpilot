@@ -95,11 +95,11 @@ $colspan = 10;
         </th>
         <th scope="col"><?php echo subject_sort_link('gr_id') ?>그룹아이디</a></th>
         <th scope="col"><?php echo subject_sort_link('gr_subject') ?>제목</a></th>
-        <th scope="col"><?php echo subject_sort_link('gr_admin') ?>그룹관리자</a></th>
+<!--        <th scope="col">--><?php //echo subject_sort_link('gr_admin') ?><!--그룹관리자</a></th>-->
         <th scope="col">게시판</th>
         <th scope="col">접근<br>사용</th>
         <th scope="col">접근<br>회원수</th>
-        <th scope="col"><?php echo subject_sort_link('gr_order') ?>출력<br>순서</a></th>
+<!--        <th scope="col">--><?php //echo subject_sort_link('gr_order') ?><!--출력<br>순서</a></th>-->
         <th scope="col">접속기기</th>
         <th scope="col">관리</th>
     </tr>
@@ -132,24 +132,24 @@ $colspan = 10;
             <label for="gr_subject_<?php echo $i; ?>" class="sound_only">그룹제목</label>
             <input type="text" name="gr_subject[<?php echo $i ?>]" value="<?php echo get_text($row['gr_subject']) ?>" id="gr_subject_<?php echo $i ?>" class="tbl_input">
         </td>
-        <td class="td_mng td_input">
-        <?php if ($is_admin == 'super'){ ?>
-            <label for="gr_admin_<?php echo $i; ?>" class="sound_only">그룹관리자</label>
-            <input type="text" name="gr_admin[<?php echo $i ?>]" value="<?php echo get_sanitize_input($row['gr_admin']); ?>" id="gr_admin_<?php echo $i ?>" class="tbl_input" size="10" maxlength="20">
-        <?php }else{ ?>
-            <input type="hidden" name="gr_admin[<?php echo $i ?>]" value="<?php echo get_sanitize_input($row['gr_admin']); ?>"><?php echo get_text($row['gr_admin']); ?>
-        <?php } ?>
-        </td>
+<!--        <td class="td_mng td_input">-->
+<!--        --><?php //if ($is_admin == 'super'){ ?>
+<!--            <label for="gr_admin_--><?php //echo $i; ?><!--" class="sound_only">그룹관리자</label>-->
+<!--            <input type="text" name="gr_admin[--><?php //echo $i ?><!--]" value="--><?php //echo get_sanitize_input($row['gr_admin']); ?><!--" id="gr_admin_--><?php //echo $i ?><!--" class="tbl_input" size="10" maxlength="20">-->
+<!--        --><?php //}else{ ?>
+<!--            <input type="hidden" name="gr_admin[--><?php //echo $i ?><!--]" value="--><?php //echo get_sanitize_input($row['gr_admin']); ?><!--">--><?php //echo get_text($row['gr_admin']); ?>
+<!--        --><?php //} ?>
+<!--        </td>-->
         <td class="td_num"><a href="./board_list.php?sfl=a.gr_id&amp;stx=<?php echo $row['gr_id'] ?>"><?php echo $row2['cnt'] ?></a></td>
         <td class="td_numsmall">
              <label for="gr_use_access_<?php echo $i; ?>" class="sound_only">접근회원 사용</label>
             <input type="checkbox" name="gr_use_access[<?php echo $i ?>]" <?php echo $row['gr_use_access']?'checked':'' ?> value="1" id="gr_use_access_<?php echo $i ?>">
         </td>
         <td class="td_num"><a href="./boardgroupmember_list.php?gr_id=<?php echo $row['gr_id'] ?>"><?php echo $row1['cnt'] ?></a></td>
-        <td class="td_numsmall">
-            <label for="gr_order_<?php echo $i; ?>" class="sound_only">메인메뉴 출력순서</label>
-            <input type="text" name="gr_order[<?php echo $i ?>]" value="<?php echo $row['gr_order'] ?>" id="gr_order_<?php echo $i ?>" class="tbl_input" size="2">
-        </td>
+<!--        <td class="td_numsmall">-->
+<!--            <label for="gr_order_--><?php //echo $i; ?><!--" class="sound_only">메인메뉴 출력순서</label>-->
+<!--            <input type="text" name="gr_order[--><?php //echo $i ?><!--]" value="--><?php //echo $row['gr_order'] ?><!--" id="gr_order_--><?php //echo $i ?><!--" class="tbl_input" size="2">-->
+<!--        </td>-->
         <td class="td_mng">
             <label for="gr_device_<?php echo $i; ?>" class="sound_only">접속기기</label>
             <select name="gr_device[<?php echo $i ?>]" id="gr_device_<?php echo $i ?>">

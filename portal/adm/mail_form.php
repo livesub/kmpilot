@@ -28,7 +28,7 @@ include_once('./admin.head.php');
 
 <div class="local_desc"><p>메일 내용에 {이름} , {닉네임} , {회원아이디} , {이메일} 처럼 내용에 삽입하면 해당 내용에 맞게 변환하여 메일을 발송합니다.</p></div>
 
-<form name="fmailform" id="fmailform" action="./mail_update.php" onsubmit="return fmailform_check(this);" method="post">
+<form name="fmailform" id="fmailform" action="./mail_update.php" onsubmit="return fmailform_check(this);" method="post" enctype="multipart/form-data">
 <input type="hidden" name="w" value="<?php echo $w ?>" id="w">
 <input type="hidden" name="ma_id" value="<?php echo $ma['ma_id'] ?>" id="ma_id">
 <input type="hidden" name="token" value="" id="token">
@@ -49,6 +49,10 @@ include_once('./admin.head.php');
         <th scope="row"><label for="ma_content">메일 내용<strong class="sound_only">필수</strong></label></th>
         <td><?php echo editor_html("ma_content", get_text(html_purifier($ma['ma_content']), 0)); ?></td>
     </tr>
+<!--    <tr>-->
+<!--        <th scope="row"><label for="files">첨부 파일</label></th>-->
+<!--        <td><input type="file"></td>-->
+<!--    </tr>-->
     </tbody>
     </table>
 </div>

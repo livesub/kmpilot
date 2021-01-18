@@ -170,9 +170,21 @@ define('G5_MOBILE_AGENT',   'phone|samsung|lgtel|mobile|[^A]skt|nokia|blackberry
 
 // SMTP
 // lib/mailer.lib.php 에서 사용
-define('G5_SMTP',      '127.0.0.1');
+define('G5_SMTP',      '');
 define('G5_SMTP_PORT', '25');
+//google메일을 이용할 경우
+define('G5_SMTP_GOOGLE',      'smtp.gmail.com');
+define('G5_SMTP_GOOGLE_PORT', 465);
+//구글 아이디 설정
+define('G5_GOOGLE_ID', 'kkte03@gmail.com');
+//구글 패스워드 또는 앱비밀번호 입력(앱비밀번호가 보안성이 좋다)
+define('G5_GOOGLE_PASSWORD', 'uitazphsjkhnmvhl');
 
+//네이버 설정
+define('G5_SMTP_NAVER',      'smtp.naver.com');
+define('G5_SMTP_NAVER_PORT', '587');
+define('G5_SMTP_NAVER_ID',      'kkte02@naver.com');
+define('G5_SMTP_NAVER_PASSWORD',      '~!1770012439');
 
 /********************
     기타 상수
