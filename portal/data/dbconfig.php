@@ -1,9 +1,9 @@
 <?php
 if (!defined('_GNUBOARD_')) exit;
 define('G5_MYSQL_HOST', 'localhost');
-define('G5_MYSQL_USER', 'kmpilot');
-define('G5_MYSQL_PASSWORD', 'pilot59260!');
-define('G5_MYSQL_DB', 'kmpilot');
+define('G5_MYSQL_USER', 'root');
+define('G5_MYSQL_PASSWORD', '12341234');
+define('G5_MYSQL_DB', 'kmpilot2');
 define('G5_MYSQL_SET_MODE', true);
 
 define('G5_TABLE_PREFIX', 'kmp_');
