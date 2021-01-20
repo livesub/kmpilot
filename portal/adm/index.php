@@ -61,9 +61,9 @@ $colspan = 12;
         <tr>
             <th scope="col">회원아이디</th>
             <th scope="col">이름</th>
-            <th scope="col">닉네임</th>
+<!--            <th scope="col">닉네임</th>-->
             <th scope="col">권한</th>
-            <th scope="col">포인트</th>
+<!--            <th scope="col">포인트</th>-->
             <th scope="col">수신</th>
             <th scope="col">공개</th>
             <th scope="col">인증</th>
@@ -104,9 +104,9 @@ $colspan = 12;
         <tr>
             <td class="td_mbid"><?php echo $mb_id ?></td>
             <td class="td_mbname"><?php echo get_text($row['mb_name']); ?></td>
-            <td class="td_mbname sv_use"><div><?php echo $mb_nick ?></div></td>
+<!--            <td class="td_mbname sv_use"><div>--><?php //echo $mb_nick ?><!--</div></td>-->
             <td class="td_num"><?php echo $row['mb_level'] ?></td>
-            <td><a href="./point_list.php?sfl=mb_id&amp;stx=<?php echo $row['mb_id'] ?>"><?php echo number_format($row['mb_point']) ?></a></td>
+<!--            <td><a href="./point_list.php?sfl=mb_id&amp;stx=--><?php //echo $row['mb_id'] ?><!--">--><?php //echo number_format($row['mb_point']) ?><!--</a></td>-->
             <td class="td_boolean"><?php echo $row['mb_mailling']?'예':'아니오'; ?></td>
             <td class="td_boolean"><?php echo $row['mb_open']?'예':'아니오'; ?></td>
             <td class="td_boolean"><?php echo preg_match('/[1-9]/', $row['mb_email_certify'])?'예':'아니오'; ?></td>

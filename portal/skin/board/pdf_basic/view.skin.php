@@ -92,6 +92,33 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
          ?>
 
         <!-- 본문 내용 시작 { -->
+        <!-- 첨부파일이 PDF 라면 미리보기-->
+        <?php
+        // 가변 파일
+ //       if($_GET["bo_table"] == "officialDoc"){
+            for ($i=0; $i<count($view['file']); $i++) {
+                if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view']) {
+                    if(substr( strrchr($view['file'][$i]['file'],"."),1) == "pdf"){
+                    ?>
+                        <div id="pdf_viewer" style="height:400px"></div>
+<!--                --><?php //echo $view['file'][$i]['file'] ?><!--<br>-->
+<!--                --><?php //echo G5_DATA_URL; ?><!--<br>-->
+                        <?php //session_start();
+                            $userid = get_session('ss_mb_id');
+                            if(get_member_group_check($userid, 4)) {
+                                if(!get_open_board_check($_GET["bo_table"],$userid, $_GET["wr_id"], 4)) {
+                                    echo insert_group_member_check($_GET["bo_table"], $userid, $_GET["wr_id"], 4);
+                                }
+                            }
+                        ?>
+                        <script src="<?php echo G5_JS_URL; ?>/pdfobject.min.js"></script>
+                        <script>PDFObject.embed("<?php echo G5_DATA_URL; ?>/file/officialDoc/<?php echo $view['file'][$i]['file'];?>","#pdf_viewer");</script>
+                    <?php
+                    }
+                }
+            }
+ //       }
+        ?>
         <div id="bo_v_con"><?php echo get_view_thumbnail($view['content']); ?></div>
         <?php //echo $view['rich_content']; // {이미지:0} 과 같은 코드를 사용할 경우 ?>
         <!-- } 본문 내용 끝 -->
@@ -133,7 +160,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     $cnt = 0;
     if ($view['file']['count']) {
         for ($i=0; $i<count($view['file']); $i++) {
-            if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view'])
+            if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'])
                 $cnt++;
         }
     }
@@ -147,7 +174,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         <?php
         // 가변 파일
         for ($i=0; $i<count($view['file']); $i++) {
-            if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view']) {
+            if (isset($view['file'][$i]['source']) && $view['file'][$i]['source']) {
          ?>
             <li>
                	<i class="fa fa-folder-open" aria-hidden="true"></i>

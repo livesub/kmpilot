@@ -83,7 +83,7 @@ $colspan = 5;
             <input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
         </th>
         <th scope="col"><?php echo subject_sort_link('a.mb_id') ?>회원아이디</a></th>
-        <th scope="col"><?php echo subject_sort_link('mb_nick') ?>닉네임</a></th>
+<!--        <th scope="col">--><?php //echo subject_sort_link('mb_nick') ?><!--닉네임</a></th>-->
         <th scope="col">메뉴</th>
         <th scope="col">권한</th>
     </tr>
@@ -94,8 +94,8 @@ $colspan = 5;
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
         $is_continue = false;
-        // 회원아이디가 없는 메뉴는 삭제함
-        if($row['mb_id'] == '' && $row['mb_nick'] == '') {
+        // 회원아이디가 없는 메뉴는 삭제함  && $row['mb_nick'] == '' - 아래 조건문에 넣은게 원본
+        if($row['mb_id'] == '') {
             sql_query(" delete from {$g5['auth_table']} where au_menu = '{$row['au_menu']}' ");
             $is_continue = true;
         }
@@ -118,11 +118,11 @@ $colspan = 5;
         <td class="td_chk">
             <input type="hidden" name="au_menu[<?php echo $i ?>]" value="<?php echo $row['au_menu'] ?>">
             <input type="hidden" name="mb_id[<?php echo $i ?>]" value="<?php echo $row['mb_id'] ?>">
-            <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo $row['mb_nick'] ?>님 권한</label>
+            <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo $row['mb_name'] ?>님 권한</label>
             <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>">
         </td>
         <td class="td_mbid"><a href="?sfl=a.mb_id&amp;stx=<?php echo $row['mb_id'] ?>"><?php echo $row['mb_id'] ?></a></td>
-        <td class="td_auth_mbnick"><?php echo $mb_nick ?></td>
+<!--        <td class="td_auth_mbnick">--><?php //echo $mb_nick ?><!--</td>-->
         <td class="td_menu">
             <?php echo $row['au_menu'] ?>
             <?php echo $auth_menu[$row['au_menu']] ?>
@@ -186,10 +186,18 @@ echo $pagelist;
         </colgroup>
         <tbody>
         <tr>
-            <th scope="row"><label for="mb_id">회원아이디<strong class="sound_only">필수</strong></label></th>
+            <th scope="row"><label for="mb_id">회원아이디</label></th>
             <td>
-                <strong id="msg_mb_id" class="msg_sound_only"></strong>
-                <input type="text" name="mb_id" value="<?php echo $mb_id ?>" id="mb_id" required class="required frm_input">
+<!--                <strong id="msg_mb_id" class="msg_sound_only"></strong>-->
+                <input type="text" name="mb_id" value="<?php echo $mb_id ?>" id="mb_id" >
+            </td>
+<!--      input에 추가하면 반드시 입력해야한 칸으로 변경되고 값이 없을경우 반환      required class="required frm_input"-->
+        </tr>
+        <tr>
+            <th scope="row"><label for="mb_group">그룹</label></th>
+            <td>
+<!--                <strong id="msg_mb_id" class="msg_sound_only"></strong>-->
+                <?php echo get_group_select("mb_group"); ?>
             </td>
         </tr>
         <tr>
@@ -200,7 +208,7 @@ echo $pagelist;
                     <?php
                     foreach($auth_menu as $key=>$value)
                     {
-                        if (!(substr($key, -3) == '000' || $key == '-' || !$key))
+                        if (!(substr($key, -3) == '000' || $key == '100100' || $key == '-' || !$key))
                             echo '<option value="'.$key.'">'.$key.' '.$value.'</option>';
                     }
                     ?>
@@ -218,17 +226,17 @@ echo $pagelist;
                 <label for="d">d (삭제)</label>
             </td>
         </tr>
-        <tr>
-            <th scope="row">자동등록방지</th>
-            <td>
-                <?php
-                include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
-                $captcha_html = captcha_html();
-                $captcha_js   = chk_captcha_js();
-                echo $captcha_html;
-                ?>
-            </td>
-        </tr>
+<!--        <tr>-->
+<!--            <th scope="row">자동등록방지</th>-->
+<!--            <td>-->
+<!--                --><?php
+//                include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
+//                $captcha_html = captcha_html();
+//                $captcha_js   = chk_captcha_js();
+//                echo $captcha_html;
+//                ?>
+<!--            </td>-->
+<!--        </tr>-->
         </tbody>
         </table>
     </div>

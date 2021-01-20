@@ -210,6 +210,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
         <th scope="row"><label for="mb_id">아이디<?php echo $sound_only ?></label></th>
         <td>
             <input type="text" name="mb_id" value="<?php echo $mb['mb_id'] ?>" id="mb_id" <?php echo $required_mb_id ?> class="frm_input <?php echo $required_mb_id_class ?>" size="15"  maxlength="20">
+            <?php if ($w!='u') {?><label for="mb_group">그룹설정</label><?php echo get_group_select("mb_group"); }?>
             <?php if ($w=='u'){ ?><a href="./boardgroupmember_form.php?mb_id=<?php echo $mb['mb_id'] ?>" class="btn_frmline">접근가능그룹보기</a><?php } ?>
         </td>
         <th scope="row"><label for="mb_password">비밀번호<?php echo $sound_only ?><?php if ($w=='u'){ ?>
@@ -238,7 +239,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
 <!--        <th scope="row"><label for="mb_nick">닉네임<strong class="sound_only">필수</strong></label></th>-->
 <!--        <td><input type="text" name="mb_nick" value="--><?php //echo $mb['mb_nick'] ?><!--" id="mb_nick" required class="required frm_input" size="15"  maxlength="20"></td>-->
         <th scope="row"><label for="mb_level">회원 권한</label><strong class="sound_only">필수</strong></th>
-        <td><?php echo get_member_level_select('mb_level', 1, $member['mb_level'], $mb['mb_level']) ?></td>
+        <td><?php echo get_member_level_select('mb_level', 2, $member['mb_level'], $mb['mb_level']) ?></td>
     </tr>
     <tr>
 <!--        <th scope="row">포인트</th>-->
@@ -252,13 +253,13 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     </tr>
     <tr>
         <th scope="row"><label for="mb_hp">휴대폰번호</label></th>
-        <td><input type="text" name="mb_hp" value="<?php echo $mb['mb_hp'] ?>" id="mb_hp" class="frm_input" size="15" maxlength="20"></td>
+        <td><input type="text" name="mb_hp" value="<?php echo $mb['mb_hp'] ?>" id="mb_hp" class="frm_input" size="15" maxlength="13"></td>
         <th scope="row"><label for="mb_tel">전화번호</label></th>
-        <td><input type="text" name="mb_tel" value="<?php echo $mb['mb_tel'] ?>" id="mb_tel" class="frm_input" size="15" maxlength="20"></td>
+        <td><input type="text" name="mb_tel" value="<?php echo $mb['mb_tel'] ?>" id="mb_tel" class="frm_input" size="15" maxlength="15"></td>
     </tr>
     <tr>
         <th scope="row"><label for="mb_doseongu">도선구</label></th>
-        <td><?php echo get_doseongu_select('mb_doseongu', 1, 12, $mb['mb_doseongu']) ?></td>
+        <td><?php echo get_doseongu_select('mb_doseongu', 0, 12, $mb['mb_doseongu']) ?></td>
         <th scope="row"><label for="mb_lead_code">도선약호</label></th>
         <td><input type="text" name="mb_lead_code" value="<?php echo $mb['mb_lead_code'] ?>" id="mb_tel" class="frm_input" size="15" maxlength="20"></td>
     </tr>
@@ -271,7 +272,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     <tr><th><h1>면허 관리 정보</h1></th></tr>
     <tr>
         <th scope="row"><label for="mb_license_mean">면허 종류</label></th>
-        <td><?php echo get_license_select('mb_license_mean', 1, 3, $mb['mb_license_mean']) ?></td>
+        <td><?php echo get_license_select('mb_license_mean', 0, 3, $mb['mb_license_mean']) ?></td>
         <th scope="row"><label for="mb_first_license_day">최초면허 발급일</label></th>
         <td><input type="text" id="mb_first_license_day" name="mb_first_license_day" class="datepicker" value="<?php echo $mb['mb_first_license_day']?>"></td>
     </tr>
@@ -460,13 +461,13 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
 <!--    --><?php //} ?>
 <!---->
 <!--    <tr>-->
-<!--        <th scope="row"><label for="mb_leave_date">탈퇴일자</label></th>-->
-<!--        <td>-->
-<!--            <input type="text" name="mb_leave_date" value="--><?php //echo $mb['mb_leave_date'] ?><!--" id="mb_leave_date" class="frm_input" maxlength="8">-->
-<!--            <input type="checkbox" value="--><?php //echo date("Ymd"); ?><!--" id="mb_leave_date_set_today" onclick="if (this.form.mb_leave_date.value==this.form.mb_leave_date.defaultValue) {-->
-<!--this.form.mb_leave_date.value=this.value; } else { this.form.mb_leave_date.value=this.form.mb_leave_date.defaultValue; }">-->
-<!--            <label for="mb_leave_date_set_today">탈퇴일을 오늘로 지정</label>-->
-<!--        </td>-->
+        <th scope="row"><label for="mb_leave_date">탈퇴일자</label></th>
+        <td>
+            <input type="text" name="mb_leave_date" value="<?php echo $mb['mb_leave_date'] ?>" id="mb_leave_date" class="frm_input" maxlength="8">
+            <input type="checkbox" value="<?php echo date("Ymd"); ?>" id="mb_leave_date_set_today" onclick="if (this.form.mb_leave_date.value==this.form.mb_leave_date.defaultValue) {
+this.form.mb_leave_date.value=this.value; } else { this.form.mb_leave_date.value=this.form.mb_leave_date.defaultValue; }">
+            <label for="mb_leave_date_set_today">탈퇴일을 오늘로 지정</label>
+        </td>
 <!--        <th scope="row">접근차단일자</th>-->
 <!--        <td>-->
 <!--            <input type="text" name="mb_intercept_date" value="--><?php //echo $mb['mb_intercept_date'] ?><!--" id="mb_intercept_date" class="frm_input" maxlength="8">-->

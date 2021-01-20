@@ -22,7 +22,7 @@ $colspan = 4;
 <div class="local_ov01 local_ov">
     <span class="btn_ov01"><span class="ov_txt"> 아이디</span><span class="ov_num"><?php echo $mb['mb_id'] ?></span></span>
     <span class="btn_ov01"><span class="ov_txt"> 이름</span><span class="ov_num"><?php echo get_text($mb['mb_name']); ?></span></span>
-    <span class="btn_ov01"><span class="ov_txt"> 닉네임</span><span class="ov_num"><?php echo $mb['mb_nick'] ?></span></span>
+<!--    <span class="btn_ov01"><span class="ov_txt"> 닉네임</span><span class="ov_num">--><?php //echo $mb['mb_nick'] ?><!--</span></span>-->
 </div>    
 <div class="local_cmd01 local_cmd">
 

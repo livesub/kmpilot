@@ -3715,7 +3715,7 @@ function get_member_profile_img($mb_id='', $width='', $height='', $alt='profile_
         if( isset($member_cache[$mb_id]) ){
             $src = $member_cache[$mb_id];
         } else {
-            $member_img = G5_DATA_PATH.'/member_image/'.substr($mb_id,0,2).'/'.get_mb_icon_name($mb_id).'.gif';
+            $member_img = G5_DATA_PATH.'/member_license/'.substr($mb_id,0,2).'/'.get_mb_icon_name($mb_id).'.gif';
             if (is_file($member_img)) {
                 if(defined('G5_USE_MEMBER_IMAGE_FILETIME') && G5_USE_MEMBER_IMAGE_FILETIME) {
                     $member_img .= '?'.filemtime($member_img);
@@ -4076,6 +4076,7 @@ function get_doseongu_select($name, $start_id=0, $end_id=12, $selected="", $even
     for ($i=$start_id; $i<=$end_id; $i++) {
         $value = null;
         switch ($i){
+            case 0: $value = "해당사항없음"; break;
             case 1: $value = "부산항"; break;
             case 2: $value = "여수항"; break;
             case 3: $value = "인천항"; break;
@@ -4109,6 +4110,7 @@ function get_license_select($name, $start_id=0, $end_id=10, $selected="", $event
     for ($i=$start_id; $i<=$end_id; $i++) {
         $value = null;
         switch ($i){
+            case 0: $value = "면허없음"; break;
             case 1: $value = "1종"; break;
             case 2: $value = "2종"; break;
             case 3: $value = "3종"; break;
@@ -4169,3 +4171,5 @@ function get_punishment_select($name, $start_id=0, $end_id=10, $selected="", $ev
     $str .= "</select>\n";
     return $str;
 }
+
+//학력사항을 SELECT 형식으로 얻음

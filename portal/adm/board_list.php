@@ -163,7 +163,7 @@ $colspan = 15;
 <!--        </td>-->
 <!--        <td class="td_numsmall">-->
 <!--            <label for="bo_use_sns_--><?php //echo $i; ?><!--" class="sound_only">SNS<br>사용</label>-->
-<!--            <input type="checkbox" name="bo_use_sns[--><?php //echo $i ?><!--]" value="1" id="bo_use_sns_--><?php //echo $i ?><!--" --><?php //echo $row['bo_use_sns']?"checked":"" ?><!-->-->
+<!--            <input type="checkbox" name="bo_use_sns[--><?php //echo $i ?><!--]" value="1" id="bo_use_sns_--><?php //echo $i ?><!--" --><?php //echo $row['bo_use_sns']?"checked":"" ?><!-- >-->
 <!--        </td>-->
         <td class="td_numsmall">
             <label for="bo_use_search_<?php echo $i; ?>" class="sound_only">검색<br>사용</label>
