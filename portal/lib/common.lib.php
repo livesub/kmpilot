@@ -4173,3 +4173,19 @@ function get_punishment_select($name, $start_id=0, $end_id=10, $selected="", $ev
 }
 
 //학력사항을 SELECT 형식으로 얻음
+
+//관리권한테이블에 특정아이디가 지정 페이지에 권한이 있는지 확인하는 함수
+function get_auth_member_exits($member_id, $au_nenu){
+    global $g5;
+    $sql_sel_auth = " select * from {$g5['auth_table']} where mb_id ='".$member_id."' and au_menu = '".$au_nenu."'";
+    return sql_query($sql_sel_auth);
+}
+
+//그 아이디에 도선구를 얻는 함수
+function get_user_doseongu($mb_id){
+    global $g5;
+    $sql_sel_doseongu = " select mb_doseongu from {$g5['member_table']} where mb_id ='".$mb_id."'";
+    $result = sql_fetch($sql_sel_doseongu);
+    //alert('값은 어떻게? : '.$result['mb_doseongu']);
+    return $result['mb_doseongu'];
+}

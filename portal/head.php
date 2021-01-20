@@ -95,6 +95,14 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
             <?php if ($is_member) {  ?>
             <li><a href="<?php echo G5_BBS_URL ?>/member_confirm.php?url=<?php echo G5_BBS_URL ?>/register_form.php">정보수정</a></li>
             <li><a href="<?php echo G5_BBS_URL ?>/logout.php">로그아웃</a></li>
+            <?php
+            //$member_id = $member['mb_id'];
+//            $sql_sel_auth = " select * from {$g5['auth_table']} where mb_id ='".$member_id."' and au_menu = '200100'";
+//            $result = sql_query($sql_sel_auth);
+            $result = get_auth_member_exits($member['mb_id'], 200100);
+            if ($result) {  ?>
+            <li class="tnb_admin"><a href="<?php echo correct_goto_url(G5_ADMIN_URL.'/member_list.php'); ?>">회원관리</a></li>
+            <?php }  ?>
             <?php if ($is_admin) {  ?>
             <li class="tnb_admin"><a href="<?php echo correct_goto_url(G5_ADMIN_URL); ?>">관리자</a></li>
             <?php }  ?>

@@ -63,8 +63,8 @@ else if ($w == 'u')
     if (!$mb['mb_id'])
         alert('존재하지 않는 회원자료입니다.');
 
-    if ($is_admin != 'super' && $mb['mb_level'] >= $member['mb_level'])
-        alert('자신보다 권한이 높거나 같은 회원은 수정할 수 없습니다.');
+    if ($is_admin != 'super' && $mb['mb_level'] >= $member['mb_level'] && $mb['mb_id'] != $member['mb_id'])
+        alert('본인이 아니거나 자신보다 권한이 높거나 같은 회원은 수정할 수 없습니다.');
 
     if($mb['mb_level'] > $member['mb_level'])
         alert('자신보다 권한이 높은회원은 수정할 수 없습니다.');

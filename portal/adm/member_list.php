@@ -6,6 +6,13 @@ auth_check_menu($auth, $sub_menu, 'r');
 
 $sql_common = " from {$g5['member_table']} ";
 $sql_del_mem = " and mb_memo = '' and mb_id != 'yongsanzip' ";
+if($member['mb_level'] == 10){
+    $sql_del_mem = null;
+}
+if(get_auth_member_exits($member['mb_id'], 200100)){
+   $doseongu =  get_user_doseongu($member['mb_id']);
+   $sql_del_mem = " and mb_memo = '' and mb_id != 'yongsanzip' and mb_doseongu = '".$doseongu."'";
+}
 
 $sql_search = " where (1) ";
 if ($stx) {
@@ -99,7 +106,7 @@ $colspan = 16;
 
 <div class="local_desc01 local_desc">
     <p>
-        회원자료 삭제 시 다른 회원이 기존 회원아이디를 사용하지 못하도록 회원아이디, 이름, 닉네임은 삭제하지 않고 영구 보관합니다.
+        회원자료 삭제 시 다른 회원이 기존 회원아이디를 사용하지 못하도록 회원아이디, 이름은 삭제하지 않고 영구 보관합니다.
     </p>
 </div>
 
