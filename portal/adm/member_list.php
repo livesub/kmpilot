@@ -9,7 +9,7 @@ $sql_del_mem = " and mb_memo = '' and mb_id != 'yongsanzip' ";
 if($member['mb_level'] == 10){
     $sql_del_mem = null;
 }
-if(get_auth_member_exits($member['mb_id'], 200100)){
+if(get_auth_member_exits($member['mb_id'], 200100) && !$is_admin){
    $doseongu =  get_user_doseongu($member['mb_id']);
    $sql_del_mem = " and mb_memo = '' and mb_id != 'yongsanzip' and mb_doseongu = '".$doseongu."'";
 }

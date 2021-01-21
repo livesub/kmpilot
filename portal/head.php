@@ -100,7 +100,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
 //            $sql_sel_auth = " select * from {$g5['auth_table']} where mb_id ='".$member_id."' and au_menu = '200100'";
 //            $result = sql_query($sql_sel_auth);
             $result = get_auth_member_exits($member['mb_id'], 200100);
-            if ($result) {  ?>
+            if ($result && !$is_admin) {  ?>
             <li class="tnb_admin"><a href="<?php echo correct_goto_url(G5_ADMIN_URL.'/member_list.php'); ?>">회원관리</a></li>
             <?php }  ?>
             <?php if ($is_admin) {  ?>

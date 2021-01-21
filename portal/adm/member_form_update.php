@@ -72,6 +72,7 @@ $check_keys = array(
     'mb_applicable_or_not',
     'mb_punishment',
     'mb_group',
+    'mb_punishment_date'
 );
 
 for($i=1;$i<=10;$i++){
@@ -117,9 +118,7 @@ $sql_common = "  mb_name = '{$posts['mb_name']}',
                  mb_validity_day_from = '{$posts['mb_validity_day_from']}',
                  mb_validity_day_to = '{$posts['mb_validity_day_to']}',
                  mb_license_ext_day_from = '{$posts['mb_license_ext_day_from']}',
-                 mb_license_ext_day_to = '{$posts['mb_license_ext_day_to']}',
-                 mb_applicable_or_not = '{$posts['mb_applicable_or_not']}',
-                 mb_punishment = '{$posts['mb_punishment']}' ";
+                 mb_license_ext_day_to = '{$posts['mb_license_ext_day_to']}' ";
 $mb_group = $posts['mb_group'];
 
 if ($w == '')
@@ -200,6 +199,21 @@ else
 
 if( $w == '' || $w == 'u' ){
 
+    //징계사항 중복 확인
+    $sql_punish_select = " select * from {$g5['member_punishment']} where mb_id = '{$mb_id}'and mb_applicable_or_not='{$posts['mb_applicable_or_not']}' and mb_punishment='{$posts['mb_punishment']}' and mb_punishment_date='{$posts['mb_punishment_date']}'";
+    $row_sel_punish = sql_fetch($sql_punish_select);
+    //alert('성공 or 실패 '.$sql_punish_select);
+    if (isset($row_sel_punish['mb_id']) && $row_sel_punish['mb_id']){
+        alert('이미 존재하는 징계사항입니다.\\nＩＤ : '.$row_sel_punish['mb_id'].'\\n해심재결 해당여부 : '.$row_sel_punish['mb_applicable_or_not'].'\\n징계사항 : '.$row_sel_punish['mb_punishment'].'\\n징계 선고일: '.$row_sel_punish['mb_punishment_date']);
+    }
+    //징계사항은 수정이 없기 때문에 둘다 일 경우에도 진행되어야 한다.( 단 값이 있을 경우 에만)
+    if(isset($posts['mb_applicable_or_not']) && $posts['mb_applicable_or_not'] != '' && isset($posts['mb_punishment']) && $posts['mb_punishment'] && isset($posts['mb_punishment_date']) && $posts['mb_punishment_date']){
+        $sql_punish = " insert into {$g5['member_punishment']} set mb_id = '{$mb_id}', mb_applicable_or_not='{$posts['mb_applicable_or_not']}', mb_punishment='{$posts['mb_punishment']}', mb_punishment_date='{$posts['mb_punishment_date']}'";
+        $result_sql_punish = sql_query($sql_punish);
+        if(!$result_sql_punish){
+            alert('member_punishment 에 정보 등록을 실패했습니다.');
+        }
+    }
     $mb_dir = substr($mb_id,0,2);
     $mb_license_img = get_mb_icon_name($mb_id).'.gif';
 

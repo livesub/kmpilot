@@ -43,7 +43,7 @@ $g5['menu_table'] = G5_TABLE_PREFIX.'menu'; // 메뉴관리 테이블
 $g5['social_profile_table'] = G5_TABLE_PREFIX.'member_social_profiles'; // 소셜 로그인 테이블
 
 $g5['group_member_check_table'] = G5_TABLE_PREFIX.'group_member_check'; // 특정 게시판에 특정 그룹이 들어올 경우 저장하는 테이블
-
+$g5['member_punishment'] = G5_TABLE_PREFIX.'member_punishment'; // 징계관련 저장 테이
 //추가 테이블 정의
 $g5['pilot_license_renewal_table'] = G5_TABLE_PREFIX.'pilot_license_renewal'; // 도선사면허갱신
 $g5['pilot_mending_table'] = G5_TABLE_PREFIX.'pilot_mending'; // 도선사보수

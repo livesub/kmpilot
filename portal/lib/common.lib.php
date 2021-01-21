@@ -4125,11 +4125,13 @@ function get_license_select($name, $start_id=0, $end_id=10, $selected="", $event
 }
 
 //해심재결 해당여부를 SELECT 형식으로 얻음
-function get_applicable_or_not_select($name, $start_id=0, $end_id=10, $selected="", $event=""){
+function get_applicable_or_not_select($name, $start_id=0, $end_id=10, $selected="", $onchange="", $event=""){
 
     global $g5;
 
     $str = "\n<select id=\"{$name}\" name=\"{$name}\"";
+    if($onchange)
+    $str.=" onchange= $onchange";
     if ($event) $str .= " $event";
     $str .= ">\n";
     for ($i=$start_id; $i<=$end_id; $i++) {
@@ -4137,7 +4139,7 @@ function get_applicable_or_not_select($name, $start_id=0, $end_id=10, $selected=
             case 0: $value = "해당사항 없음"; break;
             case 1: $value = "해심"; break;
             case 2: $value = "재결"; break;
-            case 3: $value = "심의중"; break;
+            case 3: $value = "종결"; break;
         }
         $str .= '<option value="'.$i.'"';
         if ($i == $selected)
@@ -4188,4 +4190,34 @@ function get_user_doseongu($mb_id){
     $result = sql_fetch($sql_sel_doseongu);
     //alert('값은 어떻게? : '.$result['mb_doseongu']);
     return $result['mb_doseongu'];
+}
+
+//DB 값에 따른 해당여부 해결사항 변환 함수
+function change_applicable_or_not_to_kr($code){
+    $value_kr = '';
+    switch ($code){
+        case 1 : $value_kr = "해심"; break;
+        case 2 : $value_kr = "재결"; break;
+        case 3 : $value_kr = "종결"; break;
+        default : $value_kr ="값 없음"; break;
+    }
+    return $value_kr;
+}
+
+//DB 값에 따른 징계사항 변환 함수
+function change_punishment_to_kr($punishment){
+    $punishment_kr= '';
+    switch ($punishment){
+        case 100 : $punishment_kr = "해심1"; break;
+        case 101 : $punishment_kr = "해심2"; break;
+        case 102 : $punishment_kr = "해심3"; break;
+        case 200 : $punishment_kr = "재결1"; break;
+        case 201 : $punishment_kr = "재결2"; break;
+        case 202 : $punishment_kr = "재결3"; break;
+        case 300 : $punishment_kr = "종결1"; break;
+        case 301 : $punishment_kr = "종결2"; break;
+        case 302 : $punishment_kr = "종결3"; break;
+        default : $punishment_kr ="값 없음"; break;
+    }
+    return $punishment_kr;
 }
