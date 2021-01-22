@@ -126,7 +126,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 	            
 	                <label for="reg_mb_tel">전화번호<?php if ($config['cf_req_tel']) { ?><strong class="sound_only">필수</strong><?php } ?></label>
 	                <input type="text" name="mb_tel" value="<?php echo get_text($member['mb_tel']) ?>" id="reg_mb_tel" <?php echo $config['cf_req_tel']?"required":""; ?> class="frm_input full_input <?php echo $config['cf_req_tel']?"required":""; ?>" maxlength="20" placeholder="전화번호">
-	            <?php }  ?>호
+	            <?php }  ?>
 				</li>
 				<li>
 	            <?php if ($config['cf_use_hp'] || $config['cf_cert_hp']) {  ?>
@@ -134,14 +134,14 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
                         <button type="button" class="tooltip_icon"><i class="fa fa-question-circle-o" aria-hidden="true"></i><span class="sound_only">설명보기</span></button>
                         <span class="tooltip">-없이 작성해주세요</span>
                     </label>
-	                <input type="text" name="mb_hp" value="<?php echo get_text($member['mb_hp']) ?>" id="reg_mb_hp" <?php echo ($config['cf_req_hp'])?"required":""; ?> class="frm_input full_input <?php echo ($config['cf_req_hp'])?"required":""; ?>" maxlength="20" placeholder="휴대폰번호 - 없이 작성해주세">
+	                <input type="text" name="mb_hp" value="<?php echo get_text($member['mb_hp']) ?>" id="reg_mb_hp" <?php echo ($config['cf_req_hp'])?"required":""; ?> class="frm_input full_input <?php echo ($config['cf_req_hp'])?"required":""; ?>" maxlength="20" placeholder="휴대폰번호 - 없이 작성해주세요">
 	                <?php if ($config['cf_cert_use'] && $config['cf_cert_hp']) { ?>
 	                <input type="hidden" name="old_mb_hp" value="<?php echo get_text($member['mb_hp']) ?>">
 	                <?php } ?>
 	            <?php }  ?>
 	            </li>
 	
-	            <?php if ($config['cf_use_addr']) { ?>요
+	            <?php if ($config['cf_use_addr']) { ?>
 	            <li>
 	            	<label>주소</label>
 					<?php if ($config['cf_req_addr']) { ?><strong class="sound_only">필수</strong><?php }  ?>
@@ -158,6 +158,18 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 	                <input type="hidden" name="mb_addr_jibeon" value="<?php echo get_text($member['mb_addr_jibeon']); ?>">
 	            </li>
 	            <?php }  ?>
+                <li>
+                    <label>학력 사항</label>
+                    <label for="mb_highschool">고등학교</label>
+                    <input type="text" name="mb_highschool" id="mb_highschool"  class="frm_input" size="20" value="" placeholder="학교 명">
+                    <input type="text" name="mb_major" id="mb_major" class="frm_input" size="20" value="" placeholder="전공">
+                    <?=get_grade_value('mb_grade_value',0,3, "");?>
+                    <br>
+                    <label for="mb_highschool">대학교</label>
+                    <input type="text" name="mb_university" id="mb_university" class="frm_input" size="20" value="" placeholder="학교 명">
+                    <input type="text" name="mb_university_major" id="mb_university_major" class="frm_input" size="20" value="" placeholder="전공">
+                    <?=get_grade_value('mb_grade_value',0,3, "");?>
+                </li>
 	        </ul>
 	    </div>
 	
@@ -205,64 +217,61 @@ gif, jpg, png파일만 가능하며 용량 <?php echo number_format($config['cf_
 	                	<span class="tooltip">이미지 크기는 가로 <?php echo $config['cf_member_img_width'] ?>픽셀, 세로 <?php echo $config['cf_member_img_height'] ?>픽셀 이하로 해주세요.<br>
 	                    gif, jpg, png파일만 가능하며 용량 <?php echo number_format($config['cf_member_img_size']) ?>바이트 이하만 등록됩니다.</span>
 	                </label>
-	                <input type="file" name="mb_img" id="reg_mb_img">
+<!--	                s-->
 	
 	                <?php if ($w == 'u' && file_exists($mb_img_path)) {  ?>
 	                <img src="<?php echo $mb_img_url ?>" alt="회원이미지">
-	                <input type="checkbox" name="del_mb_img" value="1" id="del_mb_img">
-	                <label for="del_mb_img" class="inline">삭제</label>
+<!--	                <input type="checkbox" name="del_mb_img" value="1" id="del_mb_img">-->
+<!--	                <label for="del_mb_img" class="inline">삭제</label>-->
 	                <?php }  ?>
 	            
 	            </li>
 	            <?php } ?>
-                <li class="">
-                    <?php echo get_member_level_select("mb_level[$i]", 1, $member['mb_level'], $row['mb_level']) ?>
-                </li>
 
 	            <li class="chk_box">
-		        	<input type="checkbox" name="mb_mailling" value="1" id="reg_mb_mailling" <?php echo ($w=='' || $member['mb_mailling'])?'checked':''; ?> class="selec_chk">
-		            <label for="reg_mb_mailling">
-		            	<span></span>
-		            	<b class="sound_only">메일링서비스</b>
-		            </label>
-		            <span class="chk_li">정보 메일을 받겠습니다.</span>
+<!--		        	<input type="checkbox" name="mb_mailling" value="1" id="reg_mb_mailling" --><?php //echo ($w=='' || $member['mb_mailling'])?'checked':''; ?><!-- class="selec_chk">-->
+<!--		            <label for="reg_mb_mailling">-->
+<!--		            	<span></span>-->
+<!--		            	<b class="sound_only">메일링서비스</b>-->
+<!--		            </label>-->
+<!--		            <span class="chk_li">정보 메일을 받겠습니다.</span>-->
 		        </li>
-	
+
 				<?php if ($config['cf_use_hp']) { ?>
 		        <li class="chk_box">
-		            <input type="checkbox" name="mb_sms" value="1" id="reg_mb_sms" <?php echo ($w=='' || $member['mb_sms'])?'checked':''; ?> class="selec_chk">
-		        	<label for="reg_mb_sms">
-		            	<span></span>
-		            	<b class="sound_only">SMS 수신여부</b>
-		            </label>        
-		            <span class="chk_li">휴대폰 문자메세지를 받겠습니다.</span>
+<!--		            <input type="checkbox" name="mb_sms" value="1" id="reg_mb_sms" --><?php //echo ($w=='' || $member['mb_sms'])?'checked':''; ?><!-- class="selec_chk">-->
+<!--		        	<label for="reg_mb_sms">-->
+<!--		            	<span></span>-->
+<!--		            	<b class="sound_only">SMS 수신여부</b>-->
+<!--		            </label>-->
+<!--		            <span class="chk_li">휴대폰 문자메세지를 받겠습니다.</span>-->
 		        </li>
 		        <?php } ?>
-	
+
 		        <?php if (isset($member['mb_open_date']) && $member['mb_open_date'] <= date("Y-m-d", G5_SERVER_TIME - ($config['cf_open_modify'] * 86400)) || empty($member['mb_open_date'])) { // 정보공개 수정일이 지났다면 수정가능 ?>
-		        <li class="chk_box">
-		            <input type="checkbox" name="mb_open" value="1" id="reg_mb_open" <?php echo ($w=='' || $member['mb_open'])?'checked':''; ?> class="selec_chk">
-		      		<label for="reg_mb_open">
-		      			<span></span>
-		      			<b class="sound_only">정보공개</b>
-		      		</label>      
-		            <span class="chk_li">다른분들이 나의 정보를 볼 수 있도록 합니다.</span>
-		            <button type="button" class="tooltip_icon"><i class="fa fa-question-circle-o" aria-hidden="true"></i><span class="sound_only">설명보기</span></button>
-		            <span class="tooltip">
-		                정보공개를 바꾸시면 앞으로 <?php echo (int)$config['cf_open_modify'] ?>일 이내에는 변경이 안됩니다.
-		            </span>
-		            <input type="hidden" name="mb_open_default" value="<?php echo $member['mb_open'] ?>"> 
-		        </li>		        
+<!--		        <li class="chk_box">-->
+<!--		            <input type="checkbox" name="mb_open" value="1" id="reg_mb_open" --><?php //echo ($w=='' || $member['mb_open'])?'checked':''; ?><!-- class="selec_chk">-->
+<!--		      		<label for="reg_mb_open">-->
+<!--		      			<span></span>-->
+<!--		      			<b class="sound_only">정보공개</b>-->
+<!--		      		</label>      -->
+<!--		            <span class="chk_li">다른분들이 나의 정보를 볼 수 있도록 합니다.</span>-->
+<!--		            <button type="button" class="tooltip_icon"><i class="fa fa-question-circle-o" aria-hidden="true"></i><span class="sound_only">설명보기</span></button>-->
+<!--		            <span class="tooltip">-->
+<!--		                정보공개를 바꾸시면 앞으로 --><?php //echo (int)$config['cf_open_modify'] ?><!--일 이내에는 변경이 안됩니다.-->
+<!--		            </span>-->
+<!--		            <input type="hidden" name="mb_open_default" value="--><?php //echo $member['mb_open'] ?><!--"> -->
+		        </li>
 		        <?php } else { ?>
 	            <li>
-	                정보공개
-	                <input type="hidden" name="mb_open" value="<?php echo $member['mb_open'] ?>">
-	                <button type="button" class="tooltip_icon"><i class="fa fa-question-circle-o" aria-hidden="true"></i><span class="sound_only">설명보기</span></button>
-	                <span class="tooltip">
-	                    정보공개는 수정후 <?php echo (int)$config['cf_open_modify'] ?>일 이내, <?php echo date("Y년 m월 j일", isset($member['mb_open_date']) ? strtotime("{$member['mb_open_date']} 00:00:00")+$config['cf_open_modify']*86400:G5_SERVER_TIME+$config['cf_open_modify']*86400); ?> 까지는 변경이 안됩니다.<br>
-	                    이렇게 하는 이유는 잦은 정보공개 수정으로 인하여 쪽지를 보낸 후 받지 않는 경우를 막기 위해서 입니다.
-	                </span>
-	                
+<!--	                정보공개-->
+<!--	                <input type="hidden" name="mb_open" value="--><?php //echo $member['mb_open'] ?><!--">-->
+<!--	                <button type="button" class="tooltip_icon"><i class="fa fa-question-circle-o" aria-hidden="true"></i><span class="sound_only">설명보기</span></button>-->
+<!--	                <span class="tooltip">-->
+<!--	                    정보공개는 수정후 --><?php //echo (int)$config['cf_open_modify'] ?><!--일 이내, --><?php //echo date("Y년 m월 j일", isset($member['mb_open_date']) ? strtotime("{$member['mb_open_date']} 00:00:00")+$config['cf_open_modify']*86400:G5_SERVER_TIME+$config['cf_open_modify']*86400); ?><!-- 까지는 변경이 안됩니다.<br>-->
+<!--	                    이렇게 하는 이유는 잦은 정보공개 수정으로 인하여 쪽지를 보낸 후 받지 않는 경우를 막기 위해서 입니다.-->
+<!--	                </span>-->
+
 	            </li>
 	            <?php }  ?>
 	
@@ -280,12 +289,60 @@ gif, jpg, png파일만 가능하며 용량 <?php echo number_format($config['cf_
 	            </li>
 	            <?php }  ?>
 	
-	            <li class="is_captcha_use">
-	                자동등록방지
-	                <?php echo captcha_html(); ?>
-	            </li>
+<!--	            <li class="is_captcha_use">-->
+<!--	                자동등록방지-->
+<!--	                --><?php //echo captcha_html(); ?>
+<!--	            </li>-->
 	        </ul>
 	    </div>
+        <div>
+            <div class="tbl_frm01 tbl_wrap register_form_inner">
+                <h2>면허 관리 정보</h2>
+                <ul>
+                    <li>
+                        <label for="mb_license_mean">면허 종류</label>
+                        <input type="text" id="mb_license_mean" readonly class="frm_input" size="50" value="<?=$member['mb_license_mean']?>">
+                    </li>
+                    <li>
+                        <label for="mb_first_license_day">최초 면허 발급일</label>
+                        <input type="text" id="mb_first_license_day" readonly class="frm_input" size="50" value="<?=$member['mb_first_license_day']?>">
+                        <label for="mb_license_renewal_day">면허 갱신일</label>
+                        <input type="text" id="mb_license_renewal_day" readonly class="frm_input" size="50" value="<?=$member['mb_license_renewal_day']?>">
+                    </li>
+                    <li>
+                        <label for="mb_validity_day_from">면허 유효기간</label>
+                        <input type="text" id="mb_validity_day_from" readonly  class="frm_input" size="50"value="<?=$member['mb_validity_day_from']?> ">부터
+                        <br>
+                        <input type="text" id="mb_validity_day_to" readonly value="<?=$member['mb_validity_day_to']?>" class="frm_input" size="50">까지
+                    </li>
+                    <li>
+                        <label>최신 면허 사본</label>
+                        <?php
+                        $mb_dir = substr($member['mb_id'],0,2);
+                        $icon_file = G5_DATA_PATH.'/member_license/'.$mb_dir.'/'.get_mb_icon_name($member['mb_id']).'.gif';
+                        if (file_exists($icon_file)) {
+                            echo get_member_profile_img($member['mb_id']);
+                        }
+                        ?>
+                    </li>
+                    <li>
+                        <label>정년연정현황</label>
+                        <input type="text" id="mb_license_ext_day_from" readonly class="frm_input" size="50" value="연장됨(기간: <?=$member['mb_license_ext_day_from']?> ~ <?=$member['mb_license_ext_day_to']?>)">
+                    </li>
+                    <li>
+                        <label>해심 재결 사항</label>
+                        <?php $sql_sel_punishment = " select * from {$g5['member_punishment']} where mb_id ='{$member['mb_id']}'";
+                            $result_sel_punish = sql_query($sql_sel_punishment);
+                            //alert('쿼리문'.$sql_sel_punishment);
+                            for($i=0; $row=sql_fetch_array($result_sel_punish); $i++){
+                        ?>
+                        <input type="text" id="mb_punishment" readonly class="frm_input" size="50" value="<?=$row['mb_applicable_or_not']?> - <?=$row['mb_punishment']?>      <?=$row['mb_punishment_date']?>">
+                        <?php } ?>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
 	</div>
 	<div class="btn_confirm">
 	    <a href="<?php echo G5_URL ?>" class="btn_close">취소</a>
@@ -404,14 +461,14 @@ function fregisterform_submit(f)
     <?php } ?>
 
     // 닉네임 검사
-    if ((f.w.value == "") || (f.w.value == "u" && f.mb_nick.defaultValue != f.mb_nick.value)) {
-        var msg = reg_mb_nick_check();
-        if (msg) {
-            alert(msg);
-            f.reg_mb_nick.select();
-            return false;
-        }
-    }
+    // if ((f.w.value == "") || (f.w.value == "u" && f.mb_nick.defaultValue != f.mb_nick.value)) {
+    //     var msg = reg_mb_nick_check();
+    //     if (msg) {
+    //         alert(msg);
+    //         f.reg_mb_nick.select();
+    //         return false;
+    //     }
+    // }
 
     // E-mail 검사
     if ((f.w.value == "") || (f.w.value == "u" && f.mb_email.defaultValue != f.mb_email.value)) {
@@ -453,22 +510,22 @@ function fregisterform_submit(f)
         }
     }
 
-    if (typeof(f.mb_recommend) != "undefined" && f.mb_recommend.value) {
-        if (f.mb_id.value == f.mb_recommend.value) {
-            alert("본인을 추천할 수 없습니다.");
-            f.mb_recommend.focus();
-            return false;
-        }
+    // if (typeof(f.mb_recommend) != "undefined" && f.mb_recommend.value) {
+    //     if (f.mb_id.value == f.mb_recommend.value) {
+    //         alert("본인을 추천할 수 없습니다.");
+    //         f.mb_recommend.focus();
+    //         return false;
+    //     }
+    //
+    //     var msg = reg_mb_recommend_check();
+    //     if (msg) {
+    //         alert(msg);
+    //         f.mb_recommend.select();
+    //         return false;
+    //     }
+    // }
 
-        var msg = reg_mb_recommend_check();
-        if (msg) {
-            alert(msg);
-            f.mb_recommend.select();
-            return false;
-        }
-    }
-
-    <?php echo chk_captcha_js();  ?>
+<!--    --><?php //echo chk_captcha_js();  ?>
 
     document.getElementById("btn_submit").disabled = "disabled";
 

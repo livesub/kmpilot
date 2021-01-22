@@ -639,6 +639,7 @@ $sql_sel_punish = " select *
             ";
 $result_punish = sql_query($sql_sel_punish);
 ?>
+    <div><h2>현재 아이디 징계 리스트</h2></div>
     <form name="fauthlist" id="fauthlist" method="post" action="./member_form_punishment_delete.php" onsubmit="return fauthlist_submit(this);">
     <input type="hidden" name="sst" value="<?php echo $sst ?>">
     <input type="hidden" name="sod" value="<?php echo $sod ?>">

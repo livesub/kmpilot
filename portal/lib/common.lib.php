@@ -4174,7 +4174,28 @@ function get_punishment_select($name, $start_id=0, $end_id=10, $selected="", $ev
     return $str;
 }
 
-//학력사항을 SELECT 형식으로 얻음
+//학력사항상태를 SELECT 형식으로 얻음
+function get_grade_value($name, $start_id=0, $end_id=10, $selected="", $event=""){
+    global $g5;
+
+    $str = "\n<select id=\"{$name}\" name=\"{$name}\"";
+    if ($event) $str .= " $event";
+    $str .= ">\n";
+    for ($i=$start_id; $i<=$end_id; $i++) {
+        switch ($i){
+            case 0: $value = "선택해주세요"; break;
+            case 1: $value = "중퇴"; break;
+            case 2: $value = "재학"; break;
+            case 3: $value = "졸업"; break;
+        }
+        $str .= '<option value="'.$i.'"';
+        if ($i == $selected)
+            $str .= ' selected="selected"';
+        $str .= ">{$value}</option>\n";
+    }
+    $str .= "</select>\n";
+    return $str;
+}
 
 //관리권한테이블에 특정아이디가 지정 페이지에 권한이 있는지 확인하는 함수
 function get_auth_member_exits($member_id, $au_nenu){
@@ -4221,3 +4242,20 @@ function change_punishment_to_kr($punishment){
     }
     return $punishment_kr;
 }
+//언어팩 적용 언어 판단
+//alert($_COOKIE['lang_change_portal']);
+switch ($_COOKIE['lang_change_portal']) {
+    case 'en':
+        $lang_file = 'lang_en.php';
+        $lang_type_portal = $_COOKIE['lang_change_portal'];
+        break;
+    case 'kr':
+        $lang_file = 'lang_kr.php';
+        $lang_type_portal = $_COOKIE['lang_change_portal'];
+        break;
+    default:
+        $lang_file = 'lang_kr.php';
+        $lang_type_portal = 'kr';
+        break;
+}
+include_once G5_PATH.'/languages_portal/'.$lang_file;
