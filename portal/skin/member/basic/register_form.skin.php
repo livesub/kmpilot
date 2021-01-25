@@ -160,15 +160,15 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 	            <?php }  ?>
                 <li>
                     <label>학력 사항</label>
-                    <label for="mb_highschool">고등학교</label>
-                    <input type="text" name="mb_highschool" id="mb_highschool"  class="frm_input" size="20" value="" placeholder="학교 명">
-                    <input type="text" name="mb_major" id="mb_major" class="frm_input" size="20" value="" placeholder="전공">
-                    <?=get_grade_value('mb_grade_value',0,3, "");?>
+                    <label for="high_name">고등학교</label>
+                    <input type="text" name="high_name" id="high_name"  class="frm_input" size="20" value="<?=$high_name?>" placeholder="학교 명">
+                    <input type="text" name="high_major" id="high_major" class="frm_input" size="20" value="<?=$high_major?>" placeholder="전공">
+                    <?= get_grade_value('high_status',0,3, $high_status);?>
                     <br>
-                    <label for="mb_highschool">대학교</label>
-                    <input type="text" name="mb_university" id="mb_university" class="frm_input" size="20" value="" placeholder="학교 명">
-                    <input type="text" name="mb_university_major" id="mb_university_major" class="frm_input" size="20" value="" placeholder="전공">
-                    <?=get_grade_value('mb_grade_value',0,3, "");?>
+                    <label for="university_name">대학교</label>
+                    <input type="text" name="university_name" id="university_name" class="frm_input" size="20" value="<?=$university_name?>" placeholder="학교 명">
+                    <input type="text" name="university_major" id="university_major" class="frm_input" size="20" value="<?=$university_major?>" placeholder="전공">
+                    <?= get_grade_value('university_status',0,3, $university_status);?>
                 </li>
 	        </ul>
 	    </div>
