@@ -4,7 +4,7 @@ include_once('./_common.php');
 
 
 auth_check_menu($auth, $sub_menu, 'w');
-
+$colspan = 6;
 $mb = array(
 'mb_certify' => null,
 //'mb_adult' => null,
@@ -63,8 +63,8 @@ else if ($w == 'u')
     if (!$mb['mb_id'])
         alert('존재하지 않는 회원자료입니다.');
 
-    if ($is_admin != 'super' && $mb['mb_level'] >= $member['mb_level'])
-        alert('자신보다 권한이 높거나 같은 회원은 수정할 수 없습니다.');
+    if ($is_admin != 'super' && $mb['mb_level'] >= $member['mb_level'] && $mb['mb_id'] != $member['mb_id'])
+        alert('본인이 아니거나 자신보다 권한이 높거나 같은 회원은 수정할 수 없습니다.');
 
     if($mb['mb_level'] > $member['mb_level'])
         alert('자신보다 권한이 높은회원은 수정할 수 없습니다.');
@@ -75,7 +75,7 @@ else if ($w == 'u')
     $mb['mb_name'] = get_text($mb['mb_name']);
     //$mb['mb_nick'] = get_text($mb['mb_nick']);
     $mb['mb_email'] = get_text($mb['mb_email']);
-    $mb['mb_homepage'] = get_text($mb['mb_homepage']);
+//    $mb['mb_homepage'] = get_text($mb['mb_homepage']);
     $mb['mb_birth'] = get_text($mb['mb_birth']);
     $mb['mb_tel'] = get_text($mb['mb_tel']);
     $mb['mb_hp'] = get_text($mb['mb_hp']);
@@ -381,9 +381,24 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     </tr>
     <tr>
         <th scope="row"><label for="mb_applicable_or_not">해심재결 해당여부</label></th>
-        <td><?php echo get_applicable_or_not_select('mb_applicable_or_not', 0, 3, $mb['mb_applicable_or_not']) ?></td>
-        <th scope="row"><label for="mb_punishment">징계 선택</label></th>
-        <td><?php echo get_punishment_select('mb_punishment', 0, 3, $mb['mb_punishment']) ?></td>
+        <td><?php echo get_applicable_or_not_select('mb_applicable_or_not', 0, 3, "", 'changePunishmentValue()') ?></td>
+<!--            <td>-->
+<!--                <select id="mb_applicable_or_not" name="mb_applicable_or_not" onchange="changePunishmentValue()">-->
+<!--                    <option value="0">선택해주세요</option>-->
+<!--                    <option value="1">해심</option>-->
+<!--                    <option value="2">재결</option>-->
+<!--                    <option value="3">종결</option>-->
+<!--                </select>-->
+<!--            </td>-->
+        <th scope="row" id="punish_label" style="display: none" class="punishment"><label for="mb_punishment">징계 선택</label></th>
+<!--        <td>--><?php //echo get_punishment_select('mb_punishment', 0, 3, $mb['mb_punishment']) ?><!--</td>-->
+        <td>
+            <select id="mb_punishment" name="mb_punishment" style="display: none" class="punishment">
+
+            </select>
+        </td>
+        <th scope="row" class="punishment" style="display: none"><label for="mb_punishment_date">징계 선고일</label></th>
+        <td><input type="text" id="mb_punishment_date" name="mb_punishment_date" class="datepicker punishment" value="" style="display: none"></td>
     </tr>
 <!--    <tr>-->
 <!--    -->
@@ -584,8 +599,150 @@ this.form.mb_leave_date.value=this.value; } else { this.form.mb_leave_date.value
     <input type="submit" value="확인" class="btn_submit btn" accesskey='s'>
 </div>
 </form>
+<?php
+//$sql_member_punish_select = " select * form {$g5}";
+$sql_member_punish_select = " from {$g5['member_punishment']} ";
+
+$sql_search_punish = " where mb_id ='{$mb['mb_id']}'";
+//if ($stx) {
+//    $sql_search .= " and ( ";
+//    switch ($sfl) {
+//        default :
+//            $sql_search .= " ({$sfl} like '%{$stx}%') ";
+//            break;
+//    }
+//    $sql_search .= " ) ";
+//}
+
+if (!$sst1) {
+    $sst1  = " mb_punishment_date desc";
+    $sod1 = "";
+}
+$sql_order_punish = " order by $sst1 $sod1 ";
+
+//$sql_count_punish = " select count(*) as cnt
+//            {$sql_member_punish_select}
+//            {$sql_search}
+//            {$sql_order} ";
+//$row_punish = sql_fetch($sql_count_punish);
+//$total_count_punish = $row_punish['cnt'];
+//
+//$rows = $config['cf_page_rows'];
+//$total_page  = ceil($total_count_punish / $rows);  // 전체 페이지 계산
+//if ($page < 1) $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
+//$from_record = ($page - 1) * $rows; // 시작 열을 구함
+
+$sql_sel_punish = " select *
+            {$sql_member_punish_select}
+            {$sql_search_punish}
+            {$sql_order_punish}
+            ";
+$result_punish = sql_query($sql_sel_punish);
+?>
+    <div><h2>현재 아이디 징계 리스트</h2></div>
+    <form name="fauthlist" id="fauthlist" method="post" action="./member_form_punishment_delete.php" onsubmit="return fauthlist_submit(this);">
+    <input type="hidden" name="sst" value="<?php echo $sst ?>">
+    <input type="hidden" name="sod" value="<?php echo $sod ?>">
+<!--    <input type="hidden" name="sfl" value="--><?php //echo $sfl ?><!--">-->
+<!--    <input type="hidden" name="stx" value="--><?php //echo $stx ?><!--">-->
+<!--    <input type="hidden" name="page" value="--><?php //echo $page ?><!--">-->
+    <input type="hidden" name="token" value="">
+
+    <div class="tbl_head01 tbl_wrap">
+        <table>
+            <caption><?php echo $g5['title']; ?> 목록</caption>
+            <thead>
+            <tr>
+                <th scope="col">
+                    <label for="chkall" class="sound_only">현재 페이지 징계 전체</label>
+                    <input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
+                </th>
+                <th scope="col"><?php echo subject_sort_link('a.mb_id') ?>회원아이디</a></th>
+                <!--        <th scope="col">--><?php //echo subject_sort_link('mb_nick') ?><!--닉네임</a></th>-->
+                <th scope="col">해당여부</th>
+                <th scope="col">징계</th>
+                <th scope="col">징계일자</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            $count = 0;
+            for ($i=0; $row=sql_fetch_array($result_punish); $i++)
+            {
+                $is_continue = false;
+
+                if($is_continue)
+                    continue;
+
+                //$mb_nick = get_sideview($row['mb_id'], $row['mb_nick'], $row['mb_email'], $row['mb_homepage']);
+
+                $bg = 'bg'.($i%2);
+                ?>
+                <tr class="<?php echo $bg; ?>">
+                    <td class="td_chk">
+                        <input type="hidden" name="mb_applicable_or_not[<?php echo $i ?>]" value="<?php echo $row['mb_applicable_or_not'] ?>">
+                        <input type="hidden" name="mb_punishment[<?php echo $i ?>]" value="<?php echo $row['mb_punishment'] ?>">
+                        <input type="hidden" name="mb_punishment_date[<?php echo $i ?>]" value="<?php echo $row['mb_punishment_date'] ?>">
+                        <input type="hidden" name="mb_id[<?php echo $i ?>]" value="<?php echo $row['mb_id'] ?>">
+                        <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo $row['mb_name'] ?>님 징계</label>
+                        <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>">
+                    </td>
+                    <td class="td_mbid"><?php echo $row['mb_id'] ?></a></td>
+                    <!--        <td class="td_auth_mbnick">--><?php //echo $mb_nick ?><!--</td>-->
+                    <td class="td_applicable_or_not">
+                        <?php echo change_applicable_or_not_to_kr($row['mb_applicable_or_not']) ?>
+                    </td>
+                    <td class="td_punishment"><?php echo change_punishment_to_kr($row['mb_punishment']) ?></td>
+                    <td class="mb_punishment_date"><?php echo $row['mb_punishment_date'] ?></td>
+                </tr>
+                <?php
+                $count++;
+            }
+
+            if ($count == 0)
+                echo '<tr><td colspan="'.$colspan.'" class="empty_table">징계사유가 없습니다.</td></tr>';
+            ?>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="btn_list01 btn_list">
+        <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value" class="btn btn_02">
+    </div>
+
+<?php
+//if (isset($stx))
+//    echo '<script>document.fsearch.sfl.value = "'.$sfl.'";</script>'."\n";
+
+if (strstr($sfl, 'mb_id'))
+    $mb_id = $stx;
+else
+    $mb_id = '';
+?>
+    </form>
+
+<?php
+//$pagelist = get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, $_SERVER['SCRIPT_NAME'].'?'.$qstr.'&amp;page=');
+//echo $pagelist;
+//?>
 
 <script>
+    function changePunishmentValue(){
+        let sVal = $('#mb_applicable_or_not').val();
+        let $punish_array = [];
+        let $key;
+        switch (sVal){
+            case '1': $punish_array = ["해심1","해심2","해심3"]; $key = 100; $(".punishment").show();  break;
+            case '2': $punish_array = ["재결1","재결2","재결3"]; $key = 200; $(".punishment").show();  break;
+            case '3': $punish_array = ["종결1","종결2","종결3"]; $key = 300; $(".punishment").show();  break;
+            case '0': $(".punishment").hide();
+            default: break;
+        }
+        $('.punish_value').remove();
+        for($i=0; $i<$punish_array.length; $i++){
+            $('#mb_punishment').append("<option class=punish_value value='"+($key+$i)+"'>"+$punish_array[$i]+"</option>");
+        }
+    }
     $(function(){
         $(".datepicker").datepicker({ changeMonth: true, changeYear: true, dateFormat: "yy-mm-dd", showButtonPanel: false });
     });
@@ -596,7 +753,7 @@ this.form.mb_leave_date.value=this.value; } else { this.form.mb_leave_date.value
             changeYear: true,
             changeMonth: true,
             dateFormat: "yy-mm-dd",  //  년월일 표시방법  yy-mm-dd 또는 yymmdd
-            numberOfMonths: 2,  // 한눈에 보이는 월달력수
+            numberOfMonths: 1,  // 한눈에 보이는 월달력수
             onSelect: function( selectedDate ) {
                 let option = this.id === "datepicker_from" ? "minDate" : "maxDate",
                     instance = $( this ).data( "datepicker" ),
@@ -615,7 +772,7 @@ this.form.mb_leave_date.value=this.value; } else { this.form.mb_leave_date.value
             changeYear: true,
             changeMonth: true,
             dateFormat: "yy-mm-dd",  //  년월일 표시방법  yy-mm-dd 또는 yymmdd
-            numberOfMonths: 2,  // 한눈에 보이는 월달력수
+            numberOfMonths: 1,  // 한눈에 보이는 월달력수
             onSelect: function( selectedDate ) {
                 let option = this.id === "mb_license_ext_day_from" ? "minDate" : "maxDate",
                     instance = $( this ).data( "datepicker" ),
@@ -641,6 +798,21 @@ function fmember_submit(f)
 
     return true;
 }
+function fauthlist_submit(f)
+    {
+        if (!is_checked("chk[]")) {
+            alert(document.pressed+" 하실 항목을 하나 이상 선택하세요.");
+            return false;
+        }
+
+        if(document.pressed == "선택삭제") {
+            if(!confirm("선택한 자료를 정말 삭제하시겠습니까?")) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 </script>
 <?php
 run_event('admin_member_form_after', $mb, $w);

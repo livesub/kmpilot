@@ -20,6 +20,9 @@ include_once(G5_LIB_PATH.'/poll.lib.php');
 include_once(G5_LIB_PATH.'/visit.lib.php');
 include_once(G5_LIB_PATH.'/connect.lib.php');
 include_once(G5_LIB_PATH.'/popular.lib.php');
+
+//언어팩 쿠키 저장 함수 경로 추가
+$ajaxpage = G5_URL.'/lang_change_portal.php';
 ?>
 
 <!-- 상단 시작 { -->
@@ -38,7 +41,13 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
 	            <li><a href="<?php echo G5_BBS_URL ?>/faq.php">FAQ</a></li>
 	            <li><a href="<?php echo G5_BBS_URL ?>/qalist.php">Q&A</a></li>
 	            <li><a href="<?php echo G5_BBS_URL ?>/new.php">새글</a></li>
-	            <li><a href="<?php echo G5_BBS_URL ?>/current_connect.php" class="visit">접속자<strong class="visit-num"><?php echo connect(); // 현재 접속자수, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정 ?></strong></a></li>
+	            <li><a href="<?php echo G5_BBS_URL ?>/current_connect.php" class="visit"><?=$lang['connect_user']?><strong class="visit-num"><?php echo connect(); // 현재 접속자수, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정 ?></strong></a></li>
+	            <li>
+	            <select name="lang_change" id="lang_change" onchange="lang_change();">
+                    <option value="kr" <?php if($lang_type_portal == "kr" || $lang_type_portal == "") echo "selected"?>>KOREA</option>
+                    <option value="en" <?php if($lang_type_portal == "en") echo "selected"?>>ENGLISH</option>
+                </select>
+                </li>
 	        </ul>
 		</div>
     </div>
@@ -93,14 +102,22 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
         </div>
         <ul class="hd_login">
             <?php if ($is_member) {  ?>
-            <li><a href="<?php echo G5_BBS_URL ?>/member_confirm.php?url=<?php echo G5_BBS_URL ?>/register_form.php">정보수정</a></li>
-            <li><a href="<?php echo G5_BBS_URL ?>/logout.php">로그아웃</a></li>
+            <li><a href="<?php echo G5_BBS_URL ?>/member_confirm.php?url=<?php echo G5_BBS_URL ?>/register_form.php"><?=$lang['member_modi']?></a></li>
+            <li><a href="<?php echo G5_BBS_URL ?>/logout.php"><?=$lang['member_logout']?></a></li>
+            <?php
+            //$member_id = $member['mb_id'];
+//            $sql_sel_auth = " select * from {$g5['auth_table']} where mb_id ='".$member_id."' and au_menu = '200100'";
+//            $result = sql_query($sql_sel_auth);
+            $result = get_auth_member_exits($member['mb_id'], 200100);
+            if ($result && !$is_admin) {  ?>
+            <li class="tnb_admin"><a href="<?php echo correct_goto_url(G5_ADMIN_URL.'/member_list.php'); ?>">회원관리</a></li>
+            <?php }  ?>
             <?php if ($is_admin) {  ?>
             <li class="tnb_admin"><a href="<?php echo correct_goto_url(G5_ADMIN_URL); ?>">관리자</a></li>
             <?php }  ?>
             <?php } else {  ?>
-            <li><a href="<?php echo G5_BBS_URL ?>/register.php">회원가입</a></li>
-            <li><a href="<?php echo G5_BBS_URL ?>/login.php">로그인</a></li>
+            <li><a href="<?php echo G5_BBS_URL ?>/register.php"><?=$lang['member_sign_up']?></a></li>
+            <li><a href="<?php echo G5_BBS_URL ?>/login.php"><?=$lang['member_login']?></a></li>
             <?php }  ?>
 
         </ul>
@@ -195,7 +212,28 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
             $("#gnb_all, #gnb_all_bg").hide();
         });
     });
-
+    function lang_change()
+    {
+        var ajaxUrl = "<?=$ajaxpage?>";
+        $.ajax({
+            type		: "POST",
+            dataType    : "text",
+            url			: ajaxUrl,
+            data		: {
+                "lang_type" : $("#lang_change").val(),
+            },
+            success: function(data){
+                if(trim(data) == "OK"){
+                    location.href = "<?=G5_URL?>";
+                    //location.reload();
+                }
+                console.log(data);
+            },
+            error: function () {
+                    console.log('error');
+            }
+        });
+    }
     </script>
 </div>
 <!-- } 상단 끝 -->

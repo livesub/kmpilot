@@ -113,16 +113,24 @@ if ($w == "") {
     $member['mb_signature']   = get_text($member['mb_signature']);
     $member['mb_recommend']   = get_text($member['mb_recommend']);
     $member['mb_profile']     = get_text($member['mb_profile']);
-    $member['mb_1']           = get_text($member['mb_1']);
-    $member['mb_2']           = get_text($member['mb_2']);
-    $member['mb_3']           = get_text($member['mb_3']);
-    $member['mb_4']           = get_text($member['mb_4']);
-    $member['mb_5']           = get_text($member['mb_5']);
-    $member['mb_6']           = get_text($member['mb_6']);
-    $member['mb_7']           = get_text($member['mb_7']);
-    $member['mb_8']           = get_text($member['mb_8']);
-    $member['mb_9']           = get_text($member['mb_9']);
-    $member['mb_10']          = get_text($member['mb_10']);
+//    $member['mb_1']           = get_text($member['mb_1']);
+//    $member['mb_2']           = get_text($member['mb_2']);
+//    $member['mb_3']           = get_text($member['mb_3']);
+//    $member['mb_4']           = get_text($member['mb_4']);
+//    $member['mb_5']           = get_text($member['mb_5']);
+//    $member['mb_6']           = get_text($member['mb_6']);
+//    $member['mb_7']           = get_text($member['mb_7']);
+//    $member['mb_8']           = get_text($member['mb_8']);
+//    $member['mb_9']           = get_text($member['mb_9']);
+//    $member['mb_10']          = get_text($member['mb_10']);
+    $sql_member_academic_sel = " select * from {$g5['member_academic_back']} where mb_id = '{$member['mb_id']}'";
+    $row_aca = sql_fetch($sql_member_academic_sel);
+    $high_name = get_text($row_aca['high_name']);
+    $high_major = get_text($row_aca['high_major']);
+    $high_status = get_text($row_aca['high_status']);
+    $university_name = get_text($row_aca['university_name']);
+    $university_major= get_text($row_aca['university_major']);
+    $university_status= get_text($row_aca['university_status']);
 } else {
     alert('w 값이 제대로 넘어오지 않았습니다.');
 }
@@ -130,9 +138,9 @@ if ($w == "") {
 include_once('./_head.php');
 
 // 회원아이콘 경로
-$mb_icon_path = G5_DATA_PATH.'/member/'.substr($member['mb_id'],0,2).'/'.get_mb_icon_name($member['mb_id']).'.gif';
+$mb_icon_path = G5_DATA_PATH.'/member_license/'.substr($member['mb_id'],0,2).'/'.get_mb_icon_name($member['mb_id']).'.gif';
 $mb_icon_filemtile = (defined('G5_USE_MEMBER_IMAGE_FILETIME') && G5_USE_MEMBER_IMAGE_FILETIME && file_exists($mb_icon_path)) ? '?'.filemtime($mb_icon_path) : '';
-$mb_icon_url  = G5_DATA_URL.'/member/'.substr($member['mb_id'],0,2).'/'.get_mb_icon_name($member['mb_id']).'.gif'.$mb_icon_filemtile;
+$mb_icon_url  = G5_DATA_URL.'/member_license/'.substr($member['mb_id'],0,2).'/'.get_mb_icon_name($member['mb_id']).'.gif'.$mb_icon_filemtile;
 
 // 회원이미지 경로
 $mb_img_path = G5_DATA_PATH.'/member_image/'.substr($member['mb_id'],0,2).'/'.get_mb_icon_name($member['mb_id']).'.gif';

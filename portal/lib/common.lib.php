@@ -967,7 +967,9 @@ function get_group_select($name, $selected='', $event='')
     $str = "<select id=\"$name\" name=\"$name\" $event>\n";
     for ($i=0; $row=sql_fetch_array($result); $i++) {
         if ($i == 0) $str .= "<option value=\"\">선택</option>";
+//        if($row['gr_subject'] != "Passage Plan" && $row['gr_subject'] != "홈페이지" && $row['gr_subject'] != "교육센터")
         $str .= option_selected($row['gr_id'], $selected, $row['gr_subject']);
+
     }
     $str .= "</select>";
     return $str;
@@ -4125,11 +4127,13 @@ function get_license_select($name, $start_id=0, $end_id=10, $selected="", $event
 }
 
 //해심재결 해당여부를 SELECT 형식으로 얻음
-function get_applicable_or_not_select($name, $start_id=0, $end_id=10, $selected="", $event=""){
+function get_applicable_or_not_select($name, $start_id=0, $end_id=10, $selected="", $onchange="", $event=""){
 
     global $g5;
 
     $str = "\n<select id=\"{$name}\" name=\"{$name}\"";
+    if($onchange)
+    $str.=" onchange= $onchange";
     if ($event) $str .= " $event";
     $str .= ">\n";
     for ($i=$start_id; $i<=$end_id; $i++) {
@@ -4137,7 +4141,7 @@ function get_applicable_or_not_select($name, $start_id=0, $end_id=10, $selected=
             case 0: $value = "해당사항 없음"; break;
             case 1: $value = "해심"; break;
             case 2: $value = "재결"; break;
-            case 3: $value = "심의중"; break;
+            case 3: $value = "종결"; break;
         }
         $str .= '<option value="'.$i.'"';
         if ($i == $selected)
@@ -4172,4 +4176,88 @@ function get_punishment_select($name, $start_id=0, $end_id=10, $selected="", $ev
     return $str;
 }
 
-//학력사항을 SELECT 형식으로 얻음
+//학력사항상태를 SELECT 형식으로 얻음
+function get_grade_value($name, $start_id=0, $end_id=10, $selected="", $event=""){
+    global $g5;
+
+    $str = "\n<select id=\"{$name}\" name=\"{$name}\"";
+    if ($event) $str .= " $event";
+    $str .= ">\n";
+    for ($i=$start_id; $i<=$end_id; $i++) {
+        switch ($i){
+            case 0: $value = "선택해주세요"; break;
+            case 1: $value = "중퇴"; break;
+            case 2: $value = "재학"; break;
+            case 3: $value = "졸업"; break;
+        }
+        $str .= '<option value="'.$i.'"';
+        if ($i == $selected)
+            $str .= ' selected="selected"';
+        $str .= ">{$value}</option>\n";
+    }
+    $str .= "</select>\n";
+    return $str;
+}
+
+//관리권한테이블에 특정아이디가 지정 페이지에 권한이 있는지 확인하는 함수
+function get_auth_member_exits($member_id, $au_nenu){
+    global $g5;
+    $sql_sel_auth = " select * from {$g5['auth_table']} where mb_id ='".$member_id."' and au_menu = '".$au_nenu."'";
+    return sql_query($sql_sel_auth);
+}
+
+//그 아이디에 도선구를 얻는 함수
+function get_user_doseongu($mb_id){
+    global $g5;
+    $sql_sel_doseongu = " select mb_doseongu from {$g5['member_table']} where mb_id ='".$mb_id."'";
+    $result = sql_fetch($sql_sel_doseongu);
+    //alert('값은 어떻게? : '.$result['mb_doseongu']);
+    return $result['mb_doseongu'];
+}
+
+//DB 값에 따른 해당여부 해결사항 변환 함수
+function change_applicable_or_not_to_kr($code){
+    $value_kr = '';
+    switch ($code){
+        case 1 : $value_kr = "해심"; break;
+        case 2 : $value_kr = "재결"; break;
+        case 3 : $value_kr = "종결"; break;
+        default : $value_kr ="값 없음"; break;
+    }
+    return $value_kr;
+}
+
+//DB 값에 따른 징계사항 변환 함수
+function change_punishment_to_kr($punishment){
+    $punishment_kr= '';
+    switch ($punishment){
+        case 100 : $punishment_kr = "해심1"; break;
+        case 101 : $punishment_kr = "해심2"; break;
+        case 102 : $punishment_kr = "해심3"; break;
+        case 200 : $punishment_kr = "재결1"; break;
+        case 201 : $punishment_kr = "재결2"; break;
+        case 202 : $punishment_kr = "재결3"; break;
+        case 300 : $punishment_kr = "종결1"; break;
+        case 301 : $punishment_kr = "종결2"; break;
+        case 302 : $punishment_kr = "종결3"; break;
+        default : $punishment_kr ="값 없음"; break;
+    }
+    return $punishment_kr;
+}
+//언어팩 적용 언어 판단
+//alert($_COOKIE['lang_change_portal']);
+switch ($_COOKIE['lang_change_portal']) {
+    case 'en':
+        $lang_file = 'lang_en.php';
+        $lang_type_portal = $_COOKIE['lang_change_portal'];
+        break;
+    case 'kr':
+        $lang_file = 'lang_kr.php';
+        $lang_type_portal = $_COOKIE['lang_change_portal'];
+        break;
+    default:
+        $lang_file = 'lang_kr.php';
+        $lang_type_portal = 'kr';
+        break;
+}
+include_once G5_PATH.'/languages_portal/'.$lang_file;

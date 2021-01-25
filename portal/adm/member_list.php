@@ -6,6 +6,13 @@ auth_check_menu($auth, $sub_menu, 'r');
 
 $sql_common = " from {$g5['member_table']} ";
 $sql_del_mem = " and mb_memo = '' and mb_id != 'yongsanzip' ";
+if($member['mb_level'] == 10){
+    $sql_del_mem = null;
+}
+if(get_auth_member_exits($member['mb_id'], 200100) && !$is_admin){
+   $doseongu =  get_user_doseongu($member['mb_id']);
+   $sql_del_mem = " and mb_memo = '' and mb_id != 'yongsanzip' and mb_doseongu = '".$doseongu."'";
+}
 
 $sql_search = " where (1) ";
 if ($stx) {
@@ -99,7 +106,7 @@ $colspan = 16;
 
 <div class="local_desc01 local_desc">
     <p>
-        회원자료 삭제 시 다른 회원이 기존 회원아이디를 사용하지 못하도록 회원아이디, 이름, 닉네임은 삭제하지 않고 영구 보관합니다.
+        회원자료 삭제 시 다른 회원이 기존 회원아이디를 사용하지 못하도록 회원아이디, 이름은 삭제하지 않고 영구 보관합니다.
     </p>
 </div>
 
@@ -125,6 +132,13 @@ $colspan = 16;
         <th scope="col" id="mb_list_name"><?php echo subject_sort_link('mb_name') ?>이름</a></th>
         <th scope="col" id="mb_list_auth">상태</th>
         <th scope="col" id="mb_list_auth"><?php echo subject_sort_link('mb_intercept_date', '', 'desc') ?>접근차단</a></th>
+        <?php
+        if($member['mb_level'] == 10){
+        ?>
+            <th scope="col" id="mb_list_memo"><?php echo subject_sort_link('mb_memo', '', 'desc') ?>회원삭제일</a></th>
+        <?php
+        }
+        ?>
         <th scope="col" id="mb_list_mobile">휴대폰</th>
         <th scope="col" id="mb_list_tel">전화번호</th>
         <th scope="col" id="mb_list_lastcall"><?php echo subject_sort_link('mb_today_login', '', 'desc') ?>최종접속</a></th>
@@ -268,6 +282,13 @@ $colspan = 16;
                 <label for="mb_intercept_date_<?php echo $i; ?>" class="sound_only">접근차단</label>
             <?php } ?>
         </td>
+        <?php
+        if($member['mb_level'] == 10){
+            ?>
+            <td headers="mb_list_memo" class="td_memo"><?php  echo get_text($row['mb_memo'])?></td>
+            <?php
+        }
+        ?>
         <td headers="mb_list_mobile" class="td_tel"><?php echo get_text($row['mb_hp']); ?></td>
         <td headers="mb_list_tel" class="td_tel"><?php echo get_text($row['mb_tel']); ?></td>
         <td headers="mb_list_lastcall" class="td_date"><?php echo substr($row['mb_today_login'],2,8); ?></td>
