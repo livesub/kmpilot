@@ -134,6 +134,7 @@ class SuremPacket
 
 	function sendsms($member,$callphone1,$callphone2,$callphone3,$callmessage,$rdate,$rtime,$reqphone1,$reqphone2,$reqphone3,$callname)
 	{
+
 		global $usercode,$username,$deptcode,$deptname;
 
 		$cdate = mktime();
