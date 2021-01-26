@@ -4261,3 +4261,27 @@ switch ($_COOKIE['lang_change_portal']) {
         break;
 }
 include_once G5_PATH.'/languages_portal/'.$lang_file;
+
+//문자전송내역 건별 검색구분을 select 형식으로 가져온다.
+function get_sms_mean_value($name, $start_id=0, $end_id=10, $selected="", $event=""){
+    global $g5;
+
+    $str = "\n<select id=\"{$name}\" name=\"{$name}\"";
+    if ($event) $str .= " $event";
+    $str .= ">\n";
+    for ($i=$start_id; $i<=$end_id; $i++) {
+        switch ($i){
+            case 0: $value = "선택해주세요"; $op_val = ""; break;
+            case 1: $value = "발송구분(M,S,K로 입력 요망)"; $op_val = "SMS_TYPE"; break;
+            case 2: $value = "발신구분(P,C,K로 입력 요망)"; $op_val = "SEND_TYPE"; break;
+            case 3: $value = "내용"; $op_val = "SMS_MSG"; break;
+            case 4: $value = "전화번호(뒷번호 4자리입력요망)"; $op_val = "SPHONE3"; break;
+        }
+        $str .= '<option value="'.$op_val.'"';
+        if ($op_val == $selected)
+            $str .= ' selected="selected"';
+        $str .= ">{$value}</option>\n";
+    }
+    $str .= "</select>\n";
+    return $str;
+}
