@@ -1,15 +1,14 @@
 <?php
-$sub_menu = "900300";
+$sub_menu = "900310";
 include_once("./_common.php");
 
 auth_check_menu($auth, $sub_menu, "r");
 
-$g5['title'] = "문자 보내기";
+$g5['title'] = "카카오 친구톡 보내기";
 
 include_once(G5_ADMIN_PATH.'/admin.head.php');
-
-
 ?>
+
 
 <link rel="stylesheet" href="https://kmpilot.or.kr/CMS/_css/common.css" type="text/css" />
 <link rel="stylesheet" href="https://kmpilot.or.kr/CMS/_css/layout.css" type="text/css" />
@@ -27,13 +26,11 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 <div class="contents">
 	<!--컨텐츠 시작-->
 
-
-
 	<div class="visualphone">
 		<div id="visualphone-wrap">
 			<form name="VisualPhone" id="VisualPhone" method="post" enctype="multipart/form-data" action="./sms_action.php" target="hiddenframe">
-			<input id="mode" name="mode" type="hidden" value="send_sms">
-			<input id="sendtype" name="sendtype" type="hidden" value="cms">
+			<input id="mode" name="mode" type="hidden" value="kakao">
+			<input id="sendtype" name="sendtype" type="hidden" value="k">
 
 			<input id="s_calltype" name="s_calltype" type="hidden" value="0">
 			<input id="s_msgflag" name="s_msgflag" type="hidden" value="sms">
@@ -65,7 +62,7 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 					<div class="message-box">
 						<textarea name="s_message" class="message-text" id="s_message" rows="1" cols="1"></textarea>
 					</div>
-					<div class="txt-byte"><span class="txt-message-byte" id="msglen">0</span> / <span class="txt-max-byte" id="max_len">90</span> byte</div>
+					<div class="txt-byte"><span class="txt-message-byte" id="msglen">0</span> / <span class="txt-max-byte" id="max_len">1000</span> 자</div>
 				</div>
 				<!--<
 				<div class="btn-message-area">
@@ -79,12 +76,6 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 				!-->
 				<div class="btn-phone-area">
 					<a class="first" id="pb_btn" href="#"><img alt="주소록" src="https://kmpilot.or.kr/CMS/_img/sms/btn_address.gif"></a>
-					<a id="paste_btn" href="#"><img alt="붙여넣기" src="https://kmpilot.or.kr/CMS/_img/sms/btn_paste.gif"></a>
-					<a id="spchar_btn" href="#"><img alt="특수문자" src="https://kmpilot.or.kr/CMS/_img/sms/btn_chr.gif"></a>
-
-					<a id="imgadd_btn" href="#"><img alt="내 PC에서 사진 불러오기" src="https://kmpilot.or.kr/CMS/_img/sms/btn_up_img.gif"></a>
-					<!--<a id="sendme_btn" href="#"><img style="width: 33px;" alt="나에게" src="/visualphone/img/btn_vp_menu04.jpg"></a>
-					!-->
 				</div>
 				<div class="phone-area">
 					<div class="btn-phone-controll">
@@ -170,85 +161,7 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 			<input name="ReceiveGroup" id="ReceiveGroup" type="hidden" value="">
 		</form>
 	</div>
-	<!--이미지 첨부 레이어-->
-	<div class="ly-mms-file ly-div" style="display: none;">
-		<strong class="tit-mms-file blind">이미지첨부</strong>
-		<div class="ly-wrap">
-			<div class="desc">
-				<span class="cblue">★</span> <strong class="en">1000*1000 / 500KB</strong>
-					<p style="margin: 0px; padding: 0px 0px 0px 11px;">이미지까지 업로드 가능</p>
-				<span class="cblue">★</span> <strong class="en">JPG</strong>만 업로드 가능<br>
-				<span class="cblue">★</span> <strong>업로드된 이미지는</strong><br>
-				<p style="margin: 0px; padding: 0px 0px 0px 11px;">각 단말기 기종에따라 통신사에서 자동 리사이징된후 발송 됩니다</p>
-			</div>
-			<div class="input-area">
-				<form name="upload_form" action="./sms_action.php" enctype="multipart/form-data" method="post" target="hiddenframe">
-					<input id="image_mode" name="mode" type="hidden" value="up_img">
-					<input name="img1" title="이미지첨부" id="img1" type="file">
-				</form>
-			</div>
-		</div>
-		<!--<div class="btn-area">
-			<button type="button" title="이미지첨부" class="btn btn-file" id="up_btn">이미지첨부</button>
-		</div>-->
-		<a class="btn-close" href="#"><img alt="닫기" src="https://kmpilot.or.kr/CMS/_img/sms/btn_close.gif"></a>
-	</div>
-	<!--이미지 첨부 레이어-->
-	<!-- 특수문자 레이어 -->
-	<div class="ly-special-characters ly-div">
-		<strong class="blind">특수문자</strong>
-		<div class="ly-wrap">
-			<table cellspacing="0" cellpadding="0" summary="특수문자">
-				<tbody>
-					<tr>
-						<td><a href="#" data-str="☆">☆</a></td>
-						<td><a href="#" data-str="○">○</a></td>
-						<td><a href="#" data-str="□">□</a></td>
-						<td><a href="#" data-str="◎">◎</a></td>
-						<td><a href="#" data-str="★">★</a></td>
-						<td><a href="#" data-str="●">●</a></td>
-						<td><a href="#" data-str="■">■</a></td>
-						<td><a href="#" data-str="☏">☏</a></td>
-						<td><a href="#" data-str="♪">♪</a></td>
-					</tr>
-					<tr>
-						<td><a href="#" data-str="☎">☎</a></td>
-						<td><a href="#" data-str="◈">◈</a></td>
-						<td><a href="#" data-str="▣">▣</a></td>
-						<td><a href="#" data-str="◐">◐</a></td>
-						<td><a href="#" data-str="◑">◑</a></td>
-						<td><a href="#" data-str="☜">☜</a></td>
-						<td><a href="#" data-str="☞">☞</a></td>
-						<td><a href="#" data-str="◀">◀</a></td>
-						<td><a href="#" data-str="▶">▶</a></td>
-					</tr>
-					<tr>
-						<td><a href="#" data-str="▲">▲</a></td>
-						<td><a href="#" data-str="▼">▼</a></td>
-						<td><a href="#" data-str="♠">♠</a></td>
-						<td><a href="#" data-str="♣">♣</a></td>
-						<td><a href="#" data-str="♥">♥</a></td>
-						<td><a href="#" data-str="◆">◆</a></td>
-						<td><a href="#" data-str="◁">◁</a></td>
-						<td><a href="#" data-str="▷">▷</a></td>
-						<td><a href="#" data-str="△">△</a></td>
-					</tr>
-					<tr>
-						<td><a href="#" data-str="▽">▽</a></td>
-						<td><a href="#" data-str="♤">♤</a></td>
-						<td><a href="#" data-str="♧">♧</a></td>
-						<td><a href="#" data-str="♡">♡</a></td>
-						<td><a href="#" data-str="◇">◇</a></td>
-						<td><a href="#" data-str="※">※</a></td>
-						<td><a href="#" data-str="♨">♨</a></td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<a class="btn-close" href="#"><img alt="닫기" src="https://kmpilot.or.kr/CMS/_img/sms/btn_close.gif"></a>
-	</div>
+
 
 	<!-- 최근번호 레이어 -->
 	<div class="ly-recentnum ly-div">
@@ -267,24 +180,6 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 		<a class="btn-close" href="#"><img alt="닫기" src="https://kmpilot.or.kr/CMS/_img/sms/btn_close.gif"></a>
 	</div>
 
-	<!-- 붙여넣기 레이어 -->
-	<div class="ly-paste ly-div">
-		<strong class="blind">붙여넣기</strong>
-		<div class="ly-wrap">
-			<div class="desc">
-				<p class="c6"><span class="blue">★</span> <strong>비회원</strong> 등록하기</p>
-				<p>ex)이름|번호(xxx-xxxx-xxxx)</p>
-			</div>
-			<div class="message">
-				<input name="guest_number" id="guest_number" type="hidden" value="">
-				<textarea name="s_pastetxt" id="s_pastetxt" rows="1" cols="1"></textarea>
-			</div>
-			<div class="btn-area">
-				<a class="btn-paste" href="#"><img alt="확인" src="https://kmpilot.or.kr/CMS/_img/sms/mms_btn_number_check.gif"></a>
-			</div>
-		</div>
-		<a class="btn-close" href="#"><img alt="닫기" src="https://kmpilot.or.kr/CMS/_img/sms/btn_close.gif"></a>
-	</div>
 
 </div>
 <script language="javascript">
@@ -534,7 +429,7 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 		f.goods_id.value = goods_id;
 		f.target = 'ifrm_pop';
 		//f.action = 'http://heartcon.surem.com/pop_auto.php';
-		f.action = 'pop_auto.php';
+        f.action = 'pop_auto.php';
 		f.submit();
 	}
 
@@ -555,5 +450,10 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 <!-- 중요
 <iframe width="0" height="0" name='hiddenframe' class="hiddenx"></iframe>
 -->
+
+
+
+
+
 <?php
 include_once(G5_ADMIN_PATH.'/admin.tail.php');

@@ -4,7 +4,7 @@ document.write('<script language="javascript" type="text/javascript" src="'+CMS_
 document.write('<script language="javascript" type="text/javascript" src="'+CMS_FOLDER+'/sms_js/ajax_lib.js"></script>');
 document.write('<script language="javascript" type="text/javascript" src="'+CMS_FOLDER+'/sms_js/formcheck.js"></script>');
 document.write('<script language="javascript" type="text/javascript" src="'+CMS_FOLDER+'/sms_js/utils_lab.js"></script>');
-document.write('<script language="javascript" type="text/javascript" src="'+CMS_FOLDER+'/sms_js/site.js"></script>');
+//document.write('<script language="javascript" type="text/javascript" src="'+CMS_FOLDER+'/sms_js/site.js"></script>');
 document.write('<script language="javascript" type="text/javascript" src="'+CMS_FOLDER+'/sms_js/window.js"></script>');
 function getEditorContent(str){
 	var tmpCont = str;

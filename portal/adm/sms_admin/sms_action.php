@@ -35,6 +35,7 @@ switch($_POST['mode']){
                 $_where[] = "mb_hp like '%".trim($_POST["addr_sw"])."%' OR mb_name like '%".trim($_POST["addr_sw"])."%'";
             }
 		}
+
 		if($_POST['addr_group_type']=="B"){
 /*
 			$_where[] = "trim(M.USER_ID)=trim(MB.USERID)";
@@ -80,7 +81,8 @@ switch($_POST['mode']){
             }
 
         }else{
-			$result = sql_query("select * from {$g5['member_table']}  where  ".$retValue." and mb_hp != '' ORDER BY mb_no desc ");
+
+			$result = sql_query("select * from {$g5['member_table']}  ".$retValue." and mb_hp != '' ORDER BY mb_no desc ");
             while($row = sql_fetch_array($result)){
                 $get_list[] = $row;
             }
@@ -171,6 +173,7 @@ switch($_POST['mode']){
 		print "]}";
 		exit;
 	break;
+
 	case "send_sms":
 		$result = $SMS->send_mobile($_POST);
 		alert("발송되었습니다.","sms_write.php");
@@ -234,11 +237,23 @@ switch($_POST['mode']){
 			exit;
 		}
 		break;
+
 	case "del_img":
 		$result = $SMS->delete_sms_img($_POST);
 		print "{\"count\":".$result."}";
 		exit;
 		break;
+
+	case "kakao":
+		$result = $SMS->send_kakao($_POST);
+
+echo "result=====> ".$result;
+exit;
+		alert("발송되었습니다.","kakao_write.php");
+	break;
+
+
+
 }
 
 ?>
