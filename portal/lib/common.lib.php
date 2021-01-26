@@ -4021,7 +4021,7 @@ function get_license_select($name, $start_id=0, $end_id=10, $selected="", $event
     return $str;
 }
 //해심재결 해당여부를 SELECT 형식으로 얻음
-function get_applicable_or_not_select($name, $start_id=0, $end_id=10, $selected="", $event=""){
+function get_applicable_or_not_select($name, $start_id=0, $end_id=10, $selected="", $onchange="", $event=""){
 
     global $g5;
     $str = "\n<select id=\"{$name}\" name=\"{$name}\"";
