@@ -719,14 +719,6 @@ Class SURESMS{
 				$group_result = $this->insertKakaoData($G_DATA); // sms 발송 데이터 저장
 			}
 
-<<<<<<< HEAD
-
-
-
-
-
-=======
->>>>>>> 82e26dca56eeb93fff99009c675256df061c56e0
 			for ($i=0; $i<count($to_group);$i++){
 				if ($to_group[$i] != ""){
 					unset($to_sms_info[0]);

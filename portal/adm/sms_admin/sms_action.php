@@ -244,27 +244,6 @@ switch($_POST['mode']){
 		exit;
 		break;
 
-<<<<<<< HEAD
-
-
-
-/*
-		case "send_sms":
-			$result = $SMS->send_mobile($_POST);
-			alert("발송되었습니다.","sms_write.php");
-
-			if($result == "" || $result == 0){
-				alert("발송에 실패 하였습니다.");
-				exit;
-			}else{
-				alert("발송되었습니다.","sms_write.php");
-				exit;
-			}
-
-		break;
-	*/
-=======
->>>>>>> 82e26dca56eeb93fff99009c675256df061c56e0
 	case "kakao":
 		$result = $SMS->send_kakao($_POST);
 

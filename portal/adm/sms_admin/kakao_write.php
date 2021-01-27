@@ -8,11 +8,6 @@ $g5['title'] = "카카오 친구톡 보내기";
 
 include_once(G5_ADMIN_PATH.'/admin.head.php');
 ?>
-<<<<<<< HEAD
-y
-=======
-
->>>>>>> 82e26dca56eeb93fff99009c675256df061c56e0
 
 <link rel="stylesheet" href="https://kmpilot.or.kr/CMS/_css/common.css" type="text/css" />
 <link rel="stylesheet" href="https://kmpilot.or.kr/CMS/_css/layout.css" type="text/css" />
