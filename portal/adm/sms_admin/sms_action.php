@@ -244,6 +244,7 @@ switch($_POST['mode']){
 		exit;
 		break;
 
+<<<<<<< HEAD
 
 
 
@@ -262,6 +263,8 @@ switch($_POST['mode']){
 
 		break;
 	*/
+=======
+>>>>>>> 82e26dca56eeb93fff99009c675256df061c56e0
 	case "kakao":
 		$result = $SMS->send_kakao($_POST);
 

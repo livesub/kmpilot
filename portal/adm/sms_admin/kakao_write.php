@@ -8,7 +8,11 @@ $g5['title'] = "카카오 친구톡 보내기";
 
 include_once(G5_ADMIN_PATH.'/admin.head.php');
 ?>
+<<<<<<< HEAD
 y
+=======
+
+>>>>>>> 82e26dca56eeb93fff99009c675256df061c56e0
 
 <link rel="stylesheet" href="https://kmpilot.or.kr/CMS/_css/common.css" type="text/css" />
 <link rel="stylesheet" href="https://kmpilot.or.kr/CMS/_css/layout.css" type="text/css" />
@@ -62,7 +66,11 @@ y
 					<div class="message-box">
 						<textarea name="s_message" class="message-text" id="s_message" rows="1" cols="1"></textarea>
 					</div>
+<<<<<<< HEAD
 					<div class="txt-byte"><span class="txt-message-byte" id="msglen">0</span> / <span class="txt-max-byte" id="max_len">90</span> byte</div>
+=======
+					<div class="txt-byte"><span class="txt-message-byte" id="msglen">0</span> / <span class="txt-max-byte" id="max_len">1000</span> 자</div>
+>>>>>>> 82e26dca56eeb93fff99009c675256df061c56e0
 				</div>
 				<!--<
 				<div class="btn-message-area">
@@ -100,7 +108,11 @@ y
 					</div>
 					<div class="txt-count-area">
 						<span>잔액</span>
+<<<<<<< HEAD
 						<div class="cnavy"><span class="phone-count" id="sms_money"><strong class="cwhite"><?=number_format($money)?></strong></span> 건</div>
+=======
+						<div class="cnavy"><span class="phone-count" id="sms_money"><strong class="cwhite"><?=number_format($money)?></strong></span> 원</div>
+>>>>>>> 82e26dca56eeb93fff99009c675256df061c56e0
 					</div>
 					<div class="txt-count-area">
 						<span>받는사람</span>

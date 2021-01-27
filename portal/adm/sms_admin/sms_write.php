@@ -109,7 +109,7 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 					</div>
 					<div class="txt-count-area">
 						<span>잔액</span>
-						<div class="cnavy"><span class="phone-count" id="sms_money"><strong class="cwhite"><?=number_format($money)?></strong></span> 건</div>
+						<div class="cnavy"><span class="phone-count" id="sms_money"><strong class="cwhite"><?=number_format($money)?></strong></span> 원</div>
 					</div>
 					<div class="txt-count-area">
 						<span>받는사람</span>
@@ -555,10 +555,5 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 <!-- 중요
 <iframe width="0" height="0" name='hiddenframe' class="hiddenx"></iframe>
 -->
-
-
-
-
-
 <?php
 include_once(G5_ADMIN_PATH.'/admin.tail.php');

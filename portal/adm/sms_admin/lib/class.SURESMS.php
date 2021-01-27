@@ -151,6 +151,24 @@ Class SURESMS{
 		$result = sql_query($qry);
 	}
 
+	function UpdateKakaoUserData($R_ID,$RESULT){
+		global $SITE,$DB;
+
+		if($RESULT=="O"){
+			$retSendResult = "1";
+		}else{
+			$retSendResult = "0";
+		}
+		$DATA = array(
+			"SEND_RESULT"	=> $RESULT,
+			"RECEIVE"		=> $retSendResult
+		);
+
+		foreach ($DATA as $key=>$val) $qry_arr[] = $key ." = ". quote($val);
+		$qry = "UPDATE CMS_SMS_RESULT SET " . implode(",",$qry_arr). " where idx='".$R_ID."'" ;
+		$result = sql_query($qry);
+	}
+
 	//SMS 스킨등록
 	function create_sms_skin($R_DATA){
 		global $DB;
@@ -197,7 +215,6 @@ Class SURESMS{
 	}
 
 	function send_mobile($R_DATA,$FILES=null){
-
 		global $SITE,$DB,$MEM,$CFG,$WebApp,$Wapp,$packettest,$usercode,$username,$deptcode,$deptname,$UserCode,$DeptCode,$DeptName;
 		if($R_DATA['sendtype']=="cms"){
 
@@ -260,6 +277,7 @@ Class SURESMS{
 							$reqphone3		= $returnNum[2];
 							$callname		= "";
 							$result=$packettest->sendsms($SeqNo,$callphone1,$callphone2,$callphone3,$callmessage,$rdate,$rtime,$reqphone1,$reqphone2,$reqphone3,$callname);
+							//$result=$this->sendsms2($SeqNo,$callphone1,$callphone2,$callphone3,$callmessage,$rdate,$rtime,$reqphone1,$reqphone2,$reqphone3,$callname);
 							$res =substr($result,94,1);
 
 							$this->UpdateSmsUserData($record_result,$res);
@@ -701,11 +719,14 @@ Class SURESMS{
 				$group_result = $this->insertKakaoData($G_DATA); // sms 발송 데이터 저장
 			}
 
+<<<<<<< HEAD
 
 
 
 
 
+=======
+>>>>>>> 82e26dca56eeb93fff99009c675256df061c56e0
 			for ($i=0; $i<count($to_group);$i++){
 				if ($to_group[$i] != ""){
 					unset($to_sms_info[0]);
@@ -744,20 +765,16 @@ Class SURESMS{
 						$reqphone3		= $returnNum[2];
 						$callname		= "";
 
-						$result = $this->sendkakao($SeqNo,$callphone1,$callphone2,$callphone3,$callmessage,$rdate,$rtime,$reqphone1,$reqphone2,$reqphone3,$callname,$i);
+						$result = $this->sendkakao($SeqNo,$callphone1,$callphone2,$callphone3,$callmessage,$rdate,$rtime,$reqphone1,$reqphone2,$reqphone3,$callname);
 print_r($result);
 
-
 						$res =substr($result,94,1);
-						//$this->UpdateSmsUserData($record_result,$res);
+echo "res====> ".$res;
+exit;
+						$this->UpdateKakaoUserData($record_result,$res);
 					}
 				}
 			}
-
-			//여기다 작업
-echo "plue====> ".$string;
-
-exit;
 		}else{
 			alert("잘못된 경로 입니다.","kakao_write.php");
 			exit;
@@ -766,31 +783,12 @@ exit;
 	}
 
 
-	function sendkakao($member,$callphone1,$callphone2,$callphone3,$callmessage,$rdate,$rtime,$reqphone1,$reqphone2,$reqphone3,$callname,$i){
+	function sendkakao($member,$callphone1,$callphone2,$callphone3,$callmessage,$rdate,$rtime,$reqphone1,$reqphone2,$reqphone3,$callname){
+		global $SITE,$DB,$MEM,$CFG,$WebApp,$Wapp,$packettest,$usercode,$username,$deptcode,$deptname,$UserCode,$DeptCode,$DeptName;
 
-		$aa[$i] = '
-		[{
-			"type":"ft",
-			"message_id":"1000000",
-			"to" : "821012345678",
-			"text" : "홍길동님, 안녕하세요. 슈어엠주식회사입니다.11111",
-			"from" : "15884640",
-			"reserved_time" : "209912310000",
-			"re_send" : "R(or Y)",
-			"re_text" : "대체 메시지입니다.",
-			"buttons" :
-				[{
-					"button_type" : "WL",
-					"button_name" : "슈어엠 이동",
-					"button_url" : "http://www.surem.co.kr"
-				},{
-					"button_type" : "MD",
-					"button_name" : "메시지 전달"
-				}]
-		}]
-		';
-		return $aa;
-/*
+		$callphone1_cut = preg_replace('/(0)(\d)/','$2',$callphone1);	//앞자리 0 자르기
+		$phone_mk = "82".$callphone1_cut.$callphone2.$callphone3;	//국가번호 포함한 전화번호 (821012345678)
+
 		$curl = curl_init();
 		curl_setopt_array($curl, array(
 		  CURLOPT_URL => "https://rest.surem.com/alimtalk/v2/json",
@@ -801,32 +799,33 @@ exit;
 		  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
 		  CURLOPT_CUSTOMREQUEST => "POST",
 
-		  CURLOPT_POSTFIELDS => '
+		  CURLOPT_POSTFIELDS => "
 		  {
-			"usercode" : "test001",
- 			"deptcode" : "XX-XXX-XX",
- 			"yellowid_key" : "1234567890123456789012345678901234567890",
- 			"messages" :
+			'usercode' : '".$usercode."',		//슈어엠 제공 아이디
+ 			'deptcode' : '".$deptcode."',		//슈어엠 제공 회사코드
+ 			'yellowid_key' : '".G5_YELLOWID_KEY."',	//발신프로필키(40 자)
+ 			'messages' :
  				[{
- 					"type":"ft",
- 					"message_id":"1000000",
- 					"to" : "821012345678",
- 					"text" : "홍길동님, 안녕하세요. 슈어엠주식회사입니다.",
- 					"from" : "15884640",
- 					"reserved_time" : "209912310000",
- 					"re_send" : "R(or Y)",
- 					"re_text" : "대체 메시지입니다.",
- 					"buttons" :
+ 					'type'			:'ft',
+ 					'message_id'	:'".$member."',	//메시지 고유키 값
+ 					'to' 			: '".$phone_mk."',	//국가번호 포함한 전화번호 (821012345678)
+ 					'text' 			: '".$callmessage."',	//전송할 메시지
+ 					'from' 			: '15884640',
+ 					'reserved_time' : '',	//예약 발송시 예약시간 (YYYYMMDDhhmm - 12 자리) => 미입력시 즉시전송
+ 					're_send' 		: 'Y',	//알림톡 전송 실패시 문자 재전송 여부 Y 는 MMS 로 재전송
+					're_text' 		: '".$callmessage."',
+					'additional_information': '".$usercode."',
+ 					'buttons' 		:
  						[{
- 							"button_type" : "WL",
- 							"button_name" : "슈어엠 이동",
- 							"button_url" : "http://www.surem.co.kr"
+ 							'button_type' : 'WL',
+ 							'button_name' : '슈어엠 이동',
+ 							'button_url' : 'http://www.surem.co.kr'
  						},{
- 							"button_type" : "MD",
- 							"button_name" : "메시지 전달"
+ 							'button_type' : 'MD',
+ 							'button_name' : '메시지 전달'
  						}]
  				}]
-		}',
+		}",
 		CURLOPT_HTTPHEADER => array(
 			"Content-Type: application/json",
 			"cache-control: no-cache"
@@ -843,8 +842,60 @@ exit;
 		} else {
 		  echo $response;
 		}
-*/
 	}
+
+
+	function sendsms2($member,$callphone1,$callphone2,$callphone3,$callmessage,$rdate,$rtime,$reqphone1,$reqphone2,$reqphone3,$callname){
+		global $usercode,$username,$deptcode,$deptname;
+		$callphone1_cut = preg_replace('/(0)(\d)/','$2',$callphone1);	//앞자리 0 자르기
+		$phone_mk = "82".$callphone1_cut.$callphone2.$callphone3;	//국가번호 포함한 전화번호 (821012345678)
+		$ori_phone_mk = $callphone1.$callphone2.$callphone3;
+
+		$curl = curl_init();
+		curl_setopt_array($curl, array(
+		  CURLOPT_URL => "https://rest.surem.com/sms/v1/json",
+		  CURLOPT_RETURNTRANSFER => true,
+		  CURLOPT_ENCODING => "",
+		  CURLOPT_MAXREDIRS => 10,
+		  CURLOPT_TIMEOUT => 30,
+		  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		  CURLOPT_CUSTOMREQUEST => "POST",
+
+		  CURLOPT_POSTFIELDS => "
+		  {
+			'usercode' : '".$usercode."',
+			'deptcode' : '".$deptcode."',
+			'messages' :
+			[{
+				'message_id':'".$member."',
+				'to' : '".$ori_phone_mk."'
+			},{
+				'to' : '".$phone_mk."',
+			}],
+			'text' : '".$callmessage."',
+			'from' : '15884640',
+			'additional_information': '".$usercode."',
+			'reserved_time' : ''
+		}",
+		CURLOPT_HTTPHEADER => array(
+			"Content-Type: application/json",
+			"cache-control: no-cache"
+			),
+		));
+
+		$response = curl_exec($curl);
+		$err = curl_error($curl);
+
+		curl_close($curl);
+
+		if ($err) {
+		  echo "cURL Error #:" . $err;
+		} else {
+		  echo $response;
+		}
+
+	}
+
 
 }
 ?>
