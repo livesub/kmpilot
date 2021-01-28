@@ -53,6 +53,44 @@ Class SURESMS{
 
 		return  $MaxID;
 	}
+
+
+	function insertKakaoData($R_DATA){
+		global $SITE,$DB;
+		$returnNum	  = explode('-',$R_DATA['s_reqphone']);
+		if($R_DATA['s_msgflag']){
+			switch($R_DATA['s_msgflag']){
+				case "kakao":	//카카오
+					$retType = "K";
+				break;
+			}
+		}
+		if($R_DATA['sendtype']){
+			switch($R_DATA['sendtype']){
+				case "k":
+					$retSendType = "K";
+				break;
+			}
+		}
+		$DATA = array(
+		"SMS_TYPE"		=> $retType, // 문자 구분자
+		"SEND_TYPE"		=> $retSendType, // 발송 구분자
+		"SPHONE1"		=> $returnNum[0], // 회신번호
+		"SPHONE2"		=> $returnNum[1], // 회신번호
+		"SPHONE3"		=> $returnNum[2], // 회신번호
+		"SMS_MSG"		=> $R_DATA['s_message'], //송신메시지
+		"S_COUNT"		=> $R_DATA['s_count'], //총 수신자
+		"REG_DATE"		=> time()
+		);
+
+		foreach ($DATA as $key=>$val) $qry_arr[] = $key ." = ". quote($val);
+		$qry = "INSERT INTO CMS_SMS_DATA SET " . implode(",",$qry_arr);
+		$result = sql_query($qry);
+		$MaxID = sql_insert_id();
+
+		return  $MaxID;
+	}
+
 	function insertSmsUserData($R_DATA){
 		global $SITE,$DB;
 		$DATA = array(
@@ -73,7 +111,47 @@ Class SURESMS{
 		$MaxID = sql_insert_id();
 		return  $MaxID;
 	}
+
+	function insertKakaoUserData($R_DATA){
+		global $SITE,$DB;
+		$DATA = array(
+			"PARENTIDX"		=> $R_DATA['g_idx'], //수신자 IDX값
+			"USER_ID"		=> $R_DATA['mb_id'], //수신자 아이디
+			"RPHONE1"		=> $R_DATA['callphone1'], //수신번호 앞자리
+			"RPHONE2"		=> $R_DATA['callphone2'], //수신번호 중간자리
+			"RPHONE3"		=> $R_DATA['callphone3'], //수신번호 뒷자리
+			"RECV_NAME"		=> $R_DATA['mb_name'], //수신자명
+			"LINK_FILE"		=> $R_DATA['link_file'], //데이터 링크
+			"R_MSG"			=> $R_DATA['r_message'], //문자내용
+			"REG_DATE"		=> time()
+		);
+
+		foreach ($DATA as $key=>$val) $qry_arr[] = $key ." = ". quote($val);
+		$qry = "INSERT INTO CMS_SMS_RESULT SET " . implode(",",$qry_arr);
+		$result = sql_query($qry);
+		$MaxID = sql_insert_id();
+		return  $MaxID;
+	}
+
 	function UpdateSmsUserData($R_ID,$RESULT){
+		global $SITE,$DB;
+
+		if($RESULT=="O"){
+			$retSendResult = "1";
+		}else{
+			$retSendResult = "0";
+		}
+		$DATA = array(
+			"SEND_RESULT"	=> $RESULT,
+			"RECEIVE"		=> $retSendResult
+		);
+
+		foreach ($DATA as $key=>$val) $qry_arr[] = $key ." = ". quote($val);
+		$qry = "UPDATE CMS_SMS_RESULT SET " . implode(",",$qry_arr). " where idx='".$R_ID."'" ;
+		$result = sql_query($qry);
+	}
+
+	function UpdateKakaoUserData($R_ID,$RESULT){
 		global $SITE,$DB;
 
 		if($RESULT=="O"){
@@ -137,7 +215,6 @@ Class SURESMS{
 	}
 
 	function send_mobile($R_DATA,$FILES=null){
-
 		global $SITE,$DB,$MEM,$CFG,$WebApp,$Wapp,$packettest,$usercode,$username,$deptcode,$deptname,$UserCode,$DeptCode,$DeptName;
 		if($R_DATA['sendtype']=="cms"){
 
@@ -160,7 +237,6 @@ Class SURESMS{
 
 					$group_result = $this->insertSmsData($G_DATA); // sms 발송 데이터 저장
 				}
-
 				for ($i=0; $i<count($to_group);$i++){
 					if ($to_group[$i]!=""){
 
@@ -199,7 +275,8 @@ Class SURESMS{
 							$reqphone2		= $returnNum[1];
 							$reqphone3		= $returnNum[2];
 							$callname		= "";
-							$result=$packettest->sendsms($SeqNo,$callphone1,$callphone2,$callphone3,$callmessage,$rdate,$rtime,$reqphone1,$reqphone2,$reqphone3,$callname);
+//							$result=$packettest->sendsms($SeqNo,$callphone1,$callphone2,$callphone3,$callmessage,$rdate,$rtime,$reqphone1,$reqphone2,$reqphone3,$callname);
+							$result=$this->sendsms2($SeqNo,$callphone1,$callphone2,$callphone3,$callmessage,$rdate,$rtime,$reqphone1,$reqphone2,$reqphone3,$callname,$CFG['cms_sms_number']);
 							$res =substr($result,94,1);
 
 							$this->UpdateSmsUserData($record_result,$res);
@@ -258,7 +335,8 @@ Class SURESMS{
 							$filepath1	= $R_DATA['filepath1'];							//파일경로1
 							$filepath2	= $R_DATA['filepath2'];							//파일경로2
 							$filepath3	= "";							//파일경로3
-							$result=$packettest->SendMms($SeqNo, $CallPhone, $ReqPhone, $Time, $Subject, $Msg,$filepath1,$filepath2,$filepath3);
+//							$result=$packettest->SendMms($SeqNo, $CallPhone, $ReqPhone, $Time, $Subject, $Msg,$filepath1,$filepath2,$filepath3);
+							$result=$this->SendMms2($SeqNo, $CallPhone, $ReqPhone, $Time, $Subject, $Msg,$filepath1,$filepath2,$filepath3,$CFG['cms_sms_number']);
 							$this->UpdateSmsUserData($record_result,$result);
 						}
 					}
@@ -557,7 +635,6 @@ Class SURESMS{
 			"ReceiveDetail"	=> $R_DATA['ReceiveDetail'],
 		);
 		$qry = $DB->updateQuery($this->_Tables['cms_sms_result'],$DATA,"SeqNo='".$R_DATA['SeqNo']."'");
-		;
 		$result = $DB->dbQuery($qry);
 	}
 
@@ -621,6 +698,241 @@ Class SURESMS{
 		}
 		return $chkCount;
 	}
+
+	//카카오 친구톡 추가(2021.01.25 김영섭)
+	function send_kakao($R_DATA,$FILES=null){
+		global $SITE,$DB,$MEM,$CFG,$WebApp,$Wapp,$packettest,$usercode,$username,$deptcode,$deptname,$UserCode,$DeptCode,$DeptName;
+		if($R_DATA['sendtype']=="K"){
+			$bytelimitChk	= strlen(charConvert($R_DATA["s_message"],2));
+			$returnNum		= explode('-',$R_DATA['s_reqphone']);
+			$to_group		= $R_DATA['phone_num'];
+
+			if(count($to_group)){
+				$G_DATA = array(
+					"s_msgflag"		=> "kakao", //문자발송 타입
+					"sendtype"		=> $R_DATA['sendtype'], //발송 구분자
+					"s_reqphone"	=> $R_DATA['s_reqphone'], //회신번호
+					"s_message"		=> $R_DATA["s_message"], //송신메시지
+					"s_count"		=> count($to_group) //발신갯수
+				);
+				$group_result = $this->insertKakaoData($G_DATA); // sms 발송 데이터 저장
+			}
+
+			for ($i=0; $i<count($to_group);$i++){
+				if ($to_group[$i] != ""){
+					unset($to_sms_info[0]);
+					$to_sms_info = explode("|",trim($to_group[$i]));
+					/* 휴대폰에 - 문자열 찾기 */
+					if (preg_match('/-/', $to_sms_info[2])){
+						$setNumSeq = explode("-",$to_sms_info[2]);
+					}else{
+						$setNumSeq = array(substr($to_sms_info[2],0,3),substr($to_sms_info[2],3,-4),substr($to_sms_info[2],-4,4));
+					}
+					$DATA = array(
+						"sendtype"		=> $R_DATA['s_msgflag'], //문자발송 타입
+						"mb_id"			=> $to_sms_info[1], //수신자 ID 값
+						"mb_name"		=> $to_sms_info[0], //회원이름
+						"callphone1"	=> $setNumSeq[0], //수신번호 앞자리
+						"callphone2"	=> $setNumSeq[1], //수신번호 중간자리
+						"callphone3"	=> $setNumSeq[2], //수신번호 마지막자리
+						"r_message"		=> $R_DATA['s_message'],
+						"g_idx"			=> $group_result //송신메시지
+					);
+					$record_result	= $this->insertKakaoUserData($DATA); // sms 발송 데이터 저장
+
+					/* kakao 발송 */
+					if(trim($to_sms_info[2])!=""){
+						$SeqNo			= $record_result;
+						$callphone1		= $setNumSeq[0];
+						$callphone2		= $setNumSeq[1];
+						$callphone3		= $setNumSeq[2];
+
+						$callmessage	= charConvert($R_DATA["s_message"],2);
+
+						$rdate			= "00000000";
+						$rtime			= "000000";
+						$reqphone1		= $returnNum[0];
+						$reqphone2		= $returnNum[1];
+						$reqphone3		= $returnNum[2];
+						$callname		= "";
+
+						$result = $this->sendkakao($SeqNo,$callphone1,$callphone2,$callphone3,$callmessage,$rdate,$rtime,$reqphone1,$reqphone2,$reqphone3,$callname,$CFG['cms_sms_number']);
+print_r($result);
+
+						$res =substr($result,94,1);
+echo "res====> ".$res;
+exit;
+						$this->UpdateKakaoUserData($record_result,$res);
+					}
+				}
+			}
+		}else{
+			alert("잘못된 경로 입니다.","kakao_write.php");
+			exit;
+		}
+		return "kakao";
+	}
+
+
+	function sendkakao($member,$callphone1,$callphone2,$callphone3,$callmessage,$rdate,$rtime,$reqphone1,$reqphone2,$reqphone3,$callname,$cms_sms_number){
+		global $SITE,$DB,$MEM,$CFG,$WebApp,$Wapp,$packettest,$usercode,$username,$deptcode,$deptname,$UserCode,$DeptCode,$DeptName;
+
+		$callphone1_cut = preg_replace('/(0)(\d)/','$2',$callphone1);	//앞자리 0 자르기
+		$phone_mk = "82".$callphone1_cut.$callphone2.$callphone3;	//국가번호 포함한 전화번호 (821012345678)
+
+		$curl = curl_init();
+		curl_setopt_array($curl, array(
+		  CURLOPT_URL => "https://rest.surem.com/alimtalk/v2/json",
+		  CURLOPT_RETURNTRANSFER => true,
+		  CURLOPT_ENCODING => "",
+		  CURLOPT_MAXREDIRS => 10,
+		  CURLOPT_TIMEOUT => 30,
+		  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		  CURLOPT_CUSTOMREQUEST => "POST",
+
+		  CURLOPT_POSTFIELDS => "
+		  {
+			'usercode' : '".$usercode."',		//슈어엠 제공 아이디
+ 			'deptcode' : '".$deptcode."',		//슈어엠 제공 회사코드
+ 			'yellowid_key' : '".G5_YELLOWID_KEY."',	//발신프로필키(40 자)
+ 			'messages' :
+ 				[{
+ 					'type'			:'ft',
+ 					'message_id'	:'".$member."',	//메시지 고유키 값
+ 					'to' 			: '".$phone_mk."',	//국가번호 포함한 전화번호 (821012345678)
+ 					'text' 			: '".$callmessage."',	//전송할 메시지
+ 					'from' 			: '".$cms_sms_number."',
+ 					'reserved_time' : '',	//예약 발송시 예약시간 (YYYYMMDDhhmm - 12 자리) => 미입력시 즉시전송
+ 					're_send' 		: 'Y',	//알림톡 전송 실패시 문자 재전송 여부 Y 는 MMS 로 재전송
+					're_text' 		: '".$callmessage."',
+					'additional_information': '".$usercode."',
+ 					'buttons' 		:
+ 						[{
+ 							'button_type' : 'WL',
+ 							'button_name' : '슈어엠 이동',
+ 							'button_url' : 'http://www.surem.co.kr'
+ 						},{
+ 							'button_type' : 'MD',
+ 							'button_name' : '메시지 전달'
+ 						}]
+ 				}]
+		}",
+		CURLOPT_HTTPHEADER => array(
+			"Content-Type: application/json",
+			"cache-control: no-cache"
+			),
+		));
+
+		$response = curl_exec($curl);
+		$err = curl_error($curl);
+
+		curl_close($curl);
+
+		if ($err) {
+		  echo "cURL Error #:" . $err;
+		} else {
+		  echo $response;
+		}
+	}
+
+
+	function sendsms2($member,$callphone1,$callphone2,$callphone3,$callmessage,$rdate,$rtime,$reqphone1,$reqphone2,$reqphone3,$callname,$cms_sms_number){
+		global $usercode,$username,$deptcode,$deptname;
+		$callphone1_cut = preg_replace('/(0)(\d)/','$2',$callphone1);	//앞자리 0 자르기
+		$phone_mk = "82".$callphone1_cut.$callphone2.$callphone3;	//국가번호 포함한 전화번호 (821012345678)
+		$ori_phone_mk = $callphone1.$callphone2.$callphone3;
+
+		$curl = curl_init();
+		curl_setopt_array($curl, array(
+		  CURLOPT_URL => "https://rest.surem.com/sms/v1/json",
+		  CURLOPT_RETURNTRANSFER => true,
+		  CURLOPT_ENCODING => "",
+		  CURLOPT_MAXREDIRS => 10,
+		  CURLOPT_TIMEOUT => 30,
+		  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		  CURLOPT_CUSTOMREQUEST => "POST",
+
+		  CURLOPT_POSTFIELDS => "{
+			'usercode': '".$usercode."',
+			'deptcode': '".$deptcode."',
+			'messages':
+			[{
+				'message_id': '".$member."',
+				'to': '".$ori_phone_mk."'
+			}],
+			'text': '".$callmessage."',
+			'from': '".$cms_sms_number."',
+			'additional_information': '".$usercode."'
+		}",
+		CURLOPT_HTTPHEADER => array(
+			"Content-Type: application/json",
+			"cache-control: no-cache"
+			),
+		));
+
+		$response = curl_exec($curl);
+		$err = curl_error($curl);
+
+		curl_close($curl);
+echo "sms_response====> ".$response;
+exit;
+		if ($err) {
+		  echo "cURL Error #:" . $err;
+		} else {
+		  echo $response;
+		}
+	}
+
+
+	function SendMms2($param_SeqNo, $param_CallPhone, $param_ReqPhone, $param_Time, $param_Subject, $param_Msg, $param_File1, $param_File2, $param_File3,$cms_sms_number){
+		global $UserCode, $DeptCode;
+
+		$curl = curl_init();
+		curl_setopt_array($curl, array(
+		  CURLOPT_URL => "https://rest.surem.com/mms/v1",
+		  CURLOPT_RETURNTRANSFER => true,
+		  CURLOPT_ENCODING => "",
+		  CURLOPT_MAXREDIRS => 10,
+		  CURLOPT_TIMEOUT => 30,
+		  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		  CURLOPT_CUSTOMREQUEST => "POST",
+
+		  CURLOPT_POSTFIELDS => "{
+			'image1'		: '".$param_File1."',
+			'image2'		: '".$param_File2."',
+			'image3'		: '".$param_File3."',
+			'usercode'		: '".$UserCode."',
+			'deptcode'		: '".$DeptCode."',
+			'messages'		:
+			[{
+				'message_id': '".$param_SeqNo."',
+				'to'		: '".$param_CallPhone."'
+			}],
+			'subject'		: '".$param_Subject."',
+			'text'			: '".$param_Msg."',
+			'from'			: '".$cms_sms_number."',
+			'additional_information': '".$UserCode."'
+		}",
+		CURLOPT_HTTPHEADER => array(
+			"Content-Type: application/json",
+			"cache-control: no-cache"
+			),
+		));
+
+		$response = curl_exec($curl);
+		$err = curl_error($curl);
+
+		curl_close($curl);
+echo "mms_response====> ".$response;
+exit;
+		if ($err) {
+		  echo "cURL Error #:" . $err;
+		} else {
+		  echo $response;
+		}
+
+	}
+
 
 }
 ?>
