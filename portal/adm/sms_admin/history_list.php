@@ -15,7 +15,7 @@ $lDate = $_REQUEST['lDate'];
 //alert('fDate'.$fDate.'   lDate'.$lDate);
 if ($page < 1) $page = 1;
 
-if (isset($sv) && trim($sv) && trim($sms_mean))
+if (isset($sv) && trim($sv) && trim($sms_mean)){
     switch ($sms_mean){
         case "SMS_TYPE" :
         case "SPHONE3" :
@@ -23,21 +23,35 @@ if (isset($sv) && trim($sv) && trim($sms_mean))
         case "SMS_MSG" : $sql_search = " and $sms_mean like '%$sv%' "; break;
         default : $sql_search = "";
     }
-if((isset($fDate) && $fDate != "") && (isset($lDate) && $lDate != "") ){
-    $sql_date_search = " and from_unixtime(REG_DATE, '%Y%m%d') between '".$fDate."' and '".$lDate."'";
-}elseif((isset($fDate) && $fDate != "") && (!isset($lDate) && $lDate == "")){
-    $sql_date_search = " and from_unixtime(REG_DATE, '%Y%m%d') = '".$fDate."'";
-}elseif((!isset($fDate) && $fDate == "") && (isset($lDate) && $lDate != "")){
-    $sql_date_search = " and from_unixtime(REG_DATE, '%Y%m%d') = '".$lDate."'";
-}
-else{
+}else{
     $sql_search = "";
+}
+if($fDate != ""){
+    $a  = true;
+}else{$a = false;}
+
+if($lDate != ""){
+    $b  = true;
+}else{$b = false;}
+
+//alert('첫번째 일자 데이터 '.$a." 두번째 일자 데이터 ".$b);
+if((isset($fDate) && $fDate != "") && (isset($lDate) && $lDate != "") ){
+    $sql_date_search = " and from_unixtime(REG_DATE, '%Y%m%d') between '".str_replace("-","",$fDate)."' and '".str_replace("-","",$lDate)."'";
+}elseif($a && !$b){
+    //alert('첫번째 일자 데이터 '.$fDate." 두번째 일자 데이터 ".$lDate);
+    $sql_date_search = " and from_unixtime(REG_DATE, '%Y%m%d') = '".str_replace("-","",$fDate)."'";
+}elseif(!$a && $b){
+    //alert('첫번째 일자 데이터 '.$fDate." 두번째 일자 데이터 ".$lDate);
+    $sql_date_search = " and from_unixtime(REG_DATE, '%Y%m%d') = '".str_replace("-","",$lDate)."'";
+}elseif(!$a && !$b){
+    //alert('첫번째 일자 데이터 '.$fDate." 두번째 일자 데이터 ".$lDate);
     $sql_date_search = "";
 }
 //alert('방향'.$sql_date_search);
+//alert('시간좀 알아보기 1 : '.strtotime($fDate).' 시간 알아보기 2 : '.strtotime($lDate));
 
-
-$total_res = sql_fetch("select count(*) as cnt from CMS_SMS_DATA where IS_DEL='0' $sql_search $sql_date_search");
+$total_res = sql_fetch("select count(*) as cnt from CMS_SMS_DATA where IS_DEL='0' {$sql_search} {$sql_date_search}");
+//alert('search 쿼리문 : '.$sql_search.' date 쿼리문'.$sql_date_search);
 $total_count = $total_res['cnt'];
 
 $total_page = (int)($total_count/$page_size) + ($total_count%$page_size==0 ? 0 : 1);
@@ -99,7 +113,7 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
     </tr>
     <?php
     }
-    $qry = sql_query("select * from CMS_SMS_DATA where IS_DEL='0' $sql_search $sql_date_search order by IDX desc limit $page_start, $page_size");
+    $qry = sql_query("select IDX,SEND_TYPE,SMS_TYPE,SPHONE1,SPHONE2,SPHONE3,SMS_MSG,S_COUNT,from_unixtime(REG_DATE, '%Y%m%d'), IS_DEL, REG_DATE from CMS_SMS_DATA where IS_DEL='0' $sql_search $sql_date_search order by IDX desc limit $page_start, $page_size");
     //alert('방향'.$qry);
     while($res = sql_fetch_array($qry)) {
         $bg = 'bg'.($line++%2);
