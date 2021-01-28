@@ -73,7 +73,9 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 <label for="sv" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
 <input type="text" name="sv" value="<?php echo $sv ?>" id="sv">
 <input type="submit" value="검색" class="btn_submit">
+    <input type="reset" value="초기화" >
 </form>
+
     <div id="tab_container">
         <ul class="tabs">
             <li rel="tab1"><a href="<?=$_SERVER['SCRIPT_NAME']?>"><span>전체</span></a></li>
