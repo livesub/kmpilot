@@ -237,7 +237,6 @@ Class SURESMS{
 
 					$group_result = $this->insertSmsData($G_DATA); // sms 발송 데이터 저장
 				}
-
 				for ($i=0; $i<count($to_group);$i++){
 					if ($to_group[$i]!=""){
 
@@ -276,8 +275,8 @@ Class SURESMS{
 							$reqphone2		= $returnNum[1];
 							$reqphone3		= $returnNum[2];
 							$callname		= "";
-							$result=$packettest->sendsms($SeqNo,$callphone1,$callphone2,$callphone3,$callmessage,$rdate,$rtime,$reqphone1,$reqphone2,$reqphone3,$callname);
-							//$result=$this->sendsms2($SeqNo,$callphone1,$callphone2,$callphone3,$callmessage,$rdate,$rtime,$reqphone1,$reqphone2,$reqphone3,$callname);
+//							$result=$packettest->sendsms($SeqNo,$callphone1,$callphone2,$callphone3,$callmessage,$rdate,$rtime,$reqphone1,$reqphone2,$reqphone3,$callname);
+							$result=$this->sendsms2($SeqNo,$callphone1,$callphone2,$callphone3,$callmessage,$rdate,$rtime,$reqphone1,$reqphone2,$reqphone3,$callname,$CFG['cms_sms_number']);
 							$res =substr($result,94,1);
 
 							$this->UpdateSmsUserData($record_result,$res);
@@ -336,7 +335,8 @@ Class SURESMS{
 							$filepath1	= $R_DATA['filepath1'];							//파일경로1
 							$filepath2	= $R_DATA['filepath2'];							//파일경로2
 							$filepath3	= "";							//파일경로3
-							$result=$packettest->SendMms($SeqNo, $CallPhone, $ReqPhone, $Time, $Subject, $Msg,$filepath1,$filepath2,$filepath3);
+//							$result=$packettest->SendMms($SeqNo, $CallPhone, $ReqPhone, $Time, $Subject, $Msg,$filepath1,$filepath2,$filepath3);
+							$result=$this->SendMms2($SeqNo, $CallPhone, $ReqPhone, $Time, $Subject, $Msg,$filepath1,$filepath2,$filepath3,$CFG['cms_sms_number']);
 							$this->UpdateSmsUserData($record_result,$result);
 						}
 					}
@@ -635,7 +635,6 @@ Class SURESMS{
 			"ReceiveDetail"	=> $R_DATA['ReceiveDetail'],
 		);
 		$qry = $DB->updateQuery($this->_Tables['cms_sms_result'],$DATA,"SeqNo='".$R_DATA['SeqNo']."'");
-		;
 		$result = $DB->dbQuery($qry);
 	}
 
@@ -703,7 +702,7 @@ Class SURESMS{
 	//카카오 친구톡 추가(2021.01.25 김영섭)
 	function send_kakao($R_DATA,$FILES=null){
 		global $SITE,$DB,$MEM,$CFG,$WebApp,$Wapp,$packettest,$usercode,$username,$deptcode,$deptname,$UserCode,$DeptCode,$DeptName;
-		if($R_DATA['sendtype']=="k"){
+		if($R_DATA['sendtype']=="K"){
 			$bytelimitChk	= strlen(charConvert($R_DATA["s_message"],2));
 			$returnNum		= explode('-',$R_DATA['s_reqphone']);
 			$to_group		= $R_DATA['phone_num'];
@@ -757,7 +756,7 @@ Class SURESMS{
 						$reqphone3		= $returnNum[2];
 						$callname		= "";
 
-						$result = $this->sendkakao($SeqNo,$callphone1,$callphone2,$callphone3,$callmessage,$rdate,$rtime,$reqphone1,$reqphone2,$reqphone3,$callname);
+						$result = $this->sendkakao($SeqNo,$callphone1,$callphone2,$callphone3,$callmessage,$rdate,$rtime,$reqphone1,$reqphone2,$reqphone3,$callname,$CFG['cms_sms_number']);
 print_r($result);
 
 						$res =substr($result,94,1);
@@ -775,7 +774,7 @@ exit;
 	}
 
 
-	function sendkakao($member,$callphone1,$callphone2,$callphone3,$callmessage,$rdate,$rtime,$reqphone1,$reqphone2,$reqphone3,$callname){
+	function sendkakao($member,$callphone1,$callphone2,$callphone3,$callmessage,$rdate,$rtime,$reqphone1,$reqphone2,$reqphone3,$callname,$cms_sms_number){
 		global $SITE,$DB,$MEM,$CFG,$WebApp,$Wapp,$packettest,$usercode,$username,$deptcode,$deptname,$UserCode,$DeptCode,$DeptName;
 
 		$callphone1_cut = preg_replace('/(0)(\d)/','$2',$callphone1);	//앞자리 0 자르기
@@ -802,7 +801,7 @@ exit;
  					'message_id'	:'".$member."',	//메시지 고유키 값
  					'to' 			: '".$phone_mk."',	//국가번호 포함한 전화번호 (821012345678)
  					'text' 			: '".$callmessage."',	//전송할 메시지
- 					'from' 			: '15884640',
+ 					'from' 			: '".$cms_sms_number."',
  					'reserved_time' : '',	//예약 발송시 예약시간 (YYYYMMDDhhmm - 12 자리) => 미입력시 즉시전송
  					're_send' 		: 'Y',	//알림톡 전송 실패시 문자 재전송 여부 Y 는 MMS 로 재전송
 					're_text' 		: '".$callmessage."',
@@ -837,7 +836,7 @@ exit;
 	}
 
 
-	function sendsms2($member,$callphone1,$callphone2,$callphone3,$callmessage,$rdate,$rtime,$reqphone1,$reqphone2,$reqphone3,$callname){
+	function sendsms2($member,$callphone1,$callphone2,$callphone3,$callmessage,$rdate,$rtime,$reqphone1,$reqphone2,$reqphone3,$callname,$cms_sms_number){
 		global $usercode,$username,$deptcode,$deptname;
 		$callphone1_cut = preg_replace('/(0)(\d)/','$2',$callphone1);	//앞자리 0 자르기
 		$phone_mk = "82".$callphone1_cut.$callphone2.$callphone3;	//국가번호 포함한 전화번호 (821012345678)
@@ -853,21 +852,17 @@ exit;
 		  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
 		  CURLOPT_CUSTOMREQUEST => "POST",
 
-		  CURLOPT_POSTFIELDS => "
-		  {
-			'usercode' : '".$usercode."',
-			'deptcode' : '".$deptcode."',
-			'messages' :
+		  CURLOPT_POSTFIELDS => "{
+			'usercode': '".$usercode."',
+			'deptcode': '".$deptcode."',
+			'messages':
 			[{
-				'message_id':'".$member."',
-				'to' : '".$ori_phone_mk."'
-			},{
-				'to' : '".$phone_mk."',
+				'message_id': '".$member."',
+				'to': '".$ori_phone_mk."'
 			}],
-			'text' : '".$callmessage."',
-			'from' : '15884640',
-			'additional_information': '".$usercode."',
-			'reserved_time' : ''
+			'text': '".$callmessage."',
+			'from': '".$cms_sms_number."',
+			'additional_information': '".$usercode."'
 		}",
 		CURLOPT_HTTPHEADER => array(
 			"Content-Type: application/json",
@@ -879,7 +874,57 @@ exit;
 		$err = curl_error($curl);
 
 		curl_close($curl);
+echo "sms_response====> ".$response;
+exit;
+		if ($err) {
+		  echo "cURL Error #:" . $err;
+		} else {
+		  echo $response;
+		}
+	}
 
+
+	function SendMms2($param_SeqNo, $param_CallPhone, $param_ReqPhone, $param_Time, $param_Subject, $param_Msg, $param_File1, $param_File2, $param_File3,$cms_sms_number){
+		global $UserCode, $DeptCode;
+
+		$curl = curl_init();
+		curl_setopt_array($curl, array(
+		  CURLOPT_URL => "https://rest.surem.com/mms/v1",
+		  CURLOPT_RETURNTRANSFER => true,
+		  CURLOPT_ENCODING => "",
+		  CURLOPT_MAXREDIRS => 10,
+		  CURLOPT_TIMEOUT => 30,
+		  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		  CURLOPT_CUSTOMREQUEST => "POST",
+
+		  CURLOPT_POSTFIELDS => "{
+			'image1'		: '".$param_File1."',
+			'image2'		: '".$param_File2."',
+			'image3'		: '".$param_File3."',
+			'usercode'		: '".$UserCode."',
+			'deptcode'		: '".$DeptCode."',
+			'messages'		:
+			[{
+				'message_id': '".$param_SeqNo."',
+				'to'		: '".$param_CallPhone."'
+			}],
+			'subject'		: '".$param_Subject."',
+			'text'			: '".$param_Msg."',
+			'from'			: '".$cms_sms_number."',
+			'additional_information': '".$UserCode."'
+		}",
+		CURLOPT_HTTPHEADER => array(
+			"Content-Type: application/json",
+			"cache-control: no-cache"
+			),
+		));
+
+		$response = curl_exec($curl);
+		$err = curl_error($curl);
+
+		curl_close($curl);
+echo "mms_response====> ".$response;
+exit;
 		if ($err) {
 		  echo "cURL Error #:" . $err;
 		} else {

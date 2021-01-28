@@ -29,10 +29,10 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 		<div id="visualphone-wrap">
 			<form name="VisualPhone" id="VisualPhone" method="post" enctype="multipart/form-data" action="./sms_action.php" target="hiddenframe">
 			<input id="mode" name="mode" type="hidden" value="kakao">
-			<input id="sendtype" name="sendtype" type="hidden" value="k">
+			<input id="sendtype" name="sendtype" type="hidden" value="K">
 
 			<input id="s_calltype" name="s_calltype" type="hidden" value="0">
-			<input id="s_msgflag" name="s_msgflag" type="hidden" value="sms">
+			<input id="s_msgflag" name="s_msgflag" type="hidden" value="kakao">
 			<input id="s_sendtime" name="s_sendtime" type="hidden" value="">
 
 			<input name="s_callphone" name="s_callphone" id="s_callphone" type="hidden" value="">
