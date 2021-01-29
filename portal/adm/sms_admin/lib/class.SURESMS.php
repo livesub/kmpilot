@@ -888,29 +888,29 @@ exit;
 
 		$curl = curl_init();
 		curl_setopt_array($curl, array(
-		  CURLOPT_URL => "https://rest.surem.com/sms/v1/json",
-		  CURLOPT_RETURNTRANSFER => true,
-		  CURLOPT_ENCODING => "",
-		  CURLOPT_MAXREDIRS => 10,
-		  CURLOPT_TIMEOUT => 30,
-		  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-		  CURLOPT_CUSTOMREQUEST => "POST",
+			CURLOPT_URL => "https://rest.surem.com/sms/v1/json",
+		  	CURLOPT_RETURNTRANSFER => true,
+		  	CURLOPT_ENCODING => "",
+		  	CURLOPT_MAXREDIRS => 10,
+		  	CURLOPT_TIMEOUT => 30,
+		  	CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		  	CURLOPT_CUSTOMREQUEST => "POST",
 
-		  CURLOPT_POSTFIELDS => "{
-			'usercode': '".$usercode."',
-			'deptcode': '".$deptcode."',
-			'messages':
-			[{
-				'message_id': '".$member."',
-				'to': '".$ori_phone_mk."'
-			}],
-			'text': '".$callmessage."',
-			'from': '".$cms_sms_number."',
-			'additional_information': '".$usercode."'
-		}",
-		CURLOPT_HTTPHEADER => array(
-			"Content-Type: application/json",
-			"cache-control: no-cache"
+			CURLOPT_POSTFIELDS => "{
+				'usercode': '".$usercode."',
+				'deptcode': '".$deptcode."',
+				'messages':
+				[{
+					'message_id': '".$member."',
+					'to': '".$ori_phone_mk."'
+				}],
+				'text': '".$callmessage."',
+				'from': '".$cms_sms_number."',
+				'additional_information': '".$usercode."'
+			}",
+			CURLOPT_HTTPHEADER => array(
+				"Content-Type: application/json",
+				"cache-control: no-cache"
 			),
 		));
 
@@ -969,8 +969,8 @@ exit;
 				CURLOPT_HTTPHEADER => array(
 					"Content-Type: application/json",
 					"cache-control: no-cache"
-					),
-				));
+				),
+			));
 		}else{
 			//이미지 있는 메세지
 			if($param_File1 == "") $File1_json1 = "";
@@ -1004,11 +1004,11 @@ exit;
 							"text" : "'.$param_Msg.'",
 							"from" : "'.$cms_sms_number.'",
 							"additional_information": "'.$UserCode.'"
-						}'),
-						CURLOPT_HTTPHEADER => array(
-							"Content-Type: multipart/form-data",
-							"cache-control: no-cache"
-						),
+					}'),
+					CURLOPT_HTTPHEADER => array(
+						"Content-Type: multipart/form-data",
+						"cache-control: no-cache"
+					),
 				));
 			}else{
 				//2이미지가 있을때
@@ -1036,11 +1036,11 @@ exit;
 							"text" : "'.$param_Msg.'",
 							"from" : "'.$cms_sms_number.'",
 							"additional_information": "'.$UserCode.'"
-						}'),
-						CURLOPT_HTTPHEADER => array(
-							"Content-Type: multipart/form-data",
-							"cache-control: no-cache"
-						),
+					}'),
+					CURLOPT_HTTPHEADER => array(
+						"Content-Type: multipart/form-data",
+						"cache-control: no-cache"
+					),
 				));
 			}
 		}
