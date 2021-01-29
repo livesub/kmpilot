@@ -176,16 +176,8 @@ switch($_POST['mode']){
 
 	case "send_sms":
 		$result = $SMS->send_mobile($_POST);
-		alert("발송되었습니다.","sms_write.php");
-/*
-		if($result == "" || $result == 0){
-			alert("발송에 실패 하였습니다.");
-			exit;
-		}else{
-			alert("발송되었습니다.","sms_write.php");
-			exit;
-		}
-*/
+		echo "<script>alert('발송되었습니다.'); parent.document.location.reload(); </script>";
+		exit;
 	break;
 
 	case "config_modify":

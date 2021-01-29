@@ -3604,14 +3604,14 @@ function get_write_token($bo_table)
 function check_write_token($bo_table)
 {
     if(!$bo_table)
-        alert('올바른 방법으로 이용해 주십시오1111111111111.', G5_URL);
+        alert('올바른 방법으로 이용해 주십시오.', G5_URL);
 
     $token = get_session('ss_write_'.$bo_table.'_token');
 
     set_session('ss_write_'.$bo_table.'_token', '');
 
     if(!$token || !$_REQUEST['token'] || $token != $_REQUEST['token'])
-        alert('올바른 방법으로 이용해 주십시오2222222222222.', G5_URL);
+        alert('올바른 방법으로 이용해 주십시오..', G5_URL);
 
     return true;
 }
@@ -4197,3 +4197,13 @@ function get_sms_mean_value($name, $start_id=0, $end_id=10, $selected="", $event
     return $str;
 }
 
+function alertReload($msg,$target="",$noscript=""){
+    $msg = str_replace(array("\n","'"),array("\\n","\'"),$msg);
+
+    if($target) $target = $target.".";
+    echo "<script>alert(\"$msg\"); ".$target."document.location.reload(); </script>";
+    echo "\n<noscript>\n";
+    echo $noscript;
+    echo "\n</noscript>";
+
+}

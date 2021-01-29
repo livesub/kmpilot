@@ -138,9 +138,35 @@ Class SURESMS{
 
 		if($RESULT=="O"){
 			$retSendResult = "1";
+			$RESULT_TMP = "1";
 		}else{
 			$retSendResult = "0";
+			$RESULT_TMP = "0";
 		}
+		$DATA = array(
+			"SEND_RESULT"	=> $RESULT_TMP,
+			"RECEIVE"		=> $retSendResult
+		);
+
+		foreach ($DATA as $key=>$val) $qry_arr[] = $key ." = ". quote($val);
+		$qry = "UPDATE CMS_SMS_RESULT SET " . implode(",",$qry_arr). " where idx='".$R_ID."'" ;
+		$result = sql_query($qry);
+	}
+
+	function UpdateSmsUserData2($R_ID,$RESULT){
+		global $SITE,$DB;
+
+		if($RESULT=="2"){	//서버 오류 일시
+			$retSendResult = "0";
+			$RESULT = "0";
+		}elseif($RESULT=="0"){	//슈어엠 오류가 아닌 리턴 값 오류 일때
+			$retSendResult = "1";
+			$RESULT = "0";
+		}else{
+			$retSendResult = "1";
+			$RESULT = "1";
+		}
+
 		$DATA = array(
 			"SEND_RESULT"	=> $RESULT,
 			"RECEIVE"		=> $retSendResult
@@ -216,6 +242,7 @@ Class SURESMS{
 
 	function send_mobile($R_DATA,$FILES=null){
 		global $SITE,$DB,$MEM,$CFG,$WebApp,$Wapp,$packettest,$usercode,$username,$deptcode,$deptname,$UserCode,$DeptCode,$DeptName;
+
 		if($R_DATA['sendtype']=="cms"){
 
 			$bytelimitChk	= strlen(charConvert($R_DATA["s_message"],2));
@@ -268,7 +295,8 @@ Class SURESMS{
 							$callphone1		= $setNumSeq[0];
 							$callphone2		= $setNumSeq[1];
 							$callphone3		= $setNumSeq[2];
-							$callmessage	= charConvert($R_DATA["s_message"],2);
+							//$callmessage	= charConvert($R_DATA["s_message"],2);
+							$callmessage	= $R_DATA["s_message"];
 							$rdate			= "00000000";
 							$rtime			= "000000";
 							$reqphone1		= $returnNum[0];
@@ -277,9 +305,15 @@ Class SURESMS{
 							$callname		= "";
 //							$result=$packettest->sendsms($SeqNo,$callphone1,$callphone2,$callphone3,$callmessage,$rdate,$rtime,$reqphone1,$reqphone2,$reqphone3,$callname);
 							$result=$this->sendsms2($SeqNo,$callphone1,$callphone2,$callphone3,$callmessage,$rdate,$rtime,$reqphone1,$reqphone2,$reqphone3,$callname,$CFG['cms_sms_number']);
-							$res =substr($result,94,1);
-
-							$this->UpdateSmsUserData($record_result,$res);
+							//$res =substr($result,94,1);
+							if($result == "success"){
+								$res = 1;
+							}else if($result == "server_error"){
+								$res = 2;	//슈어엠 서버 에러 일때 (500,403 기타 등등)
+							}else{
+								$res = 0;	//슈어엠 오류가 아닌 리턴 값 오류 일때
+							}
+							$this->UpdateSmsUserData2($record_result,$res);
 						}
 					}
 				}
@@ -330,14 +364,24 @@ Class SURESMS{
 							$CallPhone	= $setNumSeq[0].$setNumSeq[1].$setNumSeq[2];									//수신번호 ex)01012345678
 							$ReqPhone	= $returnNum[0].$returnNum[1].$returnNum[2];	//회신번호 ex)01078454545
 							$Time		= "";											//안 넣었을 경우 즉시 발송 예약시 ex) 20991225231100
-							$Subject	= charConvert($smsSubject,2);					//메시지 제목
-							$Msg		= charConvert($R_DATA["s_message"],2);			//메시지 내용
+							//$Subject	= charConvert($smsSubject,2);					//메시지 제목
+							$Subject	= $smsSubject;					//메시지 제목
+							//$Msg		= charConvert($R_DATA["s_message"],2);			//메시지 내용
+							$Msg		= $R_DATA["s_message"];			//메시지 내용
 							$filepath1	= $R_DATA['filepath1'];							//파일경로1
 							$filepath2	= $R_DATA['filepath2'];							//파일경로2
 							$filepath3	= "";							//파일경로3
-//							$result=$packettest->SendMms($SeqNo, $CallPhone, $ReqPhone, $Time, $Subject, $Msg,$filepath1,$filepath2,$filepath3);
+
 							$result=$this->SendMms2($SeqNo, $CallPhone, $ReqPhone, $Time, $Subject, $Msg,$filepath1,$filepath2,$filepath3,$CFG['cms_sms_number']);
-							$this->UpdateSmsUserData($record_result,$result);
+
+							if($result == "success"){
+								$res = 1;
+							}else if($result == "server_error"){
+								$res = 2;	//슈어엠 서버 에러 일때 (500,403 기타 등등)
+							}else{
+								$res = 0;	//슈어엠 오류가 아닌 리턴 값 오류 일때
+							}
+							$this->UpdateSmsUserData2($record_result,$res);
 						}
 					}
 				}
@@ -874,12 +918,19 @@ exit;
 		$err = curl_error($curl);
 
 		curl_close($curl);
-echo "sms_response====> ".$response;
-exit;
+
+		$data = json_decode($response);
+
 		if ($err) {
-		  echo "cURL Error #:" . $err;
+		  	//echo "cURL Error #:" . $err;
+			return "fail";
 		} else {
-		  echo $response;
+			if($data == ""){
+				return "server_error";
+			}else{
+				//echo $response;
+				return $data->results[0]->result; //success
+			}
 		}
 	}
 
@@ -888,51 +939,129 @@ exit;
 		global $UserCode, $DeptCode;
 
 		$curl = curl_init();
-		curl_setopt_array($curl, array(
-		  CURLOPT_URL => "https://rest.surem.com/mms/v1",
-		  CURLOPT_RETURNTRANSFER => true,
-		  CURLOPT_ENCODING => "",
-		  CURLOPT_MAXREDIRS => 10,
-		  CURLOPT_TIMEOUT => 30,
-		  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-		  CURLOPT_CUSTOMREQUEST => "POST",
 
-		  CURLOPT_POSTFIELDS => "{
-			'image1'		: '".$param_File1."',
-			'image2'		: '".$param_File2."',
-			'image3'		: '".$param_File3."',
-			'usercode'		: '".$UserCode."',
-			'deptcode'		: '".$DeptCode."',
-			'messages'		:
-			[{
-				'message_id': '".$param_SeqNo."',
-				'to'		: '".$param_CallPhone."'
-			}],
-			'subject'		: '".$param_Subject."',
-			'text'			: '".$param_Msg."',
-			'from'			: '".$cms_sms_number."',
-			'additional_information': '".$UserCode."'
-		}",
-		CURLOPT_HTTPHEADER => array(
-			"Content-Type: application/json",
-			"cache-control: no-cache"
-			),
-		));
+		if($param_File1 == "" && $param_File2 == "" && $param_File1 == "")
+		{
+			//이미지가 없는 lms
+			curl_setopt_array($curl, array(
+				CURLOPT_URL => 'https://rest.surem.com/lms/v1/json',
+				CURLOPT_RETURNTRANSFER => true,
+				CURLOPT_ENCODING => '',
+				CURLOPT_MAXREDIRS => 10,
+				CURLOPT_TIMEOUT => 0,
+				CURLOPT_FOLLOWLOCATION => true,
+				CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+				CURLOPT_CUSTOMREQUEST => 'POST',
+
+				CURLOPT_POSTFIELDS => "{
+					'usercode': '".$UserCode."',
+					'deptcode': '".$DeptCode."',
+					'messages':
+					[{
+						'message_id': '".$param_SeqNo."',
+						'to': '".$param_CallPhone."'
+					}],
+					'subject' : '".$param_Subject."',
+					'text': '".$param_Msg."',
+					'from': '".$cms_sms_number."',
+					'additional_information': '".$UserCode."'
+				}",
+				CURLOPT_HTTPHEADER => array(
+					"Content-Type: application/json",
+					"cache-control: no-cache"
+					),
+				));
+		}else{
+			//이미지 있는 메세지
+			if($param_File1 == "") $File1_json1 = "";
+			else $File1_json1 = new CURLFILE($param_File1);
+
+			if($param_File2 == "") $File1_json2 = "";
+			else $File1_json2 = new CURLFILE($param_File2);
+
+			if($param_File1 != "" && $param_File2 == ""){
+				//1이미지가 있을때
+				curl_setopt_array($curl, array(
+					CURLOPT_URL => 'http://rest.surem.com/mms/v1',
+					CURLOPT_RETURNTRANSFER => true,
+					CURLOPT_ENCODING => '',
+					CURLOPT_MAXREDIRS => 10,
+					CURLOPT_TIMEOUT => 0,
+					CURLOPT_FOLLOWLOCATION => true,
+					CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+					CURLOPT_CUSTOMREQUEST => 'POST',
+
+					CURLOPT_POSTFIELDS => array(
+						"image1"=> $File1_json1,
+						"reqJSON" 	=> '{
+							"usercode" : "'.$UserCode.'",
+							"deptcode" : "'.$DeptCode.'",
+							"messages" : [{
+								"message_id":"'.$param_SeqNo.'",
+								"to" : "'.$param_CallPhone.'"
+							}],
+							"subject" : "'.$param_Subject.'",
+							"text" : "'.$param_Msg.'",
+							"from" : "'.$cms_sms_number.'",
+							"additional_information": "'.$UserCode.'"
+						}'),
+						CURLOPT_HTTPHEADER => array(
+							"Content-Type: multipart/form-data",
+							"cache-control: no-cache"
+						),
+				));
+			}else{
+				//2이미지가 있을때
+				curl_setopt_array($curl, array(
+					CURLOPT_URL => 'http://rest.surem.com/mms/v1',
+					CURLOPT_RETURNTRANSFER => true,
+					CURLOPT_ENCODING => '',
+					CURLOPT_MAXREDIRS => 10,
+					CURLOPT_TIMEOUT => 0,
+					CURLOPT_FOLLOWLOCATION => true,
+					CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+					CURLOPT_CUSTOMREQUEST => 'POST',
+
+					CURLOPT_POSTFIELDS => array(
+						"image1"=> $File1_json1,
+						"image2"=> $File1_json2,
+						"reqJSON" 	=> '{
+							"usercode" : "'.$UserCode.'",
+							"deptcode" : "'.$DeptCode.'",
+							"messages" : [{
+								"message_id":"'.$param_SeqNo.'",
+								"to" : "'.$param_CallPhone.'"
+							}],
+							"subject" : "'.$param_Subject.'",
+							"text" : "'.$param_Msg.'",
+							"from" : "'.$cms_sms_number.'",
+							"additional_information": "'.$UserCode.'"
+						}'),
+						CURLOPT_HTTPHEADER => array(
+							"Content-Type: multipart/form-data",
+							"cache-control: no-cache"
+						),
+				));
+			}
+		}
 
 		$response = curl_exec($curl);
 		$err = curl_error($curl);
 
 		curl_close($curl);
-echo "mms_response====> ".$response;
-exit;
+		$data = json_decode($response);
+
 		if ($err) {
-		  echo "cURL Error #:" . $err;
+		  	//echo "cURL Error #:" . $err;
+			return "fail";
 		} else {
-		  echo $response;
+			if($data == ""){
+				return "server_error";
+			}else{
+				//echo $response;
+				return $data->results[0]->result; //success
+			}
 		}
-
 	}
-
-
 }
 ?>

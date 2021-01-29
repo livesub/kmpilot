@@ -7,6 +7,7 @@ auth_check_menu($auth, $sub_menu, "r");
 $g5['title'] = "카카오 친구톡 보내기";
 
 include_once(G5_ADMIN_PATH.'/admin.head.php');
+
 ?>
 
 <link rel="stylesheet" href="https://kmpilot.or.kr/CMS/_css/common.css" type="text/css" />

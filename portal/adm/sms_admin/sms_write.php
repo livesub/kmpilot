@@ -4,11 +4,10 @@ include_once("./_common.php");
 
 auth_check_menu($auth, $sub_menu, "r");
 
+
 $g5['title'] = "문자 보내기";
 
 include_once(G5_ADMIN_PATH.'/admin.head.php');
-
-
 ?>
 
 <link rel="stylesheet" href="https://kmpilot.or.kr/CMS/_css/common.css" type="text/css" />
@@ -533,8 +532,8 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 		f.cat_id.value = cat_id;
 		f.goods_id.value = goods_id;
 		f.target = 'ifrm_pop';
-		//f.action = 'http://heartcon.surem.com/pop_auto.php';
-		f.action = 'pop_auto.php';
+		f.action = 'http://heartcon.surem.com/pop_auto.php';
+		//f.action = 'pop_auto.php';
 		f.submit();
 	}
 
@@ -552,8 +551,8 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 
 	</div>
 </div>
-<!-- 중요
+
 <iframe width="0" height="0" name='hiddenframe' class="hiddenx"></iframe>
--->
+
 <?php
 include_once(G5_ADMIN_PATH.'/admin.tail.php');
