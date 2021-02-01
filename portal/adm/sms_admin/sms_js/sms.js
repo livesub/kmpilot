@@ -357,8 +357,10 @@ $(function(){
 				var bind_results = $.parseJSON(data);
 				if(bind_results.count > 0){
 					alert('삭제할 이미지가 없습니다.');
+					location.reload();
 				}else{
 					alert('삭제 되었습니다.');
+					location.reload();
 				}
 			}
 		});

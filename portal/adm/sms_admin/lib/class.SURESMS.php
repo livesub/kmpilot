@@ -940,7 +940,7 @@ exit;
 
 		$curl = curl_init();
 
-		if($param_File1 == "" && $param_File2 == "" && $param_File1 == "")
+		if($param_File1 == "" && $param_File2 == "" && $param_File3 == "")
 		{
 			//이미지가 없는 lms
 			curl_setopt_array($curl, array(
@@ -979,7 +979,10 @@ exit;
 			if($param_File2 == "") $File1_json2 = "";
 			else $File1_json2 = new CURLFILE($param_File2);
 
-			if($param_File1 != "" && $param_File2 == ""){
+			if($param_File3 == "") $File1_json3 = "";
+			else $File1_json3 = new CURLFILE($param_File3);
+
+			if($param_File1 != "" && $param_File2 == "" && $param_File3 == ""){
 				//1이미지가 있을때
 				curl_setopt_array($curl, array(
 					CURLOPT_URL => 'http://rest.surem.com/mms/v1',
@@ -992,7 +995,7 @@ exit;
 					CURLOPT_CUSTOMREQUEST => 'POST',
 
 					CURLOPT_POSTFIELDS => array(
-						"image1"=> $File1_json1,
+						"image1"	=> $File1_json1,
 						"reqJSON" 	=> '{
 							"usercode" : "'.$UserCode.'",
 							"deptcode" : "'.$DeptCode.'",

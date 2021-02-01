@@ -4196,14 +4196,3 @@ function get_sms_mean_value($name, $start_id=0, $end_id=10, $selected="", $event
     $str .= "</select>\n";
     return $str;
 }
-
-function alertReload($msg,$target="",$noscript=""){
-    $msg = str_replace(array("\n","'"),array("\\n","\'"),$msg);
-
-    if($target) $target = $target.".";
-    echo "<script>alert(\"$msg\"); ".$target."document.location.reload(); </script>";
-    echo "\n<noscript>\n";
-    echo $noscript;
-    echo "\n</noscript>";
-
-}
