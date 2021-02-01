@@ -13,9 +13,9 @@ if ($page < 1) $page = 1;
 
 $line = 0;
 
-$IDX = $_REQUEST['IDX'];
-if($IDX != ""){
-    $sql_IDX = " and PARENTIDX = $IDX ";
+$idx = $_REQUEST['IDX'];
+if($idx != ""){
+    $sql_IDX = " and PARENTIDX = $idx ";
 }else{
     $sql_IDX ="";
 }
@@ -26,7 +26,7 @@ $sr = $_REQUEST['sr'];
         case "error": $sql_sr = " and RECEIVE = '0' "; break;
         default : $sql_sr = ""; break;
     }
-//alert($IDX);
+//alert($idx);
 //if( isset($st) && !in_array($st, array('RECV_NAME', 'RPHONE3')) ){
 //    $st = '';
 //}
@@ -36,7 +36,7 @@ if ($st && trim($sv))
 else
     $sql_search = "";
 
-$total_res = sql_fetch("select count(*) as cnt from CMS_SMS_RESULT where IDX != 0 {$sql_IDX} {$sql_sr} {$sql_search} ");
+$total_res = sql_fetch("select count(*) as cnt from CMS_SMS_RESULT where IDX != 0 and IS_DEL != '1' {$sql_IDX} {$sql_sr} {$sql_search} ");
 $total_count = $total_res['cnt'];
 
 $total_page = (int)($total_count/$page_size) + ($total_count%$page_size==0 ? 0 : 1);
@@ -46,7 +46,7 @@ $vnum = $total_count - (($page-1) * $page_size);
 
 include_once(G5_ADMIN_PATH.'/admin.head.php');
 //alert($_SERVER['SCRIPT_NAME']);
-//$_SERVER['SCRIPT_NAME'] = $_SERVER['SCRIPT_NAME']."?st=$st&amp;sv=$sv&amp;sr=$sr&amp;IDX=$IDX&amp;page=";
+//$_SERVER['SCRIPT_NAME'] = $_SERVER['SCRIPT_NAME']."?st=$st&amp;sv=$sv&amp;sr=$sr&amp;IDX=$idx&amp;page=";
 ?>
 
 <form name="search_form" method="get" action="<?=$_SERVER['SCRIPT_NAME'];?>" class="local_sch01 local_sch" >
@@ -63,7 +63,7 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
     <option value="RECV_NAME"<?php echo get_selected('RECV_NAME', $st); ?>>이름</option>
     <option value="RPHONE3"<?php echo get_selected('RPHONE3', $st); ?>>휴대폰번호(뒷자리4개)</option>
 </select>
-<input type="hidden" value="<?=$IDX?>" name="IDX" id="IDX">
+<input type="hidden" value="<?=$idx?>" name="IDX" id="IDX">
 <label for="sv" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
 <input type="text" name="sv" value="<?php echo $sv; ?>" id="sv" >
 <input type="submit" value="검색" class="btn_submit">
@@ -95,7 +95,7 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
         </tr>
     <?php
     }
-    $qry = sql_query("select * from CMS_SMS_RESULT where IDX != 0 {$sql_IDX} {$sql_sr} {$sql_search} order by IDX desc limit $page_start, $page_size");
+    $qry = sql_query("select * from CMS_SMS_RESULT where IDX != 0 and IS_DEL != '1'{$sql_IDX} {$sql_sr} {$sql_search} order by IDX desc limit $page_start, $page_size");
     while($res = sql_fetch_array($qry)) {
         $bg = 'bg'.($line++%2);
 
@@ -123,15 +123,25 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 <!--        <td class="td_mng td_mng_s">-->
 <!--            <a href="./history_view.php?page=--><?php //echo $page; ?><!--&amp;st=--><?php //echo $st; ?><!--&amp;sv=--><?php //echo $sv; ?><!--&amp;wr_no=--><?php //echo $res['wr_no']; ?><!--" class="btn btn_03">수정</a>-->
 <!--        </td>-->
-        <td><a>재발송</a>  |  <a>삭제</a></td>
+        <td><button onclick="del_num('정말 삭제하시겠습니까?',<?=$res['IDX']?>)">삭제</button></td>
     </tr>
     <?php } ?>
     </tbody>
     </table>
 </div>
 
-<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, $_SERVER['SCRIPT_NAME']."?st=$st&amp;sv=$sv&amp;sr=$sr&amp;IDX=$IDX&amp;page="); ?>
+<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, $_SERVER['SCRIPT_NAME']."?st=$st&amp;sv=$sv&amp;sr=$sr&amp;IDX=$idx&amp;page="); ?>
 
 <?php
-//alert($_SERVER['SCRIPT_NAME']."?IDX={$IDX}");
+//alert($_SERVER['SCRIPT_NAME']."?IDX={$idx}");
 include_once(G5_ADMIN_PATH.'/admin.tail.php');
+?>
+<script>
+    function del_num($msg, $value){
+        if(confirm($msg)){
+           location.href="./history_num_delete.php?IDX="+$value;
+        }else{
+            return false;
+        }
+    }
+</script>

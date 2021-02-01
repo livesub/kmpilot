@@ -178,7 +178,7 @@ $total_count_fail = $total_count_result - $total_count_send_result;
         <td class="td_datetime"><?=date('Y-m-d', $res['REG_DATE'])?></td>
         <td class="td_datetime"><?=date('H:i', $res['REG_DATE'])?></td>
         <td class="td_num"><?=$res['S_COUNT']?></td>
-        <td><a href="<?=G5_SMS5_ADMIN_URL?>/history_num.php?IDX=<?=$res['IDX']?>">발송회원보기</a> | <a href="">삭제</a></td>
+        <td><a href="<?=G5_SMS5_ADMIN_URL?>/history_num.php?IDX=<?=$res['IDX']?>">발송회원보기</a> | <button onclick="del_list('정말 삭제하시겠습니까?',<?=$res['IDX']?>);">삭제</button></td>
 <!--        <td class="td_boolean">--><?php //echo $res['wr_booking']!='0000-00-00 00:00:00'?"<span title='{$res['wr_booking']}'>예약</span>":'';?><!--</td>-->
 <!--        <td class="td_num">--><?php //echo number_format($res['wr_total'])?><!--</td>-->
 <!--        <td class="td_num">--><?php //echo number_format($res['wr_success'])?><!--</td>-->
@@ -199,3 +199,13 @@ $total_count_fail = $total_count_result - $total_count_send_result;
 
 <?php
 include_once(G5_ADMIN_PATH.'/admin.tail.php');
+?>
+<script>
+    function del_list($msg, $value){
+        if(confirm($msg)){
+            location.href="./history_list_delete.php?IDX="+$value+"&amp;sv=<?=$sv?>&amp;SMS_MEAN=<?=$sms_mean?>&amp;fDate=<?=$fDate?>&amp;lDate=<?=$lDate?>&amp;send=<?=$send?>&amp;page=<?=$page?>";
+        }else{
+            return false;
+        }
+    }
+</script>
