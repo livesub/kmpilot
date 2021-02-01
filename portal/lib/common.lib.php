@@ -4177,7 +4177,7 @@ function quote($value) {
 function get_sms_mean_value($name, $start_id=0, $end_id=10, $selected="", $event=""){
     global $g5;
 
-    $str = "\n<select id=\"{$name}\" name=\"{$name}\"";
+    $str = "\n<select id=\"{$name}\" name=\"{$name}\" class='reset_form'";
     if ($event) $str .= " $event";
     $str .= ">\n";
     for ($i=$start_id; $i<=$end_id; $i++) {

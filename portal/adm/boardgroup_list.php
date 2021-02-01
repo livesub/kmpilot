@@ -97,7 +97,7 @@ $colspan = 10;
         <th scope="col"><?php echo subject_sort_link('gr_subject') ?>제목</a></th>
 <!--        <th scope="col">--><?php //echo subject_sort_link('gr_admin') ?><!--그룹관리자</a></th>-->
         <th scope="col">게시판</th>
-        <th scope="col">접근<br>사용</th>
+<!--        <th scope="col">접근<br>사용</th>-->
         <th scope="col">접근<br>회원수</th>
 <!--        <th scope="col">--><?php //echo subject_sort_link('gr_order') ?><!--출력<br>순서</a></th>-->
         <th scope="col">접속기기</th>
@@ -141,10 +141,10 @@ $colspan = 10;
 <!--        --><?php //} ?>
 <!--        </td>-->
         <td class="td_num"><a href="./board_list.php?sfl=a.gr_id&amp;stx=<?php echo $row['gr_id'] ?>"><?php echo $row2['cnt'] ?></a></td>
-        <td class="td_numsmall">
-             <label for="gr_use_access_<?php echo $i; ?>" class="sound_only">접근회원 사용</label>
-            <input type="checkbox" name="gr_use_access[<?php echo $i ?>]" <?php echo $row['gr_use_access']?'checked':'' ?> value="1" id="gr_use_access_<?php echo $i ?>">
-        </td>
+<!--        <td class="td_numsmall">-->
+<!--             <label for="gr_use_access_--><?php //echo $i; ?><!--" class="sound_only">접근회원 사용</label>-->
+<!--            <input type="checkbox" name="gr_use_access[--><?php //echo $i ?><!--]" --><?php //echo $row['gr_use_access']?'checked':'' ?><!-- value="1" id="gr_use_access_--><?php //echo $i ?><!--">-->
+<!--        </td>-->
         <td class="td_num"><a href="./boardgroupmember_list.php?gr_id=<?php echo $row['gr_id'] ?>"><?php echo $row1['cnt'] ?></a></td>
 <!--        <td class="td_numsmall">-->
 <!--            <label for="gr_order_--><?php //echo $i; ?><!--" class="sound_only">메인메뉴 출력순서</label>-->
@@ -179,10 +179,10 @@ $colspan = 10;
 </form>
 
 <div class="local_desc01 local_desc">
-    <p>
-        접근사용 옵션을 설정하시면 관리자가 지정한 회원만 해당 그룹에 접근할 수 있습니다.<br>
-        접근사용 옵션은 해당 그룹에 속한 모든 게시판에 적용됩니다.
-    </p>
+<!--    <p>-->
+<!--        접근사용 옵션을 설정하시면 관리자가 지정한 회원만 해당 그룹에 접근할 수 있습니다.<br>-->
+<!--        접근사용 옵션은 해당 그룹에 속한 모든 게시판에 적용됩니다.-->
+<!--    </p>-->
 </div>
 
 <?php
