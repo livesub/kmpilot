@@ -21,16 +21,17 @@ if (isset($sv) && trim($sv) && trim($sms_mean)){
         case "SMS_TYPE" :
         case "SPHONE3" :
         case "SEND_TYPE" : $sql_search = " and $sms_mean = '$sv' "; break;
-        case "SMS_MSG" : $sql_search = " and $sms_mean like '%$sv%' "; break;
+        case "SMS_MSG" : $sql_search = " and $sms_mean like '%$sv%' "; $sql_search_result = " and R_MSG like '%$sv%' "; break;
         default : $sql_search = "";
     }
 }else{
     $sql_search = "";
+    $sql_search_result = "";
 }
 
 $send = $_REQUEST['send'];
 $sql_join=" left join CMS_SMS_RESULT on CMS_SMS_DATA.IDX = CMS_SMS_RESULT.PARENTIDX ";
-$sql_oner="CMS_SMS_DATA.";
+$sql_owner="CMS_SMS_DATA.";
 if($send){
     switch ($send){
         case "success":  $sql_send = " and SEND_RESULT = '1' ";break;
@@ -39,7 +40,7 @@ if($send){
         default : $sql_send = ""; $sql_join=""; break;
     }
 }else{
-    $sql_send = ""; $sql_join= ""; $sql_oner="";
+    $sql_send = ""; $sql_join= ""; $sql_owner="";
 }
 
 //alert('조인 쿼리문 : '.$sql_join.' send 쿼리문 '.$sql_send);
@@ -54,21 +55,25 @@ if($lDate != ""){
 
 //alert('첫번째 일자 데이터 '.$a." 두번째 일자 데이터 ".$b);
 if((isset($fDate) && $fDate != "") && (isset($lDate) && $lDate != "") ){
-    $sql_date_search = " and from_unixtime($sql_oner REG_DATE, '%Y%m%d') between '".str_replace("-","",$fDate)."' and '".str_replace("-","",$lDate)."'";
+    $sql_date_search = " and from_unixtime($sql_owner REG_DATE, '%Y%m%d') between '".str_replace("-","",$fDate)."' and '".str_replace("-","",$lDate)."'";
+    $sql_date_search_result = " and from_unixtime(CMS_SMS_DATA.REG_DATE, '%Y%m%d') between '".str_replace("-","",$fDate)."' and '".str_replace("-","",$lDate)."'";
 }elseif($a && !$b){
     //alert('첫번째 일자 데이터 '.$fDate." 두번째 일자 데이터 ".$lDate);
-    $sql_date_search = " and from_unixtime($sql_oner REG_DATE, '%Y%m%d') >= '".str_replace("-","",$fDate)."'";
+    $sql_date_search = " and from_unixtime($sql_owner REG_DATE, '%Y%m%d') >= '".str_replace("-","",$fDate)."'";
+    $sql_date_search_result = " and from_unixtime(CMS_SMS_DATA.REG_DATE, '%Y%m%d') >= '".str_replace("-","",$fDate)."'";
 }elseif(!$a && $b){
     //alert('첫번째 일자 데이터 '.$fDate." 두번째 일자 데이터 ".$lDate);
-    $sql_date_search = " and from_unixtime($sql_oner REG_DATE, '%Y%m%d') <= '".str_replace("-","",$lDate)."'";
+    $sql_date_search = " and from_unixtime($sql_owner REG_DATE, '%Y%m%d') <= '".str_replace("-","",$lDate)."'";
+    $sql_date_search_result = " and from_unixtime(CMS_SMS_DATA.REG_DATE, '%Y%m%d') <= '".str_replace("-","",$lDate)."'";
 }elseif(!$a && !$b){
     //alert('첫번째 일자 데이터 '.$fDate." 두번째 일자 데이터 ".$lDate);
     $sql_date_search = "";
+    $sql_date_search_result = "";
 }
 //alert('방향'.$sql_date_search);
 //alert('시간좀 알아보기 1 : '.strtotime($fDate).' 시간 알아보기 2 : '.strtotime($lDate));
 
-$total_res = sql_fetch("select count(*) as cnt from CMS_SMS_DATA {$sql_join} where IS_DEL='0' {$sql_search} {$sql_date_search} {$sql_send}");
+$total_res = sql_fetch("select count(*) as cnt from CMS_SMS_DATA {$sql_join} where $sql_owner IS_DEL='0' {$sql_search} {$sql_date_search} {$sql_send}");
 //alert('search 쿼리문 : '.$sql_search.' date 쿼리문'.$sql_date_search);
 $total_count = $total_res['cnt'];
 
@@ -79,13 +84,23 @@ $vnum = $total_count - (($page-1) * $page_size);
 $line = 0;
 include_once(G5_ADMIN_PATH.'/admin.head.php');
 //alert('action 방향'.$_SERVER['SCRIPT_NAME']);
-$total_res_result = sql_fetch("select count(*) as cnt from CMS_SMS_RESULT");
-$total_count_result = $total_res_result['cnt'];
-$total_res_RECEIVE = sql_fetch("select count(*) as cnt from CMS_SMS_RESULT where RECEIVE = '1'");
-$total_count_RECEIVE = $total_res_RECEIVE['cnt'];
+//$total_res_result = sql_("select count(*) as cnt from {$sql_join} CMS_SMS_RESULT where IDX != 0 $sql_search $sql_date_search $sql_send ");
+//$total_count_result = $total_res_result['cnt'];
+//$total_res_RECEIVE = sql_fetch("select count(*) as cnt from CMS_SMS_RESULT {$sql_join} where RECEIVE = '1' $sql_search $sql_date_search $sql_send ");
+//$total_count_RECEIVE = $total_res_RECEIVE['cnt'];
+//$total_count_error = $total_count_result - $total_count_RECEIVE;
+//$total_res_send_result = sql_fetch("select count(*) as cnt from CMS_SMS_RESULT {$sql_join} where SEND_RESULT = '1' $sql_search $sql_date_search $sql_send ");
+//$total_count_send_result = $total_res_send_result['cnt'];
+//$total_count_fail = $total_count_result - $total_count_send_result;
+$kim_query = "select CMS_SMS_DATA.IDX,SEND_TYPE,SMS_TYPE,SPHONE1,SPHONE2,SPHONE3,SMS_MSG,S_COUNT,from_unixtime(CMS_SMS_DATA. REG_DATE, '%Y%m%d'), CMS_SMS_DATA.IS_DEL, CMS_SMS_DATA.REG_DATE, SEND_RESULT, RECEIVE from CMS_SMS_DATA left join CMS_SMS_RESULT on CMS_SMS_DATA.IDX = CMS_SMS_RESULT.PARENTIDX where CMS_SMS_DATA.IS_DEL='0' $sql_search $sql_date_search_result $sql_send order by CMS_SMS_DATA.IDX";
+$total_res_result = sql_query("select CMS_SMS_DATA.IDX,SEND_TYPE,SMS_TYPE,SPHONE1,SPHONE2,SPHONE3,SMS_MSG,S_COUNT,from_unixtime(CMS_SMS_DATA. REG_DATE, '%Y%m%d'), CMS_SMS_DATA.IS_DEL, CMS_SMS_DATA.REG_DATE, SEND_RESULT, RECEIVE from CMS_SMS_DATA left join CMS_SMS_RESULT on CMS_SMS_DATA.IDX = CMS_SMS_RESULT.PARENTIDX where CMS_SMS_DATA.IS_DEL='0' $sql_search $sql_date_search_result $sql_send order by CMS_SMS_DATA.IDX");
+$total_count_result = sql_num_rows($total_res_result);
+//alert('총 개수 확인 쿼리'.$kim_query);
+$total_res_RECEIVE = sql_query("select CMS_SMS_DATA.IDX,SEND_TYPE,SMS_TYPE,SPHONE1,SPHONE2,SPHONE3,SMS_MSG,S_COUNT,from_unixtime(CMS_SMS_DATA.REG_DATE, '%Y%m%d'), CMS_SMS_DATA.IS_DEL, CMS_SMS_DATA.REG_DATE, SEND_RESULT, RECEIVE from CMS_SMS_DATA left join CMS_SMS_RESULT on CMS_SMS_DATA.IDX = CMS_SMS_RESULT.PARENTIDX where CMS_SMS_DATA.IS_DEL='0' and RECEIVE='1' $sql_search $sql_date_search_result $sql_send order by CMS_SMS_DATA.IDX");
+$total_count_RECEIVE = sql_num_rows($total_res_RECEIVE);
 $total_count_error = $total_count_result - $total_count_RECEIVE;
-$total_res_send_result = sql_fetch("select count(*) as cnt from CMS_SMS_RESULT where SEND_RESULT = '1'");
-$total_count_send_result = $total_res_send_result['cnt'];
+$total_res_send_result = sql_query("select CMS_SMS_DATA.IDX,SEND_TYPE,SMS_TYPE,SPHONE1,SPHONE2,SPHONE3,SMS_MSG,S_COUNT,from_unixtime(CMS_SMS_DATA. REG_DATE, '%Y%m%d'), CMS_SMS_DATA.IS_DEL, CMS_SMS_DATA.REG_DATE, SEND_RESULT, RECEIVE from CMS_SMS_DATA left join CMS_SMS_RESULT on CMS_SMS_DATA.IDX = CMS_SMS_RESULT.PARENTIDX where CMS_SMS_DATA.IS_DEL='0' and SEND_RESULT='1' $sql_search $sql_date_search_result $sql_send order by CMS_SMS_DATA.IDX");
+$total_count_send_result = sql_num_rows($total_res_send_result);
 $total_count_fail = $total_count_result - $total_count_send_result;
 ?>
 
@@ -161,7 +176,7 @@ $total_count_fail = $total_count_result - $total_count_send_result;
     </tr>
     <?php
     }
-    $sql_content = "select $sql_oner IDX,SEND_TYPE,SMS_TYPE,SPHONE1,SPHONE2,SPHONE3,SMS_MSG,S_COUNT,from_unixtime($sql_oner REG_DATE, '%Y%m%d'), IS_DEL, $sql_oner REG_DATE from CMS_SMS_DATA {$sql_join} where IS_DEL='0' $sql_search $sql_date_search $sql_send order by IDX desc limit $page_start, $page_size";
+    $sql_content = "select $sql_owner IDX,SEND_TYPE,SMS_TYPE,SPHONE1,SPHONE2,SPHONE3,SMS_MSG,S_COUNT,from_unixtime($sql_owner REG_DATE, '%Y%m%d'), $sql_owner IS_DEL, $sql_owner REG_DATE from CMS_SMS_DATA {$sql_join} where $sql_owner IS_DEL='0' $sql_search $sql_date_search $sql_send order by IDX desc limit $page_start, $page_size";
     $qry = sql_query($sql_content);
     //alert('방향'.$sql_content);
     while($res = sql_fetch_array($qry)) {
