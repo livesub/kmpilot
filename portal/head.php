@@ -24,7 +24,6 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
 //언어팩 쿠키 저장 함수 경로 추가
 $ajaxpage = G5_URL.'/lang_change_portal.php';
 ?>
-
 <!-- 상단 시작 { -->
 <div id="hd">
     <h1 id="hd_h1"><?php echo $g5['title'] ?></h1>
@@ -117,9 +116,41 @@ $ajaxpage = G5_URL.'/lang_change_portal.php';
             <?php }  ?>
             <?php } else {  ?>
             <li><a href="<?php echo G5_BBS_URL ?>/register.php"><?=$lang['member_sign_up']?></a></li>
-            <li><a href="<?php echo G5_BBS_URL ?>/login.php"><?=$lang['member_login']?></a></li>
+<!--            <li><a href="--><?php //echo G5_BBS_URL ?><!--/login.php">--><?//=$lang['member_login']?><!--</a></li>-->
+            <li><button id="popup_open_btn"><?=$lang['member_login']?></button></li>
+            <div id="my_modal">
+                <?php
+                //include ('/kmpilot/portal/bbs/login.php');
+                //alert(G5_BBS_URL);
+                $_COOKIE['current_page'] = $_SERVER['REQUEST_URI'];
+                if( function_exists('social_check_login_before') ){
+                    $social_login_html = social_check_login_before();
+                }
+                //include_once('./_head.sub.php');
+                //$url = isset($_GET['url']) ? strip_tags($_GET['url']) : '';
+                $url = isset($_COOKIE['current_page']) ? strip_tags($_COOKIE['current_page']) : '';
+                // url 체크
+                check_url_host($url);
+                // 이미 로그인 중이라면
+                if ($is_member) {
+                    if ($url)
+                        goto_url($url);
+                    else
+                        goto_url(G5_URL);
+                }
+                $login_url        = login_url($url);
+                $login_action_url = G5_HTTPS_BBS_URL."/login_check.php";
+                // 로그인 스킨이 없는 경우 관리자 페이지 접속이 안되는 것을 막기 위하여 기본 스킨으로 대체
+                $login_file = $member_skin_path.'/login_modal.skin.php';
+                if (!file_exists($login_file))
+                    $member_skin_path   = G5_SKIN_PATH.'/member/basic';
+                include_once($member_skin_path.'/login_modal.skin.php');
+                run_event('member_login_tail', $login_url, $login_action_url, $member_skin_path, $url);
+//                include_once('./_tail.sub.php');
+                ?>
+            <a class="modal_close_btn">닫기</a>
+            </div>
             <?php }  ?>
-
         </ul>
     </div>
 
@@ -202,42 +233,29 @@ $ajaxpage = G5_URL.'/lang_change_portal.php';
             <div id="gnb_all_bg"></div>
         </div>
     </nav>
-    <script>
 
-    $(function(){
-        $(".gnb_menu_btn").click(function(){
-            $("#gnb_all, #gnb_all_bg").show();
-        });
-        $(".gnb_close_btn, #gnb_all_bg").click(function(){
-            $("#gnb_all, #gnb_all_bg").hide();
-        });
-    });
-    function lang_change()
-    {
-        var ajaxUrl = "<?=$ajaxpage?>";
-        $.ajax({
-            type		: "POST",
-            dataType    : "text",
-            url			: ajaxUrl,
-            data		: {
-                "lang_type" : $("#lang_change").val(),
-            },
-            success: function(data){
-                if(trim(data) == "OK"){
-                    location.href = "<?=G5_URL?>";
-                    //location.reload();
-                }
-                console.log(data);
-            },
-            error: function () {
-                    console.log('error');
-            }
-        });
-    }
-    </script>
 </div>
 <!-- } 상단 끝 -->
-
+<style>
+    #my_modal {
+        display: none;
+        width: 400px;
+        /*height: 200px;*/
+        /*padding: 20px 60px;*/
+        background-color: #dde4e9;
+        border: 1px solid #888;
+        border-radius: 3px;
+    }
+    #my_modal .modal_close_btn {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        -webkit-text-fill-color: #0f192a;
+    }
+    html.modal-open {
+        overflow-y: hidden;
+    }
+</style>
 
 <hr>
 
@@ -247,3 +265,87 @@ $ajaxpage = G5_URL.'/lang_change_portal.php';
 
     <div id="container">
         <?php if (!defined("_INDEX_")) { ?><h2 id="container_title"><span title="<?php echo get_text($g5['title']); ?>"><?php echo get_head_title($g5['title']); ?></span></h2><?php }
+        ?>
+        <script>
+
+            $(function(){
+                $(".gnb_menu_btn").click(function(){
+                    $("#gnb_all, #gnb_all_bg").show();
+                });
+                $(".gnb_close_btn, #gnb_all_bg").click(function(){
+                    $("#gnb_all, #gnb_all_bg").hide();
+                });
+            });
+            function lang_change()
+            {
+                var ajaxUrl = "<?=$ajaxpage?>";
+                $.ajax({
+                    type		: "POST",
+                    dataType    : "text",
+                    url			: ajaxUrl,
+                    data		: {
+                        "lang_type" : $("#lang_change").val(),
+                    },
+                    success: function(data){
+                        if(trim(data) == "OK"){
+                            location.href = "<?=G5_URL?>";
+                            //location.reload();
+                        }
+                        console.log(data);
+                    },
+                    error: function () {
+                        console.log('error');
+                    }
+                });
+            }
+            function modal(id) {
+
+                var zIndex = 9999;
+                var modal = $('#' + id);
+                //$("#my_modal").load("./portal/bbs/login.php");
+                // 모달 div 뒤에 희끄무레한 레이어
+                var bg = $('<div id=back_div>')
+                    .css({
+                        position: 'fixed',
+                        zIndex: zIndex,
+                        left: '0px',
+                        top: '0px',
+                        width: '100%',
+                        height: '100%',
+                        overflow: 'hidden',
+                        // 레이어 색갈은 여기서 바꾸면 됨
+                        backgroundColor: 'rgba(0,0,0,0.7)'
+                    })
+                    .appendTo('body');
+
+                modal
+                    .css({
+                        position: 'fixed',
+                        boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+
+                        // 시꺼먼 레이어 보다 한칸 위에 보이기
+                        zIndex: zIndex + 1,
+
+                        // div center 정렬
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        msTransform: 'translate(-50%, -50%)',
+                        webkitTransform: 'translate(-50%, -50%)'
+                    })
+                    .show()
+                    // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
+                    .find('.modal_close_btn')
+                    .on('click', function() {
+                        $('html').css('overflowY','scroll');
+                        bg.remove();
+                        modal.hide();
+                    });
+            }
+
+            $('#popup_open_btn').on('click', function() {
+                $('html').css('overflowY','hidden');
+                // 모달창 띄우기
+                modal('my_modal');
+            });
+        </script>

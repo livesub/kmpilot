@@ -967,9 +967,12 @@ function get_group_select($name, $selected='', $event='')
     $str = "<select id=\"$name\" name=\"$name\" $event>\n";
     for ($i=0; $row=sql_fetch_array($result); $i++) {
         if ($i == 0) $str .= "<option value=\"\">선택</option>";
-//        if($row['gr_subject'] != "Passage Plan" && $row['gr_subject'] != "홈페이지" && $row['gr_subject'] != "교육센터")
-        $str .= option_selected($row['gr_id'], $selected, $row['gr_subject']);
-
+        if($event == "not_board"){
+            if($row['gr_subject'] != "Passage Plan" && $row['gr_subject'] != "홈페이지" && $row['gr_subject'] != "교육센터")
+            $str .= option_selected($row['gr_id'], $selected, $row['gr_subject']);
+        }else{
+            $str .= option_selected($row['gr_id'], $selected, $row['gr_subject']);
+        }
     }
     $str .= "</select>";
     return $str;
@@ -4284,4 +4287,33 @@ function get_sms_mean_value($name, $start_id=0, $end_id=10, $selected="", $event
     }
     $str .= "</select>\n";
     return $str;
+}
+
+//도선구 번호를 이름을 변환
+function get_doseongu_name($name){
+    $value = "";
+    switch ($name){
+        case 0: $value = "해당사항없음"; break;
+        case 1: $value = "부산항"; break;
+        case 2: $value = "여수항"; break;
+        case 3: $value = "인천항"; break;
+        case 4: $value = "울산항"; break;
+        case 5: $value = "평택항"; break;
+        case 6: $value = "마산항"; break;
+        case 7: $value = "대산항"; break;
+        case 8: $value = "포항항"; break;
+        case 9: $value = "군산항"; break;
+        case 10: $value = "목포항"; break;
+        case 11: $value = "동해항"; break;
+        case 12: $value = "제주항"; break;
+    }
+    return $value;
+}
+
+//그룹 번호를 이름으로 변환하는 함수
+function get_group_name($number){
+    global $g5;
+    $sql_group_sel = " select gr_subject from {$g5['group_table']} where gr_id = $number ";
+    $subject = sql_fetch($sql_group_sel);
+    return $subject['gr_subject'];
 }
