@@ -216,7 +216,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
         <th scope="row"><label for="mb_password">비밀번호<?php echo $sound_only ?><?php if ($w=='u'){ ?>
                     <p>미 입력시 원래 비밀번호로 저장</p>
                 <?php } ?></label></th>
-        <td><input type="password" name="mb_password" id="mb_password" <?php echo $required_mb_password ?> class="frm_input <?php echo $required_mb_password ?>" size="15" maxlength="20"></td>
+        <td><input type="password" name="mb_password" id="mb_password" <?php echo $required_mb_password ?> class="frm_input <?php echo $required_mb_password ?>" size="15" maxlength="20" minlength="6"></td>
     </tr>
     <tr>
         <th scope="row"><label for="mb_img">회원이미지</label></th>
@@ -727,6 +727,8 @@ else
 //?>
 
 <script>
+    let pwTest = /[a-zA-Z\w!@#$%|^&|*|(|)]{6,20}/;
+    let searchPw = /[|~|`|-|_|+|=|?|>|<|,|.]/;
     function changePunishmentValue(){
         let sVal = $('#mb_applicable_or_not').val();
         let $punish_array = [];
@@ -793,6 +795,33 @@ function fmember_submit(f)
 
     if (!f.mb_img.value.match(/\.(gif|jpe?g|png)$/i) && f.mb_img.value) {
         alert('회원이미지는 이미지 파일만 가능합니다.');
+        return false;
+    }
+
+    if (f.mb_password.value.length > 0) {
+        if (f.mb_password.value.length < 6) {
+            alert("비밀번호를 6글자 이상 입력하십시오.");
+            f.mb_password.focus();
+            //f.mb_password.value = "";
+            return false;
+        }
+    }
+
+    if (!(pwTest.test(f.mb_password.value))) {
+        alert("비밀번호는 영어소문자 또는 대문자,특수문자(!@#$%^&*())숫자포함 6글자이상 20글자이하만 허용가능합니다.");
+        f.mb_password.focus();
+        return false;
+    }
+
+    if (searchPw.test(f.mb_password.value)) {
+        alert("비밀번호는 특수문자(!@#$%^&*())만 허용가능합니다.");
+        f.mb_password.focus();
+        return false;
+    }
+
+    if (f.mb_password.value.length > 20) {
+        alert("비밀번호는 6글자이상 20글자이하로 입력하십시오.");
+        f.mb_password.focus();
         return false;
     }
 
