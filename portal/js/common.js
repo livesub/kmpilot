@@ -750,6 +750,7 @@ function modal(id) {
     var zIndex = 9999;
     var modal = $('#' + id);
     console.log('모달 함수 들어옴');
+    $('#back_div').remove();
     // 모달 div 뒤에 희끄무레한 레이어
     var bg = $('<div id=back_div>')
         .css({
