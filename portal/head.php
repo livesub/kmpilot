@@ -56,49 +56,49 @@ $ajaxpage = G5_URL.'/lang_change_portal.php';
             <a href="<?php echo G5_URL ?>"><img src="<?php echo G5_IMG_URL ?>/logo.png" alt="<?php echo $config['cf_title']; ?>"></a>
         </div>
 
-        <div class="hd_sch_wr">
-            <fieldset id="hd_sch">
-                <legend>사이트 내 전체검색</legend>
-                <form name="fsearchbox" method="get" action="<?php echo G5_BBS_URL ?>/search.php" onsubmit="return fsearchbox_submit(this);">
-                <input type="hidden" name="sfl" value="wr_subject||wr_content">
-                <input type="hidden" name="sop" value="and">
-                <label for="sch_stx" class="sound_only">검색어 필수</label>
-                <input type="text" name="stx" id="sch_stx" maxlength="20" placeholder="검색어를 입력해주세요">
-                <button type="submit" id="sch_submit" value="검색"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">검색</span></button>
-                </form>
-
-                <script>
-                function fsearchbox_submit(f)
-                {
-                    if (f.stx.value.length < 2) {
-                        alert("검색어는 두글자 이상 입력하십시오.");
-                        f.stx.select();
-                        f.stx.focus();
-                        return false;
-                    }
-
-                    // 검색에 많은 부하가 걸리는 경우 이 주석을 제거하세요.
-                    var cnt = 0;
-                    for (var i=0; i<f.stx.value.length; i++) {
-                        if (f.stx.value.charAt(i) == ' ')
-                            cnt++;
-                    }
-
-                    if (cnt > 1) {
-                        alert("빠른 검색을 위하여 검색어에 공백은 한개만 입력할 수 있습니다.");
-                        f.stx.select();
-                        f.stx.focus();
-                        return false;
-                    }
-
-                    return true;
-                }
-                </script>
-
-            </fieldset>
-
-            <?php echo popular(); // 인기검색어, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정  ?>
-        </div>
+<!--        <div class="hd_sch_wr">-->
+<!--            <fieldset id="hd_sch">-->
+<!--                <legend>사이트 내 전체검색</legend>-->
+<!--                <form name="fsearchbox" method="get" action="--><?php //echo G5_BBS_URL ?><!--/search.php" onsubmit="return fsearchbox_submit(this);">-->
+<!--                <input type="hidden" name="sfl" value="wr_subject||wr_content">-->
+<!--                <input type="hidden" name="sop" value="and">-->
+<!--                <label for="sch_stx" class="sound_only">검색어 필수</label>-->
+<!--                <input type="text" name="stx" id="sch_stx" maxlength="20" placeholder="검색어를 입력해주세요">-->
+<!--                <button type="submit" id="sch_submit" value="검색"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">검색</span></button>-->
+<!--                </form>-->
+<!---->
+<!--                <script>-->
+<!--                function fsearchbox_submit(f)-->
+<!--                {-->
+<!--                    if (f.stx.value.length < 2) {-->
+<!--                        alert("검색어는 두글자 이상 입력하십시오.");-->
+<!--                        f.stx.select();-->
+<!--                        f.stx.focus();-->
+<!--                        return false;-->
+<!--                    }-->
+<!---->
+<!--                    // 검색에 많은 부하가 걸리는 경우 이 주석을 제거하세요.-->
+<!--                    var cnt = 0;-->
+<!--                    for (var i=0; i<f.stx.value.length; i++) {-->
+<!--                        if (f.stx.value.charAt(i) == ' ')-->
+<!--                            cnt++;-->
+<!--                    }-->
+<!---->
+<!--                    if (cnt > 1) {-->
+<!--                        alert("빠른 검색을 위하여 검색어에 공백은 한개만 입력할 수 있습니다.");-->
+<!--                        f.stx.select();-->
+<!--                        f.stx.focus();-->
+<!--                        return false;-->
+<!--                    }-->
+<!---->
+<!--                    return true;-->
+<!--                }-->
+<!--                </script>-->
+<!---->
+<!--            </fieldset>-->
+<!---->
+<!--            --><?php //echo popular(); // 인기검색어, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정  ?>
+<!--        </div>-->
         <ul class="hd_login">
             <?php if ($is_member) {  ?>
             <li><a href="<?php echo G5_BBS_URL ?>/member_confirm.php?url=<?php echo G5_BBS_URL ?>/register_form.php"><?=$lang['member_modi']?></a></li>
@@ -117,7 +117,7 @@ $ajaxpage = G5_URL.'/lang_change_portal.php';
             <?php } else {  ?>
             <li><a href="<?php echo G5_BBS_URL ?>/register.php"><?=$lang['member_sign_up']?></a></li>
 <!--            <li><a href="--><?php //echo G5_BBS_URL ?><!--/login.php">--><?//=$lang['member_login']?><!--</a></li>-->
-            <li><button id="popup_open_btn"><?=$lang['member_login']?></button></li>
+            <li><button id="popup_open_btn" onclick="modal('my_modal')"><?=$lang['member_login']?></button></li>
             <div id="my_modal">
                 <?php
                 //include ('/kmpilot/portal/bbs/login.php');
@@ -298,54 +298,5 @@ $ajaxpage = G5_URL.'/lang_change_portal.php';
                     }
                 });
             }
-            function modal(id) {
 
-                var zIndex = 9999;
-                var modal = $('#' + id);
-                //$("#my_modal").load("./portal/bbs/login.php");
-                // 모달 div 뒤에 희끄무레한 레이어
-                var bg = $('<div id=back_div>')
-                    .css({
-                        position: 'fixed',
-                        zIndex: zIndex,
-                        left: '0px',
-                        top: '0px',
-                        width: '100%',
-                        height: '100%',
-                        overflow: 'hidden',
-                        // 레이어 색갈은 여기서 바꾸면 됨
-                        backgroundColor: 'rgba(0,0,0,0.7)'
-                    })
-                    .appendTo('body');
-
-                modal
-                    .css({
-                        position: 'fixed',
-                        boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
-
-                        // 시꺼먼 레이어 보다 한칸 위에 보이기
-                        zIndex: zIndex + 1,
-
-                        // div center 정렬
-                        top: '50%',
-                        left: '50%',
-                        transform: 'translate(-50%, -50%)',
-                        msTransform: 'translate(-50%, -50%)',
-                        webkitTransform: 'translate(-50%, -50%)'
-                    })
-                    .show()
-                    // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
-                    .find('.modal_close_btn')
-                    .on('click', function() {
-                        $('html').css('overflowY','scroll');
-                        bg.remove();
-                        modal.hide();
-                    });
-            }
-
-            $('#popup_open_btn').on('click', function() {
-                $('html').css('overflowY','hidden');
-                // 모달창 띄우기
-                modal('my_modal');
-            });
         </script>

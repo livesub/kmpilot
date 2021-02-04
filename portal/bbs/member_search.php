@@ -1,13 +1,14 @@
 <?php
 include_once('./_common.php');
 include_once('./_head.php');
+$g5['title'] = "회원 검색";
 if(!$is_member){
     echo "<script>
-            alert('회원만 이용 가능한 곳입니다. 회원이시라면 로그인을 해주세요.');
-            $('#popup_open_btn').trigger('click');
-            $('#back_div').css('background', 'rgba(0,0,0,0.9)')
-            </script>";
+        alert('회원만 이용가능한 페이지 입니다. 로그인을 해주세요');
+        reLogin();
+    </script>";
 }
+
 $sql_common = " from {$g5['member_table']} ";
 $sql_del_mem = " and mb_memo = '' and {$g5['member_table']}.mb_id != 'yongsanzip' ";
 
@@ -68,16 +69,6 @@ $rows = $config['cf_page_rows'];
 $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if ($page < 1) $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
-
-// 탈퇴회원수
-//$sql = " select count(*) as cnt {$sql_common} {$sql_search} and mb_leave_date <> '' {$sql_order} ";
-//$row = sql_fetch($sql);
-//$leave_count = $row['cnt'];
-
-// 차단회원수
-//$sql = " select count(*) as cnt {$sql_common} {$sql_search} and mb_intercept_date <> '' {$sql_order} ";
-//$row = sql_fetch($sql);
-//$intercept_count = $row['cnt'];
 
 $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목록</a>';
 
@@ -188,3 +179,10 @@ $colspan = 16;
 
 <?php
 include_once('./_tail.php');
+?>
+<script>
+    $('#popup_open_btn').on('click', function() {
+        //모달창 띄우기
+        modal('my_modal');
+    });
+</script>

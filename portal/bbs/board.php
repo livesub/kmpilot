@@ -1,6 +1,7 @@
 <?php
 include_once('./_common.php');
-
+//include_once(G5_PATH.'/head.php');
+include_once(G5_PATH.'/head.sub.php');
 if (!$board['bo_table']) {
    alert('존재하지 않는 게시판입니다.', G5_URL);
 }
@@ -51,7 +52,11 @@ if ((isset($wr_id) && $wr_id) || (isset($wr_seo_title) && $wr_seo_title)) {
         if ($is_member)
             alert('글을 읽을 권한이 없습니다.', G5_URL);
         else
-            alert('글을 읽을 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', G5_BBS_URL.'/login.php?wr_id='.$wr_id.$qstr.'&amp;url='.urlencode(get_pretty_url($bo_table, $wr_id, $qstr)));
+            //alert('글을 읽을 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', G5_BBS_URL.'/login.php?wr_id='.$wr_id.$qstr.'&amp;url='.urlencode(get_pretty_url($bo_table, $wr_id, $qstr)));
+            echo "<script>
+        alert('회원만 이용가능한 페이지 입니다. 로그인을 해주세요');
+        reLogin();
+    </script>";
     }
 
     // 본인확인을 사용한다면
@@ -144,7 +149,11 @@ if ((isset($wr_id) && $wr_id) || (isset($wr_seo_title) && $wr_seo_title)) {
         if ($member['mb_id'])
             alert('목록을 볼 권한이 없습니다.', G5_URL);
         else
-            alert('목록을 볼 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', G5_BBS_URL.'/login.php?'.$qstr.'&url='.urlencode(G5_BBS_URL.'/board.php?bo_table='.$bo_table.($qstr?'&amp;':'')));
+            //alert('목록을 볼 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', G5_BBS_URL.'/login.php?'.$qstr.'&url='.urlencode(G5_BBS_URL.'/board.php?bo_table='.$bo_table.($qstr?'&amp;':'')));
+            echo "<script>
+        alert('목록을 볼 권한이 없습니다. 로그인을 해주세요');
+        reLogin();
+    </script>";
     }
 
     // 본인확인을 사용한다면
@@ -178,7 +187,7 @@ if ((isset($wr_id) && $wr_id) || (isset($wr_seo_title) && $wr_seo_title)) {
 
 $is_auth = $is_admin ? true : false;
 
-include_once(G5_PATH.'/head.sub.php');
+
 
 $width = $board['bo_table_width'];
 if ($width <= 100)
