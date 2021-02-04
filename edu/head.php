@@ -45,6 +45,7 @@ $ajaxpage = G5_URL.'/lang_change.php';
             <li><a href="<?php echo G5_BBS_URL ?>/board.php?bo_table=edu_notice_<?=$lang_type?>"><font color="#ffffff"><?=$lang['menu_notice']?></font></a></li>
             <li><a href="<?php echo G5_BBS_URL ?>/board.php?bo_table=edu_video_<?=$lang_type?>"><font color="#ffffff"><?=$lang['menu_movie']?></font></a></li>
             <li><a href="<?php echo G5_BBS_URL ?>/content.php?co_id=pilot_edu_list"><font color="#ffffff"><?=$lang['edu_title']?></font></a></li>
+            <li><a href="<?php echo G5_BBS_URL ?>/content.php?co_id=pilot_edu_list"><font color="#ffffff">신청 및 이수현황</font></a></li>
 
 
 <!-- 나중에 삭제 함

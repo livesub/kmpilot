@@ -57,6 +57,9 @@ $lang['edu_lecture_time'] = '강의 시간';
 $lang['edu_lecture_view'] = '강의 시청';
 $lang['edu_lecture_complete'] = '과목별 이수 현황';
 $lang['edu_lecture_play'] = '재생';
+$lang['edu_view'] = '이수';
+$lang['edu_no_view'] = '미이수';
+$lang['edu_status'] = '과목 이수 상태로 취소 하실수 없습니다.';
 
 
 $lang['lecture_login'] = '회원 전용 입니다.\\n로그인 후 이용해 보십시오.';

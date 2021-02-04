@@ -58,7 +58,7 @@ $ajaxpage_apply = G5_URL."/edu_process/ajax_lecture_apply.php";
         $apply_count = $row_cnt['apply_cnt'];
 
         //신청 여부
-        $row_status_result = sql_query(" select apply_idx from kmp_pilot_edu_apply where edu_idx = '{$row['edu_idx']}' and edu_type = '{$row['edu_type']}' and mb_id='{$member['mb_id']}' and apply_cancel = 'N' ");
+        $row_status_result = sql_query(" select apply_idx, lecture_completion_status from kmp_pilot_edu_apply where edu_idx = '{$row['edu_idx']}' and edu_type = '{$row['edu_type']}' and mb_id='{$member['mb_id']}' and apply_cancel = 'N' ");
         $apply_status = sql_num_rows($row_status_result);
         $row_status = sql_fetch_array($row_status_result);
 
@@ -80,10 +80,20 @@ $ajaxpage_apply = G5_URL."/edu_process/ajax_lecture_apply.php";
             if($apply_status != 0){
 
                 $apply_button = "<input type='button' class='btn btn_02' value='".$lang[lecture_apply]."' onclick='alert(\"$lang[edu_apply_pre]\");return false;'>";
-                $cancel_button = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='cancel_chk(\"{$row[edu_name_.$lang_type]}\",\"{$row[edu_type]}\",{$row[edu_idx]}, {$row_status[apply_idx]})'>";
+                if($row_status['lecture_completion_status'] == "Y"){
+                    //이수한 상태(모든 동영상을 다 본 상태)
+                    $cancel_button = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='alert(\"$lang[edu_status]\");return false;'>";
+                }else{
+                    $cancel_button = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='cancel_chk(\"{$row[edu_name_.$lang_type]}\",\"{$row[edu_type]}\",{$row[edu_idx]}, {$row_status[apply_idx]})'>";
+                }
             }else{
                 $apply_button = "<input type='button' class='btn btn_02' value='".$lang[lecture_apply]."' onclick='alert(\"$lang[edu_apply_pre]\");return false;'>";
-                $cancel_button = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='alert(\"$lang[edu_apply_pre]\");return false;'>";
+                if($row_status['lecture_completion_status'] == "Y"){
+                    //이수한 상태(모든 동영상을 다 본 상태)
+                    $cancel_button = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='alert(\"$lang[edu_status]\");return false;'>";
+                }else{
+                    $cancel_button = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='alert(\"$lang[edu_apply_pre]\");return false;'>";
+                }
             }
             $edu_receipt_status = edu_receipt_status($row['edu_receipt_status'],$lang);
         }else{
@@ -96,10 +106,20 @@ $ajaxpage_apply = G5_URL."/edu_process/ajax_lecture_apply.php";
                     //신청 버튼 처리 하기
                     if($apply_status != 0){
                         $apply_button = "<input type='button' class='btn btn_02' value='".$lang[lecture_apply]."' onclick='alert(\"$lang[edu_apply_ok]\");return false;'>";
-                        $cancel_button = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='cancel_chk(\"{$row[edu_name_.$lang_type]}\",\"{$row[edu_type]}\",{$row[edu_idx]}, {$row_status[apply_idx]})'>";
+                        if($row_status['lecture_completion_status'] == "Y"){
+                            //이수한 상태(모든 동영상을 다 본 상태)
+                            $cancel_button = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='alert(\"$lang[edu_status]\");return false;'>";
+                        }else{
+                            $cancel_button = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='cancel_chk(\"{$row[edu_name_.$lang_type]}\",\"{$row[edu_type]}\",{$row[edu_idx]}, {$row_status[apply_idx]})'>";
+                        }
                     }else{
                         $apply_button = "<input type='button' class='btn btn_02' value='".$lang[lecture_apply]."' onclick='alert(\"$lang[edu_apply_close]\");return false;'>";
-                        $cancel_button = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='alert(\"$lang[edu_apply_close]\");return false;'>";
+                        if($row_status['lecture_completion_status'] == "Y"){
+                            //이수한 상태(모든 동영상을 다 본 상태)
+                            $cancel_button = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='alert(\"$lang[edu_status]\");return false;'>";
+                        }else{
+                            $cancel_button = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='alert(\"$lang[edu_apply_close]\");return false;'>";
+                        }
                     }
                 }else{
                     //접수 마감 조건이 아닐시
@@ -107,10 +127,20 @@ $ajaxpage_apply = G5_URL."/edu_process/ajax_lecture_apply.php";
                     $edu_receipt_status = edu_receipt_status($row['edu_receipt_status'],$lang);
                     if($apply_status != 0){
                         $apply_button = "<input type='button' class='btn btn_02' value='".$lang[lecture_apply]."' onclick='alert(\"$lang[edu_apply_ok]\");return false;'>";
-                        $cancel_button = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='cancel_chk(\"{$row[edu_name_.$lang_type]}\",\"{$row[edu_type]}\",{$row[edu_idx]}, {$row_status[apply_idx]})'>";
+                        if($row_status['lecture_completion_status'] == "Y"){
+                            //이수한 상태(모든 동영상을 다 본 상태)
+                            $cancel_button = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='alert(\"$lang[edu_status]\");return false;'>";
+                        }else{
+                            $cancel_button = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='cancel_chk(\"{$row[edu_name_.$lang_type]}\",\"{$row[edu_type]}\",{$row[edu_idx]}, {$row_status[apply_idx]})'>";
+                        }
                     }else{
                         $apply_button = "<input type='button' class='btn btn_02' value='".$lang[lecture_apply]."' onclick='apply_chk(\"{$row[edu_name_.$lang_type]}\",\"{$row[edu_type]}\",{$row[edu_idx]})'>";
-                        $cancel_button = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='alert(\"$lang[edu_apply_no]\");return false;'>";
+                        if($row_status['lecture_completion_status'] == "Y"){
+                            //이수한 상태(모든 동영상을 다 본 상태)
+                            $cancel_button = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='alert(\"$lang[edu_status]\");return false;'>";
+                        }else{
+                            $cancel_button = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='alert(\"$lang[edu_apply_no]\");return false;'>";
+                        }
                     }
                 }
             }else{
@@ -120,19 +150,39 @@ $ajaxpage_apply = G5_URL."/edu_process/ajax_lecture_apply.php";
                     $edu_receipt_status = edu_receipt_status("C",$lang);
                     if($apply_status != 0){
                         $apply_button = "<input type='button' class='btn btn_02' value='".$lang[lecture_apply]."' onclick='alert(\"$lang[edu_apply_ok]\");return false;'>";
-                        $cancel_button = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='cancel_chk(\"{$row[edu_name_.$lang_type]}\",\"{$row[edu_type]}\",{$row[edu_idx]}, {$row_status[apply_idx]})'>";
+                        if($row_status['lecture_completion_status'] == "Y"){
+                            //이수한 상태(모든 동영상을 다 본 상태)
+                            $cancel_button = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='alert(\"$lang[edu_status]\");return false;'>";
+                        }else{
+                            $cancel_button = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='cancel_chk(\"{$row[edu_name_.$lang_type]}\",\"{$row[edu_type]}\",{$row[edu_idx]}, {$row_status[apply_idx]})'>";
+                        }
                     }else{
                         $apply_button = "<input type='button' class='btn btn_02' value='".$lang[lecture_apply]."' onclick='alert(\"$lang[edu_apply_close]\");return false;'>";
-                        $cancel_button = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='alert(\"$lang[edu_apply_close]\");return false;'>";
+                        if($row_status['lecture_completion_status'] == "Y"){
+                            //이수한 상태(모든 동영상을 다 본 상태)
+                            $cancel_button = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='alert(\"$lang[edu_status]\");return false;'>";
+                        }else{
+                            $cancel_button = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='alert(\"$lang[edu_apply_close]\");return false;'>";
+                        }
                     }
                 }else{
                     $edu_receipt_status = edu_receipt_status($row['edu_receipt_status'],$lang);
                     if($apply_status != 0){
                         $apply_button = "<input type='button' class='btn btn_02' value='".$lang[lecture_apply]."' onclick='alert(\"$lang[edu_apply_ok]\");return false;'>";
-                        $cancel_button = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='cancel_chk(\"{$row[edu_name_.$lang_type]}\",\"{$row[edu_type]}\",{$row[edu_idx]}, {$row_status[apply_idx]})'>";
+                        if($row_status['lecture_completion_status'] == "Y"){
+                            //이수한 상태(모든 동영상을 다 본 상태)
+                            $cancel_button = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='alert(\"$lang[edu_status]\");return false;'>";
+                        }else{
+                            $cancel_button = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='cancel_chk(\"{$row[edu_name_.$lang_type]}\",\"{$row[edu_type]}\",{$row[edu_idx]}, {$row_status[apply_idx]})'>";
+                        }
                     }else{
                         $apply_button = "<input type='button' class='btn btn_02' value='".$lang[lecture_apply]."' onclick='apply_chk(\"{$row[edu_name_.$lang_type]}\",\"{$row[edu_type]}\",{$row[edu_idx]})'>";
-                        $cancel_button = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='alert(\"$lang[edu_apply_no]\");return false;'>";
+                        if($row_status['lecture_completion_status'] == "Y"){
+                            //이수한 상태(모든 동영상을 다 본 상태)
+                            $cancel_button = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='alert(\"$lang[edu_status]\");return false;'>";
+                        }else{
+                            $cancel_button = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='alert(\"$lang[edu_apply_no]\");return false;'>";
+                        }
                     }
                 }
             }
@@ -167,9 +217,9 @@ $ajaxpage_apply = G5_URL."/edu_process/ajax_lecture_apply.php";
 <br><br>
 
 <?php
-$sql_on = " select count(*) as cnt from kmp_pilot_edu_list where edu_del_type = 'N' and edu_onoff_type = 'on' ";
-$row_on = sql_fetch($sql_on);
-$total_count_on = $row_on['cnt'];
+$sql_on_cnt = " select count(*) as cnt from kmp_pilot_edu_list where edu_del_type = 'N' and edu_onoff_type = 'on' ";
+$row_on_cnt = sql_fetch($sql_on_cnt);
+$total_count_on = $row_on_cnt['cnt'];
 
 $sql_list_on = " select * from kmp_pilot_edu_list where edu_del_type = 'N' and edu_onoff_type = 'on' order by edu_idx desc ";
 $result_on = sql_query($sql_list_on);
@@ -206,7 +256,7 @@ $result_on = sql_query($sql_list_on);
         $apply_count_on = $row_cnt_on['apply_cnt'];
 
         //신청 여부
-        $row_status_result_on = sql_query(" select apply_idx from kmp_pilot_edu_apply where edu_idx = '{$row_on['edu_idx']}' and edu_type = '{$row_on['edu_type']}' and mb_id='{$member['mb_id']}' and apply_cancel = 'N' ");
+        $row_status_result_on = sql_query(" select apply_idx, lecture_completion_status from kmp_pilot_edu_apply where edu_idx = '{$row_on['edu_idx']}' and edu_type = '{$row_on['edu_type']}' and mb_id='{$member['mb_id']}' and apply_cancel = 'N' ");
         $apply_status_on = sql_num_rows($row_status_result_on);
         $row_status_on = sql_fetch_array($row_status_result_on);
 
@@ -227,11 +277,21 @@ $result_on = sql_query($sql_list_on);
             //신청 버튼 처리 하기
             if($apply_status_on != 0){
                 $apply_button_on = "<input type='button' class='btn btn_02' value='".$lang[lecture_apply]."' onclick='alert(\"$lang[edu_apply_pre]\");return false;'>";
-                $cancel_button_on = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='cancel_chk(\"{$row_on[edu_name_.$lang_type]}\",\"{$row_on[edu_type]}\",{$row_on[edu_idx]}, {$row_status_on[apply_idx]})'>";
+                if($row_status_on['lecture_completion_status'] == "Y"){
+                    //이수한 상태(모든 동영상을 다 본 상태)
+                    $cancel_button_on = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='alert(\"$lang[edu_status]\");return false;'>";
+                }else{
+                    $cancel_button_on = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='cancel_chk(\"{$row_on[edu_name_.$lang_type]}\",\"{$row_on[edu_type]}\",{$row_on[edu_idx]}, {$row_status_on[apply_idx]})'>";
+                }
                 $lecture_button_on = "<input type='button' class='btn btn_02' value='".$lang[edu_lecture_ing]."' onclick='alert(\"$lang[edu_apply_pre]\");return false;'>";
             }else{
                 $apply_button_on = "<input type='button' class='btn btn_02' value='".$lang[lecture_apply]."' onclick='alert(\"$lang[edu_apply_pre]\");return false;'>";
-                $cancel_button_on = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='alert(\"$lang[edu_apply_pre]\");return false;'>";
+                if($row_status_on['lecture_completion_status'] == "Y"){
+                    //이수한 상태(모든 동영상을 다 본 상태)
+                    $cancel_button_on = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='alert(\"$lang[edu_status]\");return false;'>";
+                }else{
+                    $cancel_button_on = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='alert(\"$lang[edu_apply_pre]\");return false;'>";
+                }
                 $lecture_button_on = "<input type='button' class='btn btn_02' value='".$lang[edu_lecture_ing]."' onclick='alert(\"$lang[edu_apply_pre]\");return false;'>";
             }
             $edu_receipt_status_on = edu_receipt_status($row_on['edu_receipt_status'],$lang);
@@ -245,11 +305,21 @@ $result_on = sql_query($sql_list_on);
                     //신청 버튼 처리 하기
                     if($apply_status_on != 0){
                         $apply_button_on = "<input type='button' class='btn btn_02' value='".$lang[lecture_apply]."' onclick='alert(\"$lang[edu_apply_ok]\");return false;'>";
-                        $cancel_button_on = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='cancel_chk(\"{$row_on[edu_name_.$lang_type]}\",\"{$row_on[edu_type]}\",{$row_on[edu_idx]}, {$row_status_on[apply_idx]})'>";
+                        if($row_status_on['lecture_completion_status'] == "Y"){
+                            //이수한 상태(모든 동영상을 다 본 상태)
+                            $cancel_button_on = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='alert(\"$lang[edu_status]\");return false;'>";
+                        }else{
+                            $cancel_button_on = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='cancel_chk(\"{$row_on[edu_name_.$lang_type]}\",\"{$row_on[edu_type]}\",{$row_on[edu_idx]}, {$row_status_on[apply_idx]})'>";
+                        }
                         $lecture_button_on = "<input type='button' class='btn btn_02' value='".$lang[edu_lecture_ing]."' onclick='lecture_move(\"{$row_on[edu_type]}\",{$row_on[edu_idx]}, {$row_status_on[apply_idx]})'>";
                     }else{
                         $apply_button_on = "<input type='button' class='btn btn_02' value='".$lang[lecture_apply]."' onclick='alert(\"$lang[edu_apply_close]\");return false;'>";
-                        $cancel_button_on = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='alert(\"$lang[edu_apply_close]\");return false;'>";
+                        if($row_status_on['lecture_completion_status'] == "Y"){
+                            //이수한 상태(모든 동영상을 다 본 상태)
+                            $cancel_button_on = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='alert(\"$lang[edu_status]\");return false;'>";
+                        }else{
+                            $cancel_button_on = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='alert(\"$lang[edu_apply_close]\");return false;'>";
+                        }
                         $lecture_button_on = "<input type='button' class='btn btn_02' value='".$lang[edu_lecture_ing]."' onclick='alert(\"$lang[edu_apply_close]\");return false;'>";
                     }
                 }else{
@@ -258,11 +328,21 @@ $result_on = sql_query($sql_list_on);
                     $edu_receipt_status_on = edu_receipt_status($row_on['edu_receipt_status'],$lang);
                     if($apply_status_on != 0){
                         $apply_button_on = "<input type='button' class='btn btn_02' value='".$lang[lecture_apply]."' onclick='alert(\"$lang[edu_apply_ok]\");return false;'>";
-                        $cancel_button_on = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='cancel_chk(\"{$row_on[edu_name_.$lang_type]}\",\"{$row_on[edu_type]}\",{$row_on[edu_idx]}, {$row_status_on[apply_idx]})'>";
+                        if($row_status_on['lecture_completion_status'] == "Y"){
+                            //이수한 상태(모든 동영상을 다 본 상태)
+                            $cancel_button_on = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='alert(\"$lang[edu_status]\");return false;'>";
+                        }else{
+                            $cancel_button_on = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='cancel_chk(\"{$row_on[edu_name_.$lang_type]}\",\"{$row_on[edu_type]}\",{$row_on[edu_idx]}, {$row_status_on[apply_idx]})'>";
+                        }
                         $lecture_button_on = "<input type='button' class='btn btn_02' value='".$lang[edu_lecture_ing]."' onclick='lecture_move(\"{$row_on[edu_type]}\",{$row_on[edu_idx]}, {$row_status_on[apply_idx]})'>";
                     }else{
                         $apply_button_on = "<input type='button' class='btn btn_02' value='".$lang[lecture_apply]."' onclick='apply_chk(\"{$row_on[edu_name_.$lang_type]}\",\"{$row_on[edu_type]}\",{$row_on[edu_idx]})'>";
-                        $cancel_button_on = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='alert(\"$lang[edu_apply_no]\");return false;'>";
+                        if($row_status_on['lecture_completion_status'] == "Y"){
+                            //이수한 상태(모든 동영상을 다 본 상태)
+                            $cancel_button_on = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='alert(\"$lang[edu_status]\");return false;'>";
+                        }else{
+                            $cancel_button_on = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='alert(\"$lang[edu_apply_no]\");return false;'>";
+                        }
                         $lecture_button_on = "<input type='button' class='btn btn_02' value='".$lang[edu_lecture_ing]."' onclick='alert(\"$lang[edu_apply_no]\");return false;'>";
                     }
                 }
@@ -273,22 +353,42 @@ $result_on = sql_query($sql_list_on);
                     $edu_receipt_status_on = edu_receipt_status("C",$lang);
                     if($apply_status_on != 0){
                         $apply_button_on = "<input type='button' class='btn btn_02' value='".$lang[lecture_apply]."' onclick='alert(\"$lang[edu_apply_ok]\");return false;'>";
-                        $cancel_button_on = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='cancel_chk(\"{$row_on[edu_name_.$lang_type]}\",\"{$row_on[edu_type]}\",{$row_on[edu_idx]}, {$row_status_on[apply_idx]})'>";
+                        if($row_status_on['lecture_completion_status'] == "Y"){
+                            //이수한 상태(모든 동영상을 다 본 상태)
+                            $cancel_button_on = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='alert(\"$lang[edu_status]\");return false;'>";
+                        }else{
+                            $cancel_button_on = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='cancel_chk(\"{$row_on[edu_name_.$lang_type]}\",\"{$row_on[edu_type]}\",{$row_on[edu_idx]}, {$row_status_on[apply_idx]})'>";
+                        }
                         $lecture_button_on = "<input type='button' class='btn btn_02' value='".$lang[edu_lecture_ing]."' onclick='lecture_move(\"{$row_on[edu_type]}\",{$row_on[edu_idx]}, {$row_status_on[apply_idx]})'>";
                     }else{
                         $apply_button_on = "<input type='button' class='btn btn_02' value='".$lang[lecture_apply]."' onclick='alert(\"$lang[edu_apply_close]\");return false;'>";
-                        $cancel_button_on = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='alert(\"$lang[edu_apply_close]\");return false;'>";
+                        if($row_status_on['lecture_completion_status'] == "Y"){
+                            //이수한 상태(모든 동영상을 다 본 상태)
+                            $cancel_button_on = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='alert(\"$lang[edu_status]\");return false;'>";
+                        }else{
+                            $cancel_button_on = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='alert(\"$lang[edu_apply_close]\");return false;'>";
+                        }
                         $lecture_button_on = "<input type='button' class='btn btn_02' value='".$lang[edu_lecture_ing]."' onclick='alert(\"$lang[edu_apply_close]\");return false;'>";
                     }
                 }else{
                     $edu_receipt_status_on = edu_receipt_status($row_on['edu_receipt_status'],$lang);
                     if($apply_status_on != 0){
                         $apply_button_on = "<input type='button' class='btn btn_02' value='".$lang[lecture_apply]."' onclick='alert(\"$lang[edu_apply_ok]\");return false;'>";
-                        $cancel_button_on = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='cancel_chk(\"{$row_on[edu_name_.$lang_type]}\",\"{$row_on[edu_type]}\",{$row_on[edu_idx]}, {$row_status_on[apply_idx]})'>";
+                        if($row_status_on['lecture_completion_status'] == "Y"){
+                            //이수한 상태(모든 동영상을 다 본 상태)
+                            $cancel_button_on = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='alert(\"$lang[edu_status]\");return false;'>";
+                        }else{
+                            $cancel_button_on = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='cancel_chk(\"{$row_on[edu_name_.$lang_type]}\",\"{$row_on[edu_type]}\",{$row_on[edu_idx]}, {$row_status_on[apply_idx]})'>";
+                        }
                         $lecture_button_on = "<input type='button' class='btn btn_02' value='".$lang[edu_lecture_ing]."' onclick='lecture_move(\"{$row_on[edu_type]}\",{$row_on[edu_idx]}, {$row_status_on[apply_idx]})'>";
                     }else{
                         $apply_button_on = "<input type='button' class='btn btn_02' value='".$lang[lecture_apply]."' onclick='apply_chk(\"{$row_on[edu_name_.$lang_type]}\",\"{$row_on[edu_type]}\",{$row_on[edu_idx]})'>";
-                        $cancel_button_on = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='alert(\"$lang[edu_apply_no]\");return false;'>";
+                        if($row_status_on['lecture_completion_status'] == "Y"){
+                            //이수한 상태(모든 동영상을 다 본 상태)
+                            $cancel_button_on = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='alert(\"$lang[edu_status]\");return false;'>";
+                        }else{
+                            $cancel_button_on = "<input type='button' class='btn btn_02' value='".$lang[lecture_cancel]."' onclick='alert(\"$lang[edu_apply_no]\");return false;'>";
+                        }
                         $lecture_button_on = "<input type='button' class='btn btn_02' value='".$lang[edu_lecture_ing]."' onclick='alert(\"$lang[edu_apply_no]\");return false;'>";
                     }
                 }
