@@ -4196,3 +4196,34 @@ function get_sms_mean_value($name, $start_id=0, $end_id=10, $selected="", $event
     $str .= "</select>\n";
     return $str;
 }
+
+
+function edu_type($value){
+    switch ($value){
+        case 'CR':
+            $edu_type = '면허갱신교육';
+            break;
+        case 'CE':
+            $edu_type = '보수교육';
+            break;
+        case 'CC':
+            $edu_type = '필수도선사교육';
+            break;
+    }
+    return $edu_type;
+}
+
+function edu_receipt_status($value){
+    switch ($value){
+        case 'I':
+            $edu_receipt_status = "<font color='blue'><b>접수중</b></font>";
+            break;
+        case 'C':
+            $edu_receipt_status = "<font color='red'><b>접수마감</b></font>";
+            break;
+        case 'P':
+            $edu_receipt_status = "<font color='black'><b>준비중</b></font>";
+            break;
+    }
+    return $edu_receipt_status;
+}

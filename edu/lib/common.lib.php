@@ -3958,3 +3958,35 @@ function date_change($val){
     $date = date_create($val);
     return date_format($date, "D. d, Y");
 }
+
+
+function edu_way($val,$lang){
+    switch ($val) {
+        case 'on':
+            $dis_edu_way = $lang['edu_list_on'];
+            break;
+        case 'off':
+            $dis_edu_way = $lang['edu_list_off'];
+            break;
+        default:
+            $dis_edu_way = '문제 생겼음!!!';
+    }
+    return $dis_edu_way;
+}
+
+function edu_receipt_status($val,$lang){
+    switch ($val) {
+        case 'I':
+            $dis_edu_way = $lang['edu_list_receipt_ing'];
+            break;
+        case 'C':
+            $dis_edu_way = $lang['edu_list_receipt_close'];
+            break;
+        case 'P':
+            $dis_edu_way = $lang['edu_list_receipt_pre'];
+            break;
+        default:
+            $dis_edu_way = '문제 생겼음!!!';
+    }
+    return $dis_edu_way;
+}

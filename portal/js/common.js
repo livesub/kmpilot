@@ -69,7 +69,7 @@ function number_format(data)
     var cutlen = 3;
     var comma = ',';
     var i;
-    
+
     data = data + '';
 
     var sign = data.match(/^[\+\-]/);
@@ -416,7 +416,7 @@ var win_zip = function(frm_name, frm_zip, frm_addr1, frm_addr2, frm_addr3, frm_j
         if(of[frm_jibeon] !== undefined){
             of[frm_jibeon].value = data.userSelectedType;
         }
-        
+
         setTimeout(function(){
             of[frm_addr2].focus();
         } , 100);
@@ -745,3 +745,10 @@ $(function() {
         return true;
     });
 });
+
+
+function inNumber(){
+    if(event.keyCode<48 || event.keyCode>57){
+        event.returnValue=false;
+    }
+}
