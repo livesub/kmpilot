@@ -7,11 +7,18 @@ if($is_member <> 1){
     exit;
 }
 
-$sql = " select count(*) as cnt from kmp_pilot_edu_list where edu_del_type = 'N' and edu_onoff_type = 'off' ";
+//년도 검색
+$year_ch = $_GET['year_ch'];
+$default_year = 2021;
+$now_year = date("Y");
+if($year_ch == "") $select_y = $now_year;
+else $select_y = $year_ch;
+
+$sql = " select count(*) as cnt from kmp_pilot_edu_list where edu_del_type = 'N' and edu_onoff_type = 'off' and edu_cal_start like '%{$select_y}%' ";
 $row = sql_fetch($sql);
 $total_count = $row['cnt'];
 
-$sql_list = " select * from kmp_pilot_edu_list where edu_del_type = 'N' and edu_onoff_type = 'off' order by edu_idx desc ";
+$sql_list = " select * from kmp_pilot_edu_list where edu_del_type = 'N' and edu_onoff_type = 'off' and edu_cal_start like '%{$select_y}%' order by edu_idx asc ";
 $result = sql_query($sql_list);
 $now_date = date("Y-m-d");
 
@@ -21,6 +28,17 @@ $ajaxpage_apply = G5_URL."/edu_process/ajax_lecture_apply.php";
 <table>
     <tr>
         <td><b><?=$lang['edu_title']?></b></td>
+        <td> <?=$lang['edu_year_search']?>
+            <select name="year_ch" id="year_ch" onchange = "year_change();">
+<?php
+    for($k = $default_year; $k <= $now_year; $k++){
+?>
+                <option value="<?=$k?>" <?php if($k == $select_y) echo "selected"?>><?=$k?></option>
+<?php
+    }
+?>
+            </select>
+        </td>
     </tr>
 </table>
 <br><br>
@@ -217,11 +235,11 @@ $ajaxpage_apply = G5_URL."/edu_process/ajax_lecture_apply.php";
 <br><br>
 
 <?php
-$sql_on_cnt = " select count(*) as cnt from kmp_pilot_edu_list where edu_del_type = 'N' and edu_onoff_type = 'on' ";
+$sql_on_cnt = " select count(*) as cnt from kmp_pilot_edu_list where edu_del_type = 'N' and edu_onoff_type = 'on' and edu_cal_start like '%{$select_y}%' ";
 $row_on_cnt = sql_fetch($sql_on_cnt);
 $total_count_on = $row_on_cnt['cnt'];
 
-$sql_list_on = " select * from kmp_pilot_edu_list where edu_del_type = 'N' and edu_onoff_type = 'on' order by edu_idx desc ";
+$sql_list_on = " select * from kmp_pilot_edu_list where edu_del_type = 'N' and edu_onoff_type = 'on' and edu_cal_start like '%{$select_y}%' order by edu_idx asc ";
 $result_on = sql_query($sql_list_on);
 ?>
 <table>
@@ -416,6 +434,11 @@ $result_on = sql_query($sql_list_on);
 <?php if ($total_count_on == 0) { echo '<tr><td colspan="9" class="empty_table">'.$lang['edu_apply_list'].'</td></tr>'; } ?>
 </table>
 
+<script>
+    function year_change(){
+        location.href = "content.php?co_id=pilot_edu_list&year_ch="+$("#year_ch option:selected").val();
+    }
+</script>
 
 <script>
     function apply_chk(edu_name,edu_type,edu_idx){

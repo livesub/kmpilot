@@ -10,6 +10,7 @@ $lang = array();
 //Menu 관련
 $lang['menu_notice'] = 'NOTICE';
 $lang['menu_movie'] = 'MOVIE';
+$lang['menu_apply_status'] = 'eng 신청 및 이수현황';
 
 //회원 관련
 $lang['member_modi'] = 'Member_modify';
@@ -60,6 +61,21 @@ $lang['edu_lecture_play'] = 'eng 재생';
 $lang['edu_view'] = 'eng 이수';
 $lang['edu_no_view'] = 'eng 미이수';
 $lang['edu_status'] = 'eng 과목 이수 상태로 취소 하실수 없습니다.';
+$lang['edu_minute'] = ' minute';
+$lang['edu_year_search'] = 'eng 년도 검색';
+
+$lang['edu_apply_status'] = 'eng 교육 신청현황';
+$lang['edu_apply_status1'] = 'eng 교육 이수현황';
+$lang['edu_apply_start'] = 'eng 교육 시작일';
+$lang['edu_apply_end'] = 'eng 교육 종료일';
+$lang['edu_apply_status2'] = 'eng 상태';
+$lang['edu_apply_receipt_st'] = 'eng 접수완료';
+$lang['edu_apply_receipt_st1'] = 'eng 미접수';
+$lang['edu_apply_complete'] = "eng 수료여부";
+$lang['edu_apply_certificates'] = "eng 수료증";
+$lang['edu_print'] = "eng 인쇄";
+$lang['edu_apply_nocomplete'] = "eng 미수료 상태입니다.";
+
 
 
 $lang['lecture_login'] = 'eng 회원 전용 입니다.\\n로그인 후 이용해 보십시오.';

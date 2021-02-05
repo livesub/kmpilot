@@ -86,7 +86,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
         <td><?=$virtual_num?></td>
         <td><?=$row['lecture_subject']?></td>
         <td><?=$row['lecture_name']?></td>
-        <td><?=$row['lecture_time']?> 분</td>
+        <td><?=$row['lecture_time']?> <?=$lang['edu_minute']?></td>
         <td><input type='button' class='btn btn_02' value='<?=$lang['edu_lecture_play']?>' onclick='lecture_view(<?=$row[lecture_idx]?>)'></td>
         <td><?=$view_ment?></td>
     </tr>

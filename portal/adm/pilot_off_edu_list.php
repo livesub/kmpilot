@@ -81,9 +81,19 @@ $result = sql_query($sql);
 <?php
     $virtual_num = $total_count - $rows * ($page - 1);
     for ($i=0; $row=sql_fetch_array($result); $i++) {
+        $list_button = "";
         $edu_ment = "";
         $edu_ment = edu_type($row['edu_type']);
-        //접수 마감 로직 작업 해야 함(날짜 지나도 접수 마감이며, 인원이 꽉 차도 접수 마감이다)
+
+        $sql_cnt = " select count(*) as cnt from kmp_pilot_edu_apply where apply_cancel = 'N' and edu_idx = '{$row[edu_idx]}' and edu_type = '{$row[edu_type]}' ";
+        $row_cnt = sql_fetch($sql_cnt);
+        if($row_cnt['cnt'] == 0){
+            $list_button = "<input type='button' class='btn btn_02' value='리스트' onclick='alert(\"신청자가 없습니다.\");return false;'>";
+        }else{
+            $list_button = "<input type='button' class='btn btn_02' value='리스트' onclick='excel_down(\"{$row[edu_idx]}\",\"{$row[edu_type]}\");'>";
+        }
+
+        //접수 마감 로직 작업 해야 함(날짜 지나도 접수 마감이며, 인원이 꽉 차도 접수 마감이다) - 나중에 유지 보수로 해달라 할때 해줌으로 대료님과 협의
         $edu_receipt_status_dis = edu_receipt_status($row['edu_receipt_status']);
 ?>
     <tr>
@@ -91,9 +101,9 @@ $result = sql_query($sql);
         <td><?=$virtual_num?></td>
         <td><?=$edu_ment?></td>
         <td><?=$row['edu_name_kr']?></td>
-        <td><?=$edu_receipt_status_dis?><br>20 / <?=$row['edu_person']?></td>
+        <td><?=$edu_receipt_status_dis?><br><?=$row_cnt['cnt']?> / <?=$row['edu_person']?></td>
         <td><input type="button" class="btn btn_02" value="수정하기" onclick="location.href='pilot_edu_regi.php?edu_onoff_type=off&edu_idx=<?=$row[edu_idx]?>&edu_type=<?=$row[edu_type]?>&w=u' "></td>
-        <td><button class="btn btn_02">리스트</button></td>
+        <td><?=$list_button?></td>
         <td><button class="btn btn_02">관리</button></td>
     </tr>
 <?php
@@ -150,7 +160,18 @@ function edu_list_submit(f)
 </script>
 
 
+<form name="form_excel" id="form_excel" method="POST" action="pilot_apply_excel_down.php">
+    <input type="hidden" name="edu_idx" id="edu_idx" vlaue="">
+    <input type="hidden" name="edu_type" id="edu_type" vlaue="">
+</form>
 
+<script>
+    function excel_down(edu_idx,edu_type){
+        $("#edu_idx").val(edu_idx);
+        $("#edu_type").val(edu_type);
+        $("#form_excel").submit();
+    }
+</script>
 
 <?php
 include_once ('./admin.tail.php');
