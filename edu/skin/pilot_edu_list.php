@@ -70,6 +70,10 @@ $ajaxpage_apply = G5_URL."/edu_process/ajax_lecture_apply.php";
         $apply_button = "";
         $cancel_button = "";
         $edu_way = edu_way($row['edu_way'],$lang);
+        $edu_cal_end = "";
+        $edu_caln = "";
+        $edu_receipt_end = "";
+        $row_status = "";
 
         //현재 신청 인원 구하기
         $row_cnt = sql_fetch(" select count(*) as apply_cnt from kmp_pilot_edu_apply where edu_idx = '{$row['edu_idx']}' and edu_type = '{$row['edu_type']}' and apply_cancel = 'N' ");
@@ -267,6 +271,11 @@ $result_on = sql_query($sql_list_on);
         $apply_button_on = "";
         $cancel_button_on = "";
         $lecture_button_on = "";
+        $edu_cal_end_on = "";
+        $edu_cal_on = "";
+        $edu_receipt_end_on = "";
+        $row_status_on = "";
+
         $edu_way_on = edu_way($row_on['edu_way'],$lang);
 
         //현재 신청 인원 구하기

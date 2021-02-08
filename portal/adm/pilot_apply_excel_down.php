@@ -44,7 +44,7 @@ $result = sql_query($sql);
 $virtual_num = 1;
 for ($i=0; $row=sql_fetch_array($result); $i++) {
     //회원 정보 찾기
-    $row_mem = sql_fetch(" select * from kmp_member where mb_id = '{$row['mb_id']}' ");
+    $row_mem = sql_fetch(" select mb_name, mb_birth, mb_hp, mb_validity_day_from, mb_validity_day_to, mb_license_ext_day_from, mb_license_ext_day_to from kmp_member where mb_id = '{$row['mb_id']}' ");
 ?>
     <tr>
         <td><?=$virtual_num?></td>

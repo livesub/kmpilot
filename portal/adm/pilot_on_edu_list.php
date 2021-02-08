@@ -11,8 +11,15 @@ if($_GET['sfl'] != "" && $_GET['stx'] != ""){
     $search = " and {$_GET[sfl]} like '%{$_GET[stx]}%' ";
 }
 
+//년도 검색
+$year_ch = $_GET['year_ch'];
+$default_year = 2021;
+$now_year = date("Y");
+if($year_ch == "") $select_y = $now_year;
+else $select_y = $year_ch;
+
 $sql_common = " from kmp_pilot_edu_list ";
-$sql_order = " where edu_type = 'CC' and edu_onoff_type = 'on' and edu_del_type ='N' {$search} order by edu_idx desc";
+$sql_order = " where edu_type = 'CC' and edu_onoff_type = 'on' and edu_del_type ='N' {$search} and edu_cal_start like '%{$select_y}%' order by edu_idx desc";
 
 $sql = " select count(*) as cnt {$sql_common} {$sql_order} ";
 $row = sql_fetch($sql);
@@ -42,8 +49,19 @@ $result = sql_query($sql);
 <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
 <input type="text" name="stx" value="<?php echo $stx ?>" id="stx" required class="required frm_input">
 <input type="submit" class="btn_submit" value="검색">
-
+        <td> 년도 검색
+            <select name="year_ch" id="year_ch" onchange = "year_change();">
+<?php
+    for($k = $default_year; $k <= $now_year; $k++){
+?>
+                <option value="<?=$k?>" <?php if($k == $select_y) echo "selected"?>><?=$k?></option>
+<?php
+    }
+?>
+            </select>
+        </td>
 </form>
+
 
 <form name="edu_list_from" id="edu_list_from" onsubmit="return edu_list_submit(this);" method="post">
 <input type="hidden" name="page" value="<?php echo $page ?>">
@@ -54,7 +72,7 @@ $result = sql_query($sql);
     <?php if ($is_admin == 'super') { ?>
     <a href="./pilot_edu_regi.php?edu_onoff_type=on" id="edu_add" class="btn btn_01">교육등록</a>
     <?php } ?>
-    <a href="./pilot_mending_regi.php" id="renewal_add" class="btn btn_01">신청자 관리</a>
+    <input type="button" class="btn btn_01" value="신청자 관리" onclick="apply_manage_list('','','on','all');">
 </div>
 
 
@@ -94,7 +112,7 @@ $result = sql_query($sql);
             $list_button = "<input type='button' class='btn btn_02' value='리스트' onclick='excel_down(\"{$row[edu_idx]}\",\"{$row[edu_type]}\");'>";
         }
 
-        //접수 마감 로직 작업 해야 함(날짜 지나도 접수 마감이며, 인원이 꽉 차도 접수 마감이다) - 나중에 유지 보수로 해달라 할때 해줌으로 대료님과 협의
+        //접수 마감 로직 작업 해야 함(날짜 지나도 접수 마감이며, 인원이 꽉 차도 접수 마감이다) - 나중에 유지 보수로 해달라 할때 해줌으로 대표님과 협의
         $edu_receipt_status_dis = edu_receipt_status($row['edu_receipt_status']);
 ?>
     <tr>
@@ -106,7 +124,7 @@ $result = sql_query($sql);
         <td><input type="button" class="btn btn_02" value="강의등록" onclick="location.href='pilot_lecture_regi.php?edu_onoff_type=on&edu_idx=<?=$row[edu_idx]?>&edu_type=<?=$row[edu_type]?>' "></td>
         <td><input type="button" class="btn btn_02" value="수정하기" onclick="location.href='pilot_edu_regi.php?edu_onoff_type=on&edu_idx=<?=$row[edu_idx]?>&edu_type=<?=$row[edu_type]?>&w=u' "></td>
         <td><?=$list_button?></td>
-        <td><button class="btn btn_02">관리</button></td>
+        <td><input type="button" class="btn btn_02" value="관리" onclick="apply_manage_list('<?=$row[edu_idx]?>','<?=$row[edu_type]?>','<?=$row[edu_onoff_type]?>','select');"></td>
     </tr>
 <?php
         $virtual_num--;
@@ -161,19 +179,39 @@ function edu_list_submit(f)
 }
 </script>
 
-<form name="form_excel" id="form_excel" method="POST" action="pilot_apply_excel_down.php">
+<script>
+    function year_change(){
+        location.href = "pilot_on_edu_list.php?year_ch="+$("#year_ch option:selected").val();
+    }
+</script>
+
+<form name="form_submit" id="form_submit" method="POST" action="">
     <input type="hidden" name="edu_idx" id="edu_idx" vlaue="">
     <input type="hidden" name="edu_type" id="edu_type" vlaue="">
+    <input type="hidden" name="edu_onoff_type" id="edu_onoff_type" vlaue="">
+    <input type="hidden" name="choice_type" id="choice_type" vlaue="">
 </form>
 
 <script>
     function excel_down(edu_idx,edu_type){
         $("#edu_idx").val(edu_idx);
         $("#edu_type").val(edu_type);
-        $("#form_excel").submit();
+        $("#form_submit").attr("action", "pilot_apply_excel_down.php");
+        $("#form_submit").submit();
     }
 </script>
 
+<script>
+    function apply_manage_list(edu_idx='',edu_type='',edu_onoff_type,choice_type){
+        $("#edu_idx").val(edu_idx);
+        $("#edu_type").val(edu_type);
+        $("#edu_onoff_type").val(edu_onoff_type);
+        $("#choice_type").val(choice_type);
+        $("#form_submit").attr("method", "get");
+        $("#form_submit").attr("action", "pilot_apply_manage_list.php");
+        $("#form_submit").submit();
+    }
+</script>
 
 <?php
 include_once ('./admin.tail.php');

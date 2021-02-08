@@ -9,6 +9,12 @@ $g5['title'] = "문자 보내기";
 
 $result = sql_query(" select * from {$g5['group_table']} where gr_id != 'community' ");
 $group_cnt = mysqli_num_rows($result);
+
+//교육 총갯수 구하기
+$now_year = date("Y");
+$row_edu = sql_fetch(" select count(*) as cnt from kmp_pilot_edu_list where edu_del_type = 'N' and edu_cal_start like '%{$now_year}%' ");
+$eduCount = $row_edu['cnt'];
+
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -38,7 +44,7 @@ $group_cnt = mysqli_num_rows($result);
 		<ul class="default_group">
 			<li class="group"><a id="group_list" href="#">그룹<em id="groupCount">(<?=$group_cnt?>)</em></a></li>
 			<li class="branch"><a id="branch_list" href="#">지회<em id="branchCount">(12)</em></a></li>
-			<li class="branch edu"><a id="edu_list" href="#">교육<em id="eduCount">(<?=count($eduCount)?>)</em></a></li>
+			<li class="branch edu"><a id="edu_list" href="#">교육<em id="eduCount">(<?=$eduCount?>)</em></a></li>
         </ul>
 
 
@@ -67,6 +73,8 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 		<h3 id="listHeadLine">전체주소</h3>
 		<div class="search_bar">
 			<form name="addr_search" id="addr_search" onsubmit="return false;" action="">
+			<input type="hidden" name="now_year" id="now_year" value="<?=$now_year?>">
+
 			<fieldset>
 				<legend>쪽지 주소 찾기 검색폼</legend>
 				<label class="blind" for="addr_search">쪽지 주소찾기</label>

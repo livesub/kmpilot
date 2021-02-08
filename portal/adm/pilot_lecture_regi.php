@@ -26,8 +26,9 @@ $now_data_cnt = sql_num_rows($result);  //현재 저장된 데이터 갯수
 </div>
 
 <div class="btn_fixed_top">
-    <input type="button" class="btn btn_02" id="add_lecture" value="강의추가">
-    <input type="button" class="btn btn_02" id="add_del" value="강의삭제" onclick="add_lecture_del();">
+    <a href="./pilot_on_edu_list.php?<?php echo $qstr ?>" class="btn btn_02">목록</a>
+    <input type="button" class="btn btn_01" id="add_lecture" value="강의추가">
+    <input type="button" class="btn btn_01" id="add_del" value="강의삭제" onclick="add_lecture_del();">
 </div>
 
 <form id="flecture" name="flecture" class="local_sch01 local_sch" method="post">

@@ -11,8 +11,15 @@ if($_GET['sfl'] != "" && $_GET['stx'] != ""){
     $search = " and {$_GET[sfl]} like '%{$_GET[stx]}%' ";
 }
 
+//년도 검색
+$year_ch = $_GET['year_ch'];
+$default_year = 2021;
+$now_year = date("Y");
+if($year_ch == "") $select_y = $now_year;
+else $select_y = $year_ch;
+
 $sql_common = " from kmp_pilot_edu_list ";
-$sql_order = " where (edu_type = 'CR' OR edu_type = 'CE') and edu_onoff_type = 'off' and edu_del_type ='N' {$search} order by edu_idx desc";
+$sql_order = " where (edu_type = 'CR' OR edu_type = 'CE') and edu_onoff_type = 'off' and edu_del_type ='N' {$search} and edu_cal_start like '%{$select_y}%' order by edu_idx desc";
 
 $sql = " select count(*) as cnt {$sql_common} {$sql_order} ";
 $row = sql_fetch($sql);
@@ -42,6 +49,17 @@ $result = sql_query($sql);
 <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
 <input type="text" name="stx" value="<?php echo $stx ?>" id="stx" required class="required frm_input">
 <input type="submit" class="btn_submit" value="검색">
+<td> 년도 검색
+            <select name="year_ch" id="year_ch" onchange = "year_change();">
+<?php
+    for($k = $default_year; $k <= $now_year; $k++){
+?>
+                <option value="<?=$k?>" <?php if($k == $select_y) echo "selected"?>><?=$k?></option>
+<?php
+    }
+?>
+            </select>
+        </td>
 
 </form>
 
@@ -54,7 +72,7 @@ $result = sql_query($sql);
     <?php if ($is_admin == 'super') { ?>
     <a href="./pilot_edu_regi.php?edu_onoff_type=off" id="edu_add" class="btn btn_01">교육등록</a>
     <?php } ?>
-    <a href="./pilot_mending_regi.php" id="renewal_add" class="btn btn_01">신청자 관리</a>
+    <input type="button" class="btn btn_01" value="신청자 관리" onclick="apply_manage_list('','','off','all');">
 </div>
 
 
@@ -104,7 +122,7 @@ $result = sql_query($sql);
         <td><?=$edu_receipt_status_dis?><br><?=$row_cnt['cnt']?> / <?=$row['edu_person']?></td>
         <td><input type="button" class="btn btn_02" value="수정하기" onclick="location.href='pilot_edu_regi.php?edu_onoff_type=off&edu_idx=<?=$row[edu_idx]?>&edu_type=<?=$row[edu_type]?>&w=u' "></td>
         <td><?=$list_button?></td>
-        <td><button class="btn btn_02">관리</button></td>
+        <td><input type="button" class="btn btn_02" value="관리" onclick="apply_manage_list('<?=$row[edu_idx]?>','<?=$row[edu_type]?>','<?=$row[edu_onoff_type]?>','select');"></td>
     </tr>
 <?php
         $virtual_num--;
@@ -159,17 +177,37 @@ function edu_list_submit(f)
 }
 </script>
 
+<script>
+    function year_change(){
+        location.href = "pilot_off_edu_list.php?year_ch="+$("#year_ch option:selected").val();
+    }
+</script>
 
-<form name="form_excel" id="form_excel" method="POST" action="pilot_apply_excel_down.php">
+<form name="form_submit" id="form_submit" method="POST" action="">
     <input type="hidden" name="edu_idx" id="edu_idx" vlaue="">
     <input type="hidden" name="edu_type" id="edu_type" vlaue="">
+    <input type="hidden" name="edu_onoff_type" id="edu_onoff_type" vlaue="">
+    <input type="hidden" name="choice_type" id="choice_type" vlaue="">
 </form>
 
 <script>
     function excel_down(edu_idx,edu_type){
         $("#edu_idx").val(edu_idx);
         $("#edu_type").val(edu_type);
-        $("#form_excel").submit();
+        $("#form_submit").attr("action", "pilot_apply_excel_down.php");
+        $("#form_submit").submit();
+    }
+</script>
+
+<script>
+    function apply_manage_list(edu_idx='',edu_type='',edu_onoff_type,choice_type){
+        $("#edu_idx").val(edu_idx);
+        $("#edu_type").val(edu_type);
+        $("#edu_onoff_type").val(edu_onoff_type);
+        $("#choice_type").val(choice_type);
+        $("#form_submit").attr("method", "get");
+        $("#form_submit").attr("action", "pilot_apply_manage_list.php");
+        $("#form_submit").submit();
     }
 </script>
 
