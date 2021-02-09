@@ -39,13 +39,14 @@ if($_GET['sfl'] != "" && $_GET['stx'] != ""){
 
 include_once('./admin.head.php');
 
+$and_add = "";
 if($choice_type == "select"){
     //선택시
     $and_add = " and A.edu_idx = '{$edu_idx}' ";
 }
 
 $sql_common = " from kmp_pilot_edu_apply A, kmp_pilot_edu_list B ";
-$sql_order = " where A.apply_cancel = 'N' {$and_add} and A.edu_idx = B.edu_idx and A.edu_type = B.edu_type and B.edu_onoff_type = '{$edu_onoff_type}'  {$search} order by B.edu_idx desc";
+$sql_order = " where A.apply_cancel = 'N' {$and_add} and A.edu_idx = B.edu_idx and A.edu_type = B.edu_type and B.edu_onoff_type = '{$edu_onoff_type}' {$search} order by B.edu_idx desc";
 
 $sql = " select count(*) as cnt {$sql_common} {$sql_order} ";
 
@@ -66,7 +67,6 @@ $result = sql_query($sql);
 <input type="hidden" name="edu_type" id="edu_type" value="<?=$edu_type?>">
 <input type="hidden" name="choice_type" id="choice_type" value="<?=$choice_type?>">
 <input type="hidden" name="edu_onoff_type" id="edu_onoff_type" value="<?=$edu_onoff_type?>">
-
 
 <label for="sfl" class="sound_only">검색대상</label>
 <select name="sfl" id="sfl">
@@ -111,7 +111,6 @@ if($edu_onoff_type == "on"){
 }
 ?>
     </tr>
-
     </thead>
     <tbody>
 
