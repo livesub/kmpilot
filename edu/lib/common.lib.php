@@ -3990,3 +3990,30 @@ function edu_receipt_status($val,$lang){
     }
     return $dis_edu_way;
 }
+
+//관리자 접수 현황 자동 업뎃 하기
+function admin_apply_status_auto($edu_receipt_status,$edu_receipt_type,$apply_count,$edu_person,$edu_receipt_end="",$edu_idx,$edu_onoff_type,$edu_type){
+    $now_date = date("Y-m-d");
+    if($edu_receipt_status != "P"){
+        if($edu_receipt_type == "1"){
+            if($apply_count == $edu_person || $now_date > $edu_receipt_end){
+                //정원과 신청자가 같을때 와 접수 날짜가 지났을 때 접수 마감
+                $result_admin = sql_query(" update kmp_pilot_edu_list set edu_receipt_status='C' where edu_idx = '{$edu_idx}' and edu_onoff_type = '{$edu_onoff_type}' and edu_type = '{$edu_type}' ");
+            }else{
+                //신청자가 취소 하였거나 해서 정원이 변경 되었을 경우
+                $result_admin = sql_query(" update kmp_pilot_edu_list set edu_receipt_status='I' where edu_idx = '{$edu_idx}' and edu_onoff_type = '{$edu_onoff_type}' and edu_type = '{$edu_type}' ");
+            }
+        }else{
+            //접수 기간 종료일 미정일때
+            if($apply_count == $edu_person){
+                //정원과 신청자가 같을때 와 접수 날짜가 지났을 때 접수 마감
+                $result_admin = sql_query(" update kmp_pilot_edu_list set edu_receipt_status='C' where edu_idx = '{$edu_idx}' and edu_onoff_type = '{$edu_onoff_type}' and edu_type = '{$edu_type}' ");
+            }else{
+                //신청자가 취소 하였거나 해서 정원이 변경 되었을 경우
+                $result_admin = sql_query(" update kmp_pilot_edu_list set edu_receipt_status='I' where edu_idx = '{$edu_idx}' and edu_onoff_type = '{$edu_onoff_type}' and edu_type = '{$edu_type}' ");
+            }
+        }
+    }else{
+        $result_admin = sql_query(" update kmp_pilot_edu_list set edu_receipt_status='P' where edu_idx = '{$edu_idx}' and edu_onoff_type = '{$edu_onoff_type}' and edu_type = '{$edu_type}' ");
+    }
+}
