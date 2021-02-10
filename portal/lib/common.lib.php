@@ -785,13 +785,15 @@ function get_member_group_check($mb_id, $gr_id){
 }
 
 //특정 그룹이 특정 게시판에 들어왔을때 기록하는 함수
-function insert_group_member_check($bo_table, $mb_id, $wr_id, $gr_id){
+function insert_group_member_check($bo_table, $mb_id, $wr_id, $gr_id, $mb_name, $mb_doseongu){
     global $g5;
     $sql = " insert into {$g5['group_member_check_table']}
                 set mb_id = '$mb_id',
                     bo_table = '".$bo_table."',
                     wr_id = '".$wr_id."',
                     gr_id = '".$gr_id."',
+                    mb_name = '".$mb_name."',
+                    mb_doseongu = '".$mb_doseongu."',
                     gmc_date = '".G5_TIME_YMDHIS."'";
 
     if(sql_query($sql)){
@@ -4316,4 +4318,12 @@ function get_group_name($number){
     $sql_group_sel = " select gr_subject from {$g5['group_table']} where gr_id = $number ";
     $subject = sql_fetch($sql_group_sel);
     return $subject['gr_subject'];
+}
+
+//date 또는 datetime의 default 값을 ""로 변환하는 함수
+function date_return_empty_space($value){
+    if($value == "0000-00-00" || $value == "0000-00-00 00:00:00"){
+        $value = "";
+    }
+    return $value;
 }

@@ -338,6 +338,7 @@ gif, jpg, png파일만 가능하며 용량 <?php echo number_format($config['cf_
                             for($i=0; $row=sql_fetch_array($result_sel_punish); $i++){
                         ?>
                         <input type="text" id="mb_punishment" readonly class="frm_input" size="50" value="<?=$row['mb_applicable_or_not']?> - <?=$row['mb_punishment']?>      <?=$row['mb_punishment_date']?>">
+                                <br>
                         <?php
                                 $count_sel_punish ++;
                             } ?>

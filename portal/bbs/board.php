@@ -1,6 +1,6 @@
 <?php
 include_once('./_common.php');
-//include_once(G5_PATH.'/head.php');
+include_once(G5_PATH.'/head.php');
 include_once(G5_PATH.'/head.sub.php');
 if (!$board['bo_table']) {
    alert('존재하지 않는 게시판입니다.', G5_URL);

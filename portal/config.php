@@ -75,10 +75,15 @@ define('G5_CONTENT_DIR',    'content');
 if (G5_DOMAIN) {
     define('G5_URL', G5_DOMAIN);
 } else {
-    if (isset($g5_path['url']))
+    if (isset($g5_path['url'])){
         define('G5_URL', $g5_path['url']);
-    else
+        define('G5_URL_EN', $g5_path['url'].'_en');
+    }
+    else{
         define('G5_URL', '');
+        define('G5_URL_EN', '');
+    }
+
 }
 
 if (isset($g5_path['path'])) {

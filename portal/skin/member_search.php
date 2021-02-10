@@ -1,84 +1,85 @@
 <?php
-include_once('./_common.php');
-include_once('./_head.php');
+
 $g5['title'] = "회원 검색";
-if(!$is_member){
+
+if(!$is_member) {
     echo "<script>
         alert('회원만 이용가능한 페이지 입니다. 로그인을 해주세요');
         reLogin();
     </script>";
 }
+if($is_member) {
+    $sql_common = " from {$g5['member_table']} ";
+    $sql_del_mem = " and mb_memo = '' and {$g5['member_table']}.mb_id != 'yongsanzip' ";
 
-$sql_common = " from {$g5['member_table']} ";
-$sql_del_mem = " and mb_memo = '' and {$g5['member_table']}.mb_id != 'yongsanzip' ";
-
-if($member['mb_level'] == 10){
-    $sql_del_mem = null;
-}
-
-$sql_search = " where (1) ";
-if ($stx) {
-    $sql_search .= " and ( ";
-    switch ($sfl) {
-        case 'mb_level' :
-            $sql_search .= " ({$sfl} = '{$stx}') ";
-            break;
-        case 'mb_hp' :
-            $sql_search .= " ({$sfl} like '%{$stx}') ";
-            break;
-        default :
-            $sql_search .= " ({$sfl} like '{$stx}%') ";
-            break;
+    if ($member['mb_level'] == 10) {
+        $sql_del_mem = null;
     }
-    $sql_search .= " ) ";
-}
 
-if ($is_admin != 'super')
-    $sql_search .= " and mb_level <= '{$member['mb_level']}' ";
+    $sql_search = " where (1) ";
+    if ($stx) {
+        $sql_search .= " and ( ";
+        switch ($sfl) {
+            case 'mb_level' :
+                $sql_search .= " ({$sfl} = '{$stx}') ";
+                break;
+            case 'mb_hp' :
+                $sql_search .= " ({$sfl} like '%{$stx}') ";
+                break;
+            default :
+                $sql_search .= " ({$sfl} like '{$stx}%') ";
+                break;
+        }
+        $sql_search .= " ) ";
+    }
 
-if (!$sst) {
-    $sst = "mb_datetime";
-    $sod = "desc";
-}
-$mb_doseongu = $_REQUEST['do'];
-$mb_group = $_REQUEST['gr'];
+    if ($is_admin != 'super')
+        $sql_search .= " and mb_level <= '{$member['mb_level']}' ";
 
-if(isset($mb_doseongu) && $mb_doseongu != "" && $mb_doseongu != '0'){
-    $sql_doseongu = " and mb_doseongu = $mb_doseongu";
-}else{
-    $sql_doseongu ="";
-}
+    if (!$sst) {
+        $sst = "mb_datetime";
+        $sod = "desc";
+    }
+    $mb_doseongu = $_REQUEST['do'];
+    $mb_group = $_REQUEST['gr'];
 
-if(isset($mb_group) && $mb_group != ""){
-    $sql_join = " left join {$g5['group_member_table']} on {$g5['member_table']}.mb_id = {$g5['group_member_table']}.mb_id" ;
-    $sql_group_sel = " and gr_id = {$mb_group} ";
-    $sql_owner =" {$g5['member_table']} ";
-}else{
-    $sql_join = "";
-    $sql_owner = "";
-    $sql_group_sel ="";
-}
+    if (isset($mb_doseongu) && $mb_doseongu != "" && $mb_doseongu != '0') {
+        $sql_doseongu = " and mb_doseongu = $mb_doseongu";
+    } else {
+        $sql_doseongu = "";
+    }
 
-$sql_order = " order by {$sst} {$sod} ";
+    if (isset($mb_group) && $mb_group != "") {
+        $sql_join = " left join {$g5['group_member_table']} on {$g5['member_table']}.mb_id = {$g5['group_member_table']}.mb_id";
+        $sql_group_sel = " and gr_id = {$mb_group} ";
+        $sql_owner = " {$g5['member_table']} ";
+    } else {
+        $sql_join = "";
+        $sql_owner = "";
+        $sql_group_sel = "";
+    }
 
-$sql = " select count(*) as cnt {$sql_common} left join {$g5['group_member_table']} on {$g5['member_table']}.mb_id = {$g5['group_member_table']}.mb_id {$sql_search} {$sql_group_sel} {$sql_del_mem} {$sql_doseongu} {$sql_order} ";
-$row = sql_fetch($sql);
-$total_count = $row['cnt'];
+    $sql_order = " order by {$sst} {$sod} ";
 
-$rows = $config['cf_page_rows'];
-$total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
-if ($page < 1) $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
-$from_record = ($page - 1) * $rows; // 시작 열을 구함
+    $sql = " select count(*) as cnt {$sql_common} left join {$g5['group_member_table']} on {$g5['member_table']}.mb_id = {$g5['group_member_table']}.mb_id {$sql_search} {$sql_group_sel} {$sql_del_mem} {$sql_doseongu} {$sql_order} ";
+    $row = sql_fetch($sql);
+    $total_count = $row['cnt'];
 
-$listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목록</a>';
+    $rows = $config['cf_page_rows'];
+    $total_page = ceil($total_count / $rows);  // 전체 페이지 계산
+    if ($page < 1) $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
+    $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
-$g5['title'] = '회원검색';
+    $listall = '<a href="' . $_SERVER['SCRIPT_NAME'] . '/?co_id=member_search" class="ov_listall">전체목록</a>';
+//alert('서버 네임'.$_SERVER['SCRIPT_NAME']);
+    $g5['title'] = '회원검색';
 
-$sql = " select * {$sql_common} left join {$g5['group_member_table']} on {$g5['member_table']}.mb_id = {$g5['group_member_table']}.mb_id {$sql_search} {$sql_group_sel} {$sql_del_mem} {$sql_doseongu} {$sql_order} limit {$from_record}, {$rows} ";
+    $sql = " select * {$sql_common} left join {$g5['group_member_table']} on {$g5['member_table']}.mb_id = {$g5['group_member_table']}.mb_id {$sql_search} {$sql_group_sel} {$sql_del_mem} {$sql_doseongu} {$sql_order} limit {$from_record}, {$rows} ";
 //alert('쿼리문을 달라'.$sql);
-$result = sql_query($sql);
+    $result = sql_query($sql);
 //alert('조건문 확인 :'.$sql);
-$colspan = 16;
+    $colspan = 16;
+}
 ?>
 
     <div class="local_ov01 local_ov">
@@ -86,8 +87,9 @@ $colspan = 16;
         <?php echo $listall ?>
 <!--        <span class="btn_ov01"><span class="ov_txt">총회원수 </span><span class="ov_num"> --><?php //echo number_format($total_count) ?><!--명 </span></span>-->
     </div>
-
-    <form id="fsearch" name="fsearch" class="local_sch01 local_sch" method="get">
+<?php if($is_member) {?>
+    <form id="fsearch" name="fsearch" class="local_sch01 local_sch"  method="get">
+        <input type="hidden" id="co_id" name="co_id" value="member_search">
         <br>
         <label for="do">도선구별</label>
         <?php echo get_doseongu_select("do", 0,12, $mb_doseongu)?>
@@ -103,9 +105,9 @@ $colspan = 16;
         </select>
         <label for="stx" class="sound_only">검색어</label>
         <input type="text" name="stx" value="<?php echo $stx ?>" id="stx">
-        <input type="submit" class="btn_submit" value="검색">
+        <input type="submit" value="검색">
     </form>
-    <form name="fmemberlist" id="fmemberlist" action="./member_list_update.php" onsubmit="return fmemberlist_submit(this);" method="post">
+    <form name="fmemberlist" id="fmemberlist" action="" onsubmit="" method="post">
         <input type="hidden" name="sst" value="<?php echo $sst ?>">
         <input type="hidden" name="sod" value="<?php echo $sod ?>">
         <input type="hidden" name="sfl" value="<?php echo $sfl ?>">
@@ -167,7 +169,7 @@ $colspan = 16;
                     </tr>
                     <?php
                 }
-                if ($i == 0)
+                if ($i == 0 || !$is_member)
                     echo "<tr><td colspan=\"".$colspan."\" class=\"empty_table\">자료가 없습니다.</td></tr>";
                 ?>
                 </tbody>
@@ -175,14 +177,8 @@ $colspan = 16;
         </div>
     </form>
 
-<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, '?'.$qstr.'&amp;do='.$mb_doseongu.'&amp;gr='.$mb_group.'&amp;sfl='.$sfl.'&amp;stx='.$stx.'&amp;page='.$page); ?>
+<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, '?co_id=member_search'.$qstr.'&amp;do='.$mb_doseongu.'&amp;gr='.$mb_group.'&amp;sfl='.$sfl.'&amp;stx='.$stx.'&amp;page='.$page); ?>
 
 <?php
-include_once('./_tail.php');
+}
 ?>
-<script>
-    $('#popup_open_btn').on('click', function() {
-        //모달창 띄우기
-        modal('my_modal');
-    });
-</script>

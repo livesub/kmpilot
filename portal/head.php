@@ -287,9 +287,14 @@ $ajaxpage = G5_URL.'/lang_change_portal.php';
                         "lang_type" : $("#lang_change").val(),
                     },
                     success: function(data){
-                        if(trim(data) == "OK"){
-                            location.href = "<?=G5_URL?>";
+                        if(trim(data) == "en"){
+                            //여기서 분기점을 이용해 영문페이지로 넘기자
+                            //location.replace("<?=G5_URL?>");
+                            location.href = "<?=G5_URL?>/index_en.php";
                             //location.reload();
+                        }else{
+                            //location.replace("<?=G5_URL?>");
+                            location.href = "<?=G5_URL?>";
                         }
                         console.log(data);
                     },

@@ -130,7 +130,7 @@ $total_count_fail = $total_count_result - $total_count_send_result;
         </tr>
         <tr>
             <td style="text-align: center">총계</td><td style="text-align: center">오류</td><td style="text-align: center">정상</td>
-            <td style="text-align: center">발송요총</td><td style="text-align: center">실패</td><td style="text-align: center">성공</td>
+            <td style="text-align: center">발송요청</td><td style="text-align: center">실패</td><td style="text-align: center">성공</td>
         </tr>
         <tr>
             <td style="text-align: center"><?=$total_count_result?>건</td><td style="text-align: center"><?=$total_count_error?>건</td><td style="text-align: center"><?=$total_count_RECEIVE?>건</td>

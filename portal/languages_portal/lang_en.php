@@ -7,10 +7,20 @@ Language: ENGLISH
 $lang_type = 'en';
 $lang = array();
 
+//title 관련
+$lang['Korea Marti']= '';
+
 //Menu 관련
+$lang['about_association']='About Association';
+$lang['welcome_message']='Welcome Message';
+$lang['history']='History';
+$lang['history2'] ='History · Organization';
+$lang['honor_pilot']='Honor Pilot';
 $lang['menu_notice'] = 'NOTICE';
 $lang['menu_movie'] = 'MOVIE';
-
+$lang['new_pr']='News · PR';
+$lang['news']='News';
+$lang['magazine']='Magazine';
 //헤더 관련
 $lang['connect_user'] = 'CONNECT USER';
 

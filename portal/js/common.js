@@ -800,11 +800,7 @@ function reLogin(){
     //alert('회원만 이용 가능한 곳입니다. 회원이시라면 로그인을 해주세요.');
     $('#back_div').css('background', 'rgba(0,0,0,0.9)');
     $('.modal_close_btn').off('click').on('click', function() {
-        if(confirm('로그인을 하지 않으셨습니다. 홈으로 이동하시겠습니까?')){
-            location.replace(g5_url);
-            return false;
-        }else{
-            reLogin();
-        }
+      //닫기 클릭 시 메인으로 이동
+        location.replace(g5_url);
     });
 }
