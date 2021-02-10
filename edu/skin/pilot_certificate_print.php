@@ -33,9 +33,9 @@ if($row_cp_cnt == 0){
     exit;
 }
 
-$edu_cal_end = explode("-",$row['edu_cal_end']);
-$year_mk = substr($edu_cal_end[0],2,2);
-
+//$edu_cal_end = explode("-",$row['edu_cal_end']);
+//$year_mk = substr($edu_cal_end[0],2,2);
+$year_mk = date("y");
 $no_mk = $row['edu_type']." ".$year_mk." - "; //코드 번호 정해 지지 않음!!
 
 //유효 기간은 교육 종료 일 부터 2년

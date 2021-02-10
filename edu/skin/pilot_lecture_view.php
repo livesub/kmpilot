@@ -27,7 +27,7 @@ if($apply_count == 0){
     exit;
 }
 
-//강의를 불러옴
+//교육을 불러옴
 $row = sql_fetch(" select * from kmp_pilot_lecture_list where lecture_idx='{$lecture_idx}' and edu_idx = '{$edu_idx}' and edu_type = '{$edu_type}' and lecture_del_type = 'N' ");
 $youtube_id = youtube_url($row['lecture_youtube']);
 
@@ -137,8 +137,8 @@ $ajaxpage_view_save = G5_URL."/edu_process/ajax_lecture_view_save.php";
             total_see = total_playTime - tmp_time;
 
 <?php
-//이미 동영상을 시청 했다면 다시 저장 하지 않는다
-if($view_count == 0){
+//이미 동영상을 시청 했거나 교육 기간이 지났을 경우 저장 하지 않는다
+if($view_count == 0 || $now_date <= $row['edu_cal_end']){
 ?>
             //동영상 총 시간과 영상 본시간이 같으면 디비에 저장
             if(total_playTime == total_see){
@@ -208,6 +208,12 @@ if($view_count == 1){
     echo "
         <script>
             document.getElementById('lecture_complet').innerHTML = '{$row['lecture_subject']} {$lang['lecture_complete']}';
+        </script>
+    ";
+}else if($view_count == 0 && $now_date > $row['edu_cal_end']){
+    echo "
+        <script>
+            document.getElementById('lecture_complet').innerHTML = '{$lang['lecture_date_end']}';
         </script>
     ";
 }

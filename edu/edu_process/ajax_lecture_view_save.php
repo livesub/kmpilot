@@ -10,6 +10,7 @@ if($is_member <> 1){
     $lecture_idx = $_POST['lecture_idx'];
     $apply_idx = $_POST['apply_idx'];
     $edu_idx = $_POST['edu_idx'];
+    $now_year = date("Y");
 
     if($edu_idx == "" || $apply_idx == "" || $lecture_idx == ""){
         echo "fail";
@@ -17,7 +18,7 @@ if($is_member <> 1){
     }
 
     //신청자인지 판단
-    $row_cnt = sql_fetch(" select count(*) as apply_cnt from kmp_pilot_edu_apply where edu_idx = '{$edu_idx}' and apply_idx = '{$apply_idx}' and apply_cancel = 'N' ");
+    $row_cnt = sql_fetch(" select count(*) as apply_cnt from kmp_pilot_edu_apply where edu_idx = '{$edu_idx}' and apply_idx = '{$apply_idx}' and apply_cancel = 'N' and mb_id='{$member['mb_id']}' ");
     $apply_count = $row_cnt['apply_cnt'];
 
     if($apply_count == 0){
@@ -39,6 +40,9 @@ if($is_member <> 1){
         $view_movie_count = $view_movie_cnt['view_cnt'];
 
         if($total_count == $view_movie_count){
+            //수료증 번호 만들기(월요일 부터)
+
+
             //DB 에 완료 저장
             $result_up = sql_query(" update kmp_pilot_edu_apply set lecture_completion_date = now(), lecture_completion_status = 'Y' where apply_idx = '{$apply_idx}' and mb_id='{$member['mb_id']}' ");
         }

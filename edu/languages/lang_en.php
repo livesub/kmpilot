@@ -95,6 +95,7 @@ $lang['lecture_start'] = 'eng수강';
 $lang['lecture_no_start'] = ' eng강의 시작 전입니다.';
 $lang['lecture_no_end'] = ' eng강의가 종료 되었습니다.';
 $lang['lecture_complete'] = ' eng수강을 완료 하셨습니다.';
+$lang['lecture_date_end'] = '교육 기간이 지나서 수강을 완료 할수 없습니다.';
 $lang['lecture_print'] = 'eng발급하기';
 $lang['lecture_list'] = 'eng목록';
 
