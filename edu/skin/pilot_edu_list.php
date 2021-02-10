@@ -92,7 +92,7 @@ $ajaxpage_apply = G5_URL."/edu_process/ajax_lecture_apply.php";
             if($row['edu_cal_end'] != "") $edu_cal_end = " ~ {$row['edu_cal_end']}";
             $edu_cal = $row['edu_cal_start'].$edu_cal_end;
 
-            if($row['edu_receipt_end'] != "") $edu_receipt_end = " ~ {$row['edu_receipt_end']}";
+            if($row['edu_receipt_type'] != "0") $edu_receipt_end = " ~ {$row['edu_receipt_end']}";
             $edu_receipt = $row['edu_receipt_start'].$edu_receipt_end;
         }
 
@@ -120,11 +120,12 @@ $ajaxpage_apply = G5_URL."/edu_process/ajax_lecture_apply.php";
             $edu_receipt_status = edu_receipt_status($row['edu_receipt_status'],$lang);
         }else{
             //접수현황 프로세서(마감 조건은 1.인원이 모두 찼거나 2. 기간이 지났거나 3. 관리자가 변경했거나 준비중일때는 "준비중입니다" 접수마감은 "접수가 마감되었습니다.")
-            if($row['edu_receipt_end'] != ""){
+            if($row['edu_receipt_type'] != "0"){
                 //접수기간 종료일 미정 아닐시
                 if($apply_count == $row['edu_person'] || $now_date > $row['edu_receipt_end'] || $row['edu_receipt_status'] == "C"){
                     //신청 인원과 정원이 같을때(1.인원이 모두 찼거나 2. 기간이 지났거나 3. 관리자가 변경했거나) ** 접수마감 **
                     $edu_receipt_status = edu_receipt_status("C",$lang);
+
                     //신청 버튼 처리 하기
                     if($apply_status != 0){
                         $apply_button = "<input type='button' class='btn btn_02' value='".$lang[lecture_apply]."' onclick='alert(\"$lang[edu_apply_ok]\");return false;'>";
@@ -209,6 +210,9 @@ $ajaxpage_apply = G5_URL."/edu_process/ajax_lecture_apply.php";
                 }
             }
         }
+
+        //관리자 접수 현황 자동 업뎃 하기
+        admin_apply_status_auto($row['edu_receipt_status'],$row['edu_receipt_type'],$apply_count,$row['edu_person'],$row['edu_receipt_end'],$row['edu_idx'],$row['edu_onoff_type'],$row['edu_type']);
 ?>
     <tr>
         <td><?=$virtual_num?></td>
@@ -275,7 +279,6 @@ $result_on = sql_query($sql_list_on);
         $edu_cal_on = "";
         $edu_receipt_end_on = "";
         $row_status_on = "";
-
         $edu_way_on = edu_way($row_on['edu_way'],$lang);
 
         //현재 신청 인원 구하기
@@ -295,7 +298,7 @@ $result_on = sql_query($sql_list_on);
             if($row_on['edu_cal_end'] != "") $edu_cal_end_on = " ~ {$row_on['edu_cal_end']}";
             $edu_cal_on = $row_on['edu_cal_start'].$edu_cal_end_on;
 
-            if($row_on['edu_receipt_end'] != "") $edu_receipt_end_on = " ~ {$row_on['edu_receipt_end']}";
+            if($row_on['edu_receipt_type'] != "0") $edu_receipt_end_on = " ~ {$row_on['edu_receipt_end']}";
             $edu_receipt_on = $row_on['edu_receipt_start'].$edu_receipt_end_on;
         }
 
@@ -324,7 +327,7 @@ $result_on = sql_query($sql_list_on);
             $edu_receipt_status_on = edu_receipt_status($row_on['edu_receipt_status'],$lang);
         }else{
             //접수현황 프로세서(마감 조건은 1.인원이 모두 찼거나 2. 기간이 지났거나 3. 관리자가 변경했거나 준비중일때는 "준비중입니다" 접수마감은 "접수가 마감되었습니다.")
-            if($row_on['edu_receipt_end'] != ""){
+            if($row_on['edu_receipt_type'] != "0"){
                 //접수기간 종료일 미정 아닐시
                 if($apply_count_on == $row_on['edu_person'] || $now_date > $row_on['edu_receipt_end'] || $row_on['edu_receipt_status'] == "C"){
                     //신청 인원과 정원이 같을때(1.인원이 모두 찼거나 2. 기간이 지났거나 3. 관리자가 변경했거나) ** 접수마감 **
@@ -421,6 +424,9 @@ $result_on = sql_query($sql_list_on);
                 }
             }
         }
+
+        //관리자 접수 현황 자동 업뎃 하기
+        admin_apply_status_auto($row_on['edu_receipt_status'],$row_on['edu_receipt_type'],$apply_count_on,$row_on['edu_person'],$row_on['edu_receipt_end'],$row_on['edu_idx'],$row_on['edu_onoff_type'],$row_on['edu_type']);
 ?>
     <tr>
         <td><?=$virtual_num_on?></td>

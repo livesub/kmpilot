@@ -49,6 +49,9 @@ if($is_member <> 1){
         $result_up = sql_query(" update kmp_pilot_edu_apply set apply_cancel = 'Y', apply_cancel_date = now() where apply_idx = '{$apply_idx}' and edu_idx='{$edu_idx}' and edu_type='{$edu_type}' and mb_id='{$member['mb_id']}' ");
 
         if($result_up){
+            //신청자가 취소 하였거나 해서 정원이 변경 되었을 경우
+            $result_admin_on = sql_query(" update kmp_pilot_edu_list set edu_receipt_status='I' where edu_idx = '{$edu_idx}' and edu_type = '{$edu_type}' ");
+
             echo "OK";
             exit;
         }else{
