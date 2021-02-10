@@ -771,6 +771,51 @@ function get_group($gr_id, $is_cache=false)
 }
 
 
+//접속한 멤버가 그 그룹인지 체크하는 함수
+function get_member_group_check($mb_id, $gr_id){
+    global $g5;
+    $sql = " select * from {$g5['group_member_table']} where mb_id = '$mb_id'and gr_id = '$gr_id' ";
+    //$sql = " select * from kmp_group_member where mb_id = '$mb_id'and gr_id = '$gr_id' ";
+    if(sql_fetch($sql)){
+        return true;
+        //echo $gr_id."그룹에 속한 유저";
+    }else{
+        return false;
+        //echo $gr_id."그룹에 속하지 않은 유저";
+    }
+}
+
+//특정 그룹이 특정 게시판에 들어왔을때 기록하는 함수
+function insert_group_member_check($bo_table, $mb_id, $wr_id, $gr_id, $mb_name, $mb_doseongu){
+    global $g5;
+    $sql = " insert into {$g5['group_member_check_table']}
+                set mb_id = '$mb_id',
+                    bo_table = '".$bo_table."',
+                    wr_id = '".$wr_id."',
+                    gr_id = '".$gr_id."',
+                    mb_name = '".$mb_name."',
+                    mb_doseongu = '".$mb_doseongu."',
+                    gmc_date = '".G5_TIME_YMDHIS."'";
+
+    if(sql_query($sql)){
+        return "완료";
+    }else{
+        return "실패";
+    }
+}
+
+//특정게시판에 특정권한을 가진 user가 특정 글을 열람 했는지 확인하는 함수
+function get_open_board_check($bo_table, $mb_id, $wr_id, $gr_id){
+    global $g5;
+    $sql = " select * from {$g5['group_member_check_table']} where mb_id = '$mb_id'and bo_table= '$bo_table' and wr_id = '$wr_id' and gr_id = '$gr_id' ";
+    if(sql_fetch($sql)){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+
 // 회원 정보를 얻는다.
 function get_member($mb_id, $fields='*', $is_cache=false)
 {
@@ -925,9 +970,12 @@ function get_group_select($name, $selected='', $event='')
     $str = "<select id=\"$name\" name=\"$name\" $event>\n";
     for ($i=0; $row=sql_fetch_array($result); $i++) {
         if ($i == 0) $str .= "<option value=\"\">선택</option>";
-//        if($row['gr_subject'] != "Passage Plan" && $row['gr_subject'] != "홈페이지" && $row['gr_subject'] != "교육센터")
-        $str .= option_selected($row['gr_id'], $selected, $row['gr_subject']);
-
+        if($event == "not_board"){
+            if($row['gr_subject'] != "Passage Plan" && $row['gr_subject'] != "홈페이지" && $row['gr_subject'] != "교육센터")
+            $str .= option_selected($row['gr_id'], $selected, $row['gr_subject']);
+        }else{
+            $str .= option_selected($row['gr_id'], $selected, $row['gr_subject']);
+        }
     }
     $str .= "</select>";
     return $str;
@@ -4177,7 +4225,7 @@ function quote($value) {
 function get_sms_mean_value($name, $start_id=0, $end_id=10, $selected="", $event=""){
     global $g5;
 
-    $str = "\n<select id=\"{$name}\" name=\"{$name}\"";
+    $str = "\n<select id=\"{$name}\" name=\"{$name}\" class='reset_form'";
     if ($event) $str .= " $event";
     $str .= ">\n";
     for ($i=$start_id; $i<=$end_id; $i++) {
@@ -4197,6 +4245,44 @@ function get_sms_mean_value($name, $start_id=0, $end_id=10, $selected="", $event
     return $str;
 }
 
+
+//도선구 번호를 이름을 변환
+function get_doseongu_name($name){
+    $value = "";
+    switch ($name){
+        case 0: $value = "해당사항없음"; break;
+        case 1: $value = "부산항"; break;
+        case 2: $value = "여수항"; break;
+        case 3: $value = "인천항"; break;
+        case 4: $value = "울산항"; break;
+        case 5: $value = "평택항"; break;
+        case 6: $value = "마산항"; break;
+        case 7: $value = "대산항"; break;
+        case 8: $value = "포항항"; break;
+        case 9: $value = "군산항"; break;
+        case 10: $value = "목포항"; break;
+        case 11: $value = "동해항"; break;
+        case 12: $value = "제주항"; break;
+    }
+    return $value;
+}
+
+//그룹 번호를 이름으로 변환하는 함수
+function get_group_name($number){
+    global $g5;
+    $sql_group_sel = " select gr_subject from {$g5['group_table']} where gr_id = $number ";
+    $subject = sql_fetch($sql_group_sel);
+    return $subject['gr_subject'];
+}
+
+//date 또는 datetime의 default 값을 ""로 변환하는 함수
+function date_return_empty_space($value)
+{
+    if ($value == "0000-00-00" || $value == "0000-00-00 00:00:00") {
+        $value = "";
+    }
+    return $value;
+}
 
 function edu_type($value){
     switch ($value){
@@ -4226,4 +4312,5 @@ function edu_receipt_status($value){
             break;
     }
     return $edu_receipt_status;
+
 }

@@ -334,10 +334,21 @@ gif, jpg, png파일만 가능하며 용량 <?php echo number_format($config['cf_
                         <?php $sql_sel_punishment = " select * from {$g5['member_punishment']} where mb_id ='{$member['mb_id']}'";
                             $result_sel_punish = sql_query($sql_sel_punishment);
                             //alert('쿼리문'.$sql_sel_punishment);
+                            $count_sel_punish = 0;
                             for($i=0; $row=sql_fetch_array($result_sel_punish); $i++){
                         ?>
                         <input type="text" id="mb_punishment" readonly class="frm_input" size="50" value="<?=$row['mb_applicable_or_not']?> - <?=$row['mb_punishment']?>      <?=$row['mb_punishment_date']?>">
-                        <?php } ?>
+                                <br>
+                        <?php
+                                $count_sel_punish ++;
+                            } ?>
+                        <?php
+                            if($count_sel_punish == 0){
+                        ?>
+                        <input type="text" id="mb_punishment" readonly class="frm_input" size="50" value="징계사항이 없습니다.">
+                        <?php
+                            }
+                        ?>
                     </li>
 
                 </ul>
@@ -351,6 +362,8 @@ gif, jpg, png파일만 가능하며 용량 <?php echo number_format($config['cf_
 	</form>
 </div>
 <script>
+    let pwTest = /[a-zA-Z\w!@#$%|^&|*|(|)]{6,20}/;
+    let searchPw = /[|~|`|-|_|+|=|?|>|<|,|.]/;
 $(function() {
     $("#reg_zip_find").css("display", "inline-block");
 
@@ -413,8 +426,8 @@ function fregisterform_submit(f)
     }
 
     if (f.w.value == "") {
-        if (f.mb_password.value.length < 3) {
-            alert("비밀번호를 3글자 이상 입력하십시오.");
+        if (f.mb_password.value.length < 6) {
+            alert("비밀번호를 6글자 이상 입력하십시오.");
             f.mb_password.focus();
             return false;
         }
@@ -427,11 +440,31 @@ function fregisterform_submit(f)
     }
 
     if (f.mb_password.value.length > 0) {
-        if (f.mb_password_re.value.length < 3) {
-            alert("비밀번호를 3글자 이상 입력하십시오.");
-            f.mb_password_re.focus();
+        if (f.mb_password_re.value.length < 6) {
+            alert("비밀번호를 6글자 이상 입력하십시오.");
+            f.mb_password.focus();
             return false;
         }
+    }
+
+    if (f.mb_password.value.length > 6) {
+        if (!pwTest.test(f.mb_password.value)) {
+            alert("비밀번호는 영어소문자 또는 대문자,특수문자(!@#$%^&*())숫자만 허용가능합니다.");
+            f.mb_password.focus();
+            return false;
+        }
+    }
+
+    if (f.mb_password.value.length > 20) {
+        alert("비밀번호는 6글자이상 20글자이하로 입력하십시오.");
+        f.mb_password.focus();
+        return false;
+    }
+
+    if (searchPw.test(f.mb_password.value)) {
+        alert("비밀번호는 특수문자(!@#$%^&*())만 허용가능합니다.");
+        f.mb_password.focus();
+        return false;
     }
 
     // 이름 검사

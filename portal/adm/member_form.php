@@ -63,8 +63,12 @@ else if ($w == 'u')
     if (!$mb['mb_id'])
         alert('존재하지 않는 회원자료입니다.');
 
-    if ($is_admin != 'super' && $mb['mb_level'] >= $member['mb_level'] && $mb['mb_id'] != $member['mb_id'])
+    if ($is_admin != 'super' && $member['mb_level'] >= $mb['mb_level'] && $mb['mb_id'] != $member['mb_id'])
         alert('본인이 아니거나 자신보다 권한이 높거나 같은 회원은 수정할 수 없습니다.');
+
+//    if($is_admin != 'super' && $mb['mb_id'] != $member['mb_id']){
+//        alert('본인이 아닌경우 수정할 수 없습니다.');
+//    }
 
     if($mb['mb_level'] > $member['mb_level'])
         alert('자신보다 권한이 높은회원은 수정할 수 없습니다.');
@@ -216,7 +220,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
         <th scope="row"><label for="mb_password">비밀번호<?php echo $sound_only ?><?php if ($w=='u'){ ?>
                     <p>미 입력시 원래 비밀번호로 저장</p>
                 <?php } ?></label></th>
-        <td><input type="password" name="mb_password" id="mb_password" <?php echo $required_mb_password ?> class="frm_input <?php echo $required_mb_password ?>" size="15" maxlength="20"></td>
+        <td><input type="password" name="mb_password" id="mb_password" <?php echo $required_mb_password ?> class="frm_input <?php echo $required_mb_password ?>" size="15" maxlength="20" minlength="6"></td>
     </tr>
     <tr>
         <th scope="row"><label for="mb_img">회원이미지</label></th>
@@ -235,7 +239,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     </tr>
     <tr>
         <th scope="row"><label for="mb_name">이름(실명)<strong class="sound_only">필수</strong></label></th>
-        <td><input type="text" name="mb_name" value="<?php echo $mb['mb_name'] ?>" id="mb_name" required class="required frm_input" size="15"  maxlength="20"></td>
+        <td><input type="text" name="mb_name" value="<?php echo $mb['mb_name'] ?>" id="mb_name" required class="required frm_input" size="15"  maxlength="10"></td>
 <!--        <th scope="row"><label for="mb_nick">닉네임<strong class="sound_only">필수</strong></label></th>-->
 <!--        <td><input type="text" name="mb_nick" value="--><?php //echo $mb['mb_nick'] ?><!--" id="mb_nick" required class="required frm_input" size="15"  maxlength="20"></td>-->
         <th scope="row"><label for="mb_level">회원 권한</label><strong class="sound_only">필수</strong></th>
@@ -252,10 +256,10 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
 <!--        <td><input type="text" name="mb_homepage" value="--><?php //echo $mb['mb_homepage'] ?><!--" id="mb_homepage" class="frm_input" maxlength="255" size="15"></td>-->
     </tr>
     <tr>
-        <th scope="row"><label for="mb_hp">휴대폰번호</label></th>
-        <td><input type="text" name="mb_hp" value="<?php echo $mb['mb_hp'] ?>" id="mb_hp" class="frm_input" size="15" maxlength="13"></td>
+        <th scope="row"><label for="mb_hp">휴대폰번호<strong class="sound_only">필수</strong></label></th>
+        <td><input type="text" name="mb_hp" value="<?php echo $mb['mb_hp'] ?>" id="mb_hp" required class="required frm_input" size="15" maxlength="13"></td>
         <th scope="row"><label for="mb_tel">전화번호</label></th>
-        <td><input type="text" name="mb_tel" value="<?php echo $mb['mb_tel'] ?>" id="mb_tel" class="frm_input" size="15" maxlength="15"></td>
+        <td><input type="text" name="mb_tel" value="<?php echo $mb['mb_tel'] ?>" id="mb_tel" class="frm_input" size="15" maxlength="13"></td>
     </tr>
     <tr>
         <th scope="row"><label for="mb_doseongu">도선구</label></th>
@@ -266,23 +270,23 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     <tr>
         <th scope="row"><label for="mb_sex">성별</label></th>
         <td><?php echo get_member_sex_select('mb_sex', 1, 2, $mb['mb_sex']) ?></td>
-        <th scope="row"><label for="mb_birth">생년월일</label></th>
-        <td><input type="text" id="mb_birth" name="mb_birth" class="datepicker" value="<?php echo $mb['mb_birth']?>"></td>
+        <th scope="row"><label for="mb_birth">생년월일<strong class="sound_only">필수</strong></label></th>
+        <td><input type="text" id="mb_birth" name="mb_birth" class="datepicker required frm_input" required value="<?php echo date_return_empty_space($mb['mb_birth'])?>" maxlength="10" readonly></td>
     </tr>
     <tr><th><h1>면허 관리 정보</h1></th></tr>
     <tr>
         <th scope="row"><label for="mb_license_mean">면허 종류</label></th>
         <td><?php echo get_license_select('mb_license_mean', 0, 3, $mb['mb_license_mean']) ?></td>
         <th scope="row"><label for="mb_first_license_day">최초면허 발급일</label></th>
-        <td><input type="text" id="mb_first_license_day" name="mb_first_license_day" class="datepicker" value="<?php echo $mb['mb_first_license_day']?>"></td>
+        <td><input type="text" id="mb_first_license_day" name="mb_first_license_day" class="datepicker" value="<?php echo date_return_empty_space($mb['mb_first_license_day'])?>" readonly></td>
     </tr>
     <tr>
         <th scope="row"><label for="mb_license_renewal_day">면허 갱신일</label></th>
-        <td><input type="text" id="mb_license_renewal_day" name="mb_license_renewal_day" class="datepicker" value="<?php echo $mb['mb_license_renewal_day']?>"></td>
+        <td><input type="text" id="mb_license_renewal_day" name="mb_license_renewal_day" class="datepicker" value="<?php echo date_return_empty_space($mb['mb_license_renewal_day'])?>" readonly></td>
         <th scope="row"><label for="datepicker_from">면허유효기간</label></th>
         <td>
-            <input type="text" id="datepicker_from" name="mb_validity_day_from" value="<?php echo $mb['mb_validity_day_from']?>">부터 <br>
-            <input type="text" id="datepicker_to" name="mb_validity_day_to" value="<?php echo $mb['mb_validity_day_to']?>">까지
+            <input type="text" id="datepicker_from" name="mb_validity_day_from" value="<?php echo date_return_empty_space($mb['mb_validity_day_from'])?>" readonly>부터 <br>
+            <input type="text" id="datepicker_to" name="mb_validity_day_to" value="<?php echo date_return_empty_space($mb['mb_validity_day_to'])?>" readonly>까지
         </td>
 
     </tr>
@@ -375,8 +379,8 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     <tr>
         <th scope="row"><label for="extension_day">정년연장</label></th>
         <td>
-            <input type="text" id="mb_license_ext_day_from" name="mb_license_ext_day_from" value="<?php echo $mb['mb_license_ext_day_from']?>">부터<br>
-            <input type="text" id="mb_license_ext_day_to" name="mb_license_ext_day_to" value="<?php echo $mb['mb_license_ext_day_to']?>">까지
+            <input type="text" id="mb_license_ext_day_from" name="mb_license_ext_day_from" value="<?php echo date_return_empty_space($mb['mb_license_ext_day_from'])?>" readonly>부터<br>
+            <input type="text" id="mb_license_ext_day_to" name="mb_license_ext_day_to" value="<?php echo date_return_empty_space($mb['mb_license_ext_day_to'])?>" readonly>까지
         </td>
     </tr>
     <tr>
@@ -398,7 +402,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
             </select>
         </td>
         <th scope="row" class="punishment" style="display: none"><label for="mb_punishment_date">징계 선고일</label></th>
-        <td><input type="text" id="mb_punishment_date" name="mb_punishment_date" class="datepicker punishment" value="" style="display: none"></td>
+        <td><input type="text" id="mb_punishment_date" name="mb_punishment_date" class="datepicker punishment" value="" style="display: none" readonly></td>
     </tr>
 <!--    <tr>-->
 <!--    -->
@@ -444,9 +448,9 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     <?php if ($w == 'u') { ?>
     <tr>
         <th scope="row">회원가입일</th>
-        <td><?php echo $mb['mb_datetime'] ?></td>
+        <td><?php echo date_return_empty_space($mb['mb_datetime']) ?></td>
         <th scope="row">최근접속일</th>
-        <td><?php echo $mb['mb_today_login'] ?></td>
+        <td><?php echo date_return_empty_space($mb['mb_today_login']) ?></td>
     </tr>
 <!--    <tr>-->
 <!--        <th scope="row">IP</th>-->
@@ -727,6 +731,14 @@ else
 //?>
 
 <script>
+    let pwTest = /[a-zA-Z\w!@#$%|^&|*|(|)]{6,20}/;
+    let searchPw = /[|~|`|-|_|+|=|?|>|<|,|.]/;
+    let birthTest = /^(19[0-9][0-9]|20\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/;
+    let phoneTest = /^\d{3}-\d{3,4}-\d{4}$/;
+    let emailTest = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+    let nameTest = /^[가-힣]{2,10}$/;
+    let telTest = /^\d{2,3}-\d{3,4}-\d{4}$/;
+
     function changePunishmentValue(){
         let sVal = $('#mb_applicable_or_not').val();
         let $punish_array = [];
@@ -794,6 +806,66 @@ function fmember_submit(f)
     if (!f.mb_img.value.match(/\.(gif|jpe?g|png)$/i) && f.mb_img.value) {
         alert('회원이미지는 이미지 파일만 가능합니다.');
         return false;
+    }
+
+    if(!(nameTest.test(f.mb_name.value)) || f.mb_name.value == ""){
+        alert('실명을 입력해주세요. \n한글로 작성해주시기 바랍니다.(2~10 자 이내)');
+        f.mb_name.focus();
+        return false;
+    }
+
+    if(!(emailTest.test(f.mb_email.value)) || f.mb_email.value == ""){
+        alert('제대로 된 이메일 형식이 아닙니다. ex) XXXX@XXXX.com 등 형식으로 작성해주세요');
+        f.mb_email.focus();
+        return false;
+    }
+
+    if(!(phoneTest.test(f.mb_hp.value)) || f.mb_hp.value == "000-0000-0000" || f.mb_hp.value == ""){
+        alert("제대로 된 휴대폰 번호 형식이 아닙니다. \n ex) 010-XXXX-XXXX 형식으로 작성해주세요");
+        f.mb_hp.focus();
+        return false;
+    }
+
+    //alert($('#mb_tel').val());
+    if($('#mb_tel').val() != "" && !(telTest.test($('#mb_tel').val()))){
+        alert('제대로 된 형식이 아닙니다. \nex) xx-xxxx-xxxx 형식으로 작성해주세요');
+        $('#mb_tel').focus();
+        return false;
+    }
+
+    if(!(birthTest.test(f.mb_birth.value)) || f.mb_birth.value == "0000-00-00" || f.mb_birth.value == ""){
+        alert(" 제대로 된 형식이 아닙니다 \n ex) 2010-11-11 형식으로 작성해주세요");
+        f.mb_birth.focus();
+        return false;
+    }
+
+    if(<?=$w?> == 'u' && f.mb_password.value !=0 && f.mb_password.length != 0){
+        if (f.mb_password.value.length > 0) {
+            if (f.mb_password.value.length < 6) {
+                alert("비밀번호를 6글자 이상 입력하십시오.");
+                f.mb_password.focus();
+                //f.mb_password.value = "";
+                return false;
+            }
+        }
+
+        if (!(pwTest.test(f.mb_password.value))) {
+            alert("비밀번호는 영어소문자 또는 대문자,특수문자(!@#$%^&*())숫자포함 6글자이상 20글자이하만 허용가능합니다.");
+            f.mb_password.focus();
+            return false;
+        }
+
+        if (searchPw.test(f.mb_password.value)) {
+            alert("비밀번호는 특수문자(!@#$%^&*())만 허용가능합니다.");
+            f.mb_password.focus();
+            return false;
+        }
+
+        if (f.mb_password.value.length > 20) {
+            alert("비밀번호는 6글자이상 20글자이하로 입력하십시오.");
+            f.mb_password.focus();
+            return false;
+        }
     }
 
     return true;

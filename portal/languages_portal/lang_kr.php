@@ -8,9 +8,15 @@ $lang_type = 'kr';
 $lang = array();
 
 //Menu 관련
+$lang['about_association']='협회소개';
+$lang['welcome_message']='인사말';
+$lang['history']='연혁 · 조직';
+$lang['honor_pilot']='명예도선사';
 $lang['menu_notice'] = '공지사항';
 $lang['menu_movie'] = '동영상';
-
+$lang['new_pr']='소식 · 홍보';
+$lang['news']='공지사항';
+$lang['magazine']='도선지';
 //헤더 관련
 $lang['connect_user'] = '접속자';
 

@@ -78,7 +78,7 @@ include_once('./admin.head.php');
         <th scope="col">번호</th>
         <th scope="col">회원아이디</th>
         <th scope="col">이름</th>
-        <th scope="col">닉네임</th>
+<!--        <th scope="col">닉네임</th>-->
         <th scope="col">E-mail</th>
     </tr>
     </thead>
@@ -100,7 +100,7 @@ include_once('./admin.head.php');
         <td class="td_num"><?php echo $i ?></td>
         <td class="td_mbid"><?php echo $row['mb_id'] ?></td>
         <td class="td_mbname"><?php echo get_text($row['mb_name']); ?></td>
-        <td class="td_mbname"><?php echo $row['mb_nick'] ?></td>
+<!--        <td class="td_mbname">--><?php //echo $row['mb_nick'] ?><!--</td>-->
         <td><?php echo $row['mb_email'] ?></td>
     </tr>
     <?php } ?>

@@ -107,7 +107,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                             $userid = get_session('ss_mb_id');
                             if(get_member_group_check($userid, 4)) {
                                 if(!get_open_board_check($_GET["bo_table"],$userid, $_GET["wr_id"], 4)) {
-                                    echo insert_group_member_check($_GET["bo_table"], $userid, $_GET["wr_id"], 4);
+                                    $sql_sel_member = " select * from {$g5['member_table']} where mb_id = $userid";
+                                    $result = sql_fetch($sql_sel_member);
+                                    insert_group_member_check($_GET["bo_table"], $userid, $_GET["wr_id"], 4, $result['mb_name'], $result['mb_doseongu']);
                                 }
                             }
                         ?>
@@ -120,6 +122,21 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
  //       }
         ?>
         <div id="bo_v_con"><?php echo get_view_thumbnail($view['content']); ?></div>
+        <div>
+            확인자 명단
+            <br>
+            <?php
+                $sql_sel_open_board = " select * from {$g5['group_member_check_table']} where gr_id = 4 and bo_table = '{$_GET['bo_table']}' and wr_id = '{$_GET['wr_id']}'     ";
+                $result_sel_open = sql_query($sql_sel_open_board);
+                for($i = 0; $row = sql_fetch_array($result_sel_open); $i++){
+                    $doseongu = get_doseongu_name($row['mb_doseongu']);
+                    if($i>3 && $i % 4 == 0){
+                        echo "<br>";
+                    }
+                    echo "<td>$doseongu - ".$row['mb_name']."사무장 </td>";
+                }
+            ?>
+        </div>
         <?php //echo $view['rich_content']; // {이미지:0} 과 같은 코드를 사용할 경우 ?>
         <!-- } 본문 내용 끝 -->
 
