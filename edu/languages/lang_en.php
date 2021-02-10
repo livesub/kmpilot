@@ -60,7 +60,7 @@ $lang['edu_lecture_complete'] = 'eng 과목별 이수 현황';
 $lang['edu_lecture_play'] = 'eng 재생';
 $lang['edu_view'] = 'eng 이수';
 $lang['edu_no_view'] = 'eng 미이수';
-$lang['edu_status'] = 'eng 과목 이수 상태로 취소 하실수 없습니다.';
+$lang['edu_status'] = 'eng 교육 이수 상태로 취소 하실수 없습니다.';
 $lang['edu_minute'] = ' minute';
 $lang['edu_year_search'] = 'eng 년도 검색';
 
