@@ -29,7 +29,7 @@ if($co_id == "")
     exit;
 }
 
-$g5['board_title'] = "도선사 면허 갱신 교육";
+//$g5['board_title'] = "도선사 면허 갱신 교육";
 
 $g5['title'] = $g5['board_title'];
 include_once(G5_PATH.'/head.php');

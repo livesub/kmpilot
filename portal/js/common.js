@@ -69,7 +69,7 @@ function number_format(data)
     var cutlen = 3;
     var comma = ',';
     var i;
-    
+
     data = data + '';
 
     var sign = data.match(/^[\+\-]/);
@@ -416,7 +416,7 @@ var win_zip = function(frm_name, frm_zip, frm_addr1, frm_addr2, frm_addr3, frm_j
         if(of[frm_jibeon] !== undefined){
             of[frm_jibeon].value = data.userSelectedType;
         }
-        
+
         setTimeout(function(){
             of[frm_addr2].focus();
         } , 100);
@@ -746,6 +746,7 @@ $(function() {
     });
 });
 
+
 function modal(id) {
     var zIndex = 9999;
     var modal = $('#' + id);
@@ -792,15 +793,22 @@ function modal(id) {
         $('html').css('overflowY','hidden');
 }
 
-function reLogin(){
+function reLogin() {
     //modal('my_modal');
     //console.log('들어왔어용');
     $('#popup_open_btn').trigger('click');
     //modal('my_modal');
     //alert('회원만 이용 가능한 곳입니다. 회원이시라면 로그인을 해주세요.');
     $('#back_div').css('background', 'rgba(0,0,0,0.9)');
-    $('.modal_close_btn').off('click').on('click', function() {
-      //닫기 클릭 시 메인으로 이동
+    $('.modal_close_btn').off('click').on('click', function () {
+        //닫기 클릭 시 메인으로 이동
         location.replace(g5_url);
     });
+}
+
+function inNumber(){
+    if(event.keyCode<48 || event.keyCode>57){
+        event.returnValue=false;
+    }
+
 }

@@ -2,6 +2,7 @@
 if($member['mb_id'] == 'yongsanzip'){
 $menu['menu100'] = array (
     array('100000', '환경설정', G5_ADMIN_URL.'/config_form.php',   'config'),
+    array('100050', '메인페이지이미지설정', G5_ADMIN_URL.'/main_image_list.php',   'main_image'),
     array('100100', '기본환경설정', G5_ADMIN_URL.'/config_form.php',   'cf_basic'),
     array('100200', '관리권한설정', G5_ADMIN_URL.'/auth_list.php',     'cf_auth'),
     //array('100280', '테마설정', G5_ADMIN_URL.'/theme.php',     'cf_theme', 1),

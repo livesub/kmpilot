@@ -24,7 +24,7 @@ $sql = " select * {$sql_common} {$sql_order} limit {$from_record}, {$rows} ";
 $result = sql_query($sql);
 ?>
 
-<form name="renewal_from" id="renewal_from" action="./pilot_necessary_list_update.php" onsubmit="return fmemberlist_submit(this);" method="post">
+<form name="renewal_from" id="renewal_from" action="./pilot_necessary_list_update.php" onsubmit="return renewal_submit(this);" method="post">
 <input type="hidden" name="page" value="<?php echo $page ?>">
 
 
@@ -85,7 +85,7 @@ $result = sql_query($sql);
 <?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, '?'.$qstr.'&amp;page='); ?>
 
 <script>
-function fmemberlist_submit(f)
+function renewal_submit(f)
 {
     if (!is_checked("chk[]")) {
         alert(document.pressed+" 하실 항목을 하나 이상 선택하세요.");

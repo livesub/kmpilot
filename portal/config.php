@@ -253,3 +253,9 @@ if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') {   //https 통신일때
 } else {  //http 통신일때 daum 주소 js
     define('G5_POSTCODE_JS', '<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>');
 }
+
+//메인 이미지 사이즈 강제 정의
+define('G5_MAIN_IMG_WIDTH', '500');
+define('G5_MAIN_IMG_HEIGHT', '500');
+
+define('G5_YELLOWID_KEY', '1234567890123456789012345678901234567890');  //발신프로필키(40 자)

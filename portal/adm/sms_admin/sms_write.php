@@ -4,835 +4,555 @@ include_once("./_common.php");
 
 auth_check_menu($auth, $sub_menu, "r");
 
-$wr_no = isset($_REQUEST['wr_no']) ? (int) $_REQUEST['wr_no'] : 0;
-$bk_no = isset($_REQUEST['bk_no']) ? (int) $_REQUEST['bk_no'] : 0;
-$fo_no = isset($_REQUEST['fo_no']) ? (int) $_REQUEST['fo_no'] : 0;
 
 $g5['title'] = "문자 보내기";
 
 include_once(G5_ADMIN_PATH.'/admin.head.php');
 ?>
 
-<div class="local_ov01 local_ov">
-    회원정보 최근 업데이트 : <?php echo isset($sms5['cf_datetime']) ? $sms5['cf_datetime'] : ''; ?>
-</div>
+<link rel="stylesheet" href="https://kmpilot.or.kr/CMS/_css/common.css" type="text/css" />
+<link rel="stylesheet" href="https://kmpilot.or.kr/CMS/_css/layout.css" type="text/css" />
+<link rel="stylesheet" href="https://kmpilot.or.kr/_css/board_default.css" type="text/css" />
 
-<?php
-if ($config['cf_sms_use'] == 'icode') { // 아이코드 사용
-?>
-<div id="sms5_send">
-
-    <div id="send_emo">
-        <h2>이모티콘 목록</h2>
-        <?php include_once('./sms_write_form.php'); ?>
-    </div>
-
-    <div id="send_write">
-        <form name="form_sms" id="form_sms" method="post" action="sms_write_send.php" onsubmit="return sms5_chk_send(this);"  >
-        <input type="hidden" name="send_list" value="">
-
-        <h2>보낼내용</h2>
-        <div class="sms5_box write_wrap">
-            <span class="box_ico"></span>
-            <label for="wr_message" id="wr_message_lbl">내용</label>
-            <textarea name="wr_message" id="wr_message" class="box_txt box_square" onkeyup="byte_check('wr_message', 'sms_bytes');" accesskey="m"></textarea>
-
-            <div id="sms_byte"><span id="sms_bytes">0</span> / <span id="sms_max_bytes"><?php echo ($config['cf_sms_type'] == 'LMS' ? 90 : 80); ?></span> byte</div>
-
-            <button type="button" id="write_sc_btn" class="write_scemo_btn">특수<br>기호</button>
-            <div id="write_sc" class="write_scemo">
-                <span class="scemo_ico"></span>
-                <div class="scemo_list">
-                    <button type="button" class="scemo_add" onclick="javascript:add('■')">■</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('□')">□</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('▣')">▣</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('◈')">◈</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('◆')">◆</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('◇')">◇</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('♥')">♥</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('♡')">♡</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('●')">●</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('○')">○</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('▲')">▲</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('▼')">▼</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('▶')">▶</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('▷')">▷</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('◀')">◀</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('◁')">◁</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('☎')">☎</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('☏')">☏</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('♠')">♠</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('♤')">♤</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('♣')">♣</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('♧')">♧</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('★')">★</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('☆')">☆</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('☞')">☞</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('☜')">☜</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('▒')">▒</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('⊙')">⊙</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('㈜')">㈜</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('№')">№</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('㉿')">㉿</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('♨')">♨</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('™')">™</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('℡')">℡</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('∑')">∑</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('∏')">∏</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('♬')">♬</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('♪')">♪</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('♩')">♩</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('♭')">♭</button>
-                </div>
-                <div class="scemo_cls"><button type="button" class="scemo_cls_btn">닫기</button></div>
-            </div>
-            <button type="button" id="write_emo_btn" class="write_scemo_btn">이모<br>티콘</button>
-            <div id="write_emo" class="write_scemo">
-                <span class="scemo_ico"></span>
-                <div class="scemo_list">
-                    <button type="button" class="scemo_add" onclick="javascript:add('*^^*')">*^^*</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('♡.♡')">♡.♡</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('@_@')">@_@</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('☞_☜')">☞_☜</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('ㅠ ㅠ')">ㅠ ㅠ</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('Θ.Θ')">Θ.Θ</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('^_~♥')">^_~♥</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('~o~')">~o~</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('★.★')">★.★</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('(!.!)')">(!.!)</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('⊙.⊙')">⊙.⊙</button>
-                    <button type="button" class="scemo_add" onclick="javascript:add('q.p')">q.p</button>
-                    <button type="button" class="scemo_add emo_long" onclick="javascript:add('┏( \'\')┛')">┏( \'\')┛</button>
-                    <button type="button" class="scemo_add emo_long" onclick="javascript:add('@)-)--')">@)-)--')</button>
-                    <button type="button" class="scemo_add emo_long" onclick="javascript:add('↖(^-^)↗')">↖(^-^)↗</button>
-                    <button type="button" class="scemo_add emo_long" onclick="javascript:add('(*^-^*)')">(*^-^*)</button>
-                </div>
-                <div class="scemo_cls"><button type="button" class="scemo_cls_btn">닫기</button></div>
-            </div>
-
-        </div>
-
-        <div id="write_preset">
-            {이름} : 받는사람 이름
-        </div>
-
-        <div id="write_reply">
-            <label for="wr_reply">회신<strong class="sound_only"> 필수</strong></label>
-            <input type="text" name="wr_reply" value="<?php echo isset($sms5['cf_phone']) ? get_sanitize_input($sms5['cf_phone']) : ''; ?>" id="wr_reply" required class="frm_input required" size="17" maxlength="20" readonly="readonly">
-        </div>
-
-        <div id="write_recv" class="write_inner">
-            <h2>받는사람</h2>
-            <button type="button" class="write_floater write_floater_btn" onclick="hp_list_del()">선택삭제</button>
-
-            <label for="hp_list" class="sound_only">받는사람들</label>
-            <select name="hp_list" id="hp_list" size="5"></select>
-
-            <div id="recv_add">
-                <label for="hp_name" class="sound_only">이름</label>
-                <input type="text" name="hp_name" id="hp_name" class="frm_input" size="11" maxlength="20" onkeypress="if(event.keyCode==13) document.getElementById('hp_number').focus();" placeholder="이름"><br>
-                <label for="hp_number" class="sound_only">번호</label>
-                <input type="text" name="hp_number" id="hp_number" class="frm_input" size="11" maxlength="20" onkeypress="if(event.keyCode==13) hp_add()" placeholder="번호">
-                <button type="button" onclick="hp_add()">추가</button><br>
-            </div>
-        </div>
-
-        <div id="write_rsv" class="write_inner">
-            <h2>예약전송</h2>
-
-            <div class="write_floater">
-                <label for="wr_booking"><span class="sound_only">예약전송 </span>사용</label>
-                <input type="checkbox" name="wr_booking" id="wr_booking" onclick="booking(this.checked)">
-            </div>
-
-            <select name="wr_by" id="wr_by" disabled>
-                <option value="<?php echo date('Y')?>"><?php echo date('Y')?></option>
-                <option value="<?php echo date('Y')+1?>"><?php echo date('Y')+1?></option>
-            </select>
-            <label for="wr_by">년</label><br>
-            <select name="wr_bm" id="wr_bm" disabled>
-                <?php for ($i=1; $i<=12; $i++) { ?>
-                <option value="<?php echo sprintf("%02d",$i)?>"<?php echo get_selected(date('m'), $i); ?>><?php echo sprintf("%02d",$i)?></option>
-            <?php } ?>
-            </select>
-            <label for="wr_bm">월</label>
-            <select name="wr_bd" id="wr_bd" disabled>
-                <?php for ($i=1; $i<=31; $i++) { ?>
-                <option value="<?php echo sprintf("%02d",$i)?>"<?php echo get_selected(date('d'), $i); ?>><?php echo sprintf("%02d",$i)?></option>
-                <?php } ?>
-            </select>
-            <label for="wr_bd">일</label><br>
-                <select name="wr_bh" id="wr_bh" disabled>
-                <?php for ($i=0; $i<24; $i++) { ?>
-                <option value="<?php echo sprintf("%02d",$i)?>"<?php echo get_selected(date('H')+1, $i); ?>><?php echo sprintf("%02d",$i)?></option>
-                <?php } ?>
-            </select>
-            <label for="wr_bh">시</label>
-            <select name="wr_bi" id="wr_bi" disabled>
-                <?php for ($i=0; $i<=59; $i+=5) { ?>
-                <option value="<?php echo sprintf("%02d",$i)?>"><?php echo sprintf("%02d",$i)?></option>
-                <?php } ?>
-            </select>
-            <label for="wr_bi">분</label>
-        </div>
-
-        <div class="btn_confirm01 btn_confirm">
-            <input type="submit" value="전송" class="btn_submit">
-            <!-- <input type="submit" value="전송" onclick="send()"> -->
-        </div>
-        </form>
-    </div>
-
-    <div id="send_book">
-        <h2>휴대폰번호 목록</h2>
-        <div id="book_tab">
-            <a href="#book_group" id="book_group" class="btn btn_02">그룹</a>
-            <a href="#book_person" id="book_person" class="btn btn_02">개인</a>
-            <a href="#book_level" id="book_level" class="btn btn_02">권한</a>
-        </div>
-
-        <div id="num_book"></div>
-
-        <div id="book_desc">SMS 수신을 허용한 회원님만 출력됩니다.</div>
-    </div>
-</div>
-
-<script>
-function overlap_check()
-{
-    var hp_list = document.getElementById('hp_list');
-    var hp_number = document.getElementById('hp_number');
-    var list = '';
-
-    if (hp_list.length < 1) {
-        alert('받는 사람을 입력해주세요.');
-        hp_number.focus();
-        return;
-    }
-
-    for (i=0; i<hp_list.length; i++)
-        list += hp_list.options[i].value + '/';
-
-    (function($){
-        var $form = $("#form_sms");
-        $form.find("input[name='send_list']").val( list );
-        var params = $form.serialize();
-        $.ajax({
-            url: './sms_write_overlap_check.php',
-            cache:false,
-            timeout : 30000,
-            dataType:"html",
-            data:params,
-            success: function(data) {
-                alert(data);
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                alert(xhr.status);
-                alert(thrownError);
-            }
-        });
-    })(jQuery);
-}
-
-var is_sms5_submitted = false;  //중복 submit방지
-function sms5_chk_send(f)
-{
-    if( is_sms5_submitted == false ){
-        is_sms5_submitted = true;
-        var hp_list = document.getElementById('hp_list');
-        var wr_message = document.getElementById('wr_message');
-        var hp_number = document.getElementById('hp_number');
-        var wr_reply = document.getElementById('wr_reply');
-        var wr_reply_regExp = /^[0-9\-]+$/;
-        var list = '';
-
-        if (!wr_message.value) {
-            alert('메세지를 입력해주세요.');
-            wr_message.focus();
-            is_sms5_submitted = false;
-            return false;
-        }
-        if( !wr_reply_regExp.test(wr_reply.value) ){
-            alert('회신번호 형식이 잘못 되었습니다.');
-            wr_reply.focus();
-            is_sms5_submitted = false;
-            return false;
-        }
-        if (hp_list.length < 1) {
-            alert('받는 사람을 입력해주세요.');
-            hp_number.focus();
-            is_sms5_submitted = false;
-            return false;
-        }
-
-        for (i=0; i<hp_list.length; i++)
-            list += hp_list.options[i].value + '/';
-
-        w = document.body.clientWidth/2 - 200;
-        h = document.body.clientHeight/2 - 100;
-        //act = window.open('sms_ing.php', 'act', 'width=300, height=200, left=' + w + ', top=' + h);
-        //act.focus();
-
-        f.send_list.value = list;
-        return true;
-    } else {
-        alert("데이터 전송중입니다.");
-    }
-}
-
-function hp_add()
-{
-    var hp_number = document.getElementById('hp_number'),
-        hp_name = document.getElementById('hp_name'),
-        hp_list = document.getElementById('hp_list'),
-        pattern = /^01[016789][0-9]{3,4}[0-9]{4}$/,
-        pattern2 = /^01[016789]-[0-9]{3,4}-[0-9]{4}$/;
-
-    if( !hp_number.value ){
-        alert("휴대폰번호를 입력해 주세요.");
-        hp_number.select();
-        return;
-    }
-
-    if(!pattern.test(hp_number.value) && !pattern2.test(hp_number.value)) {
-        alert("휴대폰번호 형식이 올바르지 않습니다.");
-        hp_number.select();
-        return;
-    }
-
-    if (!pattern2.test(hp_number.value)) {
-        hp_number.value = hp_number.value.replace(new RegExp("(01[016789])([0-9]{3,4})([0-9]{4})"), "$1-$2-$3");
-    }
-
-    var item = '';
-    if (trim(hp_name.value))
-        item = hp_name.value + ' (' + hp_number.value + ')';
-    else
-        item = hp_number.value;
-
-    var value = 'h,' + hp_name.value + ':' + hp_number.value;
-
-    for (i=0; i<hp_list.length; i++) {
-        if (hp_list[i].value == value) {
-            alert('이미 같은 목록이 있습니다.');
-            return;
-        }
-    }
-
-    if( jQuery.inArray( hp_number.value , sms_obj.phone_number ) > -1 ){
-       alert('목록에 이미 같은 휴대폰 번호가 있습니다.');
-       return;
-    } else {
-        sms_obj.phone_number.push( hp_number.value );
-    }
-    hp_list.options[hp_list.length] = new Option(item, value);
-
-    hp_number.value = '';
-    hp_name.value = '';
-    hp_name.select();
-}
-
-function hp_list_del()
-{
-    var hp_list = document.getElementById('hp_list');
-
-    if (hp_list.selectedIndex < 0) {
-        alert('삭제할 목록을 선택해주세요.');
-        return;
-    }
-
-    var regExp = /(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?[0-9]{3,4}-?[0-9]{4}/,
-        hp_number_option = hp_list.options[hp_list.selectedIndex],
-        result = (hp_number_option.outerHTML.match(regExp));
-    if( result !== null ){
-        sms_obj.phone_number = sms_obj.array_remove( sms_obj.phone_number, result[0] );
-    }
-    hp_list.options[hp_list.selectedIndex] = null;
-}
-
-function book_change(id)
-{
-    var book_group  = document.getElementById('book_group');
-    var book_person = document.getElementById('book_person');
-    var num_book    = document.getElementById('num_book');
-    var menu_group  = document.getElementById('menu_group');
-
-    if (id == 'book_group')
-    {
-        book_group.style.fontWeight    = 'bold';
-        book_person.style.fontWeight   = 'normal';
-        book_level.style.fontWeight    = 'normal';
-    }
-    else if (id == 'book_person')
-    {
-        book_group.style.fontWeight    = 'normal';
-        book_person.style.fontWeight   = 'bold';
-        book_level.style.fontWeight    = 'normal';
-    }
-    else if (id == 'book_level')
-    {
-        book_group.style.fontWeight    = 'normal';
-        book_person.style.fontWeight   = 'normal';
-        book_level.style.fontWeight    = 'bold';
-    }
-}
-
-function booking(val)
-{
-    if (val)
-    {
-        document.getElementById('wr_by').disabled = false;
-        document.getElementById('wr_bm').disabled = false;
-        document.getElementById('wr_bd').disabled = false;
-        document.getElementById('wr_bh').disabled = false;
-        document.getElementById('wr_bi').disabled = false;
-    }
-    else
-    {
-        document.getElementById('wr_by').disabled = true;
-        document.getElementById('wr_bm').disabled = true;
-        document.getElementById('wr_bd').disabled = true;
-        document.getElementById('wr_bh').disabled = true;
-        document.getElementById('wr_bi').disabled = true;
-    }
-}
-
-function add(str) {
-    var conts = document.getElementById('wr_message');
-    var bytes = document.getElementById('sms_bytes');
-    conts.focus();
-    conts.value+=str;
-    byte_check('wr_message', 'sms_bytes');
-    return;
-}
-
-function byte_check(wr_message, sms_bytes)
-{
-    var conts = document.getElementById(wr_message);
-    var bytes = document.getElementById(sms_bytes);
-    var max_bytes = document.getElementById("sms_max_bytes");
-    var lms_max_length = <?php echo G5_ICODE_LMS_MAX_LENGTH;?>
-
-    var i = 0;
-    var cnt = 0;
-    var exceed = 0;
-    var ch = '';
-
-    for (i=0; i<conts.value.length; i++)
-    {
-        ch = conts.value.charAt(i);
-        if (escape(ch).length > 4) {
-            cnt += 2;
-        } else {
-            cnt += 1;
-        }
-    }
-
-    bytes.innerHTML = cnt;
-
-    <?php if($config['cf_sms_type'] == 'LMS') { ?>
-    if(cnt > 90)
-        max_bytes.innerHTML = lms_max_length;
-    else
-        max_bytes.innerHTML = 90;
-
-    if (cnt > lms_max_length)
-    {
-        exceed = cnt - lms_max_length;
-        alert('메시지 내용은 '+ lms_max_length +'바이트를 넘을수 없습니다.\n\n작성하신 메세지 내용은 '+ exceed +'byte가 초과되었습니다.\n\n초과된 부분은 자동으로 삭제됩니다.');
-        var tcnt = 0;
-        var xcnt = 0;
-        var tmp = conts.value;
-        for (i=0; i<tmp.length; i++)
-        {
-            ch = tmp.charAt(i);
-            if (escape(ch).length > 4) {
-                tcnt += 2;
-            } else {
-                tcnt += 1;
-            }
-
-            if (tcnt > lms_max_length) {
-                tmp = tmp.substring(0,i);
-                break;
-            } else {
-                xcnt = tcnt;
-            }
-        }
-        conts.value = tmp;
-        bytes.innerHTML = xcnt;
-        return;
-    }
-    <?php } else { ?>
-    if (cnt > 80)
-    {
-        exceed = cnt - 80;
-        alert('메시지 내용은 80바이트를 넘을수 없습니다.\n\n작성하신 메세지 내용은 '+ exceed +'byte가 초과되었습니다.\n\n초과된 부분은 자동으로 삭제됩니다.');
-        var tcnt = 0;
-        var xcnt = 0;
-        var tmp = conts.value;
-        for (i=0; i<tmp.length; i++)
-        {
-            ch = tmp.charAt(i);
-            if (escape(ch).length > 4) {
-                tcnt += 2;
-            } else {
-                tcnt += 1;
-            }
-
-            if (tcnt > 80) {
-                tmp = tmp.substring(0,i);
-                break;
-            } else {
-                xcnt = tcnt;
-            }
-        }
-        conts.value = tmp;
-        bytes.innerHTML = xcnt;
-        return;
-    }
-    <?php } ?>
-}
-
-<?php
-if ($bk_no) {
-$row = sql_fetch("select * from {$g5['sms5_book_table']} where bk_no='$bk_no'");
-?>
-
-var hp_list = document.getElementById('hp_list');
-var item    = "<?php echo $row['bk_name']?> (<?php echo $row['bk_hp']?>)";
-var value   = "p,<?php echo $row['bk_no']?>";
-
-hp_list.options[hp_list.length] = new Option(item, value);
-
-<?php } ?>
-
-<?php
-if ($fo_no) {
-    $row = sql_fetch("select * from {$g5['sms5_form_table']} where fo_no='$fo_no'");
-    $fo_content = str_replace(array("\r\n","\n"), "\\n", $row['fo_content']);
-    echo "add(\"$fo_content\");";
-}
-?>
-
-byte_check('wr_message', 'sms_bytes');
-document.getElementById('wr_message').focus();
+<script type="text/javascript">
+    CMS_FOLDER = "<?=G5_ADMIN_URL?>/sms_admin";
 </script>
 
-<?php
+<script src="<?=G5_ADMIN_URL?>/sms_admin/sms_js/set_js.js" type="text/javascript"></script>
+<script src="<?=G5_ADMIN_URL?>/sms_admin/sms_js/sms.js"></script>
+<link rel="stylesheet" type="text/css" href="https://kmpilot.or.kr/CMS/_css/sms.css">
 
-if ($wr_no)
-{
-    // 메세지와 회신번호
-    $row = sql_fetch(" select * from {$g5['sms5_write_table']} where wr_no = '$wr_no' ");
+<div id="cont"><!-- 꼭 있어야함 -->
+<div class="contents">
+	<!--컨텐츠 시작-->
 
-    echo "<script>\n";
-    echo "var hp_list = document.getElementById('hp_list');\n";
-    //echo "add(\"$row[wr_message]\");\n";
-    $wr_message = str_replace('"', '\"', $row['wr_message']);
-    $wr_message = str_replace(array("\r\n","\n"), "\\n", $wr_message);
-    echo "add(\"$wr_message\");\n";
-    echo "document.getElementById('wr_reply').value = '{$row['wr_reply']}';\n";
 
-    // 회원목록
-    $sql = " select * from {$g5['sms5_history_table']} where wr_no = '$wr_no' and bk_no > 0 ";
-    $qry = sql_query($sql);
-    $tot = sql_num_rows($qry);
 
-    if ($tot > 0) {
+	<div class="visualphone">
+		<div id="visualphone-wrap">
+			<form name="VisualPhone" id="VisualPhone" method="post" enctype="multipart/form-data" action="./sms_action.php" target="hiddenframe">
+			<input id="mode" name="mode" type="hidden" value="send_sms">
+			<input id="sendtype" name="sendtype" type="hidden" value="cms">
 
-        $str = '재전송그룹 ('.number_format($tot).'명)';
-        $val = 'p,';
+			<input id="s_calltype" name="s_calltype" type="hidden" value="0">
+			<input id="s_msgflag" name="s_msgflag" type="hidden" value="sms">
+			<input id="s_sendtime" name="s_sendtime" type="hidden" value="">
 
-        while ($row = sql_fetch_array($qry))
-        {
-            $val .= $row['bk_no'].',';
-        }
+			<input name="s_callphone" name="s_callphone" id="s_callphone" type="hidden" value="">
+			<input name="s_userprice" name="s_userprice" id="s_userprice" type="hidden" value="">
 
-        echo "hp_list.options[hp_list.length] = new Option('$str', '$val');\n";
-    }
+			<input id="basic_req" name="basic_req" type="hidden" value="">
 
-    // 비회원 목록
-    $sql = " select * from {$g5['sms5_history_table']} where wr_no = '$wr_no' and bk_no = 0 ";
-    $qry = sql_query($sql);
-    $tot = sql_num_rows($qry);
+			<input name="s_filecnt" id="s_filecnt" type="hidden" value="0">
+			<input name="filepath1" id="filepath1" type="hidden" value="">
+			<input name="filepath2" id="filepath2" type="hidden" value="">
+			<!-- [S] Visualphone -->
+			<div class="sect-visualphone">
+				<h1 class="blind">비주얼폰</h1>
+				<!--
+				<div class="subject comm-box" style="display: none;">
+					<label for="s_title">제목 :</label>
+					<input name="s_title" title="제목을 입력해주세요." class="input-subject" id="s_title" type="text" maxlength="20" value="">
+				</div>
+				!-->
+				<div class="message-area">
+					<div class="img-box" id="add_img_box">
+						<strong>&lt;첨부 이미지&gt;</strong>
+						<div class="img-box-wrap" id="add_img_div"></div>
+						<p>이미지를 클릭하시면<br>삭제하실 수 있습니다.</p>
+					</div>
+					<div class="message-box">
+						<textarea name="s_message" class="message-text" id="s_message" rows="1" cols="1"></textarea>
+					</div>
+					<div class="txt-byte"><span class="txt-message-byte" id="msglen">0</span> / <span class="txt-max-byte" id="max_len">90</span> byte</div>
+				</div>
+				<!--<
+				<div class="btn-message-area">
+					<div>
+						a class="first" id="savemsg_btn" href="#"><img alt="저장" src="/visualphone/img/btn_save_mesg.gif"></a>
+						<a id="loadmsg_btn" href="#"><img alt="열기" src="/visualphone/img/btn_open_mesg.gif"></a>
+						<a id="imgadd_btn" href="#"><img alt="첨부" src="/visualphone/img/btn_add_mesg.gif"></a>
+						<a id="spchar_btn" href="#"><img alt="특수문자" src="https://kmpilot.or.kr/CMS/_img/sms/btn_sign.gif"></a>
+					</div>
+				</div>
+				!-->
+				<div class="btn-phone-area">
+					<a class="first" id="pb_btn" href="#"><img alt="주소록" src="https://kmpilot.or.kr/CMS/_img/sms/btn_address.gif"></a>
+					<a id="paste_btn" href="#"><img alt="붙여넣기" src="https://kmpilot.or.kr/CMS/_img/sms/btn_paste.gif"></a>
+					<a id="spchar_btn" href="#"><img alt="특수문자" src="https://kmpilot.or.kr/CMS/_img/sms/btn_chr.gif"></a>
 
-    if ($tot > 0)
-    {
-        while ($row = sql_fetch_array($qry))
-        {
-            $str = "{$row['hs_name']} ({$row['hs_hp']})";
-            $val = "h,{$row['hs_name']}:{$row['hs_hp']}";
-            echo "hp_list.options[hp_list.length] = new Option('$str', '$val');\n";
-        }
-    }
-    echo "</script>\n";
-}
-?>
-<script>
-$(function(){
-    $(".box_txt").bind("focus keydown", function(){
-        $("#wr_message_lbl").hide();
-    });
-    $(".write_scemo_btn").click(function(){
-        $(".write_scemo").hide();
-        $(this).next(".write_scemo").show();
-    });
-    $(".scemo_cls_btn").click(function(){
-        $(".write_scemo").hide();
-    });
-});
+					<a id="imgadd_btn" href="#"><img alt="내 PC에서 사진 불러오기" src="https://kmpilot.or.kr/CMS/_img/sms/btn_up_img.gif"></a>
+					<!--<a id="sendme_btn" href="#"><img style="width: 33px;" alt="나에게" src="/visualphone/img/btn_vp_menu04.jpg"></a>
+					!-->
+				</div>
+				<div class="phone-area">
+					<div class="btn-phone-controll">
+						<input name="input_number" title="이름/번호 검색" class="input_text" id="input_number" type="text">
+						<input name="ret_input_number" class="input_text" id="ret_input_number" type="hidden">
+						<!--<a id="numadd_btn" href="#"><img alt="추가하기" src="https://kmpilot.or.kr/CMS/_img/sms/btn_plus.gif"></a>!-->
 
-var sms_obj={
-    phone_number : [],
-    el_box : "#num_book",
-    person_is_search : false,
-    level_add : function(lev, cnt){
-        if (cnt == '0') {
-            alert(lev + ' 레벨은 아무도 없습니다.');
-            return;
-        }
+						<a class="last" id="allnumdel_btn" href="#"><img alt="전체 삭제하기" src="https://kmpilot.or.kr/CMS/_img/sms/btn_allminus.gif"></a>
+						<div class="ly-phone-search ly-div">
+							<strong class="blind">번호 검색</strong>
+							<div class="ly-wrap">
+								<table cellspacing="0" cellpadding="0" summary="번호 검색">
+									<tbody>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="sel-phone">
+						<ul name="callList" id="callList">
+						</ul>
+					</div>
+					<div class="txt-count-area">
+						<span>잔액</span>
+						<div class="cnavy"><span class="phone-count" id="sms_money"><strong class="cwhite"><?=number_format($money)?></strong></span> 원</div>
+					</div>
+					<div class="txt-count-area">
+						<span>받는사람</span>
+						<div>총 <span class="phone-count" id="addphone_cnt">0</span>명</div>
+					</div>
+				</div>
+				<!--
+				<div class="check-phone-area">
+					<input name="reserv_chk" title="예약전송" id="reserv_chk" type="checkbox" value="">
+					<label for="reserv_chk">예약전송</label>
+					<input name="virnum_chk" title="가상번호이용" id="virnum_chk" type="checkbox" value="0">
+					<label for="virnum_chk">가상번호이용</label>
+				</div>
+				!-->
+				<div class="regphone-area">
+					<span class="txt">회신번호</span>
+					<div class="regphone-box">
+						<input name="s_reqphone" title="회신번호" id="s_reqphone" type="text" class="c en" value="<?=$CFG['cms_sms_number']?>">
+						<!--<a id="morereq_btn" href="#"><img alt="회신번호 더 보기" src="/visualphone/img/sel_down.gif"></a>!-->
+					</div>
+				</div>
+				<!--
+				<div class="ly-phone-list ly-div">
+					<strong class="blind">회신번호</strong>
+					<div class="ly-wrap">
+						<table cellspacing="0" cellpadding="0" summary="회신번호">
+							<tbody>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="ly-phone-virtual ly-div">
+					<strong class="blind">가상번호</strong>
+					<div class="ly-wrap">
+					</div>
+					<div id="monotice">
+						<img id="monotice_img" src="/visualphone/img/monotice_new.gif" border="0" usemap="#Map">
+					</div>
+					<map name="Map">
+						<area id="close_noti_btn" href="#" shape="rect" coords="183,117,220,131">
+						<area id="mo_detail_btn" href="#" shape="rect" coords="96,110,144,124">
+					</map>
+				</div>
+				!-->
+			</div>
+			<div class="btn-send-area">
+				<a href="#"><img id="msg_send_btn" alt="전송" src="https://kmpilot.or.kr/CMS/_img/sms/btn_send.gif"></a>
+				<a href="#"><img id="msg_cancel_btn" alt="취소" src="https://kmpilot.or.kr/CMS/_img/sms/btn_cancel.gif"></a>
+			</div>
+			<div class="send-type"><img alt="전송타입" src="https://kmpilot.or.kr/CMS/_img/sms/btn_vp_now.gif"></div>
+			<div class="img-battery"><img alt="battery" src="https://kmpilot.or.kr/CMS/_img/sms/sms_coin.gif"></div>
+			</form>
+		</div>
 
-        var hp_list = document.getElementById('hp_list');
-        var item    = "회원 권한 " + lev + " 레벨 (" + cnt + " 명)";
-        var value   = 'l,' + lev;
+		<!-- [E] Visualphone -->
+		<form name="formReceiveList">
+			<input name="ReceiveList" id="ReceiveList" type="hidden" value="">
+			<input name="ReceiveGroup" id="ReceiveGroup" type="hidden" value="">
+		</form>
+	</div>
+	<!--이미지 첨부 레이어-->
+	<div class="ly-mms-file ly-div" style="display: none;">
+		<strong class="tit-mms-file blind">이미지첨부</strong>
+		<div class="ly-wrap">
+			<div class="desc">
+				<span class="cblue">★</span> <strong class="en">1000*1000 / 500KB</strong>
+					<p style="margin: 0px; padding: 0px 0px 0px 11px;">이미지까지 업로드 가능</p>
+				<span class="cblue">★</span> <strong class="en">JPG</strong>만 업로드 가능<br>
+				<span class="cblue">★</span> <strong>업로드된 이미지는</strong><br>
+				<p style="margin: 0px; padding: 0px 0px 0px 11px;">각 단말기 기종에따라 통신사에서 자동 리사이징된후 발송 됩니다</p>
+			</div>
+			<div class="input-area">
+				<form name="upload_form" action="./sms_action.php" enctype="multipart/form-data" method="post" target="hiddenframe">
+					<input id="image_mode" name="mode" type="hidden" value="up_img">
+					<input name="img1" title="이미지첨부" id="img1" type="file">
+				</form>
+			</div>
+		</div>
+		<!--<div class="btn-area">
+			<button type="button" title="이미지첨부" class="btn btn-file" id="up_btn">이미지첨부</button>
+		</div>-->
+		<a class="btn-close" href="#"><img alt="닫기" src="https://kmpilot.or.kr/CMS/_img/sms/btn_close.gif"></a>
+	</div>
+	<!--이미지 첨부 레이어-->
+	<!-- 특수문자 레이어 -->
+	<div class="ly-special-characters ly-div">
+		<strong class="blind">특수문자</strong>
+		<div class="ly-wrap">
+			<table cellspacing="0" cellpadding="0" summary="특수문자">
+				<tbody>
+					<tr>
+						<td><a href="#" data-str="☆">☆</a></td>
+						<td><a href="#" data-str="○">○</a></td>
+						<td><a href="#" data-str="□">□</a></td>
+						<td><a href="#" data-str="◎">◎</a></td>
+						<td><a href="#" data-str="★">★</a></td>
+						<td><a href="#" data-str="●">●</a></td>
+						<td><a href="#" data-str="■">■</a></td>
+						<td><a href="#" data-str="☏">☏</a></td>
+						<td><a href="#" data-str="♪">♪</a></td>
+					</tr>
+					<tr>
+						<td><a href="#" data-str="☎">☎</a></td>
+						<td><a href="#" data-str="◈">◈</a></td>
+						<td><a href="#" data-str="▣">▣</a></td>
+						<td><a href="#" data-str="◐">◐</a></td>
+						<td><a href="#" data-str="◑">◑</a></td>
+						<td><a href="#" data-str="☜">☜</a></td>
+						<td><a href="#" data-str="☞">☞</a></td>
+						<td><a href="#" data-str="◀">◀</a></td>
+						<td><a href="#" data-str="▶">▶</a></td>
+					</tr>
+					<tr>
+						<td><a href="#" data-str="▲">▲</a></td>
+						<td><a href="#" data-str="▼">▼</a></td>
+						<td><a href="#" data-str="♠">♠</a></td>
+						<td><a href="#" data-str="♣">♣</a></td>
+						<td><a href="#" data-str="♥">♥</a></td>
+						<td><a href="#" data-str="◆">◆</a></td>
+						<td><a href="#" data-str="◁">◁</a></td>
+						<td><a href="#" data-str="▷">▷</a></td>
+						<td><a href="#" data-str="△">△</a></td>
+					</tr>
+					<tr>
+						<td><a href="#" data-str="▽">▽</a></td>
+						<td><a href="#" data-str="♤">♤</a></td>
+						<td><a href="#" data-str="♧">♧</a></td>
+						<td><a href="#" data-str="♡">♡</a></td>
+						<td><a href="#" data-str="◇">◇</a></td>
+						<td><a href="#" data-str="※">※</a></td>
+						<td><a href="#" data-str="♨">♨</a></td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<a class="btn-close" href="#"><img alt="닫기" src="https://kmpilot.or.kr/CMS/_img/sms/btn_close.gif"></a>
+	</div>
 
-        for (i=0; i<hp_list.length; i++) {
-            if (hp_list[i].value == value) {
-                alert('이미 같은 목록이 있습니다.');
-                return;
-            }
-        }
+	<!-- 최근번호 레이어 -->
+	<div class="ly-recentnum ly-div">
+		<strong class="tit-recentnum blind">최근번호</strong>
+		<div class="ly-recentnum-wrap">
+			<table id="recent_table" cellspacing="0" cellpadding="0" summary="최근번호">
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+		<div class="btn-phone-new-area">
+			<a id="select_btn" href="#"><img alt="선택" src="/visualphone/img/btn_select.gif"></a>
+			<a id="delete_btn" href="#"><img alt="삭제" src="/visualphone/img/btn_delet.gif"></a>
+			<a class="last" id="alldelete_btn" href="#"><img alt="전체삭제" src="/visualphone/img/btn_alldelet.gif"></a>
+		</div>
+		<a class="btn-close" href="#"><img alt="닫기" src="https://kmpilot.or.kr/CMS/_img/sms/btn_close.gif"></a>
+	</div>
 
-        hp_list.options[hp_list.length] = new Option(item, value);
-    },
-    array_remove : function(arr, item){
-        for(var i = arr.length; i--;) {
-          if(arr[i] === item) {
-              arr.splice(i, 1);
-          }
-        }
-        return arr;
-    },
-    book_all_checked : function(chk){
-        var bk_no = document.getElementsByName('bk_no');
+	<!-- 붙여넣기 레이어 -->
+	<div class="ly-paste ly-div">
+		<strong class="blind">붙여넣기</strong>
+		<div class="ly-wrap">
+			<div class="desc">
+				<p class="c6"><span class="blue">★</span> <strong>비회원</strong> 등록하기</p>
+				<p>ex)이름|번호(xxx-xxxx-xxxx)</p>
+			</div>
+			<div class="message">
+				<input name="guest_number" id="guest_number" type="hidden" value="">
+				<textarea name="s_pastetxt" id="s_pastetxt" rows="1" cols="1"></textarea>
+			</div>
+			<div class="btn-area">
+				<a class="btn-paste" href="#"><img alt="확인" src="https://kmpilot.or.kr/CMS/_img/sms/mms_btn_number_check.gif"></a>
+			</div>
+		</div>
+		<a class="btn-close" href="#"><img alt="닫기" src="https://kmpilot.or.kr/CMS/_img/sms/btn_close.gif"></a>
+	</div>
 
-        if (chk) {
-            for (var i=0; i<bk_no.length; i++) {
-                bk_no[i].checked = true;
-            }
-        } else {
-            for (var i=0; i<bk_no.length; i++) {
-                bk_no[i].checked = false;
-            }
-        }
-    },
-    person_add : function(bk_no, bk_name, bk_hp){
-        var hp_list = document.getElementById('hp_list');
-        var item    = bk_name + " (" + bk_hp + ")";
-        var value   = 'p,' + bk_no;
+</div>
+<script language="javascript">
+<!--
+	function InputData_SMS(i,subject){
+		try{
+			selText();
+		}catch(err){
+			selText1();
+		}
+		var re, sq, dq, bs, r1, l;
+		var temp;
+		var msglen;
+		re = /cR_/g;
+		sq = /sQ_/g;
+		dq = /dQ_/g;
+		bs = /bS_/g;
+		sp = / /g;
 
-        for (i=0; i<hp_list.length; i++) {
-            if (hp_list[i].value == value) {
-                alert('이미 같은 목록이 있습니다.');
-                return;
-            }
-        }
-        if( jQuery.inArray( bk_hp , this.phone_number ) > -1 ){
-           alert('목록에 이미 같은 휴대폰 번호가 있습니다.');
-           return;
-        } else {
-            this.phone_number.push( bk_hp );
-        }
-        hp_list.options[hp_list.length] = new Option(item, value);
-    },
-    person_multi_add : function(){
-        var bk_no = document.getElementsByName('bk_no');
-        var ck_no = '';
-        var count = 0;
+		sms = eval("document.frmEmtList.message_temp"+i+".value");
 
-        for (i=0; i<bk_no.length; i++) {
-            if (bk_no[i].checked==true) {
-                count++;
-                ck_no += bk_no[i].value + ',';
-            }
-        }
+		//message
 
-        if (!count) {
-            alert('하나이상 선택해주세요.');
-            return;
-        }
+		r1 = sms.replace(re, "<BR>");
+		r1 = r1.replace(sp, "&nbsp;");
+		r1 = r1.replace(sq, "'");
+		r1 = r1.replace(dq, "\"");
+		r1 = r1.replace(bs, "\\");
 
-        var hp_list = document.getElementById('hp_list');
-        var item    = "개인 (" + count + " 명)";
-        var value   = 'p,' + ck_no;
+		//subject
 
-        for (i=0; i<hp_list.length; i++) {
-            if (hp_list[i].value == value) {
-                alert('이미 같은 목록이 있습니다.');
-                return;
-            }
-        }
+		r2 = subject.replace(re, "\r\n");
+		r2 = r2.replace(sq, "'");
+		r2 = r2.replace(dq, "\"");
+		r2 = r2.replace(bs, "\\");
 
-        hp_list.options[hp_list.length] = new Option(item, value);
-    },
-    person : function(bg_no){
-        var params = { bg_no : bg_no };
-        this.person_is_search = true;
-        this.person_select( params, "html" );
-        book_change('book_person');
-    },
-    group_add : function(bg_no, bg_name, bg_count){
-        if (bg_count == '0') {
-            alert('그룹이 비어있습니다.');
-            return;
-        }
+		msglen = 0;
+		r1= replaceThemeToBlank(r1);
+		txtMessage.document.body.innerHTML = r1;
+		document.VisualPhone.txtMessage.value = r1;
+		document.VisualPhone.txtSubject.value = r2;
 
-        var hp_list = document.getElementById('hp_list');
-        var item    = bg_name + " 그룹 (" + bg_count + " 명)";
-        var value   = 'g,' + bg_no;
+		chkBytes();
+	}
 
-        for (i=0; i<hp_list.length; i++) {
-            if (hp_list[i].value == value) {
-                alert('이미 같은 목록이 있습니다.');
-                return;
-            }
-        }
 
-        hp_list.options[hp_list.length] = new Option(item, value);
-    }
-};
-(function($){
-    $("#form_sms input[type=text], #form_sms select").keypress(function(e){
-        return e.keyCode != 13;
-    });
-    sms_obj.fn_paging = function( hash_val,total_page,$el,$search_form ){
-        $el.paging({
-            current:hash_val ? hash_val : 1,
-            max:total_page == 0 || total_page ? total_page : 45,
-            length : 5,
-            liitem : 'span',
-            format:'{0}',
-            next:'다음',
-            prev:'이전',
-            sideClass:'pg_page pg_next',
-            prevClass:'pg_page pg_prev',
-            first:'&lt;&lt;',last:'&gt;&gt;',
-            href:'#',
-            itemCurrent:'pg_current',
-            itemClass:'pg_page',
-            appendhtml:'<span class="sound_only">페이지</span>',
-            onclick:function(e,page){
-                e.preventDefault();
-                $search_form.find("input[name='page']").val( page );
-                var params = '';
-                if( sms_obj.person_is_search ){
-                    params = $search_form.serialize();
-                } else {
-                    params = { page: page };
-                }
-                sms_obj.person_select( params, "html" );
-            }
-        });
-    }
-    sms_obj.person_select = function( params, type ){
-        emoticon_list.loading(sms_obj.el_box, "./img/ajax-loader.gif" ); //로딩 이미지 보여줌
-        $.ajax({
-            url: "./ajax.sms_write_person.php",
-            cache:false,
-            timeout : 30000,
-            dataType:type,
-            data:params,
-            success: function(data) {
-               $(sms_obj.el_box).html(data);
-               var $sms_person_form = $("#sms_person_form", sms_obj.el_box),
-                   total_page = $sms_person_form.find("input[name='total_pg']").val(),
-                   current_page = $sms_person_form.find("input[name='page']").val()
-               sms_obj.fn_paging( current_page, total_page, $("#person_pg", sms_obj.el_box), $sms_person_form );
-               $sms_person_form.bind("submit", function(e){
-                   e.preventDefault();
-                   sms_obj.person_is_search = true;
-                   $(this).find("input[name='total_pg']").val('');
-                   $(this).find("input[name='page']").val('');
-                   var params = $(this).serialize();
-                   sms_obj.person_select( params, "html" );
-                   emoticon_list.loadingEnd(sms_obj.el_box); //로딩 이미지 지움
-               });
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                alert(xhr.status);
-                alert(thrownError);
-            }
-        });
-    }
-    sms_obj.triggerclick = function( sel ){
-        $(sel).trigger("click");
-    }
-    $("#book_level").bind("click", function(e){
-        e.preventDefault();
-        book_change( $(this).attr("id") );
-        emoticon_list.loading(sms_obj.el_box, "./img/ajax-loader.gif" ); //로딩 이미지 보여줌
-        $.ajax({
-            url: "./ajax.sms_write_level.php",
-            cache:false,
-            timeout : 30000,
-            dataType:'json',
-            success: function(HttpRequest) {
-                if (HttpRequest.error) {
-                    alert(HttpRequest.error);
-                    return false;
-                } else {
-                    $(sms_obj.el_box).html(HttpRequest.html);
-                }
-                emoticon_list.loadingEnd(sms_obj.el_box); //로딩 이미지 지움
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                alert(xhr.status);
-                alert(thrownError);
-            }
-        })
-    });
-    $("#book_person").bind("click", function(e){
-        e.preventDefault();
-        book_change( $(this).attr("id") );
-        sms_obj.person_is_search = false;
-        sms_obj.person_select( '','html' );
-    });
-    $("#book_group").bind("click", function(e){
-        e.preventDefault();
-        book_change( $(this).attr("id") );
-        emoticon_list.loading(sms_obj.el_box, "./img/ajax-loader.gif" ); //로딩 이미지 보여줌
-        $.ajax({
-            url: "./ajax.sms_write_group.php",
-            cache:false,
-            timeout : 30000,
-            dataType:'html',
-            success: function(data) {
-                $(sms_obj.el_box).html(data);
-                emoticon_list.loadingEnd(sms_obj.el_box); //로딩 이미지 지움
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                alert(xhr.status);
-                alert(thrownError);
-            }
-        })
-    }).trigger("click");
-})(jQuery);
+	function InputData_SMS2(i,subject)
+	{
+		sms = document.getElementsByClassName("phonemsgbox")[i-1].value;
+		document.getElementById("s_message").value = sms;
+		document.getElementById("s_message").focus();
+	}
+
+
+	function GoKIND(flag){
+
+		if (flag == 'e1')
+		{
+			document.location.href = '/sms/sms01/main.asp?KindName=즐건하루&Cidx=2&Kidx=1';
+//			document.getElementById("centerimo4").style.display = 'block';
+//			document.getElementById("centerimo3").style.display = 'none';
+//			document.getElementById("centerimo2").style.display = 'none';
+//			document.getElementById("centerimo1").style.display = 'none';
+//			document.getElementById("e1").className='bold_blue';
+//			document.getElementById("e2").className='small_basic';
+//			document.getElementById("e3").className='small_basic';
+//			document.getElementById("e4").className='small_basic';
+		}
+		else if (flag == 'e2')
+		{
+			document.location.href = '/sms/sms01/main.asp?KindName=특별한날&Cidx=4&Kidx=3';
+//			document.getElementById("centerimo4").style.display = 'none';
+//			document.getElementById("centerimo3").style.display = 'block';
+//			document.getElementById("centerimo2").style.display = 'none';
+//			document.getElementById("centerimo1").style.display = 'none';
+//			document.getElementById("e1").className='small_basic';
+//			document.getElementById("e2").className='bold_blue';
+//			document.getElementById("e3").className='small_basic';
+//			document.getElementById("e4").className='small_basic';
+		}
+		else if (flag == 'e3')
+		{
+			document.location.href = '/sms/sms01/main.asp?KindName=아침인사&Cidx=6&kidx=2';
+//			document.getElementById("centerimo4").style.display = 'none';
+//			document.getElementById("centerimo3").style.display = 'none';
+//			document.getElementById("centerimo2").style.display = 'block';
+//			document.getElementById("centerimo1").style.display = 'none';
+//			document.getElementById("e1").className='small_basic';
+//			document.getElementById("e2").className='small_basic';
+//			document.getElementById("e3").className='bold_blue';
+//			document.getElementById("e4").className='small_basic';
+		}
+		else
+		{
+			document.location.href = '/sms/sms01/main.asp?KindName=행복기원&cidx=7&kidx=3';
+//			document.getElementById("centerimo4").style.display = 'none';
+//			document.getElementById("centerimo3").style.display = 'none';
+//			document.getElementById("centerimo2").style.display = 'none';
+//			document.getElementById("centerimo1").style.display = 'block';
+//			document.getElementById("e1").className='small_basic';
+//			document.getElementById("e2").className='small_basic';
+//			document.getElementById("e3").className='small_basic';
+//			document.getElementById("e4").className='bold_blue';
+		}
+
+	}
+//MMSbest 함수부분시작
+	function MMSINSERT(imgurl,filename,CPCode,FKContent){
+		var str = txtMessage.document.body.innerHTML;
+
+		//기존에 이미지가 있다면 해당이미지 삭제 후 이미지 새로 추가
+		var str2 = replaceThemeToBlank( str );
+
+		try{
+			selText();
+		}catch(err){
+			selText1();
+		}
+		//innerhtml전에 포커스를 줘야 이미지 뒤로 포커스가 가는거 같다
+		txtMessage.document.body.focus();
+
+		//////////////////////////////////////////////////////////////////////////////
+		//gif이미지가 비쥬얼폰에 올라왔을때 움직이지 않기에 원본소스는 주석으로 봉인//
+		//////////////////////////////////////////////////////////////////////////////
+		/*
+		parent.txtMessage.document.body.innerHTML = "<img src='/images/mms/blank_traparent.gif' name='mmsimg' id='mmsimg'><BR>\n" + str2;
+
+		var obj = parent.txtMessage.document.getElementById( 'mmsimg' );
+		obj.src = "/images/mms/blank_traparent.gif";
+		obj.style.visibility = 'visible';
+		obj.width = 105;
+		obj.height = 86;
+		//이미지 선택안되게함(리사이징 못하게)
+		obj.unselectable="on"
+		obj.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" + imgurl + "', sizingMethod='scale')";
+		*/
+
+		txtMessage.document.body.innerHTML = "<img src='" + imgurl + "' name='mmsimg' id='mmsimg'><BR>\n" + str2;
+
+		var obj = txtMessage.document.getElementById('mmsimg');
+		obj.width = 105;
+		obj.height = 86;
+		//이미지 선택안되게함(리사이징 못하게)
+		obj.unselectable="on"
+
+		//파일저장 경로(mms 파일저장경로)
+
+	//	실서버
+		var sc_file_path = "D:/www/2007suremcom/mms_cp/"+CPCode+"/"
+	// 개발서버
+	//	var sc_file_path = "C:/www/web/__2007suremcom_1018/mms_cp/"+CPCode+"/";
+		s= document.VisualPhone;
+
+		s.FileCount.value = "1";
+		s.FilePath1.value = sc_file_path + filename;
+
+		//아래는 멀티파일첨부시 추가
+		s.FileType2.value = "";
+		s.FilePath2.value = "";
+		s.FileType3.value = "";
+		s.FilePath3.value = "";
+		s.FileType4.value = "";
+		s.FilePath4.value = "";
+		s.FileType5.value = "";
+		s.FilePath5.value = "";
+
+
+		//아래는 MMS페이지에서 이미지 전송시 꼭필요한 값들
+		s.CPCode.value	  = CPCode;		//회사명
+		s.FKContent.value = FKContent;	//이미지FKContent
+
+
+
+		//바이트 체크
+		chkBytes();
+
+		// MMS전송 모드로 전환
+		turnMms();
+	}
+	function GoKIND1(flag){
+
+		if (flag == 'm13')
+		{
+			document.getElementById("centermms1").style.display = 'block';
+			document.getElementById("centermms2").style.display = 'none';
+			document.getElementById("centermms3").style.display = 'none';
+			document.getElementById("m13").className='bold_blue';
+			document.getElementById("m15").className='small_basic';
+			document.getElementById("m17").className='small_basic';
+		}
+		else if (flag == 'm15')
+		{
+			document.getElementById("centermms1").style.display = 'none';
+			document.getElementById("centermms2").style.display = 'none';
+			document.getElementById("centermms3").style.display = 'block';
+			document.getElementById("m13").className='small_basic';
+			document.getElementById("m15").className='bold_blue';
+			document.getElementById("m17").className='small_basic';
+		}
+		else
+		{
+			document.getElementById("centermms1").style.display = 'none';
+			document.getElementById("centermms2").style.display = 'block';
+			document.getElementById("centermms3").style.display = 'none';
+			document.getElementById("m13").className='small_basic';
+			document.getElementById("m15").className='small_basic';
+			document.getElementById("m17").className='bold_blue';
+		}
+
+	}
+//모바일 쿠폰 함수 시작
+	function GoKIND2(flag)
+	{
+		if (flag == 'm1')
+		{
+			document.getElementById("centermcon1").style.display = 'block';
+			document.getElementById("centermcon2").style.display = 'none';
+			document.getElementById("centermcon3").style.display = 'none';
+			document.getElementById("m1").className='bold_blue';
+			document.getElementById("m2").className='small_basic';
+			document.getElementById("m3").className='small_basic';
+		}
+		else if (flag == 'm2')
+		{
+			document.getElementById("centermcon1").style.display = 'none';
+			document.getElementById("centermcon2").style.display = 'block';
+			document.getElementById("centermcon3").style.display = 'none';
+			document.getElementById("m1").className='small_basic';
+			document.getElementById("m2").className='bold_blue';
+			document.getElementById("m3").className='small_basic';
+		}
+		else
+		{
+			document.getElementById("centermcon1").style.display = 'none';
+			document.getElementById("centermcon2").style.display = 'none';
+			document.getElementById("centermcon3").style.display = 'block';
+			document.getElementById("m1").className='small_basic';
+			document.getElementById("m2").className='small_basic';
+			document.getElementById("m3").className='bold_blue';
+		}
+	}
+
+	function PopSend(cat_id, goods_id)
+	{
+		var f = document.cate_form;
+		f.cat_id.value = cat_id;
+		f.goods_id.value = goods_id;
+		f.target = 'ifrm_pop';
+		f.action = 'http://heartcon.surem.com/pop_auto.php';
+		//f.action = 'pop_auto.php';
+		f.submit();
+	}
+
+
+//-->
 </script>
 
-<?php } else { //아이코드 사용설정이 안되어 있다면... ?>
 
-<section>
-    <h2 class="h2_frm">SMS 문자전송 서비스를 사용할 수 없습니다.</h2>
-    <div class="local_desc01 local_desc">
-        <p>
-            SMS 를 사용하지 않고 있기 때문에, 문자 전송을 할 수 없습니다.<br>
-            SMS 사용 설정은 <a href="../config_form.php#anc_cf_sms" class="btn_frmline">환경설정 &gt; 기본환경설정 &gt; SMS설정</a> 에서 SMS 사용을 아이코드로 변경해 주셔야 사용하실수 있습니다.
-        </p>
-    </div>
-</section>
+<!--컨텐츠 끝-->
 
-<?php } ?>
+
+			</div>
+
+ 		</div>
+
+	</div>
+</div>
+
+<iframe width="0" height="0" name='hiddenframe' class="hiddenx"></iframe>
 
 <?php
 include_once(G5_ADMIN_PATH.'/admin.tail.php');

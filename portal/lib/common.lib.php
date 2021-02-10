@@ -98,7 +98,7 @@ function goto_url($url)
 {
     $url = str_replace("&amp;", "&", $url);
     //echo "<script> location.replace('$url'); </script>";
-    
+
     if (!headers_sent())
         header('Location: '.$url);
     else {
@@ -769,6 +769,7 @@ function get_group($gr_id, $is_cache=false)
 
     return $cache[$key];
 }
+
 
 //접속한 멤버가 그 그룹인지 체크하는 함수
 function get_member_group_check($mb_id, $gr_id){
@@ -2106,7 +2107,7 @@ function bad_tag_convert($code)
         //$code = preg_replace_callback("#(\<(embed|object)[^\>]*)\>(\<\/(embed|object)\>)?#i",
         // embed 또는 object 태그를 막지 않는 경우 필터링이 되도록 수정
         $code = preg_replace_callback("#(\<(embed|object)[^\>]*)\>?(\<\/(embed|object)\>)?#i",
-                    create_function('$matches', 'return "<div class=\"embedx\">보안문제로 인하여 관리자 아이디로는 embed 또는 object 태그를 볼 수 없습니다. 확인하시려면 관리권한이 없는 다른 아이디로 접속하세요.</div>";'),
+                    create_function('$matches', 'return "<div class=\"embedx\">보안문제로 인하여 관리자 아이디로는 embed 또는 object 태그를 볼 수 없습니다. 확인하시려면 관리권한이 ��는 다른 아이디로 접속하세요.</div>";'),
                     $code);
     }
 
@@ -2387,34 +2388,10 @@ function get_editor_image($contents, $view=true)
 // 에디터 썸네일 삭제
 function delete_editor_thumbnail($contents)
 {
-//    if(!$contents)
-//        return;
-//
-//    run_event('delete_editor_thumbnail_before', $contents);
-//
-//    // $contents 중 img 태그 추출
-//    $matchs = get_editor_image($contents, false);
-//
-//    if(!$matchs)
-//        return;
-//
-//    for($i=0; $i<count($matchs[1]); $i++) {
-//        // 이미지 path 구함
-//        $imgurl = @parse_url($matchs[1][$i]);
-//        $srcfile = dirname(G5_PATH).$imgurl['path'];
-//        if(! preg_match('/(\.jpe?g|\.gif|\.png)$/i', $srcfile)) continue;
-//        $filename = preg_replace("/\.[^\.]+$/i", "", basename($srcfile));
-//        $filepath = dirname($srcfile);
-//        $files = glob($filepath.'/thumb-'.$filename.'*');
-//        if (is_array($files)) {
-//            foreach($files as $filename)
-//                unlink($filename);
-//        }
-//    }
-//
-//    run_event('delete_editor_thumbnail_after', $contents, $matchs);
     if(!$contents)
         return;
+
+    run_event('delete_editor_thumbnail_before', $contents);
 
     // $contents 중 img 태그 추출
     $matchs = get_editor_image($contents, false);
@@ -2425,41 +2402,18 @@ function delete_editor_thumbnail($contents)
     for($i=0; $i<count($matchs[1]); $i++) {
         // 이미지 path 구함
         $imgurl = @parse_url($matchs[1][$i]);
-
-
-        if(strpos($imgurl['path'], "/data/") != 0) {
-            $data_path = preg_replace("/^\/.*\/data/", "/data", $imgurl['path']);
-        } else {
-            $data_path = $imgurl['path'];
+        $srcfile = dirname(G5_PATH).$imgurl['path'];
+        if(! preg_match('/(\.jpe?g|\.gif|\.png)$/i', $srcfile)) continue;
+        $filename = preg_replace("/\.[^\.]+$/i", "", basename($srcfile));
+        $filepath = dirname($srcfile);
+        $files = glob($filepath.'/thumb-'.$filename.'*');
+        if (is_array($files)) {
+            foreach($files as $filename)
+                unlink($filename);
         }
-
-        $is_destfile = false;
-        if(preg_match('/(gif|jpe?g|bmp|png)$/i', strtolower(end(explode('.', $data_path))))){
-
-            $destfile = ( ! preg_match('/\w+\/\.\.\//', $data_path) ) ? G5_PATH.$data_path : '';
-
-            if($destfile && preg_match('/\/data\/editor\/[A-Za-z0-9_]{1,20}\//', $destfile) && is_file($destfile)) {
-                $is_destfile = true;
-            }
-        }
-
-        if($is_destfile) {
-            //원본파일 삭제
-            @chmod($destfile, G5_FILE_PERMISSION);
-            @unlink($destfile);
-
-            //썸네일파일 삭제
-            $files = glob(dirname($destfile).'/thumb-'.preg_replace("/\.[^\.]+$/i", "", basename($imgurl['path'])).'*');
-            //return $files;
-            if (is_array($files)) {
-                foreach($files as $filename)
-                    unlink($filename);
-            }
-
-        }
-
-
     }
+
+    run_event('delete_editor_thumbnail_after', $contents, $matchs);
 }
 
 // 1:1문의 첨부파일 썸네일 삭제
@@ -3257,8 +3211,8 @@ function member_delete($mb_id)
         social_member_link_delete($mb_id);
     }
 
-    // 최신면허 삭제
-    @unlink(G5_DATA_PATH.'/member_license/'.substr($mb_id,0,2).'/'.$mb_id.'.gif');
+    // 아이콘 삭제
+    @unlink(G5_DATA_PATH.'/member/'.substr($mb_id,0,2).'/'.$mb_id.'.gif');
 
     // 프로필 이미지 삭제
     @unlink(G5_DATA_PATH.'/member_image/'.substr($mb_id,0,2).'/'.$mb_id.'.gif');
@@ -3698,14 +3652,14 @@ function get_write_token($bo_table)
 function check_write_token($bo_table)
 {
     if(!$bo_table)
-        alert('올바른 방법으로 이용해 주십시오1111111111111.', G5_URL);
+        alert('올바른 방법으로 이용해 주십시오.', G5_URL);
 
     $token = get_session('ss_write_'.$bo_table.'_token');
 
     set_session('ss_write_'.$bo_table.'_token', '');
 
     if(!$token || !$_REQUEST['token'] || $token != $_REQUEST['token'])
-        alert('올바른 방법으로 이용해 주십시오2222222222222.', G5_URL);
+        alert('올바른 방법으로 이용해 주십시오..', G5_URL);
 
     return true;
 }
@@ -3983,7 +3937,6 @@ function option_array_checked($option, $arr=array()){
 function get_gallery_count_select($name, $start_id=0, $end_id=10, $selected="", $event="")
 {
     global $g5;
-
     $str = "\n<select id=\"{$name}\" name=\"{$name}\"";
     if ($event) $str .= " $event";
     $str .= ">\n";
@@ -3996,12 +3949,10 @@ function get_gallery_count_select($name, $start_id=0, $end_id=10, $selected="", 
     $str .= "</select>\n";
     return $str;
 }
-
 // 회원권한을 SELECT 형식으로 얻음
 function get_member_level_select($name, $start_id=0, $end_id=10, $selected="", $event="")
 {
     global $g5;
-
     $str = "\n<select id=\"{$name}\" name=\"{$name}\"";
     if ($event) $str .= " $event";
     $str .= ">\n";
@@ -4024,13 +3975,10 @@ function get_member_level_select($name, $start_id=0, $end_id=10, $selected="", $
     $str .= "</select>\n";
     return $str;
 }
-
-
 // 회원아이디를 SELECT 형식으로 얻음
 function get_member_id_select($name, $level, $selected="", $event="")
 {
     global $g5;
-
     $sql = " select mb_id from {$g5['member_table']} where mb_level >= '{$level}' ";
     $result = sql_query($sql);
     $str = '<select id="'.$name.'" name="'.$name.'" '.$event.'><option value="">선택안함</option>';
@@ -4043,16 +3991,12 @@ function get_member_id_select($name, $level, $selected="", $event="")
     $str .= '</select>';
     return $str;
 }
-
 // 학력사항을 SELECT 형식으로 얻음
 function get_grade_value_select(){
-
 }
 //회원 성별을 SELECT 형식으로 얻음
 function get_member_sex_select($name, $start_id=0, $end_id=10, $selected="", $event=""){
-
     global $g5;
-
     $str = "\n<select id=\"{$name}\" name=\"{$name}\"";
     if ($event) $str .= " $event";
     $str .= ">\n";
@@ -4071,12 +4015,9 @@ function get_member_sex_select($name, $start_id=0, $end_id=10, $selected="", $ev
     $str .= "</select>\n";
     return $str;
 }
-
 //도선구를 SELECT 형식으로 얻음
 function get_doseongu_select($name, $start_id=0, $end_id=12, $selected="", $event=""){
-
     global $g5;
-
     $str = "\n<select id=\"{$name}\" name=\"{$name}\"";
     if ($event) $str .= " $event";
     $str .= ">\n";
@@ -4105,12 +4046,9 @@ function get_doseongu_select($name, $start_id=0, $end_id=12, $selected="", $even
     $str .= "</select>\n";
     return $str;
 }
-
 //면허종류를 SELECT 형식으로 얻음
 function get_license_select($name, $start_id=0, $end_id=10, $selected="", $event=""){
-
     global $g5;
-
     $str = "\n<select id=\"{$name}\" name=\"{$name}\"";
     if ($event) $str .= " $event";
     $str .= ">\n";
@@ -4130,12 +4068,10 @@ function get_license_select($name, $start_id=0, $end_id=10, $selected="", $event
     $str .= "</select>\n";
     return $str;
 }
-
 //해심재결 해당여부를 SELECT 형식으로 얻음
 function get_applicable_or_not_select($name, $start_id=0, $end_id=10, $selected="", $onchange="", $event=""){
 
     global $g5;
-
     $str = "\n<select id=\"{$name}\" name=\"{$name}\"";
     if($onchange)
     $str.=" onchange= $onchange";
@@ -4156,12 +4092,9 @@ function get_applicable_or_not_select($name, $start_id=0, $end_id=10, $selected=
     $str .= "</select>\n";
     return $str;
 }
-
 //징계여부를 SELECT 형식으로 얻음
 function get_punishment_select($name, $start_id=0, $end_id=10, $selected="", $event=""){
-
     global $g5;
-
     $str = "\n<select id=\"{$name}\" name=\"{$name}\"";
     if ($event) $str .= " $event";
     $str .= ">\n";
@@ -4267,6 +4200,27 @@ switch ($_COOKIE['lang_change_portal']) {
 }
 include_once G5_PATH.'/languages_portal/'.$lang_file;
 
+//SMS 에서 쓰임
+function charConvert($str,$conv=1){
+	$schar  = "euc-kr";
+	$echar  = "utf-8";
+	if($conv){
+		if($conv==1){
+			$rStr = iconv($schar,$echar,$str);
+		}else{
+			$rStr = iconv($echar,$schar,$str);
+		}
+	}else{
+		$rStr = $str;
+	}
+	return $rStr;
+}
+
+function quote($value) {
+    return "\"".$value."\"";
+}
+
+
 //문자전송내역 건별 검색구분을 select 형식으로 가져온다.
 function get_sms_mean_value($name, $start_id=0, $end_id=10, $selected="", $event=""){
     global $g5;
@@ -4290,6 +4244,7 @@ function get_sms_mean_value($name, $start_id=0, $end_id=10, $selected="", $event
     $str .= "</select>\n";
     return $str;
 }
+
 
 //도선구 번호를 이름을 변환
 function get_doseongu_name($name){
@@ -4321,9 +4276,41 @@ function get_group_name($number){
 }
 
 //date 또는 datetime의 default 값을 ""로 변환하는 함수
-function date_return_empty_space($value){
-    if($value == "0000-00-00" || $value == "0000-00-00 00:00:00"){
+function date_return_empty_space($value)
+{
+    if ($value == "0000-00-00" || $value == "0000-00-00 00:00:00") {
         $value = "";
     }
     return $value;
+}
+
+function edu_type($value){
+    switch ($value){
+        case 'CR':
+            $edu_type = '면허갱신교육';
+            break;
+        case 'CE':
+            $edu_type = '보수교육';
+            break;
+        case 'CC':
+            $edu_type = '필수도선사교육';
+            break;
+    }
+    return $edu_type;
+}
+
+function edu_receipt_status($value){
+    switch ($value){
+        case 'I':
+            $edu_receipt_status = "<font color='blue'><b>접수중</b></font>";
+            break;
+        case 'C':
+            $edu_receipt_status = "<font color='red'><b>접수마감</b></font>";
+            break;
+        case 'P':
+            $edu_receipt_status = "<font color='black'><b>준비중</b></font>";
+            break;
+    }
+    return $edu_receipt_status;
+
 }

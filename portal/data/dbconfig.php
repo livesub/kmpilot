@@ -1,9 +1,9 @@
 <?php
 if (!defined('_GNUBOARD_')) exit;
 define('G5_MYSQL_HOST', 'localhost');
-define('G5_MYSQL_USER', 'root');
-define('G5_MYSQL_PASSWORD', '12341234');
-define('G5_MYSQL_DB', 'kmpilot2');
+define('G5_MYSQL_USER', 'kmpilot');
+define('G5_MYSQL_PASSWORD', 'pilot59260!');
+define('G5_MYSQL_DB', 'kmpilot');
 define('G5_MYSQL_SET_MODE', true);
 
 define('G5_TABLE_PREFIX', 'kmp_');
@@ -51,5 +51,5 @@ $g5['pilot_mending_table'] = G5_TABLE_PREFIX.'pilot_mending'; // 도선사보수
 $g5['pilot_necessary_table'] = G5_TABLE_PREFIX.'pilot_necessary'; // 필수 도선사
 
 $g5['pilot_lecture_apply_table'] = G5_TABLE_PREFIX.'pilot_lecture_apply'; // 강의 수강신청및 수강 완료(도선사면허갱신/도선사보수/필수도선사 통합)
-
+$g5['main_image_table'] = G5_TABLE_PREFIX.'main_image'; // 메인이미지(혐회/교육통합)
 ?>
