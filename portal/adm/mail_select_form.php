@@ -125,7 +125,6 @@ $now_year = date('Y');
 
 <div class="btn_confirm01 btn_confirm">
     <input type="button" class="btn btn_01" value="확인" onclick="edu_list();">
-    <!-- <input type="submit" value="확인" class="btn_submit"> -->
     <a href="./mail_list.php">목록 </a>
 </div>
 </form>
