@@ -25,7 +25,7 @@ if($edu_list_cnt == 0){
 }
 
 //수료 했는지 재 검증
-$sql_cp = sql_query("select lecture_completion_date from kmp_pilot_edu_apply where edu_idx = '{$edu_idx}' and edu_type = '{$edu_type}' and mb_id='{$member['mb_id']}' and lecture_completion_status = 'Y' ");
+$sql_cp = sql_query("select lecture_completion_date,certificate_num from kmp_pilot_edu_apply where edu_idx = '{$edu_idx}' and edu_type = '{$edu_type}' and mb_id='{$member['mb_id']}' and lecture_completion_status = 'Y' ");
 $row_cp_cnt = sql_num_rows($sql_cp);
 $row_app = sql_fetch_array($sql_cp);
 if($row_cp_cnt == 0){
@@ -33,16 +33,23 @@ if($row_cp_cnt == 0){
     exit;
 }
 
-//$edu_cal_end = explode("-",$row['edu_cal_end']);
-//$year_mk = substr($edu_cal_end[0],2,2);
-$year_mk = date("y");
-$no_mk = $row['edu_type']." ".$year_mk." - "; //코드 번호 정해 지지 않음!!
+//for($i = 10; $i <= 999 ; $i++) {
+//    $num = sprintf('%02d',$i); echo $num."\n";
+//}
+
+$edu_cal_end = explode("-",$row['edu_cal_end']);
+$year_mk = substr($edu_cal_end[0],2,2);
+$certificate_num = sprintf('%02d',$row_app['certificate_num']);
+//$year_mk = date("y");
+$no_mk = $row['edu_type']." ".$year_mk." - ".$certificate_num; //사람 순번이 아닌 이수 완료 순서로 한다!
 
 //유효 기간은 교육 종료 일 부터 2년
 $end_available = ($edu_cal_end[0] + 2)."-".$edu_cal_end[1]."-".$edu_cal_end[2];
 
 $cmp_date_mk_cut = explode(" ",$row_app['lecture_completion_date']);
 $cmp_date_mk = explode("-",$cmp_date_mk_cut[0]);
+//$g5['title'] = $g5['board_title'];
+//include_once(G5_PATH.'/head.php');
 ?>
 
 <!doctype html>
@@ -51,10 +58,12 @@ $cmp_date_mk = explode("-",$cmp_date_mk_cut[0]);
 <meta charset="utf-8">
 <meta http-equiv="imagetoolbar" content="no">
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-<title><?=$data['subject']?></title>
-
+<title><?=$row['edu_name_'.$lang_type]?></title>
+<link rel="stylesheet" href="http://localhost/edu/css/default.css?ver=191202">
+<link rel="stylesheet" href="http://localhost/edu/js/font-awesome/css/font-awesome.min.css?ver=191202">
 <style type="text/css"> @page { size: auto;  margin: 0mm; } </style>
-
+</head>
+<body>
 
 <script>
 var initBody;
@@ -83,7 +92,6 @@ function page_list()
 </script>
 
 
-<body>
 <div id='print_page'>
 <table>
     <tr>

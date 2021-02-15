@@ -10,6 +10,7 @@ if($is_member <> 1){
     $lecture_idx = $_POST['lecture_idx'];
     $apply_idx = $_POST['apply_idx'];
     $edu_idx = $_POST['edu_idx'];
+    $edu_type = $_POST['edu_type'];
     $now_year = date("Y");
 
     if($edu_idx == "" || $apply_idx == "" || $lecture_idx == ""){
@@ -40,11 +41,16 @@ if($is_member <> 1){
         $view_movie_count = $view_movie_cnt['view_cnt'];
 
         if($total_count == $view_movie_count){
-            //수료증 번호 만들기(월요일 부터)
-
-
             //DB 에 완료 저장
             $result_up = sql_query(" update kmp_pilot_edu_apply set lecture_completion_date = now(), lecture_completion_status = 'Y' where apply_idx = '{$apply_idx}' and mb_id='{$member['mb_id']}' ");
+
+            //수료증 번호 만들기(순번은 당해년도 교육의 총인원 순번으로 01부터 시작 1차 교육생 10명, 2차 교육생 10명, 3차 교육생 20명 이면 총 01~40까지 발급)
+            $certificate_max = sql_fetch(" select max(certificate_num) as certificate_cnt from kmp_pilot_edu_apply where edu_type = '{$edu_type}' and apply_cancel = 'N' and lecture_completion_status = 'Y' and lecture_completion_date like '%{$now_year}%' order by mb_name asc ");
+            $certificate_cnt = $certificate_max['certificate_cnt'];
+            $certificate_cnt = $certificate_cnt + 1;
+
+            //수료증 업뎃
+            $result_cert_up = sql_query(" update kmp_pilot_edu_apply set certificate_num = '{$certificate_cnt}' where apply_idx = '{$apply_idx}' and mb_id='{$member['mb_id']}' ");
         }
         /* 교육 동영상을 확인 했는지 확인 하기 끝*/
 

@@ -119,7 +119,7 @@ if($edu_onoff_type == "off"){
         <td colspan="3">
             <input type="text" name="edu_cal_start" id="edu_cal_start" class="frm_input" size="15" maxlength="10" value="<?=$row['edu_cal_start']?>" placeholder="내용을 입력해 주세요" readonly> 부터
             <input type="text" name="edu_cal_end" id="edu_cal_end" class="frm_input" size="15" maxlength="10" value="<?=$row['edu_cal_end']?>" placeholder="내용을 입력해 주세요" readonly> 까지
-            <input type="checkbox" name="edu_cal_type" id="edu_cal_type" value="0" <?php if($row['edu_cal_type'] == "0") echo "checked";?> onclick="edu_cal_type_chk();"> 종료일 미정
+            <input type="checkbox" name="edu_cal_type" id="edu_cal_type" value="0" <?php if($row['edu_cal_type'] == "0") echo "checked";?> onclick="edu_cal_type_chk();"> 종료일 미정( ※ 종료일 미정 일시 수료증서 발급에 문제가 발생 합니다. )
         </td>
     </tr>
 

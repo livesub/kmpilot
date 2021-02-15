@@ -27,7 +27,10 @@ if($apply_count == 0){
     exit;
 }
 
-//교육을 불러옴
+//교육 불러옴
+$row_edu = sql_fetch(" select * from kmp_pilot_edu_list where edu_idx = '{$edu_idx}' and edu_type = '{$edu_type}' and edu_del_type = 'N' ");
+
+//강의 불러옴
 $row = sql_fetch(" select * from kmp_pilot_lecture_list where lecture_idx='{$lecture_idx}' and edu_idx = '{$edu_idx}' and edu_type = '{$edu_type}' and lecture_del_type = 'N' ");
 $youtube_id = youtube_url($row['lecture_youtube']);
 
@@ -138,15 +141,20 @@ $ajaxpage_view_save = G5_URL."/edu_process/ajax_lecture_view_save.php";
 
 <?php
 //이미 동영상을 시청 했거나 교육 기간이 지났을 경우 저장 하지 않는다
-if($view_count == 0 || $now_date <= $row['edu_cal_end']){
-?>
+if($view_count == 0){
+    if($row_edu['edu_cal_end'] != ""){  //종료일이 미정이 아닐때
+        if($now_date <= $row_edu['edu_cal_end']){
             //동영상 총 시간과 영상 본시간이 같으면 디비에 저장
-            if(total_playTime == total_see){
-                //clearTimeout(reset);
-                //alert("저장!!!!");
-                view_info_save('<?=$lecture_idx?>','<?=$apply_idx?>','<?=$edu_idx?>');   //디비에 저장 하는 함수 호출
-            }
+?>
+            view_save(total_playTime, total_see);
 <?php
+        }
+    }else{
+        //동영상 총 시간과 영상 본시간이 같으면 디비에 저장
+?>
+        view_save(total_playTime, total_see);
+<?php
+    }
 }
 ?>
             console.log("total_see===> "+total_see);
@@ -167,7 +175,7 @@ if($view_count == 0 || $now_date <= $row['edu_cal_end']){
 </script>
 
 <script>
-    function view_info_save(lecture_idx,apply_idx,edu_idx){
+    function view_info_save(lecture_idx,apply_idx,edu_idx,edu_type){
 
         var ajaxUrl = "<?=$ajaxpage_view_save?>";
             $.ajax({
@@ -177,7 +185,8 @@ if($view_count == 0 || $now_date <= $row['edu_cal_end']){
                 data		: {
                     "lecture_idx"   : lecture_idx,
                     "apply_idx"     : apply_idx,
-                    "edu_idx"       : edu_idx
+                    "edu_idx"       : edu_idx,
+                    "edu_type"      : edu_type
                 },
                 success: function(data){
                     if(trim(data) == "no_member"){
@@ -202,6 +211,15 @@ if($view_count == 0 || $now_date <= $row['edu_cal_end']){
     }
 </script>
 
+<script>
+    function view_save(total_playTime, total_see){
+        if(total_playTime == total_see){
+                //clearTimeout(reset);
+                //alert("저장!!!!");
+                view_info_save('<?=$lecture_idx?>','<?=$apply_idx?>','<?=$edu_idx?>','<?=$edu_type?>');   //디비에 저장 하는 함수 호출
+        }
+    }
+</script>
 
 <?php
 if($view_count == 1){
@@ -210,11 +228,17 @@ if($view_count == 1){
             document.getElementById('lecture_complet').innerHTML = '{$row['lecture_subject']} {$lang['lecture_complete']}';
         </script>
     ";
-}else if($view_count == 0 && $now_date > $row['edu_cal_end']){
-    echo "
-        <script>
-            document.getElementById('lecture_complet').innerHTML = '{$lang['lecture_date_end']}';
-        </script>
-    ";
+    exit;
+}else{
+    if($row_edu['edu_cal_end'] != ""){
+        if($now_date > $row_edu['edu_cal_end']){
+            echo "
+            <script>
+                document.getElementById('lecture_complet').innerHTML = '{$lang['lecture_date_end']}';
+            </script>
+            ";
+            exit;
+        }
+    }
 }
 ?>

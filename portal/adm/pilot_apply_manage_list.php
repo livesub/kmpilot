@@ -1,5 +1,4 @@
 <?php
-
 include_once('./_common.php');
 
 auth_check_menu($auth, $sub_menu, 'r');
@@ -17,13 +16,13 @@ if($edu_idx == "" || $edu_type == "" || $choice_type == ""){
 */
 if($edu_onoff_type == "off")
 {
-    $g5['title'] = '오프라인 교육';
+    $g5['title'] = '오프라인 교육 신청자 리스트';
     $sub_menu = "400100";
     $title_change = "교육기간";
     $return_page = "pilot_off_edu_list.php";
     $colspan = 10;
 }else{
-    $g5['title'] = '온라인 교육';
+    $g5['title'] = '온라인 교육 신청자 리스트';
     $sub_menu = "400200";
     $title_change = "수강기간";
     $return_page = "pilot_on_edu_list.php";
@@ -62,6 +61,7 @@ $sql = " select * {$sql_common} {$sql_order} limit {$from_record}, {$rows} ";
 $result = sql_query($sql);
 ?>
 
+
 <form id="fsearch" name="fsearch" class="local_sch01 local_sch" method="get">
 <input type="hidden" name="edu_idx" id="edu_idx" value="<?=$edu_idx?>">
 <input type="hidden" name="edu_type" id="edu_type" value="<?=$edu_type?>">
@@ -80,16 +80,24 @@ $result = sql_query($sql);
 <input type="submit" class="btn_submit" value="검색">
 </form>
 
+
+<form name="on_apply_list_from" id="on_apply_list_from" onsubmit="return on_apply_list_submit(this);" method="post">
+<input type="hidden" name="app_edu_idx" id="app_edu_idx" value="<?=$edu_idx?>">
+<input type="hidden" name="page" id="page" value="<?php echo $page ?>">
+<input type="hidden" name="w" id="w" value="d">
+
 <div class="btn_fixed_top">
+    <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value" class="btn btn_02">
     <a href="./<?=$return_page?>" id="edu_list" class="btn btn_01">목록</a>
 </div>
+
 
 <div class="tbl_head01 tbl_wrap">
     <table>
     <caption><?php echo $g5['title']; ?> 목록</caption>
     <thead>
     <tr>
-        <th scope="col" id="mb_list_chk" rowspan="2" >
+        <th scope="col" id="apply_list_chk" rowspan="2" >
             <label for="chkall" class="sound_only">전체</label>
             <input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
         </th>
@@ -111,6 +119,7 @@ if($edu_onoff_type == "on"){
 }
 ?>
     </tr>
+
     </thead>
     <tbody>
 
@@ -126,7 +135,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     $row_mem = sql_fetch(" select mb_name, mb_birth, mb_hp, mb_validity_day_from, mb_validity_day_to, mb_license_ext_day_from, mb_license_ext_day_to from kmp_member where mb_id = '{$row['mb_id']}' ");
 ?>
     <tr>
-        <td><input type="checkbox" id="chk_<?php echo $i ?>" name="chk[]" value="<?php echo $row['edu_idx'] ?>"></td>
+        <td><input type="checkbox" id="chk_<?php echo $i ?>" name="chk[]" value="<?php echo $row['apply_idx'] ?>"></td>
         <td><?=$virtual_num?></td>
         <td><?=$edu_ment?></td>
         <td><?=$row['edu_name_kr']?></td>
@@ -155,12 +164,62 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 ?>
     </tr>
 <?php
-    $virtual_num--;
-}
-if (!$i)
+        $virtual_num--;
+    }
+    if (!$i)
     echo "<tr><td colspan='{$colspan}' class=\"empty_table\">자료가 없습니다.</td></tr>";
 ?>
     </tbody>
     </table>
 </div>
 </form>
+<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, '?'.$qstr.'&amp;page=&edu_idx='.$edu_idx.'&edu_type='.$edu_type."&edu_onoff_type=".$edu_onoff_type."&choice_type=".$choice_type); ?>
+
+<script>
+function on_apply_list_submit(f)
+{
+    if (!is_checked("chk[]")) {
+        alert(document.pressed+" 하실 항목을 하나 이상 선택하세요.");
+        return false;
+    }
+
+    if(document.pressed == "선택삭제") {
+
+        if(confirm("선택한 자료를 정말 삭제하시겠습니까?")) {
+
+            var ajaxUrl = "ajax_apply_del.php";
+            var queryString = $("form[name=on_apply_list_from]").serialize() ;
+
+            $.ajax({
+                type		: "POST",
+                dataType    : 'text',
+                url			: ajaxUrl,
+                data        : queryString,
+                success: function(data){
+                    if(trim(data) == "no_idx"){
+                        alert('삭제할 목록을 1개이상 선택해 주세요.');
+                        return false;
+                    }
+
+                    if(trim(data) == "ok"){
+                        alert("삭제 되었습니다.");
+                        location.reload();
+                    }
+                },
+                error: function () {
+                    console.log('error');
+                }
+            });
+
+        }else{
+            return false;
+        }
+
+    }
+
+    return true;
+}
+</script>
+
+<?php
+include_once ('./admin.tail.php');

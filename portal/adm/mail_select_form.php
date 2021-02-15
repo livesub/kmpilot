@@ -43,13 +43,14 @@ $mb_email = isset($mb_email) ? clean_xss_tags($mb_email, 1, 1, 100) : '';
 
 $g5['title'] = '회원메일발송';
 include_once('./admin.head.php');
+$now_year = date('Y');
 ?>
 
 <div class="local_ov01 local_ov">
     전체회원 <?php echo number_format($tot_cnt) ?>명 , 탈퇴대기회원 <?php echo number_format($finish_cnt) ?>명, 정상회원 <?php echo number_format($tot_cnt - $finish_cnt) ?>명 중 메일 발송 대상 선택
 </div>
 
-<form name="frmsendmailselectform" id="frmsendmailselectform" action="./mail_select_list.php" method="post" autocomplete="off">
+<form name="frmsendmailselectform" id="frmsendmailselectform" action="" method="post" autocomplete="off">
 <input type="hidden" name="ma_id" value="<?php echo $ma_id ?>">
 
 <div class="tbl_frm01 tbl_wrap">
@@ -99,15 +100,20 @@ include_once('./admin.head.php');
 <!--        </td>-->
 <!--    </tr>-->
     <tr>
-        <th scope="row"><label for="gr_id">게시판그룹회원</label></th>
+        <th scope="row"><label for="gr_id">그룹회원</label></th>
         <td>
             <select name="gr_id" id="gr_id">
                 <option value=''>전체</option>
                 <?php
-                $sql = " select gr_id, gr_subject from {$g5['group_table']} order by gr_subject ";
+                $sql = " select gr_id, gr_subject from {$g5['group_table']} where gr_id != 'community' order by gr_subject ";
                 $result = sql_query($sql);
                 for ($i=0; $row=sql_fetch_array($result); $i++) {
                     echo '<option value="'.$row['gr_id'].'">'.$row['gr_subject'].'</option>';
+                }
+
+                $edu_list_result = sql_query(" select * from kmp_pilot_edu_list where edu_del_type = 'N' and edu_regi like '%{$now_year}%' ");
+                for ($j=0; $edu_list_row=sql_fetch_array($edu_list_result); $j++) {
+                    echo '<option value="edu_'.$edu_list_row['edu_idx'].'">'.$edu_list_row['edu_name_kr'].'</option>';
                 }
                 ?>
             </select>
@@ -118,10 +124,24 @@ include_once('./admin.head.php');
 </div>
 
 <div class="btn_confirm01 btn_confirm">
-    <input type="submit" value="확인" class="btn_submit">
+    <input type="button" class="btn btn_01" value="확인" onclick="edu_list();">
+    <!-- <input type="submit" value="확인" class="btn_submit"> -->
     <a href="./mail_list.php">목록 </a>
 </div>
 </form>
+
+<script>
+    function edu_list(){
+        if ($("#gr_id").val().indexOf("edu_") != -1) {
+            //교육 관련 그룹일때
+            $("#frmsendmailselectform").attr("action", "./mail_edu_list.php");
+            $("#frmsendmailselectform").submit();
+        }else {
+            $("#frmsendmailselectform").attr("action", "./mail_select_list.php");
+            $("#frmsendmailselectform").submit();
+        }
+    }
+</script>
 
 <?php
 include_once('./admin.tail.php');
