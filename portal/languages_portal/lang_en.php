@@ -23,6 +23,7 @@ $lang['news']='News';
 $lang['magazine']='Magazine';
 //헤더 관련
 $lang['connect_user'] = 'CONNECT USER';
+$lang['member_check'] = 'member_check';
 
 //회원 관련
 $lang['member_modi'] = 'Member_modify';

@@ -19,7 +19,7 @@ $lang['news']='공지사항';
 $lang['magazine']='도선지';
 //헤더 관련
 $lang['connect_user'] = '접속자';
-
+$lang['member_check'] = '회원관리';
 //회원 관련
 $lang['member_modi'] = '정보수정';
 $lang['member_logout'] = '로그아웃';
