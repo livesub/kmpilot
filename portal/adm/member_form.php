@@ -220,7 +220,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
         <th scope="row"><label for="mb_password">비밀번호<?php echo $sound_only ?><?php if ($w=='u'){ ?>
                     <p>미 입력시 원래 비밀번호로 저장</p>
                 <?php } ?></label></th>
-        <td><input type="password" name="mb_password" id="mb_password" <?php echo $required_mb_password ?> class="frm_input <?php echo $required_mb_password ?>" size="15" maxlength="20" minlength="6"></td>
+        <td><input type="password" name="mb_password" id="mb_password" <?php echo $required_mb_password ?> class="frm_input <?php echo $required_mb_password ?>" size="15" maxlength="20" minlength="6" autocomplete="off"></td>
     </tr>
     <tr>
         <th scope="row"><label for="mb_img">회원이미지</label></th>
