@@ -109,7 +109,7 @@ $ajaxpage = G5_URL.'/lang_change_portal.php';
 //            $result = sql_query($sql_sel_auth);
             $result = get_auth_member_exits($member['mb_id'], 200100);
             if ($result && !$is_admin) {  ?>
-            <li class="tnb_admin"><a href="<?= G5_ADMIN_URL?>/member_list.php">회원관리</a></li>
+            <li class="tnb_admin"><a href="<?= G5_ADMIN_URL?>/member_list.php"><?=$lang['member_check']?></a></li>
             <?php }  ?>
             <?php if ($is_admin) {  ?>
             <li class="tnb_admin"><a href="<?php echo correct_goto_url(G5_ADMIN_URL); ?>">관리자</a></li>
