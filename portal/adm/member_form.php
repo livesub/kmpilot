@@ -624,17 +624,18 @@ if (!$sst1) {
 }
 $sql_order_punish = " order by $sst1 $sod1 ";
 
-//$sql_count_punish = " select count(*) as cnt
-//            {$sql_member_punish_select}
-//            {$sql_search}
-//            {$sql_order} ";
-//$row_punish = sql_fetch($sql_count_punish);
-//$total_count_punish = $row_punish['cnt'];
-//
-//$rows = $config['cf_page_rows'];
-//$total_page  = ceil($total_count_punish / $rows);  // 전체 페이지 계산
-//if ($page < 1) $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
-//$from_record = ($page - 1) * $rows; // 시작 열을 구함
+/*$sql_count_punish = " select count(*) as cnt
+            {$sql_member_punish_select}
+            {$sql_search}
+            {$sql_order} ";
+$row_punish = sql_fetch($sql_count_punish);
+$total_count_punish = $row_punish['cnt'];
+
+$rows = $config['cf_page_rows'];
+$total_page  = ceil($total_count_punish / $rows);  // 전체 페이지 계산
+if ($page < 1) $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
+$from_record = ($page - 1) * $rows; // 시작 열을 구함
+*/
 
 $sql_sel_punish = " select *
             {$sql_member_punish_select}
@@ -738,6 +739,7 @@ else
     let emailTest = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
     let nameTest = /^[가-힣]{2,10}$/;
     let telTest = /^\d{2,3}-\d{3,4}-\d{4}$/;
+    /*let updateFlag = <?= isset($w)&&$w!='' ? "'".$w."'" : "'".'a'."'" ?>;*/
 
     function changePunishmentValue(){
         let sVal = $('#mb_applicable_or_not').val();
@@ -796,95 +798,95 @@ else
             }
         });
     })
-function fmember_submit(f)
-{
-    if (!f.mb_license.value.match(/\.(gif|jpe?g|png)$/i) && f.mb_license.value) {
-        alert('면허사본은 이미지 파일만 가능합니다.');
-        return false;
-    }
+    function fmember_submit(f)
+    {
+        if (!f.mb_license.value.match(/\.(gif|jpe?g|png)$/i) && f.mb_license.value) {
+            alert('면허사본은 이미지 파일만 가능합니다.');
+            return false;
+        }
 
-    if (!f.mb_img.value.match(/\.(gif|jpe?g|png)$/i) && f.mb_img.value) {
-        alert('회원이미지는 이미지 파일만 가능합니다.');
-        return false;
-    }
+        if (!f.mb_img.value.match(/\.(gif|jpe?g|png)$/i) && f.mb_img.value) {
+            alert('회원이미지는 이미지 파일만 가능합니다.');
+            return false;
+        }
 
-    if(!(nameTest.test(f.mb_name.value)) || f.mb_name.value == ""){
-        alert('실명을 입력해주세요. \n한글로 작성해주시기 바랍니다.(2~10 자 이내)');
-        f.mb_name.focus();
-        return false;
-    }
+        if(!(nameTest.test(f.mb_name.value)) || f.mb_name.value == ""){
+            alert('실명을 입력해주세요. \n한글로 작성해주시기 바랍니다.(2~10 자 이내)');
+            f.mb_name.focus();
+            return false;
+        }
 
-    if(!(emailTest.test(f.mb_email.value)) || f.mb_email.value == ""){
-        alert('제대로 된 이메일 형식이 아닙니다. ex) XXXX@XXXX.com 등 형식으로 작성해주세요');
-        f.mb_email.focus();
-        return false;
-    }
+        if(!(emailTest.test(f.mb_email.value)) || f.mb_email.value == ""){
+            alert('제대로 된 이메일 형식이 아닙니다. ex) XXXX@XXXX.com 등 형식으로 작성해주세요');
+            f.mb_email.focus();
+            return false;
+        }
 
-    if(!(phoneTest.test(f.mb_hp.value)) || f.mb_hp.value == "000-0000-0000" || f.mb_hp.value == ""){
-        alert("제대로 된 휴대폰 번호 형식이 아닙니다. \n ex) 010-XXXX-XXXX 형식으로 작성해주세요");
-        f.mb_hp.focus();
-        return false;
-    }
+        if(!(phoneTest.test(f.mb_hp.value)) || f.mb_hp.value == "000-0000-0000" || f.mb_hp.value == ""){
+            alert("제대로 된 휴대폰 번호 형식이 아닙니다. \n ex) 010-XXXX-XXXX 형식으로 작성해주세요");
+            f.mb_hp.focus();
+            return false;
+        }
 
-    //alert($('#mb_tel').val());
-    if($('#mb_tel').val() != "" && !(telTest.test($('#mb_tel').val()))){
-        alert('제대로 된 형식이 아닙니다. \nex) xx-xxxx-xxxx 형식으로 작성해주세요');
-        $('#mb_tel').focus();
-        return false;
-    }
+        //alert($('#mb_tel').val());
+        if($('#mb_tel').val() != "" && !(telTest.test($('#mb_tel').val()))){
+            alert('제대로 된 형식이 아닙니다. \nex) xx-xxxx-xxxx 형식으로 작성해주세요');
+            $('#mb_tel').focus();
+            return false;
+        }
 
-    if(!(birthTest.test(f.mb_birth.value)) || f.mb_birth.value == "0000-00-00" || f.mb_birth.value == ""){
-        alert(" 제대로 된 형식이 아닙니다 \n ex) 2010-11-11 형식으로 작성해주세요");
-        f.mb_birth.focus();
-        return false;
-    }
+        if(!(birthTest.test(f.mb_birth.value)) || f.mb_birth.value == "0000-00-00" || f.mb_birth.value == ""){
+            alert(" 제대로 된 형식이 아닙니다 \n ex) 2010-11-11 형식으로 작성해주세요");
+            f.mb_birth.focus();
+            return false;
+        }
 
-    if(<?=$w?> == 'u' && f.mb_password.value !=0 && f.mb_password.length != 0){
-        if (f.mb_password.value.length > 0) {
-            if (f.mb_password.value.length < 6) {
-                alert("비밀번호를 6글자 이상 입력하십시오.");
+        if(f.mb_password.value !=0 && f.mb_password.length != 0){
+            if (f.mb_password.value.length > 0) {
+                if (f.mb_password.value.length < 6) {
+                    alert("비밀번호를 6글자 이상 입력하십시오.");
+                    f.mb_password.focus();
+                    //f.mb_password.value = "";
+                    return false;
+                }
+            }
+
+            if (!(pwTest.test(f.mb_password.value))) {
+                alert("비밀번호는 영어소문자 또는 대문자,특수문자(!@#$%^&*())숫자포함 6글자이상 20글자이하만 허용가능합니다.");
                 f.mb_password.focus();
-                //f.mb_password.value = "";
                 return false;
             }
-        }
 
-        if (!(pwTest.test(f.mb_password.value))) {
-            alert("비밀번호는 영어소문자 또는 대문자,특수문자(!@#$%^&*())숫자포함 6글자이상 20글자이하만 허용가능합니다.");
-            f.mb_password.focus();
-            return false;
-        }
+            if (searchPw.test(f.mb_password.value)) {
+                alert("비밀번호는 특수문자(!@#$%^&*())만 허용가능합니다.");
+                f.mb_password.focus();
+                return false;
+            }
 
-        if (searchPw.test(f.mb_password.value)) {
-            alert("비밀번호는 특수문자(!@#$%^&*())만 허용가능합니다.");
-            f.mb_password.focus();
-            return false;
-        }
-
-        if (f.mb_password.value.length > 20) {
-            alert("비밀번호는 6글자이상 20글자이하로 입력하십시오.");
-            f.mb_password.focus();
-            return false;
-        }
-    }
-
-    return true;
-}
-function fauthlist_submit(f)
-    {
-        if (!is_checked("chk[]")) {
-            alert(document.pressed+" 하실 항목을 하나 이상 선택하세요.");
-            return false;
-        }
-
-        if(document.pressed == "선택삭제") {
-            if(!confirm("선택한 자료를 정말 삭제하시겠습니까?")) {
+            if (f.mb_password.value.length > 20) {
+                alert("비밀번호는 6글자이상 20글자이하로 입력하십시오.");
+                f.mb_password.focus();
                 return false;
             }
         }
 
         return true;
     }
+    function fauthlist_submit(f)
+        {
+            if (!is_checked("chk[]")) {
+                alert(document.pressed+" 하실 항목을 하나 이상 선택하세요.");
+                return false;
+            }
+
+            if(document.pressed == "선택삭제") {
+                if(!confirm("선택한 자료를 정말 삭제하시겠습니까?")) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
 </script>
 <?php
 run_event('admin_member_form_after', $mb, $w);
