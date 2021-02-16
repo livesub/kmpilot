@@ -783,7 +783,7 @@ else
         }
 
         if(!(nameTest.test(f.mb_name.value)) || f.mb_name.value == ""){
-            alert('실명을 입력해주세요. \n한글로 작성해주시기 바랍니다.(2~10 자 이내)');
+            alert('실명을 입력해주세요.(2~50 자 이내)');
             f.mb_name.focus();
             return false;
         }
