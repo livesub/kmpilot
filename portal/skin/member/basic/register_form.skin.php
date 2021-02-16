@@ -317,11 +317,21 @@ gif, jpg, png파일만 가능하며 용량 <?php echo number_format($config['cf_
                     </li>
                     <li>
                         <label>최신 면허 사본</label>
+<!--                        --><?php
+//                        $mb_dir = substr($member['mb_id'],0,2);
+//                        $icon_file = G5_DATA_PATH.'/member_license/'.$mb_dir.'/'.get_mb_icon_name($member['mb_id']).'.gif';
+//                        if (file_exists($icon_file)) {
+//                            echo get_member_profile_img($member['mb_id']);
+//                        }
+//                        ?>
                         <?php
                         $mb_dir = substr($member['mb_id'],0,2);
-                        $icon_file = G5_DATA_PATH.'/member_license/'.$mb_dir.'/'.get_mb_icon_name($member['mb_id']).'.gif';
-                        if (file_exists($icon_file)) {
-                            echo get_member_profile_img($member['mb_id']);
+                        $icon_file2 = G5_DATA_PATH.'/member_license/'.$mb_dir.'/'.get_mb_icon_name($member['mb_id']).'.gif';
+                        if (file_exists($icon_file2)) {
+                            $icon_url = str_replace(G5_DATA_PATH, G5_DATA_URL, $icon_file2);
+                            $icon_filemtile2 = (defined('G5_USE_MEMBER_IMAGE_FILETIME') && G5_USE_MEMBER_IMAGE_FILETIME) ? '?'.filemtime($icon_file2) : '';
+                            echo '<img src="'.$icon_url.$icon_filemtile2.'" alt="">';
+
                         }
                         ?>
                     </li>
