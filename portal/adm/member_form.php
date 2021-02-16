@@ -386,16 +386,8 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     <tr>
         <th scope="row"><label for="mb_applicable_or_not">해심재결 해당여부</label></th>
         <td><?php echo get_applicable_or_not_select('mb_applicable_or_not', 0, 3, "", 'changePunishmentValue()') ?></td>
-<!--            <td>-->
-<!--                <select id="mb_applicable_or_not" name="mb_applicable_or_not" onchange="changePunishmentValue()">-->
-<!--                    <option value="0">선택해주세요</option>-->
-<!--                    <option value="1">해심</option>-->
-<!--                    <option value="2">재결</option>-->
-<!--                    <option value="3">종결</option>-->
-<!--                </select>-->
-<!--            </td>-->
+
         <th scope="row" id="punish_label" style="display: none" class="punishment"><label for="mb_punishment">징계 선택</label></th>
-<!--        <td>--><?php //echo get_punishment_select('mb_punishment', 0, 3, $mb['mb_punishment']) ?><!--</td>-->
         <td>
             <select id="mb_punishment" name="mb_punishment" style="display: none" class="punishment">
 
@@ -404,46 +396,6 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
         <th scope="row" class="punishment" style="display: none"><label for="mb_punishment_date">징계 선고일</label></th>
         <td><input type="text" id="mb_punishment_date" name="mb_punishment_date" class="datepicker punishment" value="" style="display: none" readonly></td>
     </tr>
-<!--    <tr>-->
-<!--    -->
-<!--    </tr>-->
-<!--    <tr>-->
-<!--        <th scope="row">메일 수신</th>-->
-<!--        <td>-->
-<!--            <input type="radio" name="mb_mailling" value="1" id="mb_mailling_yes" --><?php //echo $mb_mailling_yes; ?><!-- >-->
-<!--            <label for="mb_mailling_yes">예</label>-->
-<!--            <input type="radio" name="mb_mailling" value="0" id="mb_mailling_no" --><?php //echo $mb_mailling_no; ?><!-- >-->
-<!--            <label for="mb_mailling_no">아니오</label>-->
-<!--        </td>-->
-<!--        <th scope="row"><label for="mb_sms_yes">SMS 수신</label></th>-->
-<!--        <td>-->
-<!--            <input type="radio" name="mb_sms" value="1" id="mb_sms_yes" --><?php //echo $mb_sms_yes; ?><!-- >-->
-<!--            <label for="mb_sms_yes">예</label>-->
-<!--            <input type="radio" name="mb_sms" value="0" id="mb_sms_no" --><?php //echo $mb_sms_no; ?><!-- >-->
-<!--            <label for="mb_sms_no">아니오</label>-->
-<!--        </td>-->
-<!--    </tr>-->
-<!--    <tr>-->
-<!--        <th scope="row">정보 공개</th>-->
-<!--        <td colspan="3">-->
-<!--            <input type="radio" name="mb_open" value="1" id="mb_open_yes" --><?php //echo $mb_open_yes; ?><!-- >-->
-<!--            <label for="mb_open_yes">예</label>-->
-<!--            <input type="radio" name="mb_open" value="0" id="mb_open_no" --><?php //echo $mb_open_no; ?><!-- >-->
-<!--            <label for="mb_open_no">아니오</label>-->
-<!--        </td>-->
-<!--    </tr>-->
-<!--    <tr>-->
-<!--        <th scope="row"><label for="mb_signature">서명</label></th>-->
-<!--        <td colspan="3"><textarea  name="mb_signature" id="mb_signature">--><?php //echo $mb['mb_signature'] ?><!--</textarea></td>-->
-<!--    </tr>-->
-<!--    <tr>-->
-<!--        <th scope="row"><label for="mb_profile">자기 소개</label></th>-->
-<!--        <td colspan="3"><textarea name="mb_profile" id="mb_profile">--><?php //echo $mb['mb_profile'] ?><!--</textarea></td>-->
-<!--    </tr>-->
-<!--    <tr>-->
-<!--        <th scope="row"><label for="mb_memo">메모</label></th>-->
-<!--        <td colspan="3"><textarea name="mb_memo" id="mb_memo">--><?php //echo $mb['mb_memo'] ?><!--</textarea></td>-->
-<!--    </tr>-->
 
     <?php if ($w == 'u') { ?>
     <tr>
@@ -452,34 +404,8 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
         <th scope="row">최근접속일</th>
         <td><?php echo date_return_empty_space($mb['mb_today_login']) ?></td>
     </tr>
-<!--    <tr>-->
-<!--        <th scope="row">IP</th>-->
-<!--        <td colspan="3">--><?php //echo $mb['mb_ip'] ?><!--</td>-->
-<!--    </tr>-->
-<!--    --><?php //if ($config['cf_use_email_certify']) { ?>
-<!--    <tr>-->
-<!--        <th scope="row">인증일시</th>-->
-<!--        <td colspan="3">-->
-<!--            --><?php //if ($mb['mb_email_certify'] == '0000-00-00 00:00:00') { ?>
-<!--            --><?php //echo help('회원님이 메일을 수신할 수 없는 경우 등에 직접 인증처리를 하실 수 있습니다.') ?>
-<!--            <input type="checkbox" name="passive_certify" id="passive_certify">-->
-<!--            <label for="passive_certify">수동인증</label>-->
-<!--            --><?php //} else { ?>
-<!--            --><?php //echo $mb['mb_email_certify'] ?>
-<!--            --><?php //} ?>
-<!--        </td>-->
-<!--    </tr>-->
-<!--    --><?php //} ?>
     <?php } ?>
 
-<!--    --><?php //if ($config['cf_use_recommend']) { // 추천인 사용 ?>
-<!--    <tr>-->
-<!--        <th scope="row">추천인</th>-->
-<!--        <td colspan="3">--><?php //echo ($mb['mb_recommend'] ? get_text($mb['mb_recommend']) : '없음'); // 081022 : CSRF 보안 결함으로 인한 코드 수정 ?><!--</td>-->
-<!--    </tr>-->
-<!--    --><?php //} ?>
-<!---->
-<!--    <tr>-->
         <th scope="row"><label for="mb_leave_date">탈퇴일자</label></th>
         <td>
             <input type="text" name="mb_leave_date" value="<?php echo $mb['mb_leave_date'] ?>" id="mb_leave_date" class="frm_input" maxlength="8">
