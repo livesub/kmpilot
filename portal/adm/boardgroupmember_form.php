@@ -27,6 +27,7 @@ $colspan = 4;
 <div class="local_cmd01 local_cmd">
 
     <label for="gr_id">그룹지정</label>
+    <!--
     <select name="gr_id" id="gr_id">
         <option value="">접근가능 그룹을 선택하세요.</option>
         <?php
@@ -44,6 +45,8 @@ $colspan = 4;
         }
         ?>
     </select>
+    -->
+    <?= get_group_select('gr_id')?>
     <input type="submit" value="선택" class="btn_submit btn" accesskey="s">
 </div>
 </form>

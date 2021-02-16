@@ -211,7 +211,7 @@ if( $w == '' || $w == 'u' ){
         $sql_punish = " insert into {$g5['member_punishment']} set mb_id = '{$mb_id}', mb_applicable_or_not='{$posts['mb_applicable_or_not']}', mb_punishment='{$posts['mb_punishment']}', mb_punishment_date='{$posts['mb_punishment_date']}'";
         $result_sql_punish = sql_query($sql_punish);
         if(!$result_sql_punish){
-            alert('member_punishment 에 정보 등록을 실패했습니다.');
+            alert('징계사항 정보 등록을 실패했습니다. 잠시 후에 시도해 주세요');
         }
     }
     $mb_dir = substr($mb_id,0,2);
