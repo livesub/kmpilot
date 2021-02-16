@@ -962,7 +962,9 @@ function get_group_select($name, $selected='', $event='')
     $sql = " select gr_id, gr_subject from {$g5['group_table']} a ";
     if ($is_admin == "group") {
         $sql .= " left join {$g5['member_table']} b on (b.mb_id = a.gr_admin)
-                  where b.mb_id = '{$member['mb_id']}' ";
+                  where b.mb_id = '{$member['mb_id']}' gr_subject != '커뮤니티' and gr_subject != '교육센터' and gr_subject != 'Passage Plan' and gr_subject != '홈페이지' ";
+    }else{
+        $sql .=" where gr_subject != '커뮤니티' and gr_subject != '교육센터' and gr_subject != 'Passage Plan' and gr_subject != '홈페이지'";
     }
     $sql .= " order by a.gr_id ";
 
@@ -970,12 +972,12 @@ function get_group_select($name, $selected='', $event='')
     $str = "<select id=\"$name\" name=\"$name\" $event>\n";
     for ($i=0; $row=sql_fetch_array($result); $i++) {
         if ($i == 0) $str .= "<option value=\"\">선택</option>";
-        if($event == "not_board"){
-            if($row['gr_subject'] != "Passage Plan" && $row['gr_subject'] != "홈페이지" && $row['gr_subject'] != "교육센터")
+        //if($event == "not_board"){
+            //if($row['gr_subject'] != "Passage Plan" && $row['gr_subject'] != "홈페이지" && $row['gr_subject'] != "교육센터")
+            //$str .= option_selected($row['gr_id'], $selected, $row['gr_subject']);
+        //}else{
             $str .= option_selected($row['gr_id'], $selected, $row['gr_subject']);
-        }else{
-            $str .= option_selected($row['gr_id'], $selected, $row['gr_subject']);
-        }
+        //}
     }
     $str .= "</select>";
     return $str;
@@ -3676,7 +3678,7 @@ function get_member_profile_img($mb_id='', $width='', $height='', $alt='profile_
         if( isset($member_cache[$mb_id]) ){
             $src = $member_cache[$mb_id];
         } else {
-            $member_img = G5_DATA_PATH.'/member_license/'.substr($mb_id,0,2).'/'.get_mb_icon_name($mb_id).'.gif';
+            $member_img = G5_DATA_PATH.'/member_image/'.substr($mb_id,0,2).'/'.get_mb_icon_name($mb_id).'.gif';
             if (is_file($member_img)) {
                 if(defined('G5_USE_MEMBER_IMAGE_FILETIME') && G5_USE_MEMBER_IMAGE_FILETIME) {
                     $member_img .= '?'.filemtime($member_img);

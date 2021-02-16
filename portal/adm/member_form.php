@@ -231,7 +231,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
             $mb_dir = substr($mb['mb_id'],0,2);
             $icon_file = G5_DATA_PATH.'/member_image/'.$mb_dir.'/'.get_mb_icon_name($mb['mb_id']).'.gif';
             if (file_exists($icon_file)) {
-                echo get_member_profile_img($mb['mb_id']);
+                echo get_member_profile_img($mb['mb_id'],'','','profile_image','','image');
                 echo '<input type="checkbox" id="del_mb_img" name="del_mb_img" value="1">삭제';
             }
             ?>
@@ -265,7 +265,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
         <th scope="row"><label for="mb_doseongu">도선구</label></th>
         <td><?php echo get_doseongu_select('mb_doseongu', 0, 12, $mb['mb_doseongu']) ?></td>
         <th scope="row"><label for="mb_lead_code">도선약호</label></th>
-        <td><input type="text" name="mb_lead_code" value="<?php echo $mb['mb_lead_code'] ?>" id="mb_tel" class="frm_input" size="15" maxlength="20"></td>
+        <td><input type="text" name="mb_lead_code" value="<?php echo $mb['mb_lead_code'] ?>" id="mb_lead_code" class="frm_input" size="15" maxlength="20"></td>
     </tr>
     <tr>
         <th scope="row"><label for="mb_sex">성별</label></th>
@@ -364,13 +364,25 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     <tr>
         <th scope="row"><label for="mb_license">최신면허사본</label></th>
         <td colspan="3">
+<!--            --><?php //echo help('이미지 크기는 <strong>넓이 '.$config['cf_member_icon_width'].'픽셀 높이 '.$config['cf_member_icon_height'].'픽셀</strong>로 해주세요.') ?>
+<!--            <input type="file" name="mb_license" id="mb_license">-->
+<!--            --><?php
+//            $mb_dir = substr($mb['mb_id'],0,2);
+//            $icon_file = G5_DATA_PATH.'/member_license/'.$mb_dir.'/'.get_mb_icon_name($mb['mb_id']).'.gif';
+//            if (file_exists($icon_file)) {
+//                echo get_member_profile_img($mb['mb_id']);
+//                echo '<input type="checkbox" id="del_mb_license" name="del_mb_license" value="1">삭제';
+//            }
+//            ?>
             <?php echo help('이미지 크기는 <strong>넓이 '.$config['cf_member_icon_width'].'픽셀 높이 '.$config['cf_member_icon_height'].'픽셀</strong>로 해주세요.') ?>
             <input type="file" name="mb_license" id="mb_license">
             <?php
             $mb_dir = substr($mb['mb_id'],0,2);
-            $icon_file = G5_DATA_PATH.'/member_license/'.$mb_dir.'/'.get_mb_icon_name($mb['mb_id']).'.gif';
-            if (file_exists($icon_file)) {
-                echo get_member_profile_img($mb['mb_id']);
+            $icon_file2 = G5_DATA_PATH.'/member_license/'.$mb_dir.'/'.get_mb_icon_name($mb['mb_id']).'.gif';
+            if (file_exists($icon_file2)) {
+                $icon_url = str_replace(G5_DATA_PATH, G5_DATA_URL, $icon_file2);
+                $icon_filemtile2 = (defined('G5_USE_MEMBER_IMAGE_FILETIME') && G5_USE_MEMBER_IMAGE_FILETIME) ? '?'.filemtime($icon_file2) : '';
+                echo '<img src="'.$icon_url.$icon_filemtile2.'" alt="">';
                 echo '<input type="checkbox" id="del_mb_license" name="del_mb_license" value="1">삭제';
             }
             ?>
@@ -404,6 +416,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
         <th scope="row">최근접속일</th>
         <td><?php echo date_return_empty_space($mb['mb_today_login']) ?></td>
     </tr>
+
     <?php } ?>
 
         <th scope="row"><label for="mb_leave_date">탈퇴일자</label></th>
@@ -512,13 +525,6 @@ this.form.mb_leave_date.value=this.value; } else { this.form.mb_leave_date.value
 
     run_event('admin_member_form_add', $mb, $w, 'table');
     ?>
-
-<!--    --><?php //for ($i=1; $i<=10; $i++) { ?>
-<!--    <tr>-->
-<!--        <th scope="row"><label for="mb_--><?php //echo $i ?><!--">여분 필드 --><?php //echo $i ?><!--</label></th>-->
-<!--        <td colspan="3"><input type="text" name="mb_--><?php //echo $i ?><!--" value="--><?php //echo $mb['mb_'.$i] ?><!--" id="mb_--><?php //echo $i ?><!--" class="frm_input" size="30" maxlength="255"></td>-->
-<!--    </tr>-->
-<!--    --><?php //} ?>
 
     </tbody>
     </table>
@@ -663,7 +669,7 @@ else
     let birthTest = /^(19[0-9][0-9]|20\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/;
     let phoneTest = /^\d{3}-\d{3,4}-\d{4}$/;
     let emailTest = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-    let nameTest = /^[가-힣]{2,10}$/;
+    let nameTest = /^[가-힣a-zA-Z]{2,50}$/;
     let telTest = /^\d{2,3}-\d{3,4}-\d{4}$/;
     /*let updateFlag = <?= isset($w)&&$w!='' ? "'".$w."'" : "'".'a'."'" ?>;*/
 

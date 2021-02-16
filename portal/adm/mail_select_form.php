@@ -70,7 +70,8 @@ $now_year = date('Y');
         <th scope="row"><label for="mb_email">E-mail</label></th>
         <td>
             <?php echo help("메일 주소에 단어 포함 (예 : @".preg_replace('#^(www[^\.]*\.){1}#', '', $_SERVER['HTTP_HOST']).")") ?>
-            <input type="text" name="mb_email" value="<?php echo get_sanitize_input($mb_email); ?>" id="mb_email" class="frm_input" size="50">
+            <input type="text" name="mb_email" value="" id="mb_email" class="frm_input" size="50">
+           <!-- <input type="text" name="mb_email" value="<?php echo get_sanitize_input($mb_email); ?>" id="mb_email" class="frm_input" size="50"> -->
         </td>
     </tr>
     <tr>
