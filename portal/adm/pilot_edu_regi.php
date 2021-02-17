@@ -39,7 +39,7 @@ include_once(G5_PLUGIN_PATH . '/jquery-ui/datepicker.php');
 <input type="hidden" name="w" value="<?=$w?>">
 <input type="hidden" name="edu_onoff_type" value="<?=$edu_onoff_type?>">
 <input type="hidden" name="edu_idx" value="<?=$edu_idx?>">
-
+<input type="hidden" name="edu_way" value="<?=$edu_onoff_type?>">
 
 <div class="tbl_frm01 tbl_wrap">
     <table>
@@ -92,6 +92,7 @@ if($edu_onoff_type == "off"){
     </tr>
 
     <tr>
+<!-- 먼저 교육 방법을 선택하고 들어 오는 형태라면 등록 메뉴에서 교육방법(온/오프) 별도 지정 기능 삭제(02_17 문서)
         <th scope="row"><label for="edu_way">교육방법<?php echo $sound_only ?></label></th>
         <td>
             <select name="edu_way" id="edu_way">
@@ -99,7 +100,7 @@ if($edu_onoff_type == "off"){
                 <option value="on" <?php if($row['edu_way'] == "on" || ($row['edu_way'] == "" && $edu_onoff_type == "on")) echo "selected";?>>온라인</option>
             </select>
         </td>
-
+-->
         <th scope="row"><label for="edu_place">교육장소<?php echo $sound_only ?></label></th>
         <td>
             <input type="text" name="edu_place" id="edu_place" class="frm_input" size="50" maxlength="250" value="<?=$row['edu_place']?>" placeholder="내용을 입력해 주세요">

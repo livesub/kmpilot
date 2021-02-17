@@ -6,6 +6,16 @@ portal/data/cache/
 portal/data/log/
 portal/data/member_image/
 portal/data/file/
-edu/data/
+edu/data/cache
+edu/data/content
+edu/data/edit
+edu/data/faq
+edu/data/file
+edu/data/log
+edu/data/member_image
+edu/data/member
+edu/data/session
+edu/data/tmp
+edu/data/.htaccess
 portal/data/smsFile
 .vscode/
