@@ -11,9 +11,13 @@ $sql = " select COUNT(*) as cnt {$sql_common} ";
 $row = sql_fetch($sql);
 $total_count = $row['cnt'];
 
-$page = 1;
+//$page = 1;
+$rows = $config['cf_page_rows'];
+$total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
+if ($page < 1) $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
+$from_record = ($page - 1) * $rows; // 시작 열을 구함
 
-$sql = " select * {$sql_common} order by ma_id desc ";
+$sql = " select * {$sql_common} order by ma_id desc limit {$from_record}, {$rows} ";
 $result = sql_query($sql);
 
 $g5['title'] = '회원메일발송';
@@ -24,7 +28,7 @@ $colspan = 7;
 
 <div class="local_desc01 local_desc">
     <p>
-        <b>테스트</b>는 등록된 최고관리자의 이메일로 테스트 메일을 발송합니다.<br>
+<!--        <b>테스트</b>는 등록된 최고관리자의 이메일로 테스트 메일을 발송합니다.<br>-->
         현재 등록된 메일은 총 <?php echo $total_count ?>건입니다.<br>
         <strong>주의) 수신자가 동의하지 않은 대량 메일 발송에는 적합하지 않습니다. 수십건 단위로 발송해 주십시오.</strong>
     </p>
@@ -41,7 +45,7 @@ $colspan = 7;
         <th scope="col">번호</th>
         <th scope="col">제목</th>
         <th scope="col">작성일시</th>
-        <th scope="col">테스트</th>
+<!--        <th scope="col">테스트</th>-->
         <th scope="col">보내기</th>
         <th scope="col">미리보기</th>
     </tr>
@@ -64,7 +68,7 @@ $colspan = 7;
         <td class="td_num_c"><?php echo $num ?></td>
         <td class="td_left"><a href="./mail_form.php?w=u&amp;ma_id=<?php echo $row['ma_id'] ?>"><?php echo $row['ma_subject'] ?></a></td>
         <td class="td_datetime"><?php echo $row['ma_time'] ?></td>
-        <td class="td_test"><a href="./mail_test.php?ma_id=<?php echo $row['ma_id'] ?>">테스트</a></td>
+        <!-- <td class="td_test"><a href="./mail_test.php?ma_id=<?php echo $row['ma_id'] ?>">테스트</a></td> -->
         <td class="td_send"><a href="./mail_select_form.php?ma_id=<?php echo $row['ma_id'] ?>">보내기</a></td>
         <td class="td_mng"><?php echo $s_vie ?></td>
     </tr>
@@ -82,7 +86,7 @@ $colspan = 7;
     <a href="./mail_form.php" id="mail_add" class="btn btn_01">메일내용추가</a>
 </div>
 </form>
-
+<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, '?'.$qstr.'&amp;page='); ?>
 <script>
 $(function() {
     $('#fmaillist').submit(function() {

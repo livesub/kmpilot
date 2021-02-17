@@ -305,15 +305,15 @@ gif, jpg, png파일만 가능하며 용량 <?php echo number_format($config['cf_
                     </li>
                     <li>
                         <label for="mb_first_license_day">최초 면허 발급일</label>
-                        <input type="text" id="mb_first_license_day" readonly class="frm_input" size="50" value="<?=$member['mb_first_license_day']?>">
+                        <input type="text" id="mb_first_license_day" readonly class="frm_input" size="50" value="<?=date_return_empty_space($member['mb_first_license_day'])?>">
                         <label for="mb_license_renewal_day">면허 갱신일</label>
-                        <input type="text" id="mb_license_renewal_day" readonly class="frm_input" size="50" value="<?=$member['mb_license_renewal_day']?>">
+                        <input type="text" id="mb_license_renewal_day" readonly class="frm_input" size="50" value="<?=date_return_empty_space($member['mb_license_renewal_day'])?>">
                     </li>
                     <li>
                         <label for="mb_validity_day_from">면허 유효기간</label>
-                        <input type="text" id="mb_validity_day_from" readonly  class="frm_input" size="50"value="<?=$member['mb_validity_day_from']?> ">부터
+                        <input type="text" id="mb_validity_day_from" readonly  class="frm_input" size="50"value="<?=date_return_empty_space($member['mb_validity_day_from'])?> ">부터
                         <br>
-                        <input type="text" id="mb_validity_day_to" readonly value="<?=$member['mb_validity_day_to']?>" class="frm_input" size="50">까지
+                        <input type="text" id="mb_validity_day_to" readonly value="<?=date_return_empty_space($member['mb_validity_day_to'])?>" class="frm_input" size="50">까지
                     </li>
                     <li>
                         <label>최신 면허 사본</label>
@@ -337,7 +337,7 @@ gif, jpg, png파일만 가능하며 용량 <?php echo number_format($config['cf_
                     </li>
                     <li>
                         <label>정년연정현황</label>
-                        <input type="text" id="mb_license_ext_day_from" readonly class="frm_input" size="50" value="연장됨(기간: <?=$member['mb_license_ext_day_from']?> ~ <?=$member['mb_license_ext_day_to']?>)">
+                        <input type="text" id="mb_license_ext_day_from" readonly class="frm_input" size="50" value="연장됨(기간: <?=date_return_empty_space($member['mb_license_ext_day_from'])?> ~ <?=date_return_empty_space($member['mb_license_ext_day_to'])?>)">
                     </li>
                     <li>
                         <label>해심 재결 사항</label>
