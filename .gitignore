@@ -6,6 +6,6 @@ portal/data/cache/
 portal/data/log/
 portal/data/member_image/
 portal/data/file/
-edu/data/
-portal/data/smsFile
+portal/data/smsFile/
+edu/data/session
 .vscode/
