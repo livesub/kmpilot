@@ -34,16 +34,18 @@ if ($w == "") {
     // 리퍼러 체크
     referer_check();
 
-    if (!isset($_POST['agree']) || !$_POST['agree']) {
-        alert('회원가입약관의 내용에 동의하셔야 회원가입 하실 수 있습니다.', G5_BBS_URL.'/register.php');
-    }
+//    if (!isset($_POST['agree']) || !$_POST['agree']) {
+//        alert('회원가입약관의 내용에 동의하셔야 회원가입 하실 수 있습니다.', G5_BBS_URL.'/register.php');
+//    }
+//
+//    if (!isset($_POST['agree2']) || !$_POST['agree2']) {
+//        alert('개인정보처리방침안내의 내용에 동의하셔야 회원가입 하실 수 있습니다.', G5_BBS_URL.'/register.php');
+//    }
 
-    if (!isset($_POST['agree2']) || !$_POST['agree2']) {
-        alert('개인정보처리방침안내의 내용에 동의하셔야 회원가입 하실 수 있습니다.', G5_BBS_URL.'/register.php');
-    }
-
-    $agree  = preg_replace('#[^0-9]#', '', $_POST['agree']);
-    $agree2 = preg_replace('#[^0-9]#', '', $_POST['agree2']);
+//    $agree  = preg_replace('#[^0-9]#', '', $_POST['agree']);
+//    $agree2 = preg_replace('#[^0-9]#', '', $_POST['agree2']);
+    $agree  = preg_replace('#[^0-9]#', '', 1);
+    $agree2 = preg_replace('#[^0-9]#', '', 1);
 
     $member['mb_birth'] = '';
     $member['mb_sex']   = '';
@@ -62,8 +64,8 @@ if ($w == "") {
 
 } else if ($w == 'u') {
 
-    if ($is_admin)
-        alert('관리자의 회원정보는 관리자 화면에서 수정해 주십시오.', G5_URL);
+//    if ($is_admin)
+//        alert('관리자의 회원정보는 관리자 화면에서 수정해 주십시오.', G5_URL);
 
     if (!$is_member)
         alert('로그인 후 이용하여 주십시오.', G5_URL);
@@ -78,7 +80,7 @@ if ($w == "") {
     // 수정 후 다시 이 폼으로 돌아오기 위해 임시로 저장해 놓음
     set_session("ss_tmp_password", $_POST[mb_password]);
     */
-    
+
     if($_POST['mb_id'] && ! (isset($_POST['mb_password']) && $_POST['mb_password'])){
         if( ! $is_social_login_modify ){
             alert('비밀번호를 입력해 주세요.');
@@ -113,31 +115,39 @@ if ($w == "") {
     $member['mb_signature']   = get_text($member['mb_signature']);
     $member['mb_recommend']   = get_text($member['mb_recommend']);
     $member['mb_profile']     = get_text($member['mb_profile']);
-    $member['mb_1']           = get_text($member['mb_1']);
-    $member['mb_2']           = get_text($member['mb_2']);
-    $member['mb_3']           = get_text($member['mb_3']);
-    $member['mb_4']           = get_text($member['mb_4']);
-    $member['mb_5']           = get_text($member['mb_5']);
-    $member['mb_6']           = get_text($member['mb_6']);
-    $member['mb_7']           = get_text($member['mb_7']);
-    $member['mb_8']           = get_text($member['mb_8']);
-    $member['mb_9']           = get_text($member['mb_9']);
-    $member['mb_10']          = get_text($member['mb_10']);
+//    $member['mb_1']           = get_text($member['mb_1']);
+//    $member['mb_2']           = get_text($member['mb_2']);
+//    $member['mb_3']           = get_text($member['mb_3']);
+//    $member['mb_4']           = get_text($member['mb_4']);
+//    $member['mb_5']           = get_text($member['mb_5']);
+//    $member['mb_6']           = get_text($member['mb_6']);
+//    $member['mb_7']           = get_text($member['mb_7']);
+//    $member['mb_8']           = get_text($member['mb_8']);
+//    $member['mb_9']           = get_text($member['mb_9']);
+//    $member['mb_10']          = get_text($member['mb_10']);
+    $sql_member_academic_sel = " select * from {$g5['member_academic_back']} where mb_id = '{$member['mb_id']}'";
+    $row_aca = sql_fetch($sql_member_academic_sel);
+    $high_name = get_text($row_aca['high_name']);
+    $high_major = get_text($row_aca['high_major']);
+    $high_status = get_text($row_aca['high_status']);
+    $university_name = get_text($row_aca['university_name']);
+    $university_major= get_text($row_aca['university_major']);
+    $university_status= get_text($row_aca['university_status']);
 } else {
     alert('w 값이 제대로 넘어오지 않았습니다.');
 }
 
 include_once('./_head.php');
 
-// 회원아이콘 경로
-$mb_icon_path = G5_DATA_PATH.'/member/'.substr($member['mb_id'],0,2).'/'.get_mb_icon_name($member['mb_id']).'.gif';
+// 최신면허사본 경로
+$mb_icon_path = PORTAL_DATA_PATH.'/member_license/'.substr($member['mb_id'],0,2).'/'.get_mb_icon_name($member['mb_id']).'.gif';
 $mb_icon_filemtile = (defined('G5_USE_MEMBER_IMAGE_FILETIME') && G5_USE_MEMBER_IMAGE_FILETIME && file_exists($mb_icon_path)) ? '?'.filemtime($mb_icon_path) : '';
-$mb_icon_url  = G5_DATA_URL.'/member/'.substr($member['mb_id'],0,2).'/'.get_mb_icon_name($member['mb_id']).'.gif'.$mb_icon_filemtile;
+$mb_icon_url  = PORTAL_DATA_URL.'/member_license/'.substr($member['mb_id'],0,2).'/'.get_mb_icon_name($member['mb_id']).'.gif'.$mb_icon_filemtile;
 
 // 회원이미지 경로
-$mb_img_path = G5_DATA_PATH.'/member_image/'.substr($member['mb_id'],0,2).'/'.get_mb_icon_name($member['mb_id']).'.gif';
+$mb_img_path = PORTAL_DATA_PATH.'/member_image/'.substr($member['mb_id'],0,2).'/'.get_mb_icon_name($member['mb_id']).'.gif';
 $mb_img_filemtile = (defined('G5_USE_MEMBER_IMAGE_FILETIME') && G5_USE_MEMBER_IMAGE_FILETIME && file_exists($mb_img_path)) ? '?'.filemtime($mb_img_path) : '';
-$mb_img_url  = G5_DATA_URL.'/member_image/'.substr($member['mb_id'],0,2).'/'.get_mb_icon_name($member['mb_id']).'.gif'.$mb_img_filemtile;
+$mb_img_url  = PORTAL_DATA_URL.'/member_image/'.substr($member['mb_id'],0,2).'/'.get_mb_icon_name($member['mb_id']).'.gif'.$mb_img_filemtile;
 
 $register_action_url = G5_HTTPS_BBS_URL.'/register_form_update.php';
 $req_nick = !isset($member['mb_nick_date']) || (isset($member['mb_nick_date']) && $member['mb_nick_date'] <= date("Y-m-d", G5_SERVER_TIME - ($config['cf_nick_modify'] * 86400)));
