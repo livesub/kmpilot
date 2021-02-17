@@ -142,7 +142,7 @@ $g5_object = new G5_object_cache();
 // 공통
 //------------------------------------------------------------------------------
 
-$dbconfig_file = G5_DATA_PATH.'/'.G5_DBCONFIG_FILE;
+$dbconfig_file = PORTAL_DATA_PATH.'/'.G5_DBCONFIG_FILE;
 
 if (file_exists($dbconfig_file)) {
     include_once($dbconfig_file);
