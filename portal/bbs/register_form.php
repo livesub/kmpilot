@@ -113,16 +113,15 @@ if ($w == "") {
     $member['mb_signature']   = get_text($member['mb_signature']);
     $member['mb_recommend']   = get_text($member['mb_recommend']);
     $member['mb_profile']     = get_text($member['mb_profile']);
-//    $member['mb_1']           = get_text($member['mb_1']);
-//    $member['mb_2']           = get_text($member['mb_2']);
-//    $member['mb_3']           = get_text($member['mb_3']);
-//    $member['mb_4']           = get_text($member['mb_4']);
-//    $member['mb_5']           = get_text($member['mb_5']);
-//    $member['mb_6']           = get_text($member['mb_6']);
-//    $member['mb_7']           = get_text($member['mb_7']);
-//    $member['mb_8']           = get_text($member['mb_8']);
-//    $member['mb_9']           = get_text($member['mb_9']);
-//    $member['mb_10']          = get_text($member['mb_10']);
+    $member['mb_doseongu']     = get_text($member['mb_doseongu']);
+    $member['mb_lead_code']     = get_text($member['mb_lead_code']);
+    $member['mb_birth']     = get_text($member['mb_birth']);
+    $member['mb_sex']     = get_text($member['mb_sex']);
+    //그룹을 찾는 쿼리
+    $sql_member_group_sel = " select * from {$g5['group_member_table']} where mb_id = '{$member['mb_id']}'";
+    $row_mb_group = sql_fetch($sql_member_group_sel);
+    $mb_group = get_text($row_mb_group['gr_id']);
+    //학력사항을 찾는 쿼리
     $sql_member_academic_sel = " select * from {$g5['member_academic_back']} where mb_id = '{$member['mb_id']}'";
     $row_aca = sql_fetch($sql_member_academic_sel);
     $high_name = get_text($row_aca['high_name']);
