@@ -26,7 +26,45 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 	<input type="hidden" name="mb_nick" value="<?php echo get_text($member['mb_nick']) ?>">
 	<?php }  ?>
 	
-	<div id="register_form" class="form_01">   
+	<div id="register_form" class="form_01">
+        <div class="register_form_inner">
+            <ul>
+                <li>
+                    <label for="mb_doseongu">도선구</label><br>
+                    <input type="text" id="mb_doseongu" readonly class="frm_input" size="50" value="<?php echo $member['mb_doseongu'] ?>">
+                </li>
+                <li>
+                    <label for="mb_lead_code">도선 약호</label><br>
+                    <input type="text" id="mb_lead_code" readonly class="frm_input" size="50" value="<?php echo $member['mb_lead_code'] ?>">
+                </li>
+                <li>
+                    <label for="mb_group">그룹</label><br>
+                    <?php for($i1 =0; $i1< count($mb_group); $i1++){?>
+                    <input type="text" id="mb_group" readonly class="frm_input" size="50" value="<?php echo get_group_name($mb_group[$i1]) ?>"><br>
+                    <?php }?>
+                </li>
+                <li>
+                    <label for="mb_birth">생년월일</label><br>
+                    <input type="text" id="mb_birth" readonly class="frm_input" size="50" value="<?php echo $member['mb_birth'] ?>">
+                </li>
+                <li>
+                    <label for="mb_sex">성별</label><br>
+                    <input type="text" id="mb_sex" readonly class="frm_input" size="50" value="<?php echo $member['mb_sex']==1? '남자' :  '여자'; ?>">
+                </li>
+                <li>
+                    <label for="mb_sex">교육신청현황</label><br>
+                    <?php for($i1 =0; $i1< count($mb_group); $i1++){?>
+                        <input type="text" id="mb_group" readonly class="frm_input" size="50" value="<?php echo get_group_name($mb_group[$i1]) ?>"><br>
+                    <?php }?>
+                </li>
+                <li>
+                    <label for="mb_sex">교육이수현황</label><br>
+                    <?php for($i1 =0; $i1< count($mb_group); $i1++){?>
+                        <input type="text" id="mb_group" readonly class="frm_input" size="50" value="<?php echo get_group_name($mb_group[$i1]) ?>"><br>
+                    <?php }?>
+                </li>
+            </ul>
+        </div>
 	    <div class="register_form_inner">
 	        <h2>사이트 이용정보 입력</h2>
 	        <ul>

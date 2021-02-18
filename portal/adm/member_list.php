@@ -330,7 +330,11 @@ $colspan = 16;
 
 <div class="btn_fixed_top">
     <input type="submit" name="act_button" value="선택수정" onclick="document.pressed=this.value" class="btn btn_02">
-    <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value" class="btn btn_02">
+    <?php if($is_admin =='super'){ ?>
+        <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value" class="btn btn_02">
+    <?php } else {?>
+        <input type="submit" name="act_button" value="선택탈퇴" onclick="document.pressed=this.value" class="btn btn_02">
+    <?php }?>
     <?php if ($is_admin == 'super') { ?>
     <a href="./member_form.php" id="member_add" class="btn btn_01">회원추가</a>
     <?php } ?>
