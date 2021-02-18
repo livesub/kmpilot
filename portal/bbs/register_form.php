@@ -119,8 +119,10 @@ if ($w == "") {
     $member['mb_sex']     = get_text($member['mb_sex']);
     //그룹을 찾는 쿼리
     $sql_member_group_sel = " select * from {$g5['group_member_table']} where mb_id = '{$member['mb_id']}'";
-    $row_mb_group = sql_fetch($sql_member_group_sel);
-    $mb_group = get_text($row_mb_group['gr_id']);
+    $row_mb_group = sql_query($sql_member_group_sel);
+    for($i = 0; $i < $row=sql_fetch_array($row_mb_group); $i++){
+        $mb_group[$i] = get_text($row['gr_id']);
+    }
     //학력사항을 찾는 쿼리
     $sql_member_academic_sel = " select * from {$g5['member_academic_back']} where mb_id = '{$member['mb_id']}'";
     $row_aca = sql_fetch($sql_member_academic_sel);
@@ -130,6 +132,8 @@ if ($w == "") {
     $university_name = get_text($row_aca['university_name']);
     $university_major= get_text($row_aca['university_major']);
     $university_status= get_text($row_aca['university_status']);
+    //교육신청현황을 찾는 쿼리
+    //교육이수현황을 찾는 쿼리
 } else {
     alert('w 값이 제대로 넘어오지 않았습니다.');
 }

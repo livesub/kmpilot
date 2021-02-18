@@ -93,13 +93,15 @@ $colspan = 10;
             <label for="chkall" class="sound_only">그룹 전체</label>
             <input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
         </th>
+        <?php if($member['mb_level'] == 10){?>
         <th scope="col"><?php echo subject_sort_link('gr_id') ?>그룹아이디</a></th>
+        <?php }?>
         <th scope="col"><?php echo subject_sort_link('gr_subject') ?>제목</a></th>
-<!--        <th scope="col">--><?php //echo subject_sort_link('gr_admin') ?><!--그룹관리자</a></th>-->
+
         <th scope="col">게시판</th>
-<!--        <th scope="col">접근<br>사용</th>-->
+
         <th scope="col">접근<br>회원수</th>
-<!--        <th scope="col">--><?php //echo subject_sort_link('gr_order') ?><!--출력<br>순서</a></th>-->
+
         <th scope="col">접속기기</th>
         <th scope="col">관리</th>
     </tr>
@@ -127,7 +129,9 @@ $colspan = 10;
             <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo get_text($row['gr_subject']); ?> 그룹</label>
             <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>">
         </td>
+        <?php if($member['mb_level'] == 10){?>
         <td class="td_left"><a href="<?php echo G5_BBS_URL ?>/group.php?gr_id=<?php echo $row['gr_id'] ?>"><?php echo $row['gr_id'] ?></a></td>
+        <?php }?>
         <td class="td_input">
             <label for="gr_subject_<?php echo $i; ?>" class="sound_only">그룹제목</label>
             <input type="text" name="gr_subject[<?php echo $i ?>]" value="<?php echo get_text($row['gr_subject']) ?>" id="gr_subject_<?php echo $i ?>" class="tbl_input">

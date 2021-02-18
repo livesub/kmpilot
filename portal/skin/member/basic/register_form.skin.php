@@ -39,7 +39,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
                 </li>
                 <li>
                     <label for="mb_group">그룹</label><br>
-                    <input type="text" id="mb_group" readonly class="frm_input" size="50" value="<?php echo get_group_name($mb_group) ?>">
+                    <?php for($i1 =0; $i1< count($mb_group); $i1++){?>
+                    <input type="text" id="mb_group" readonly class="frm_input" size="50" value="<?php echo get_group_name($mb_group[$i1]) ?>"><br>
+                    <?php }?>
                 </li>
                 <li>
                     <label for="mb_birth">생년월일</label><br>
@@ -48,6 +50,18 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
                 <li>
                     <label for="mb_sex">성별</label><br>
                     <input type="text" id="mb_sex" readonly class="frm_input" size="50" value="<?php echo $member['mb_sex']==1? '남자' :  '여자'; ?>">
+                </li>
+                <li>
+                    <label for="mb_sex">교육신청현황</label><br>
+                    <?php for($i1 =0; $i1< count($mb_group); $i1++){?>
+                        <input type="text" id="mb_group" readonly class="frm_input" size="50" value="<?php echo get_group_name($mb_group[$i1]) ?>"><br>
+                    <?php }?>
+                </li>
+                <li>
+                    <label for="mb_sex">교육이수현황</label><br>
+                    <?php for($i1 =0; $i1< count($mb_group); $i1++){?>
+                        <input type="text" id="mb_group" readonly class="frm_input" size="50" value="<?php echo get_group_name($mb_group[$i1]) ?>"><br>
+                    <?php }?>
                 </li>
             </ul>
         </div>

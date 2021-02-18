@@ -4329,3 +4329,30 @@ function date_return_empty_space($value){
     }
     return $value;
 }
+
+// 회원 탈
+function member_secession($mb_id)
+{
+    global $config;
+    global $g5;
+
+    $sql = " select mb_name, mb_ip, mb_recommend, mb_leave_date, mb_level from {$g5['member_table']} where mb_id= '".$mb_id."' ";
+    $mb = sql_fetch($sql);
+
+    // 이미 탈퇴된 회원은 제외
+    if(preg_match(' #^[0-9]{8} ', $mb['mb_leave_date']))
+        return;
+
+    if ($mb['mb_recommend']) {
+        $row = sql_fetch(" select count(*) as cnt from {$g5['member_table']} where mb_id = '".addslashes($mb['mb_recommend'])."' ");
+        if ($row['cnt'])
+            insert_point($mb['mb_recommend'], $config['cf_recommend_point'] * (-1), $mb_id.'님의 회원자료 삭제로 인한 추천인 포인트 반환', "@member", $mb['mb_recommend'], $mb_id.' 추천인 삭제');
+    }
+
+    // 회원탈퇴 시키기
+    $sql = " update {$g5['member_table']} set mb_leave_date = '".date('Ymd', G5_SERVER_TIME)."' where mb_id = '{$mb_id}' ";
+
+    sql_query($sql);
+
+    run_event('member_secession_after', $mb_id);
+}

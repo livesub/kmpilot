@@ -114,7 +114,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                             }
                         ?>
                         <script src="<?php echo G5_JS_URL; ?>/pdfobject.min.js"></script>
-                        <script>PDFObject.embed("<?php echo G5_DATA_URL; ?>/file/officialDoc/<?php echo $view['file'][$i]['file'];?>","#pdf_viewer");</script>
+                        <script>PDFObject.embed("<?php echo G5_DATA_URL; ?>/file/<?=$_GET["bo_table"]?>/<?php echo $view['file'][$i]['file'];?>","#pdf_viewer");</script>
                     <?php
                     }
                 }
