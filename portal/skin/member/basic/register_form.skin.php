@@ -76,9 +76,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 	                <label for="reg_mb_id">
 	                	아이디<strong class="sound_only">필수</strong>
 	                	<button type="button" class="tooltip_icon"><i class="fa fa-question-circle-o" aria-hidden="true"></i><span class="sound_only">설명보기</span></button>
-						<span class="tooltip">영문자, 숫자, _ 만 입력 가능. 최소 3자이상 입력하세요.</span>
+						<span class="tooltip">영문자, 숫자, _ 만 입력 가능. 최소 2자이상 입력하세요.</span>
 	                </label>
-	                <input type="text" name="mb_id" value="<?php echo $member['mb_id'] ?>" id="reg_mb_id" <?php echo $required ?> <?php echo $readonly ?> class="frm_input full_input <?php echo $required ?> <?php echo $readonly ?>" minlength="3" maxlength="20" placeholder="아이디">
+	                <input type="text" name="mb_id" value="<?php echo $member['mb_id'] ?>" id="reg_mb_id" <?php echo $required ?> <?php echo $readonly ?> class="frm_input full_input <?php echo $required ?> <?php echo $readonly ?>" minlength="2" maxlength="20" placeholder="아이디">
 	                <span id="msg_mb_id"></span>
 	            </li>
 	            <li class="half_input left_input margin_input">
@@ -174,7 +174,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 	            <?php if ($config['cf_use_hp'] || $config['cf_cert_hp']) {  ?>
 	                <label for="reg_mb_hp">휴대폰번호<?php if ($config['cf_req_hp']) { ?><strong class="sound_only">필수</strong><?php } ?>
                         <button type="button" class="tooltip_icon"><i class="fa fa-question-circle-o" aria-hidden="true"></i><span class="sound_only">설명보기</span></button>
-                        <span class="tooltip">-없이 작성해주세요</span>
+<!--                        <span class="tooltip">-없이 작성해주세요</span>-->
                     </label>
 	                <input type="text" name="mb_hp" value="<?php echo get_text($member['mb_hp']) ?>" id="reg_mb_hp" <?php echo ($config['cf_req_hp'])?"required":""; ?> class="frm_input full_input <?php echo ($config['cf_req_hp'])?"required":""; ?>" maxlength="20" placeholder="휴대폰번호 - 없이 작성해주세요">
 	                <?php if ($config['cf_cert_use'] && $config['cf_cert_hp']) { ?>
