@@ -25,7 +25,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 	<input type="hidden" name="mb_nick_default" value="<?php echo get_text($member['mb_nick']) ?>">
 	<input type="hidden" name="mb_nick" value="<?php echo get_text($member['mb_nick']) ?>">
 	<?php }  ?>
-	
+
 	<div id="register_form" class="form_01">
         <div class="register_form_inner">
             <ul>
@@ -66,6 +66,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
                 </li>
             </ul>
         </div>
+
+
+	<div id="register_form" class="form_01">
 	    <div class="register_form_inner">
 	        <h2>사이트 이용정보 입력</h2>
 	        <ul>
@@ -88,7 +91,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 	            </li>
 	        </ul>
 	    </div>
-	
+
 	    <div class="tbl_frm01 tbl_wrap register_form_inner">
 	        <h2>개인정보 입력</h2>
 	        <ul>
@@ -101,7 +104,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 	                        echo '<button type="button" id="win_ipin_cert" class="btn_frmline">아이핀 본인확인</button>'.PHP_EOL;
 	                    if($config['cf_cert_hp'])
 	                        echo '<button type="button" id="win_hp_cert" class="btn_frmline">휴대폰 본인확인</button>'.PHP_EOL;
-	
+
 	                    echo '<noscript>본인확인을 위해서는 자바스크립트 사용이 가능해야합니다.</noscript>'.PHP_EOL;
 	                }
 	                ?>
@@ -112,7 +115,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 	                    else
 	                        $mb_cert = '휴대폰';
 	                ?>
-	  
+
 	                <div id="msg_certify">
 	                    <strong><?php echo $mb_cert; ?> 본인확인</strong><?php if ($member['mb_adult']) { ?> 및 <strong>성인인증</strong><?php } ?> 완료
 	                </div>
@@ -135,10 +138,10 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 <!--                    <span id="msg_mb_nick"></span>	                -->
 <!--	            </li>-->
 <!--	            --><?php //}  ?>
-	
+
 	            <li>
 	                <label for="reg_mb_email">E-mail<strong class="sound_only">필수</strong>
-	                
+
 	                <?php if ($config['cf_use_email_certify']) {  ?>
 	                <button type="button" class="tooltip_icon"><i class="fa fa-question-circle-o" aria-hidden="true"></i><span class="sound_only">설명보기</span></button>
 					<span class="tooltip">
@@ -150,19 +153,19 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 
 	                <input type="hidden" name="old_email" value="<?php echo $member['mb_email'] ?>">
 	                <input type="text" name="mb_email" value="<?php echo isset($member['mb_email'])?$member['mb_email']:''; ?>" id="reg_mb_email" required class="frm_input email full_input required" size="70" maxlength="100" placeholder="E-mail">
-	            
+
 	            </li>
-	
+
 	            <?php if ($config['cf_use_homepage']) {  ?>
 	            <li>
 	                <label for="reg_mb_homepage">홈페이지<?php if ($config['cf_req_homepage']){ ?><strong class="sound_only">필수</strong><?php } ?></label>
 	                <input type="text" name="mb_homepage" value="<?php echo get_text($member['mb_homepage']) ?>" id="reg_mb_homepage" <?php echo $config['cf_req_homepage']?"required":""; ?> class="frm_input full_input <?php echo $config['cf_req_homepage']?"required":""; ?>" size="70" maxlength="255" placeholder="홈페이지">
 	            </li>
 	            <?php }  ?>
-	
+
 	            <li>
 	            <?php if ($config['cf_use_tel']) {  ?>
-	            
+
 	                <label for="reg_mb_tel">전화번호<?php if ($config['cf_req_tel']) { ?><strong class="sound_only">필수</strong><?php } ?></label>
 	                <input type="text" name="mb_tel" value="<?php echo get_text($member['mb_tel']) ?>" id="reg_mb_tel" <?php echo $config['cf_req_tel']?"required":""; ?> class="frm_input full_input <?php echo $config['cf_req_tel']?"required":""; ?>" maxlength="20" placeholder="전화번호">
 	            <?php }  ?>
@@ -179,7 +182,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 	                <?php } ?>
 	            <?php }  ?>
 	            </li>
-	
+
 	            <?php if ($config['cf_use_addr']) { ?>
 	            <li>
 	            	<label>주소</label>
@@ -211,7 +214,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
                 </li>
 	        </ul>
 	    </div>
-	
+
 	    <div class="tbl_frm01 tbl_wrap register_form_inner">
 	        <h2>기타 개인설정</h2>
 	        <ul>
@@ -228,7 +231,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 	                <textarea name="mb_profile" id="reg_mb_profile" <?php echo $config['cf_req_profile']?"required":""; ?> class="<?php echo $config['cf_req_profile']?"required":""; ?>" placeholder="기타사항"><?php echo $member['mb_profile'] ?></textarea>
 	            </li>
 	            <?php }  ?>
-	
+
 	            <?php if ($config['cf_use_member_icon'] && $member['mb_level'] >= $config['cf_icon_level']) {  ?>
 	            <li>
 	                <label for="reg_mb_icon" class="frm_label">
@@ -238,16 +241,16 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 gif, jpg, png파일만 가능하며 용량 <?php echo number_format($config['cf_member_icon_size']) ?>바이트 이하만 등록됩니다.</span>
 	                </label>
 	                <input type="file" name="mb_icon" id="reg_mb_icon">
-	
+
 	                <?php if ($w == 'u' && file_exists($mb_icon_path)) {  ?>
 	                <img src="<?php echo $mb_icon_url ?>" alt="회원아이콘">
 	                <input type="checkbox" name="del_mb_icon" value="1" id="del_mb_icon">
 	                <label for="del_mb_icon" class="inline">삭제</label>
 	                <?php }  ?>
-	            
+
 	            </li>
 	            <?php }  ?>
-	
+
 	            <?php if ($member['mb_level'] >= $config['cf_icon_level'] && $config['cf_member_img_size'] && $config['cf_member_img_width'] && $config['cf_member_img_height']) {  ?>
 	            <li class="reg_mb_img_file">
 	                <label for="reg_mb_img" class="frm_label">
@@ -257,13 +260,13 @@ gif, jpg, png파일만 가능하며 용량 <?php echo number_format($config['cf_
 	                    gif, jpg, png파일만 가능하며 용량 <?php echo number_format($config['cf_member_img_size']) ?>바이트 이하만 등록됩니다.</span>
 	                </label>
 <!--	                s-->
-	
+
 	                <?php if ($w == 'u' && file_exists($mb_img_path)) {  ?>
 	                <img src="<?php echo $mb_img_url ?>" alt="회원이미지">
 <!--	                <input type="checkbox" name="del_mb_img" value="1" id="del_mb_img">-->
 <!--	                <label for="del_mb_img" class="inline">삭제</label>-->
 	                <?php }  ?>
-	            
+
 	            </li>
 	            <?php } ?>
 
@@ -313,21 +316,21 @@ gif, jpg, png파일만 가능하며 용량 <?php echo number_format($config['cf_
 
 	            </li>
 	            <?php }  ?>
-	
+
 	            <?php
 	            //회원정보 수정인 경우 소셜 계정 출력
 	            if( $w == 'u' && function_exists('social_member_provider_manage') ){
 	                social_member_provider_manage();
 	            }
 	            ?>
-	            
+
 	            <?php if ($w == "" && $config['cf_use_recommend']) {  ?>
 	            <li>
 	                <label for="reg_mb_recommend" class="sound_only">추천인아이디</label>
 	                <input type="text" name="mb_recommend" id="reg_mb_recommend" class="frm_input" placeholder="추천인아이디">
 	            </li>
 	            <?php }  ?>
-	
+
 <!--	            <li class="is_captcha_use">-->
 <!--	                자동등록방지-->
 <!--	                --><?php //echo captcha_html(); ?>
