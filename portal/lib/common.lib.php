@@ -955,7 +955,7 @@ function get_category_option($bo_table='', $ca_name='')
 
 
 // 게시판 그룹을 SELECT 형식으로 얻음
-function get_group_select($name, $selected='', $event='')
+function get_group_select($name, $selected='', $event='', $non='')
 {
     global $g5, $is_admin, $member;
 
@@ -964,7 +964,10 @@ function get_group_select($name, $selected='', $event='')
         $sql .= " left join {$g5['member_table']} b on (b.mb_id = a.gr_admin)
                   where b.mb_id = '{$member['mb_id']}' gr_subject != '커뮤니티' and gr_subject != '교육센터' and gr_subject != 'Passage Plan' and gr_subject != '홈페이지' ";
     }else{
-        $sql .=" where gr_subject != '커뮤니티' and gr_subject != '교육센터' and gr_subject != 'Passage Plan' and gr_subject != '홈페이지'";
+        //이벤트가 no일 경우 게시판관련 그룹을 보이지 않게 한다.
+        if($non == 'no'){
+            $sql .=" where gr_subject != '커뮤니티' and gr_subject != '교육센터' and gr_subject != 'Passage Plan' and gr_subject != '홈페이지'";
+        }
     }
     $sql .= " order by a.gr_id ";
 
@@ -4318,7 +4321,7 @@ function edu_receipt_status($value)
     return $edu_receipt_status;
 }
 
-// 회원 탈
+// 회원 탈퇴
 function member_secession($mb_id)
 {
     global $config;

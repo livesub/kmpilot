@@ -291,5 +291,12 @@ function excute_good(href, $el, $tx)
         }, "json"
     );
 }
+// 스마트 에디터 링크 새창으로 띄우는 함수 2021.02.19 김관우
+$(function (){
+    //함수 시작
+    $("#bo_v_con a").on("click",function (){
+        $(this).attr("target", "_blank");
+    }); //클릭 함수 종료
+}); // 전체 함수 종료
 </script>
 <!-- } 게시글 읽기 끝 -->

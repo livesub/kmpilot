@@ -101,7 +101,8 @@ $ajaxpage = G5_URL.'/lang_change_portal.php';
 <!--        </div>-->
         <ul class="hd_login">
             <?php if ($is_member) {  ?>
-            <li><a href="<?php echo G5_BBS_URL ?>/member_confirm.php?url=<?php echo G5_BBS_URL ?>/register_form.php"><?=$lang['member_modi']?></a></li>
+          <!--  <li><a href="<?php echo G5_BBS_URL ?>/member_confirm.php?url=<?php echo G5_BBS_URL ?>/register_form.php"><?=$lang['member_modi']?></a></li> -->
+                <li><a href="<?php echo G5_BBS_URL ?>/register_form.php?w=u"><?=$lang['member_modi']?></a></li>
             <li><a href="<?php echo G5_BBS_URL ?>/logout.php"><?=$lang['member_logout']?></a></li>
             <?php
             //$member_id = $member['mb_id'];

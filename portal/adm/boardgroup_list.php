@@ -102,7 +102,7 @@ $colspan = 10;
 
         <th scope="col">접근<br>회원수</th>
 
-        <th scope="col">접속기기</th>
+<!--        <th scope="col">접속기기</th>-->
         <th scope="col">관리</th>
     </tr>
     </thead>
@@ -154,7 +154,7 @@ $colspan = 10;
 <!--            <label for="gr_order_--><?php //echo $i; ?><!--" class="sound_only">메인메뉴 출력순서</label>-->
 <!--            <input type="text" name="gr_order[--><?php //echo $i ?><!--]" value="--><?php //echo $row['gr_order'] ?><!--" id="gr_order_--><?php //echo $i ?><!--" class="tbl_input" size="2">-->
 <!--        </td>-->
-        <td class="td_mng">
+       <!-- <td class="td_mng">
             <label for="gr_device_<?php echo $i; ?>" class="sound_only">접속기기</label>
             <select name="gr_device[<?php echo $i ?>]" id="gr_device_<?php echo $i ?>">
                 <option value="both"<?php echo get_selected($row['gr_device'], 'both'); ?>>모두</option>
@@ -162,6 +162,7 @@ $colspan = 10;
                 <option value="mobile"<?php echo get_selected($row['gr_device'], 'mobile'); ?>>모바일</option>
             </select>
         </td>
+        -->
         <td class="td_mng td_mng_s"><?php echo $s_upd ?></td>
     </tr>
 

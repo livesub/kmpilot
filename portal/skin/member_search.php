@@ -95,7 +95,7 @@ if($is_member) {
         <?php echo get_doseongu_select("do", 0,12, $mb_doseongu)?>
         <br>
         <label for="gr">그룹별</label>
-        <?php echo get_group_select("gr", $mb_group)?>
+        <?php echo get_group_select("gr", $mb_group, '', 'no')?>
         <br>
         <label for="sfl" class="sound_only">필터별</label>
         <select name="sfl" id="sfl">

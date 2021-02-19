@@ -6,6 +6,12 @@ auth_check_menu($auth, $sub_menu, 'r');
 
 $sql_common = " from {$g5['member_table']} ";
 $sql_del_mem = " and mb_memo = '' and mb_id != 'yongsanzip' ";
+// 최고 관리자 일 경우 쿼리문
+if($member['mb_level'] == 9){
+    $sql_del_mem = " and mb_id != 'yongsanzip' ";
+}
+
+// 용산집 계정일 경우 쿼리문
 if($member['mb_level'] == 10){
     $sql_del_mem = null;
 }
@@ -133,7 +139,7 @@ $colspan = 16;
         <th scope="col" id="mb_list_auth">상태</th>
         <th scope="col" id="mb_list_auth"><?php echo subject_sort_link('mb_intercept_date', '', 'desc') ?>접근차단</a></th>
         <?php
-        if($member['mb_level'] == 10){
+        if($member['mb_level'] == 10 || $member['mb_level'] == 9){
         ?>
             <th scope="col" id="mb_list_memo"><?php echo subject_sort_link('mb_memo', '', 'desc') ?>회원삭제일</a></th>
         <?php
@@ -283,7 +289,7 @@ $colspan = 16;
             <?php } ?>
         </td>
         <?php
-        if($member['mb_level'] == 10){
+        if($member['mb_level'] == 10 || $member['mb_level'] == 9){
             ?>
             <td headers="mb_list_memo" class="td_memo"><?php  echo get_text($row['mb_memo'])?></td>
             <?php

@@ -12,6 +12,8 @@ if($is_admin != 'super'){
     exit;
 }
 
+goto_url(G5_ADMIN_URL."/member_list.php");
+
 $g5['title'] = '관리자메인';
 include_once ('./admin.head.php');
 
