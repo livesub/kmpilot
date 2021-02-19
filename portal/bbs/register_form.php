@@ -133,7 +133,14 @@ if ($w == "") {
     $university_major= get_text($row_aca['university_major']);
     $university_status= get_text($row_aca['university_status']);
     //교육신청현황을 찾는 쿼리
-    //교육이수현황을 찾는 쿼리
+    $sql_edu_apply_list = " SELECT edu_type_name,apply_date, lecture_completion_status FROM kmp_pilot_edu_list a inner JOIN kmp_pilot_edu_apply b ON a.edu_idx = b.edu_idx where mb_id = {$member['mb_id']} order by apply_date limit 3";
+    $row_edu_apply_list = sql_query($sql_edu_apply_list);
+    for($s = 0; $s < $row_edu = sql_fetch_array($row_edu_apply_list); $s++){
+        $mb_edu_list[$s]['edu_type_name'] = $row_edu['edu_type_name'];
+        $mb_edu_list[$s]['apply_date'] = $row_edu['apply_date'];
+        $mb_edu_list[$s]['lecture_completion_status'] = $row_edu['lecture_completion_status'];
+    }
+    //alert('나오나요?'. $mb_edu_list[0]['apply_date']);
 } else {
     alert('w 값이 제대로 넘어오지 않았습니다.');
 }

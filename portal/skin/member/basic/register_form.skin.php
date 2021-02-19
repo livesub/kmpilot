@@ -52,15 +52,16 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
                     <input type="text" id="mb_sex" readonly class="frm_input" size="50" value="<?php echo $member['mb_sex']==1? '남자' :  '여자'; ?>">
                 </li>
                 <li>
-                    <label for="mb_sex">교육신청현황</label><br>
-                    <?php for($i1 =0; $i1< count($mb_group); $i1++){?>
-                        <input type="text" id="mb_group" readonly class="frm_input" size="50" value="<?php echo get_group_name($mb_group[$i1]) ?>"><br>
+                    <label for="$mb_edu_list">교육신청현황</label><br>
+<!--                    $mb_edu_list 회원 교육신청 및 이수관련 정보를 담는 변수-->
+                    <?php for($i2 = 0; $i2< count($mb_edu_list); $i2++){?>
+                        <b><?=$mb_edu_list[$i2]['edu_type_name']?>   - <?= substr($mb_edu_list[$i2]['apply_date'],0,10) ?></b>
                     <?php }?>
                 </li>
                 <li>
-                    <label for="mb_sex">교육이수현황</label><br>
-                    <?php for($i1 =0; $i1< count($mb_group); $i1++){?>
-                        <input type="text" id="mb_group" readonly class="frm_input" size="50" value="<?php echo get_group_name($mb_group[$i1]) ?>"><br>
+                    <label for="$mb_edu_com">교육이수현황</label><br>
+                    <?php for($i3 =0; $i3< count($mb_edu_list); $i3++){?>
+                        <b><?=$mb_edu_list[$i3]['edu_type_name']?>   - <?php echo ($mb_edu_list[$i3]['lecture_completion_status'] == 'N')? '미이수' : '이수'; ?></b>
                     <?php }?>
                 </li>
             </ul>
