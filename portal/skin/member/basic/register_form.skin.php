@@ -31,7 +31,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
             <ul>
                 <li>
                     <label for="mb_doseongu">도선구</label><br>
-                    <input type="text" id="mb_doseongu" readonly class="frm_input" size="50" value="<?php echo $member['mb_doseongu'] ?>">
+                    <input type="text" id="mb_doseongu" readonly class="frm_input" size="50" value="<?php echo get_doseongu_name($member['mb_doseongu']) ?>">
                 </li>
                 <li>
                     <label for="mb_lead_code">도선 약호</label><br>
@@ -55,13 +55,13 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
                     <label for="$mb_edu_list">교육신청현황</label><br>
 <!--                    $mb_edu_list 회원 교육신청 및 이수관련 정보를 담는 변수-->
                     <?php for($i2 = 0; $i2< count($mb_edu_list); $i2++){?>
-                        <b><?=$mb_edu_list[$i2]['edu_type_name']?>   - <?= substr($mb_edu_list[$i2]['apply_date'],0,10) ?></b>
+                        <input type="text" readonly id="$mb_edu_list" class="frm_input" size="50" value="<?=$mb_edu_list[$i2]['edu_type_name']?>   - <?= substr($mb_edu_list[$i2]['apply_date'],0,10) ?>">
                     <?php }?>
                 </li>
                 <li>
                     <label for="$mb_edu_com">교육이수현황</label><br>
                     <?php for($i3 =0; $i3< count($mb_edu_list); $i3++){?>
-                        <b><?=$mb_edu_list[$i3]['edu_type_name']?>   - <?php echo ($mb_edu_list[$i3]['lecture_completion_status'] == 'N')? '미이수' : '이수'; ?></b>
+                        <input type="text" readonly id="$mb_edu_list" class="frm_input" size="50" value="<?=$mb_edu_list[$i3]['edu_type_name']?>   - <?php echo ($mb_edu_list[$i3]['lecture_completion_status'] == 'N')? '미이수' : '이수'; ?>">
                     <?php }?>
                 </li>
             </ul>
