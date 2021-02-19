@@ -19,7 +19,7 @@ if($year_ch == "") $select_y = $now_year;
 else $select_y = $year_ch;
 
 $sql_common = " from kmp_pilot_edu_list ";
-$sql_order = " where (edu_type = 'CR' OR edu_type = 'CE') and edu_onoff_type = 'off' and edu_del_type ='N' {$search} and edu_cal_start like '%{$select_y}%' order by edu_idx desc";
+$sql_order = " where (edu_type = 'CR' OR edu_type = 'CE') and edu_onoff_type = 'off' and edu_del_type ='N' {$search} and edu_regi like '%{$select_y}%' order by edu_idx desc";
 
 $sql = " select count(*) as cnt {$sql_common} {$sql_order} ";
 $row = sql_fetch($sql);
@@ -49,7 +49,7 @@ $result = sql_query($sql);
 <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
 <input type="text" name="stx" value="<?php echo $stx ?>" id="stx" required class="required frm_input">
 <input type="submit" class="btn_submit" value="검색">
-<td> 년도 검색
+<td> 등록 년도 검색
             <select name="year_ch" id="year_ch" onchange = "year_change();">
 <?php
     for($k = $default_year; $k <= $now_year; $k++){

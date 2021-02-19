@@ -14,11 +14,11 @@ $now_year = date("Y");
 if($year_ch == "") $select_y = $now_year;
 else $select_y = $year_ch;
 
-$sql = " select count(*) as cnt from kmp_pilot_edu_list where edu_del_type = 'N' and edu_onoff_type = 'off' and edu_cal_start like '%{$select_y}%' ";
+$sql = " select count(*) as cnt from kmp_pilot_edu_list where edu_del_type = 'N' and edu_onoff_type = 'off' and (edu_cal_start like '%{$select_y}%' or edu_cal_start = '') ";
 $row = sql_fetch($sql);
 $total_count = $row['cnt'];
 
-$sql_list = " select * from kmp_pilot_edu_list where edu_del_type = 'N' and edu_onoff_type = 'off' and edu_cal_start like '%{$select_y}%' order by edu_idx asc ";
+$sql_list = " select * from kmp_pilot_edu_list where edu_del_type = 'N' and edu_onoff_type = 'off' and (edu_cal_start like '%{$select_y}%' or edu_cal_start = '')  order by edu_idx asc ";
 $result = sql_query($sql_list);
 $now_date = date("Y-m-d");
 
