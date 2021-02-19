@@ -80,15 +80,16 @@ if($edu_onoff_type == "off"){
 }
 ?>
     <tr>
-        <th scope="row"><label for="edu_name_kr">교육명(한글)<?php echo $sound_only ?></label></th>
-        <td>
+        <th scope="row"><label for="edu_name_kr">교육명<?php echo $sound_only ?></label></th>
+        <td colspan="3">
             <input type="text" name="edu_name_kr" id="edu_name_kr" class="frm_input" size="70" maxlength="250" value="<?=$row['edu_name_kr']?>" placeholder="내용을 입력해 주세요">
         </td>
-
+<!--
         <th scope="row"><label for="edu_name_en">교육명(영문)<?php echo $sound_only ?></label></th>
         <td>
             <input type="text" name="edu_name_en" id="edu_name_en" class="frm_input" size="70" maxlength="250" value="<?=$row['edu_name_en']?>" placeholder="내용을 입력해 주세요">
         </td>
+-->
     </tr>
 
     <tr>
@@ -120,7 +121,7 @@ if($edu_onoff_type == "off"){
         <td colspan="3">
             <input type="text" name="edu_cal_start" id="edu_cal_start" class="frm_input" size="15" maxlength="10" value="<?=$row['edu_cal_start']?>" placeholder="내용을 입력해 주세요" readonly> 부터
             <input type="text" name="edu_cal_end" id="edu_cal_end" class="frm_input" size="15" maxlength="10" value="<?=$row['edu_cal_end']?>" placeholder="내용을 입력해 주세요" readonly> 까지
-            <input type="checkbox" name="edu_cal_type" id="edu_cal_type" value="0" <?php if($row['edu_cal_type'] == "0") echo "checked";?> onclick="edu_cal_type_chk();"> 종료일 미정( ※ 종료일 미정 일시 수료증서 발급에 문제가 발생 합니다. )
+            <input type="checkbox" name="edu_cal_type" id="edu_cal_type" value="0" <?php if($row['edu_cal_type'] == "0") echo "checked";?> onclick="edu_cal_type_chk();"> 날짜 미정
         </td>
     </tr>
 
@@ -129,7 +130,7 @@ if($edu_onoff_type == "off"){
         <td colspan="3">
             <input type="text" name="edu_receipt_start" id="edu_receipt_start" class="frm_input" size="15" maxlength="10" value="<?=$row['edu_receipt_start']?>" placeholder="내용을 입력해 주세요" readonly> 부터
             <input type="text" name="edu_receipt_end" id="edu_receipt_end" class="frm_input" size="15" maxlength="10" value="<?=$row['edu_receipt_end']?>" placeholder="내용을 입력해 주세요" readonly> 까지
-            <input type="checkbox" name="edu_receipt_type" id="edu_receipt_type" value="0" <?php if($row['edu_receipt_type'] == "0") echo "checked";?> onclick="edu_receipt_type_chk();"> 종료일 미정
+            <input type="checkbox" name="edu_receipt_type" id="edu_receipt_type" value="0" <?php if($row['edu_receipt_type'] == "0") echo "checked";?> onclick="edu_receipt_type_chk();"> 날짜 미정
         </td>
     </tr>
 
@@ -195,18 +196,54 @@ if($w == "u")
 ?>
     function edu_cal_type_chk(){
         if($("input:checkbox[name=edu_cal_type]").is(":checked") == true) {
+            $("#edu_receipt_status option[value*='I']").prop('disabled',true);
+            $("#edu_receipt_status option[value*='C']").prop('disabled',true);
+            $('#edu_receipt_status').val('P').prop("selected",true);
+
+            $("#edu_cal_start").val("");
+            $("#edu_cal_start").attr("disabled",true);
             $("#edu_cal_end").val("");
             $("#edu_cal_end").attr("disabled",true);
         }else{
+            if($("input:checkbox[name=edu_receipt_type]").is(":checked") == true) {
+                //접수 기간이 날짜 미정인지 체크
+                $("#edu_receipt_status option[value*='I']").prop('disabled',true);
+                $("#edu_receipt_status option[value*='C']").prop('disabled',true);
+                $('#edu_receipt_status').val('P').prop("selected",true);
+            }else{
+                $("#edu_receipt_status option[value*='I']").prop('disabled',false);
+                $("#edu_receipt_status option[value*='C']").prop('disabled',false);
+                $('#edu_receipt_status').val('I').prop("selected",true);
+            }
+
+            $("#edu_cal_start").attr("disabled",false);
             $("#edu_cal_end").attr("disabled",false);
         }
     }
 
     function edu_receipt_type_chk(){
         if($("input:checkbox[name=edu_receipt_type]").is(":checked") == true) {
+            $("#edu_receipt_status option[value*='I']").prop('disabled',true);
+            $("#edu_receipt_status option[value*='C']").prop('disabled',true);
+            $('#edu_receipt_status').val('P').prop("selected",true);
+
+            $("#edu_receipt_start").val("");
+            $("#edu_receipt_start").attr("disabled",true);
             $("#edu_receipt_end").val("");
             $("#edu_receipt_end").attr("disabled",true);
         }else{
+            if($("input:checkbox[name=edu_cal_type]").is(":checked") == true) {
+                //교육 기간이 날짜 미정인지 체크
+                $("#edu_receipt_status option[value*='I']").prop('disabled',true);
+                $("#edu_receipt_status option[value*='C']").prop('disabled',true);
+                $('#edu_receipt_status').val('P').prop("selected",true);
+            }else{
+                $("#edu_receipt_status option[value*='I']").prop('disabled',false);
+                $("#edu_receipt_status option[value*='C']").prop('disabled',false);
+                $('#edu_receipt_status').val('I').prop("selected",true);
+            }
+
+            $("#edu_receipt_start").attr("disabled",false);
             $("#edu_receipt_end").attr("disabled",false);
         }
     }
@@ -215,17 +252,18 @@ if($w == "u")
 <script>
     function fedu_submit(){
         if($("#edu_name_kr").val() == ""){
-            alert("교육명(한글)을 입력 하세요.");
+            alert("교육명을 입력 하세요.");
             $("#edu_name_kr").focus();
             return false;
         }
-
+/*
+        210219 기획에서 빠짐
         if($("#edu_name_en").val() == ""){
             alert("교육명(영문)을 입력 하세요.");
             $("#edu_name_en").focus();
             return false;
         }
-
+*/
         if($("#edu_place").val() == ""){
             alert("교육장소를 입력 하세요.");
             $("#edu_place").focus();
@@ -239,15 +277,14 @@ if($w == "u")
         }
 
         if($("#edu_receipt_status").val() != "P"){
-            //접수현황이 준비중일떼 날짜 입력 안 할수 있게
-            if($("#edu_cal_start").val() == ""){
-                alert("교육일정 시작 날짜를 입력 하세요.");
-                $("#edu_cal_start").focus();
-                return false;
-            }
-
             if($("input:checkbox[name=edu_cal_type]").is(":checked") == false) {
-                //종료일 미정 체크시 날짜 입력 안하게
+                //접수현황이 준비중일떼 날짜 입력 안 할수 있게=> 210219 교육기간,접수기간이 날짜 미정일시 날짜 입력 안 받게 변경
+                if($("#edu_cal_start").val() == ""){
+                    alert("교육일정 시작 날짜를 입력 하세요.");
+                    $("#edu_cal_start").focus();
+                    return false;
+                }
+                //종료일 미정 체크시 날짜 입력 안하게 ==> 210219 종료일 미정이 아닌 날짜 미정으로 변경
                 if($("#edu_cal_end").val() == ""){
                     alert("교육일정 종료 날짜를 입력 하세요.");
                     $("#edu_cal_end").focus();
@@ -255,14 +292,14 @@ if($w == "u")
                 }
             }
 
-            if($("#edu_receipt_start").val() == ""){
-                alert("접수기간 시작 날짜를 입력 하세요.");
-                $("#edu_receipt_start").focus();
-                return false;
-            }
-
             if($("input:checkbox[name=edu_receipt_type]").is(":checked") == false) {
-                //종료일 미정 체크시 날짜 입력 안하게
+                if($("#edu_receipt_start").val() == ""){
+                    alert("접수기간 시작 날짜를 입력 하세요.");
+                    $("#edu_receipt_start").focus();
+                    return false;
+                }
+
+                //종료일 미정 체크시 날짜 입력 안하게 ==> 210219 종료일 미정이 아닌 날짜 미정으로 변경
                 if($("#edu_receipt_end").val() == ""){
                     alert("접수기간 종료 날짜를 입력 하세요.");
                     $("#edu_receipt_end").focus();
@@ -270,6 +307,7 @@ if($w == "u")
                 }
             }
         }
+
         if($("#edu_person").val() == ""){
             alert("교육인원을 숫자로 입력 하세요.");
             $("#edu_person").focus();

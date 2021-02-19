@@ -96,6 +96,7 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
     <?php
     }
     $qry = sql_query("select * from CMS_SMS_RESULT where IDX != 0 and IS_DEL != '1'{$sql_IDX} {$sql_sr} {$sql_search} order by IDX desc limit $page_start, $page_size");
+
     while($res = sql_fetch_array($qry)) {
         $bg = 'bg'.($line++%2);
 
