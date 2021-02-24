@@ -167,7 +167,7 @@ var g5_admin_url = "<?php echo G5_ADMIN_URL; ?>";
                 </thead>
                 <tbody>
 <?php
-$sql_m = " select mb_no, mb_id, mb_name, mb_doseongu,mb_hp from kmp_member where (mb_intercept_date = '' OR mb_memo = '' OR mb_leave_date = '') {$mk_sql} {$search} order by mb_no desc";
+$sql_m = " select mb_no, mb_id, mb_name, mb_doseongu,mb_hp from kmp_member where (mb_intercept_date = '' and mb_memo = '' and mb_leave_date = '') {$mk_sql} {$search} order by mb_no desc";
 $result_m = sql_query($sql_m);
 
 for ($i=0; $row_m=sql_fetch_array($result_m); $i++) {
