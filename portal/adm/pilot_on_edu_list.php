@@ -19,7 +19,7 @@ if($year_ch == "") $select_y = $now_year;
 else $select_y = $year_ch;
 
 $sql_common = " from kmp_pilot_edu_list ";
-$sql_order = " where edu_type = 'CC' and edu_onoff_type = 'on' and edu_del_type ='N' {$search} and edu_regi like '%{$select_y}%' order by edu_idx desc";
+$sql_order = " where (edu_type = 'CC' OR edu_type = 'CN') and edu_onoff_type = 'on' and edu_del_type ='N' {$search} and edu_regi like '%{$select_y}%' order by edu_idx desc";
 
 $sql = " select count(*) as cnt {$sql_common} {$sql_order} ";
 $row = sql_fetch($sql);
@@ -72,7 +72,7 @@ $result = sql_query($sql);
     <?php if ($is_admin == 'super') { ?>
     <a href="./pilot_edu_regi.php?edu_onoff_type=on" id="edu_add" class="btn btn_01">교육등록</a>
     <?php } ?>
-    <input type="button" class="btn btn_01" value="신청자 관리" onclick="apply_manage_list('','','on','all');">
+    <input type="button" class="btn btn_01" value="전체 신청자 리스트" onclick="apply_manage_list('','','on','all');">
 </div>
 
 
@@ -109,7 +109,7 @@ $result = sql_query($sql);
         if($row_cnt['cnt'] == 0){
             $list_button = "<input type='button' class='btn btn_02' value='리스트' onclick='alert(\"신청자가 없습니다.\");return false;'>";
         }else{
-            $list_button = "<input type='button' class='btn btn_02' value='리스트' onclick='excel_down(\"{$row[edu_idx]}\",\"{$row[edu_type]}\");'>";
+            $list_button = "<input type='button' class='btn btn_02' value='리스트' onclick='excel_down(\"{$row[edu_idx]}\",\"{$row[edu_type]}\",\"{$row[edu_onoff_type]}\");'>";
         }
 
         //접수 마감 로직 작업 해야 함(날짜 지나도 접수 마감이며, 인원이 꽉 차도 접수 마감이다) - 나중에 유지 보수로 해달라 할때 해줌으로 대표님과 협의
@@ -193,9 +193,10 @@ function edu_list_submit(f)
 </form>
 
 <script>
-    function excel_down(edu_idx,edu_type){
+    function excel_down(edu_idx,edu_type,edu_onoff_type){
         $("#edu_idx").val(edu_idx);
         $("#edu_type").val(edu_type);
+        $("#edu_onoff_type").val(edu_onoff_type);
         $("#form_submit").attr("action", "pilot_apply_excel_down.php");
         $("#form_submit").submit();
     }
@@ -208,7 +209,7 @@ function edu_list_submit(f)
         $("#edu_onoff_type").val(edu_onoff_type);
         $("#choice_type").val(choice_type);
         $("#form_submit").attr("method", "get");
-        $("#form_submit").attr("action", "pilot_apply_manage_list.php");
+        $("#form_submit").attr("action", "pilot_on_apply_manage_list.php");
         $("#form_submit").submit();
     }
 </script>

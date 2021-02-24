@@ -78,7 +78,7 @@ if ($w == "") {
     // 수정 후 다시 이 폼으로 돌아오기 위해 임시로 저장해 놓음
     set_session("ss_tmp_password", $_POST[mb_password]);
     */
-    
+
     if($_POST['mb_id'] && ! (isset($_POST['mb_password']) && $_POST['mb_password'])){
         if( ! $is_social_login_modify ){
             alert('비밀번호를 입력해 주세요.');

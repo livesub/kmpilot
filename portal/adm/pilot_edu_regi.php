@@ -60,7 +60,7 @@ if($edu_onoff_type == "off"){
             <select name="edu_type" id="edu_type">
                 <option value="CR" <?php if($row['edu_type'] == "CR" || $row['edu_type'] == "") echo "selected";?>>면허갱신교육</option>
                 <option value="CE" <?php if($row['edu_type'] == "CE") echo "selected";?>>보수교육</option>
-                <option value="" <?php if($row['edu_type'] == "etc") echo "selected";?>>직접작성</option>
+                <option value="CF" <?php if($row['edu_type'] == "CF") echo "selected";?>>특별교육</option>
             </select>
         </td>
     </tr>
@@ -72,7 +72,7 @@ if($edu_onoff_type == "off"){
         <td colspan="3">
             <select name="edu_type" id="edu_type">
                 <option value="CC" <?php if($row['edu_type'] == "CC" || $row['edu_type'] == "") echo "selected";?>>필수도선사교육</option>
-                <option value="" <?php if($row['edu_type'] == "etc") echo "selected";?>>직접작성</option>
+                <option value="CN" <?php if($row['edu_type'] == "CN") echo "selected";?>>특별교육</option>
             </select>
         </td>
     </tr>

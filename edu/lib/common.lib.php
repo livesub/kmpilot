@@ -3996,7 +3996,7 @@ function admin_apply_status_auto($edu_receipt_status,$edu_receipt_type,$apply_co
     $now_date = date("Y-m-d");
     if($edu_receipt_status != "P"){
         if($edu_receipt_type == "1"){
-            if($apply_count == $edu_person || $now_date > $edu_receipt_end){
+            if($apply_count >= $edu_person || $now_date > $edu_receipt_end){
                 //정원과 신청자가 같을때 와 접수 날짜가 지났을 때 접수 마감
                 $result_admin = sql_query(" update kmp_pilot_edu_list set edu_receipt_status='C' where edu_idx = '{$edu_idx}' and edu_onoff_type = '{$edu_onoff_type}' and edu_type = '{$edu_type}' ");
             }else{
@@ -4005,7 +4005,7 @@ function admin_apply_status_auto($edu_receipt_status,$edu_receipt_type,$apply_co
             }
         }else{
             //접수 기간 종료일 미정일때
-            if($apply_count == $edu_person){
+            if($apply_count >= $edu_person){
                 //정원과 신청자가 같을때 와 접수 날짜가 지났을 때 접수 마감
                 $result_admin = sql_query(" update kmp_pilot_edu_list set edu_receipt_status='C' where edu_idx = '{$edu_idx}' and edu_onoff_type = '{$edu_onoff_type}' and edu_type = '{$edu_type}' ");
             }else{
@@ -4016,4 +4016,25 @@ function admin_apply_status_auto($edu_receipt_status,$edu_receipt_type,$apply_co
     }else{
         $result_admin = sql_query(" update kmp_pilot_edu_list set edu_receipt_status='P' where edu_idx = '{$edu_idx}' and edu_onoff_type = '{$edu_onoff_type}' and edu_type = '{$edu_type}' ");
     }
+}
+
+function edu_type($value){
+    switch ($value){
+        case 'CR':
+            $edu_type = '면허갱신교육';
+            break;
+        case 'CE':
+            $edu_type = '보수교육';
+            break;
+        case 'CC':
+            $edu_type = '필수도선사교육';
+            break;
+        case 'CN':
+            $edu_type = '특별교육';
+            break;
+        case 'CF':
+            $edu_type = '특별교육';
+            break;
+    }
+    return $edu_type;
 }
