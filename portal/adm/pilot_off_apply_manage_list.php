@@ -41,13 +41,15 @@ if($_GET['sfl'] != "" && $_GET['stx'] != ""){
 include_once('./admin.head.php');
 
 $and_add = "";
+$sql_common = " from kmp_pilot_edu_apply A, kmp_pilot_edu_list B, kmp_member C ";
 if($choice_type == "select"){
     //선택시
     $and_add = " and A.edu_idx = '{$edu_idx}' ";
-}
 
-$sql_common = " from kmp_pilot_edu_apply A, kmp_pilot_edu_list B, kmp_member C ";
-$sql_order = " where A.apply_cancel = 'N' and C.mb_id = A.mb_id {$and_add} and A.edu_idx = B.edu_idx and A.edu_type = B.edu_type and B.edu_onoff_type = '{$edu_onoff_type}' {$search} order by B.edu_cal_end DESC, C.mb_name ASC, B.edu_idx DESC";
+    $sql_order = " where A.apply_cancel = 'N' and C.mb_id = A.mb_id {$and_add} and A.edu_idx = B.edu_idx and A.edu_type = B.edu_type and B.edu_onoff_type = '{$edu_onoff_type}' {$search} order by B.edu_cal_end DESC, C.mb_name ASC, B.edu_idx DESC";
+}else{
+    $sql_order = " where A.apply_cancel = 'N' and C.mb_id = A.mb_id {$and_add} and A.edu_idx = B.edu_idx and A.edu_type = B.edu_type and B.edu_onoff_type = '{$edu_onoff_type}' {$search} order by B.edu_idx ASC, C.mb_name ASC, B.edu_idx DESC";
+}
 
 $sql = " select count(*) as cnt {$sql_common} {$sql_order} ";
 
