@@ -158,13 +158,13 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 ?>
     <tr>
 <?php
-if($choice_type != "all"){
+    if($choice_type != "all"){
     //전체 보기에선 기능 막음
 ?>
         <td><input type="checkbox" id="chk_<?php echo $i ?>" name="chk[]" value="<?php echo $row['apply_idx'] ?>"></td>
         <input type="hidden" name="edu_type_<?=$row['apply_idx']?>" id="edu_type_<?=$row['apply_idx']?>" value="<?=$row['edu_type'];?>">
 <?php
-}
+    }
 ?>
         <td><?=$virtual_num?></td>
         <td><?=$edu_ment?></td>
@@ -176,17 +176,17 @@ if($choice_type != "all"){
         <td><?=$row['mb_validity_day_from']?> ~ <?=$row['mb_validity_day_to']?></td>
         <td><?=$row['mb_license_ext_day_from']?> ~ <?=$row['mb_license_ext_day_to']?></td>
 <?php
-        //이수 현황
-        $row_complete = sql_fetch(" select * from kmp_pilot_edu_apply where mb_id = '{$row['mb_id']}' and edu_idx = '{$row['edu_idx']}' and edu_type = '{$row['edu_type']}' and apply_cancel = 'N' ");
-        if($row_complete['lecture_completion_status'] == "N"){
-            $complete_ment = "미수료";
-            $complete_date = "미수료";
-            $edu_print_button = "<input type='button' class='btn btn_02' value='미수료' onclick='alert(\"미수료 상태입니다.\");return false;'>";
-        }else{
-            $complete_ment = "수료";
-            $complete_date = $row_complete['lecture_completion_date'];
-            $edu_print_button = "<input type='button' class='btn btn_02' value='수료증 인쇄' onclick='print_chk(\"{$row[edu_idx]}\",\"{$row[edu_type]}\",\"{$row[mb_id]}\")'>";
-        }
+    //이수 현황
+    $row_complete = sql_fetch(" select * from kmp_pilot_edu_apply where mb_id = '{$row['mb_id']}' and edu_idx = '{$row['edu_idx']}' and edu_type = '{$row['edu_type']}' and apply_cancel = 'N' ");
+    if($row_complete['lecture_completion_status'] == "N"){
+        $complete_ment = "미수료";
+        $complete_date = "미수료";
+        $edu_print_button = "<input type='button' class='btn btn_02' value='미수료' onclick='alert(\"미수료 상태입니다.\");return false;'>";
+    }else{
+        $complete_ment = "수료";
+        $complete_date = $row_complete['lecture_completion_date'];
+        $edu_print_button = "<input type='button' class='btn btn_02' value='수료증 인쇄' onclick='print_chk(\"{$row[edu_idx]}\",\"{$row[edu_type]}\",\"{$row[mb_id]}\")'>";
+    }
 ?>
         <td><?=$complete_ment?></td>
 <?php
@@ -200,9 +200,9 @@ if($choice_type != "all"){
     </tr>
 <?php
         $virtual_num--;
-    }
-    if (!$i)
-    echo "<tr><td colspan='{$colspan}' class=\"empty_table\">자료가 없습니다.</td></tr>";
+}
+
+if (!$i) echo "<tr><td colspan='{$colspan}' class=\"empty_table\">자료가 없습니다.</td></tr>";
 ?>
     </tbody>
     </table>
