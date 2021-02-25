@@ -185,11 +185,16 @@ Class SURESMS{
 		}else{
 			$retSendResult = "0";
 		}
+/*
 		$DATA = array(
 			"SEND_RESULT"	=> $RESULT,
 			"RECEIVE"		=> $retSendResult
 		);
-
+*/
+		$DATA = array(
+			"SEND_RESULT"	=> 1,
+			"RECEIVE"		=> $retSendResult
+		);
 		foreach ($DATA as $key=>$val) $qry_arr[] = $key ." = ". quote($val);
 		$qry = "UPDATE CMS_SMS_RESULT SET " . implode(",",$qry_arr). " where idx='".$R_ID."'" ;
 		$result = sql_query($qry);

@@ -15,7 +15,7 @@ $g5['title'] = "온라인 교육 - 강의 등록";
 include_once('./admin.head.php');
 
 $sql = " select * from kmp_pilot_lecture_list where edu_idx = '{$edu_idx}' and edu_onoff_type = '{$edu_onoff_type}' and edu_type = '{$edu_type}' and lecture_del_type = 'N' order by lecture_idx asc ";
-echo $sql;
+
 $result = sql_query($sql);
 $now_data_cnt = sql_num_rows($result);  //현재 저장된 데이터 갯수
 $process_cnt = "";
