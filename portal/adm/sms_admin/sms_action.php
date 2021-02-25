@@ -258,9 +258,6 @@ switch($_POST['mode']){
 
 	case "kakao":
 		$result = $SMS->send_kakao($_POST);
-
-echo "result=====> ".$result;
-exit;
 		alert("발송되었습니다.","kakao_write.php");
 	break;
 

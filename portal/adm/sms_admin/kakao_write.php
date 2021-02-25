@@ -447,9 +447,9 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 
 	</div>
 </div>
-<!-- 중요
+
 <iframe width="0" height="0" name='hiddenframe' class="hiddenx"></iframe>
--->
+
 
 
 

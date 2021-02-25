@@ -801,11 +801,9 @@ Class SURESMS{
 						$callname		= "";
 
 						$result = $this->sendkakao($SeqNo,$callphone1,$callphone2,$callphone3,$callmessage,$rdate,$rtime,$reqphone1,$reqphone2,$reqphone3,$callname,$CFG['cms_sms_number']);
-print_r($result);
+//print_r($result);
 
 						$res =substr($result,94,1);
-echo "res====> ".$res;
-exit;
 						$this->UpdateKakaoUserData($record_result,$res);
 					}
 				}
