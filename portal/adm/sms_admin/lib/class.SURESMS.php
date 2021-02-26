@@ -726,6 +726,55 @@ Class SURESMS{
 
 		return $DATA;
 	}
+
+	function up_img_kakao($FILE){
+		global $DB,$Wapp,$SITE;
+		$mktime = date("Ymd",time());
+
+        $image_regex = "/(\.(gif|jpe?g|png))$/i";
+        if (!preg_match($image_regex, $FILE["img1"]["name"])) {
+            alert($FILE["img1"]["name"] . '은(는) 이미지 파일이 아닙니다.');
+            exit;
+        }
+
+        $uploadPathSMS = G5_DATA_PATH."/smsFile/".$mktime;
+        if(!is_dir($uploadPathSMS))	@exec("mkdir -p -m0777 ".$uploadPathSMS);
+
+        if($FILE["img1"]["size"] < 500000 ){
+
+			//파일업로드
+			if ($FILE["img1"]["name"] && $FILE["img1"]["size"]>0){
+
+				//이미지 파일 체크
+				if(checkExe($FILE["img1"]["name"] ,array("jpg"))){
+					$fileExt = getFileExt($FILE["img1"]["name"]);
+					$newFileName = md5(mktime().$FILE["img1"]["name"]).".".$fileExt;
+					$DATA['pathFile'] = $uploadPathSMS."/".$newFileName;
+					$DATA['fileName'] = $newFileName;
+					$DATA['fileFolder'] = $mktime;
+					upload($FILE["img1"],$newFileName,$uploadPathSMS);
+
+					$thumb = thumbnail($newFileName, $uploadPathSMS, $uploadPathSMS, 500, 600, true, true);
+					if($thumb){
+						@unlink($DATA['pathFile']);
+						$DATA['fileName'] = $thumb;
+						$DATA['pathFile'] = $uploadPathSMS."/".$thumb;
+					}
+				}else{
+                    alert("이미지 업로드에 실패했습니다.\\n지정한 jpg 사진파일이 아닙니다.\\n정보수정을 통해 다시 업로드해주시기 바랍니다.");
+					exit;
+				}
+            }
+		}else{
+            //$Wapp->alert("500KB 이미지까지 첨부 가능합니다.");
+            alert("500KB 이미지까지 첨부 가능합니다.");
+			exit;
+        }
+
+		return $DATA;
+	}
+
+
 	function delete_sms_img($R_DATA){
 		$chkCount =  0;
 
@@ -796,7 +845,8 @@ Class SURESMS{
 						$callphone2		= $setNumSeq[1];
 						$callphone3		= $setNumSeq[2];
 
-						$callmessage	= charConvert($R_DATA["s_message"],2);
+						//$callmessage	= charConvert($R_DATA["s_message"],2);
+						$callmessage	= $R_DATA["s_message"];			//메시지 내용
 
 						$rdate			= "00000000";
 						$rtime			= "000000";
@@ -804,9 +854,8 @@ Class SURESMS{
 						$reqphone2		= $returnNum[1];
 						$reqphone3		= $returnNum[2];
 						$callname		= "";
-
-						$result = $this->sendkakao($SeqNo,$callphone1,$callphone2,$callphone3,$callmessage,$rdate,$rtime,$reqphone1,$reqphone2,$reqphone3,$callname,$CFG['cms_sms_number']);
-//print_r($result);
+						$filepath1		= $R_DATA['filepath1'];							//파일경로1
+						$result = $this->sendkakao($SeqNo,$callphone1,$callphone2,$callphone3,$callmessage,$rdate,$rtime,$reqphone1,$reqphone2,$reqphone3,$callname,$CFG['cms_sms_number'],$filepath1);
 
 						$res =substr($result,94,1);
 						$this->UpdateKakaoUserData($record_result,$res);
@@ -821,60 +870,102 @@ Class SURESMS{
 	}
 
 
-	function sendkakao($member,$callphone1,$callphone2,$callphone3,$callmessage,$rdate,$rtime,$reqphone1,$reqphone2,$reqphone3,$callname,$cms_sms_number){
+	function sendkakao($member,$callphone1,$callphone2,$callphone3,$callmessage,$rdate,$rtime,$reqphone1,$reqphone2,$reqphone3,$callname,$cms_sms_number,$param_File1=""){
 		global $SITE,$DB,$MEM,$CFG,$WebApp,$Wapp,$packettest,$usercode,$username,$deptcode,$deptname,$UserCode,$DeptCode,$DeptName;
 
 		$callphone1_cut = preg_replace('/(0)(\d)/','$2',$callphone1);	//앞자리 0 자르기
 		$phone_mk = "82".$callphone1_cut.$callphone2.$callphone3;	//국가번호 포함한 전화번호 (821012345678)
 
 		$curl = curl_init();
-		curl_setopt_array($curl, array(
-		  CURLOPT_URL => "https://rest.surem.com/alimtalk/v2/json",
-		  CURLOPT_RETURNTRANSFER => true,
-		  CURLOPT_ENCODING => "",
-		  CURLOPT_MAXREDIRS => 10,
-		  CURLOPT_TIMEOUT => 30,
-		  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-		  CURLOPT_CUSTOMREQUEST => "POST",
+		if($param_File1 == ""){
+			//이미지 없을때
+			curl_setopt_array($curl, array(
+			CURLOPT_URL => "https://rest.surem.com/alimtalk/v2/json",
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_ENCODING => "",
+			CURLOPT_MAXREDIRS => 10,
+			CURLOPT_TIMEOUT => 30,
+			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+			CURLOPT_CUSTOMREQUEST => "POST",
 
-		  CURLOPT_POSTFIELDS => "
-		  {
-			'usercode' : '".$usercode."',		//슈어엠 제공 아이디
- 			'deptcode' : '".$deptcode."',		//슈어엠 제공 회사코드
- 			'yellowid_key' : '".G5_YELLOWID_KEY."',	//발신프로필키(40 자)
- 			'messages' :
- 				[{
- 					'type'			:'ft',
- 					'message_id'	:'".$member."',	//메시지 고유키 값
- 					'to' 			: '".$phone_mk."',	//국가번호 포함한 전화번호 (821012345678)
- 					'text' 			: '".$callmessage."',	//전송할 메시지
- 					'from' 			: '".$cms_sms_number."',
- 					'reserved_time' : '',	//예약 발송시 예약시간 (YYYYMMDDhhmm - 12 자리) => 미입력시 즉시전송
- 					're_send' 		: 'Y',	//알림톡 전송 실패시 문자 재전송 여부 Y 는 MMS 로 재전송
-					're_text' 		: '".$callmessage."',
-					'additional_information': '".$usercode."',
- 					'buttons' 		:
- 						[{
- 							'button_type' : 'WL',
- 							'button_name' : '슈어엠 이동',
- 							'button_url' : 'http://www.surem.co.kr'
- 						},{
- 							'button_type' : 'MD',
- 							'button_name' : '메시지 전달'
- 						}]
- 				}]
-		}",
-		CURLOPT_HTTPHEADER => array(
-			"Content-Type: application/json",
-			"cache-control: no-cache"
-			),
-		));
+			CURLOPT_POSTFIELDS => "
+			{
+				'usercode' : '".$usercode."',		//슈어엠 제공 아이디
+				'deptcode' : '".$deptcode."',		//슈어엠 제공 회사코드
+				'yellowid_key' : '".G5_YELLOWID_KEY."',	//발신프로필키(40 자)
+				'messages' :
+					[{
+						'type'			:'ft',
+						'message_id'	:'".$member."',	//메시지 고유키 값
+						'to' 			: '".$phone_mk."',	//국가번호 포함한 전화번호 (821012345678)
+						'text' 			: '".$callmessage."',	//전송할 메시지
+						'from' 			: '".$cms_sms_number."',
+						'reserved_time' : '',	//예약 발송시 예약시간 (YYYYMMDDhhmm - 12 자리) => 미입력시 즉시전송
+						're_send' 		: 'Y',	//알림톡 전송 실패시 문자 재전송 여부 Y 는 MMS 로 재전송
+						're_text' 		: '".$callmessage."',
+						'additional_information': '".$usercode."',
+						'buttons' 		:
+							[{
+								'button_type' : 'WL',
+								'button_name' : '슈어엠 이동',
+								'button_url' : 'http://www.surem.co.kr'
+							},{
+								'button_type' : 'MD',
+								'button_name' : '메시지 전달'
+							}]
+					}]
+			}",
+
+			CURLOPT_HTTPHEADER => array(
+				"Content-Type: application/json",
+				"cache-control: no-cache"
+				),
+			));
+		}else{
+
+			//이미지 있을때
+			$File1_json1 = new CURLFILE($param_File1);
+			curl_setopt_array($curl, array(
+				CURLOPT_URL => 'https://rest.surem.com/friendtalk/v1/image',
+				CURLOPT_RETURNTRANSFER => true,
+				CURLOPT_ENCODING => '',
+				CURLOPT_MAXREDIRS => 10,
+				CURLOPT_TIMEOUT => 0,
+				CURLOPT_FOLLOWLOCATION => true,
+				CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+				CURLOPT_CUSTOMREQUEST => 'POST',
+
+				CURLOPT_POSTFIELDS => array(
+					"image"	=> $File1_json1,
+					"reqJSON" 	=> '{
+						"usercode" 		: "'.$usercode.'",		//슈어엠 제공 아이디
+						"deptcode" 		: "'.$deptcode.'",		//슈어엠 제공 회사코드
+						"yellowid_key" 	: "'.G5_YELLOWID_KEY.'",	//발신프로필키(40 자)
+						"messages" : [{
+							"message_id"	:"'.$member.'",	//메시지 고유키 값
+							"to" 			: "'.$phone_mk.'",	//국가번호 포함한 전화번호 (821012345678)
+							"text" 			: "'.$callmessage.'",	//전송할 메시지
+							"from" 			: "'.$cms_sms_number.'",
+							"reserved_time" : "",	//예약 발송시 예약시간 (YYYYMMDDhhmm - 12 자리) => 미입력시 즉시전송
+							"image_url" 	: "",
+							"re_send" : "Y",
+							"button_set" :	{
+								"button_name" : "슈어엠 이동",
+								"button_url" : "http://www.surem.co.kr"
+							}
+						}]
+				}'),
+				CURLOPT_HTTPHEADER => array(
+					"Content-Type: multipart/form-data",
+					"cache-control: no-cache"
+				),
+			));
+		}
 
 		$response = curl_exec($curl);
 		$err = curl_error($curl);
 
 		curl_close($curl);
-
 		if ($err) {
 		  echo "cURL Error #:" . $err;
 		} else {
@@ -937,12 +1028,10 @@ Class SURESMS{
 		}
 	}
 
-
 	function SendMms2($param_SeqNo, $param_CallPhone, $param_ReqPhone, $param_Time, $param_Subject, $param_Msg, $param_File1, $param_File2, $param_File3,$cms_sms_number){
 		global $UserCode, $DeptCode;
 
 		$curl = curl_init();
-
 		if($param_File1 == "" && $param_File2 == "" && $param_File3 == "")
 		{
 			//이미지가 없는 lms

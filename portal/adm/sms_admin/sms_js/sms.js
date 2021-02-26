@@ -63,11 +63,11 @@ $(function(){
 		var msglength = txtmsg.length;
 		var tmp_num = 0;
 		var str_len = 0;
-		var sms_len = 1000;
-		var limit_len = 1000;
+		var sms_len = 400;
+		var limit_len = 400;
 
 		for(tmp_num=i=0; c=txtmsg.charCodeAt(i++); tmp_num+=c>>11?2:c>>7?2:1){
-			if (tmp_num<=1000)
+			if (tmp_num<=limit_len)
 			{
 				str_len = i-1;
 			}
@@ -270,12 +270,19 @@ $(function(){
 	});
 	//이미지 선택시
 	$("input:file").change(function(){
-
 		if ($(this).attr("id") == "img1"){
-			if (parseInt($("#s_filecnt").val()) == 2){
-				alert("이미지는 최대 2개까지 첨부 가능합니다.");
-				$(".ly-mms-file").css("display","none");
-				return false;
+			if($("#type_page").val() == "kakao"){
+				if (parseInt($("#s_filecnt").val()) == 1){
+					alert("이미지는 1개 첨부 가능합니다.");
+					$(".ly-mms-file").css("display","none");
+					return false;
+				}
+			}else{
+				if (parseInt($("#s_filecnt").val()) == 2){
+					alert("이미지는 최대 2개까지 첨부 가능합니다.");
+					$(".ly-mms-file").css("display","none");
+					return false;
+				}
 			}
 			$("form[name=upload_form]").attr("target","hiddenframe");
 			$("form[name=upload_form]").submit();

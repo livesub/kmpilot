@@ -182,6 +182,7 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 			</div>
 			<div class="input-area">
 				<form name="upload_form" action="./sms_action.php" enctype="multipart/form-data" method="post" target="hiddenframe">
+					<input id="type_page" name="type_page" type="hidden" value="sms">
 					<input id="image_mode" name="mode" type="hidden" value="up_img">
 					<input name="img1" title="이미지첨부" id="img1" type="file">
 				</form>
@@ -553,6 +554,9 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 </div>
 
 <iframe width="0" height="0" name='hiddenframe' class="hiddenx"></iframe>
+
+
+
 
 <?php
 include_once(G5_ADMIN_PATH.'/admin.tail.php');

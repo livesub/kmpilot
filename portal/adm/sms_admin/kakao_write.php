@@ -62,7 +62,7 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 					<div class="message-box">
 						<textarea name="s_message" class="message-text" id="s_message" rows="1" cols="1"></textarea>
 					</div>
-					<div class="txt-byte"><span class="txt-message-byte" id="msglen">0</span> / <span class="txt-max-byte" id="max_len">1000</span> 자</div>
+					<div class="txt-byte"><span class="txt-message-byte" id="msglen">0</span> / <span class="txt-max-byte" id="max_len">400</span> 자</div>
 				</div>
 				<!--<
 				<div class="btn-message-area">
@@ -76,6 +76,7 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 				!-->
 				<div class="btn-phone-area">
 					<a class="first" id="pb_btn" href="#"><img alt="주소록" src="https://kmpilot.or.kr/CMS/_img/sms/btn_address.gif"></a>
+					<a id="imgadd_btn" href="#"><img alt="내 PC에서 사진 불러오기" src="https://kmpilot.or.kr/CMS/_img/sms/btn_up_img.gif"></a>
 				</div>
 				<div class="phone-area">
 					<div class="btn-phone-controll">
@@ -162,6 +163,31 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 		</form>
 	</div>
 
+	<!--이미지 첨부 레이어-->
+	<div class="ly-mms-file ly-div" style="display: none;">
+		<strong class="tit-mms-file blind">이미지첨부</strong>
+		<div class="ly-wrap">
+			<div class="desc">
+				<span class="cblue">★</span> <strong class="en">500*600 / 500KB</strong>
+					<p style="margin: 0px; padding: 0px 0px 0px 11px;">이미지까지 업로드 가능</p>
+				<span class="cblue">★</span> <strong class="en">JPG</strong>만 업로드 가능<br>
+				<span class="cblue">★</span> <strong>업로드된 이미지는</strong><br>
+				<p style="margin: 0px; padding: 0px 0px 0px 11px;">각 단말기 기종에따라 통신사에서 자동 리사이징된후 발송 됩니다</p>
+			</div>
+			<div class="input-area">
+				<form name="upload_form" action="./sms_action.php" enctype="multipart/form-data" method="post" target="hiddenframe">
+					<input id="type_page" name="type_page" type="hidden" value="kakao">
+					<input id="image_mode" name="mode" type="hidden" value="up_img_kakao">
+					<input name="img1" title="이미지첨부" id="img1" type="file">
+				</form>
+			</div>
+		</div>
+		<!--<div class="btn-area">
+			<button type="button" title="이미지첨부" class="btn btn-file" id="up_btn">이미지첨부</button>
+		</div>-->
+		<a class="btn-close" href="#"><img alt="닫기" src="https://kmpilot.or.kr/CMS/_img/sms/btn_close.gif"></a>
+	</div>
+	<!--이미지 첨부 레이어-->
 
 	<!-- 최근번호 레이어 -->
 	<div class="ly-recentnum ly-div">
@@ -179,7 +205,7 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 		</div>
 		<a class="btn-close" href="#"><img alt="닫기" src="https://kmpilot.or.kr/CMS/_img/sms/btn_close.gif"></a>
 	</div>
-
+	<div>이미지는 500 X 600 으로 제작해 주세요.</div>
 
 </div>
 <script language="javascript">
@@ -449,10 +475,6 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 </div>
 
 <iframe width="0" height="0" name='hiddenframe' class="hiddenx"></iframe>
-
-
-
-
 
 
 <?php

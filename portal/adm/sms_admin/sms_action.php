@@ -1,6 +1,7 @@
 <?php
 include_once("./_common.php");
 //require_once(G5_ADMIN_PATH."/sms_admin/lib/class.WebApp.php");
+include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 require_once(G5_ADMIN_PATH."/sms_admin/lib/class.SURESMS.php");
 include_once(G5_ADMIN_PATH."/sms_admin/lib/lib.file.php");
 
@@ -250,6 +251,20 @@ switch($_POST['mode']){
 		}
 		break;
 
+		case "up_img_kakao":
+			$result = $SMS->up_img_kakao($_FILES);
+			if(is_file($result['pathFile'])){
+				echo "<script type=\"text/javascript\">";
+				echo "window.parent.imageProcFunc('".$result['pathFile']."','".$result['fileName']."','".$result['fileFolder']."','".G5_DATA_URL."');";
+				echo "</script>";
+				exit;
+			}else{
+				//$Wapp->alertReload("등록 파일이 없습니다.","top");
+				alert("등록 파일이 없습니다.");
+				exit;
+			}
+			break;
+
 	case "del_img":
 		$result = $SMS->delete_sms_img($_POST);
 		print "{\"count\":".$result."}";
@@ -260,9 +275,6 @@ switch($_POST['mode']){
 		$result = $SMS->send_kakao($_POST);
 		alert("발송되었습니다.","kakao_write.php");
 	break;
-
-
-
 }
 
 ?>

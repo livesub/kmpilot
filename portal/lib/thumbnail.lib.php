@@ -1,4 +1,5 @@
 <?php
+
 if (!defined('_GNUBOARD_')) exit;
 
 @ini_set('memory_limit', '-1');
@@ -20,7 +21,7 @@ function get_list_thumbnail($bo_table, $wr_id, $thumb_width, $thumb_height, $is_
     } else {
         $write = get_thumbnail_find_cache($bo_table, $wr_id, 'content');
         $edt = true;
-        
+
         if( $matches = get_editor_image($write['wr_content'], false) ){
             for($i=0; $i<count($matches[1]); $i++)
             {
@@ -54,7 +55,7 @@ function get_list_thumbnail($bo_table, $wr_id, $thumb_width, $thumb_height, $is_
 
     if(!$filename)
         return $empty_array;
-    
+
     if( $thumbnail_info = run_replace('get_list_thumbnail_info', array(), array('bo_table'=>$bo_table, 'wr_id'=>$wr_id, 'data_path'=>$data_path, 'edt'=>$edt, 'filename'=>$filename, 'filepath'=>$filepath, 'thumb_width'=>$thumb_width, 'thumb_height'=>$thumb_height, 'is_create'=>$is_create, 'is_crop'=>$is_crop, 'crop_mode'=>$crop_mode, 'is_sharpen'=>$is_sharpen, 'um_value'=>$um_value)) ){
         return $thumbnail_info;
     }
@@ -82,7 +83,7 @@ function get_list_thumbnail($bo_table, $wr_id, $thumb_width, $thumb_height, $is_
 
 // 게시글보기 파일 썸네일 리턴
 function get_file_thumbnail($file){
-    
+
     if( ! is_array($file) ) return '';
 
     if( preg_match('/(\.jpg|\.jpeg|\.gif|\.png|\.bmp)$/i', $file['file']) && $contents = run_replace('get_file_thumbnail_tags', '', $file) ){
@@ -199,7 +200,7 @@ function get_view_thumbnail($contents, $thumb_width=0)
             } else {
                 $thumb_tag = '<img src="'.G5_URL.str_replace($filename, $thumb_file, $data_path).'" alt="'.$alt.'"/>';
             }
-            
+
             // $img_tag에 editor 경로가 있으면 원본보기 링크 추가
             if(strpos($img_tag, G5_DATA_DIR.'/'.G5_EDITOR_DIR) && preg_match("/\.({$config['cf_image_extension']})$/i", $filename)) {
                 $imgurl = str_replace(G5_URL, "", $src);
