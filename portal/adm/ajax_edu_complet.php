@@ -34,7 +34,7 @@ if($edu_complet_type == "complet"){
             $certificate_cnt = $certificate_max['certificate_cnt'];
             $certificate_cnt = $certificate_cnt + 1;
 
-            //수료증 업뎃
+            //수료증 번호 업뎃
             $result_cert_up = sql_query(" update kmp_pilot_edu_apply set certificate_num = '{$certificate_cnt}' where apply_idx = '{$k}' ");
         }
     }
