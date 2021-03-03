@@ -259,3 +259,5 @@ define('G5_MAIN_IMG_WIDTH', '1920');
 define('G5_MAIN_IMG_HEIGHT', '980');
 
 define('G5_YELLOWID_KEY', '78f24ac95be220e45f9c7b0a7dd4d42d0c7c6dcd');  //발신프로필키(40 자)
+
+define('EDU_URL_PATH', 'http://localhost/edu/skin');
