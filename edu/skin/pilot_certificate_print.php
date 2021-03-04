@@ -104,7 +104,7 @@ function page_list()
         <td>성명 : <?=$member['mb_name']?></td>
     </tr>
     <tr>
-        <td>생년월일 : <?=date_change($member['mb_birth'])?></td>
+        <td>생년월일 : <?=date_point_change($member['mb_birth'])?></td>
     </tr>
 
     <tr>
@@ -112,11 +112,11 @@ function page_list()
     </tr>
 
     <tr>
-        <td>교육기간 : <?=date_change($row['edu_cal_start'])?> ~ <?=date_change($row['edu_cal_end'])?> (<?=$row[edu_time]?>) </td>
+        <td>교육기간 : <?=date_point_change($row['edu_cal_start'])?> ~ <?=date_point_change($row['edu_cal_end'])?> (<?=$row[edu_time]?>) </td>
     </tr>
 
     <tr>
-        <td>유효기간 : <?=date_change($row['edu_cal_end'])?> ~ <?=date_change($end_available)?></td>
+        <td>유효기간 : <?=date_point_change($row['edu_cal_end'])?> ~ <?=date_point_change($end_available)?></td>
     </tr>
 
     <tr>

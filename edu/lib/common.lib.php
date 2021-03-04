@@ -3960,6 +3960,11 @@ function date_change($val){
 }
 
 
+//날짜를 콤마로 표기 법으로 변경
+function date_point_change($val){
+    return str_replace("-", ".", $val);;
+}
+
 function edu_way($val,$lang){
     switch ($val) {
         case 'on':
