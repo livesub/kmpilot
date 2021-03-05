@@ -3,6 +3,7 @@ portal/install
 portal/data/session/
 portal/data/tmp/
 portal/data/cache/
+portal/data/editor/
 portal/data/log/
 portal/data/member_image/
 portal/data/file/
