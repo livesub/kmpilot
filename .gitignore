@@ -7,9 +7,11 @@ portal/data/editor/
 portal/data/log/
 portal/data/member_image/
 portal/data/file/
+portal/data/magazine/
 portal/data/smsFile/
 edu/data/session
 edu/data/
 edu/config.php
 portal/config.php
 .vscode/
+.idea_old/

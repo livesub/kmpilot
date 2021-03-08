@@ -4043,3 +4043,78 @@ function edu_type($value){
     }
     return $edu_type;
 }
+//회원정보수정에서 필요한 함수들 추가 2021.02.22 kkw
+
+//도선구 번호를 이름을 변환
+function get_doseongu_name($name){
+    $value = "";
+    switch ($name){
+        case 0: $value = "해당사항없음"; break;
+        case 1: $value = "부산항"; break;
+        case 2: $value = "여수항"; break;
+        case 3: $value = "인천항"; break;
+        case 4: $value = "울산항"; break;
+        case 5: $value = "평택항"; break;
+        case 6: $value = "마산항"; break;
+        case 7: $value = "대산항"; break;
+        case 8: $value = "포항항"; break;
+        case 9: $value = "군산항"; break;
+        case 10: $value = "목포항"; break;
+        case 11: $value = "동해항"; break;
+        case 12: $value = "제주항"; break;
+    }
+    return $value;
+}
+
+//그룹 번호를 이름으로 변환하는 함수
+function get_group_name($number){
+    global $g5;
+    $sql_group_sel = " select gr_subject from {$g5['group_table']} where gr_id = $number ";
+    $subject = sql_fetch($sql_group_sel);
+    return $subject['gr_subject'];
+}
+
+//학력사항상태를 SELECT 형식으로 얻음
+function get_grade_value($name, $start_id=0, $end_id=10, $selected="", $event=""){
+    global $g5;
+
+    $str = "\n<select id=\"{$name}\" name=\"{$name}\"";
+    if ($event) $str .= " $event";
+    $str .= ">\n";
+    for ($i=$start_id; $i<=$end_id; $i++) {
+        switch ($i){
+            case 0: $value = "선택해주세요"; break;
+            case 1: $value = "중퇴"; break;
+            case 2: $value = "재학"; break;
+            case 3: $value = "졸업"; break;
+        }
+        $str .= '<option value="'.$i.'"';
+        if ($i == $selected)
+            $str .= ' selected="selected"';
+        $str .= ">{$value}</option>\n";
+    }
+    $str .= "</select>\n";
+    return $str;
+}
+
+//면허종류를 반환하는 함수 2021.02.22 kkw
+function get_license_mean($num){
+    $license_mean = '';
+    switch ($num){
+        case 0 : $license_mean = '면허없음'; break;
+        case 1 : $license_mean = '1종 면허'; break;
+        case 2 : $license_mean = '2종 면허'; break;
+        case 3 : $license_mean = '3종 면허'; break;
+    }
+    return $license_mean;
+}
+
+//date 또는 datetime의 default 값을 ""로 변환하는 함수
+function date_return_empty_space($value)
+{
+    if ($value == "0000-00-00" || $value == "0000-00-00 00:00:00") {
+        $value = "";
+    }
+    return $value;
+}
+
