@@ -27,7 +27,7 @@ $ajaxpage = G5_URL.'/lang_change.php';
 
         <ul class="hd_login">
             <?php if ($is_member) {  ?>
-            <li><a href="<?php echo G5_BBS_URL ?>/member_confirm.php?url=<?php echo G5_BBS_URL ?>/register_form.php"><?=$lang['member_modi']?></a></li>
+                <li><a href="<?php echo G5_BBS_URL ?>/register_form.php?w=u"><?=$lang['member_modi']?></a></li>
             <li><a href="<?php echo G5_BBS_URL ?>/logout.php"><?=$lang['member_logout']?></a></li>
             <?php if ($is_admin) {  ?>
             <li class="tnb_admin"><a href="<?php echo correct_goto_url(G5_ADMIN_URL); ?>">관리자</a></li>
@@ -55,7 +55,9 @@ $ajaxpage = G5_URL.'/lang_change.php';
             <li><a href="<?php echo G5_BBS_URL ?>/content.php?co_id=pilot_lecture_chk_list"><font color="#ffffff"><?=$lang['mypage_title1']?></font></a></li>
             <li><a href="<?php echo G5_BBS_URL ?>/content.php?co_id=pilot_certificates_issued_list"><font color="#ffffff"><?=$lang['mypage_title2']?></font></a></li>
 -->
-            <li><a href="<?php echo G5_BBS_URL ?>/content.php?co_id=pilot_mypage"><font color="#ffffff"><?=$lang['member_mypage']?></font></a></li>
+        <!--    <li><a href="<?php echo G5_BBS_URL ?>/content.php?co_id=pilot_mypage"><font color="#ffffff"><?=$lang['member_mypage']?></font></a></li> -->
+            <!--바로 회원수정 폼으로 이동 2021.02.22 kkw -->
+            <li><a href="<?php echo G5_BBS_URL ?>/register_form.php?w=u"><font color="#ffffff"><?=$lang['member_mypage']?></font></a></li>
 
         </ul>
     </div>

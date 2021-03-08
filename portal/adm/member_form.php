@@ -186,7 +186,47 @@ include_once('./admin.head.php');
 include_once(G5_PLUGIN_PATH . '/jquery-ui/datepicker.php');
 // add_javascript('js 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
+
+//회원관리를 할 수 있는 사무장일 경우에 바꿀 수 있는 부분만 바뀌게 변수 선언
+$sql_sel_auth = " select * from {$g5['auth_table']} where mb_id = '{$member['mb_id']}'";
+$result_auth = sql_fetch($sql_sel_auth);
+$smj_only = '';
+if($result_auth['au_menu']){
+    $smj_only = 'readonly disabled';
+}
+
+//교육신청현황을 찾는 쿼리
+$mb_edu_list = array();
+$sql_edu_apply_list = " SELECT edu_type_name,apply_date, lecture_completion_status FROM kmp_pilot_edu_list a inner JOIN kmp_pilot_edu_apply b ON a.edu_idx = b.edu_idx where mb_id = '{$mb['mb_id']}' order by apply_date";
+$row_edu_apply_list = sql_query($sql_edu_apply_list);
+if($row_edu_apply_list){
+    for($s = 0; $s < $row_edu = sql_fetch_array($row_edu_apply_list); $s++){
+        $mb_edu_list[$s]['edu_type_name'] = $row_edu['edu_type_name'];
+        $mb_edu_list[$s]['apply_date'] = $row_edu['apply_date'];
+        $mb_edu_list[$s]['lecture_completion_status'] = $row_edu['lecture_completion_status'];
+    }
+}
 ?>
+    <style>
+        #my_modal_member {
+            display: none;
+            width: 400px;
+            /*height: 200px;*/
+            /*padding: 20px 60px;*/
+            background-color: #dde4e9;
+            border: 1px solid #888;
+            border-radius: 3px;
+        }
+        #my_modal_member .modal_close_btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            -webkit-text-fill-color: #0f192a;
+        }
+        html.modal-open {
+            overflow-y: hidden;
+        }
+    </style>
 
 <form name="fmember" id="fmember" action="./member_form_update.php" onsubmit="return fmember_submit(this);" method="post" enctype="multipart/form-data">
 <input type="hidden" name="w" value="<?php echo $w ?>">
@@ -218,9 +258,9 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
             <?php if ($w=='u'){ ?><a href="./boardgroupmember_form.php?mb_id=<?php echo $mb['mb_id'] ?>" class="btn_frmline">접근가능그룹보기</a><?php } ?>
         </td>
         <th scope="row"><label for="mb_password">비밀번호<?php echo $sound_only ?><?php if ($w=='u'){ ?>
-                    <p>미 입력시 원래 비밀번호로 저장</p>
+                    <p>미 입력시 원래 비밀번호로 저장 <br> (회원복구 시 재입력이 필요)</p>
                 <?php } ?></label></th>
-        <td><input type="password" name="mb_password" id="mb_password" <?php echo $required_mb_password ?> class="frm_input <?php echo $required_mb_password ?>" size="15" maxlength="20" minlength="6" autocomplete="off"></td>
+        <td><input type="password" name="mb_password" id="mb_password" <?php echo $required_mb_password ?> <?=$smj_only?> class="frm_input <?php echo $required_mb_password ?>" size="15" maxlength="20" minlength="6" autocomplete="off"></td>
     </tr>
     <tr>
         <th scope="row"><label for="mb_img">회원이미지</label></th>
@@ -239,7 +279,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     </tr>
     <tr>
         <th scope="row"><label for="mb_name">이름(실명)<strong class="sound_only">필수</strong></label></th>
-        <td><input type="text" name="mb_name" value="<?php echo $mb['mb_name'] ?>" id="mb_name" required class="required frm_input" size="15"  maxlength="10"></td>
+        <td><input type="text" name="mb_name" value="<?php echo $mb['mb_name'] ?>" id="mb_name" required <?=$smj_only?> class="required frm_input" size="15"  maxlength="10"></td>
 <!--        <th scope="row"><label for="mb_nick">닉네임<strong class="sound_only">필수</strong></label></th>-->
 <!--        <td><input type="text" name="mb_nick" value="--><?php //echo $mb['mb_nick'] ?><!--" id="mb_nick" required class="required frm_input" size="15"  maxlength="20"></td>-->
         <th scope="row"><label for="mb_level">회원 권한</label><strong class="sound_only">필수</strong></th>
@@ -251,42 +291,69 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     </tr>
     <tr>
         <th scope="row"><label for="mb_email">E-mail<strong class="sound_only">필수</strong></label></th>
-        <td><input type="text" name="mb_email" value="<?php echo $mb['mb_email'] ?>" id="mb_email" maxlength="100" required class="required frm_input email" size="30"></td>
+        <td><input type="text" name="mb_email" value="<?php echo $mb['mb_email'] ?>" <?=$smj_only?> id="mb_email" maxlength="100" required class="required frm_input email" size="30"></td>
 <!--        <th scope="row"><label for="mb_homepage">홈페이지</label></th>-->
 <!--        <td><input type="text" name="mb_homepage" value="--><?php //echo $mb['mb_homepage'] ?><!--" id="mb_homepage" class="frm_input" maxlength="255" size="15"></td>-->
     </tr>
     <tr>
         <th scope="row"><label for="mb_hp">휴대폰번호<strong class="sound_only">필수</strong></label></th>
-        <td><input type="text" name="mb_hp" value="<?php echo $mb['mb_hp'] ?>" id="mb_hp" required class="required frm_input" size="15" maxlength="13"></td>
+        <td><input type="text" name="mb_hp" value="<?php echo $mb['mb_hp'] ?>" id="mb_hp" required class="required frm_input" size="15" maxlength="13" <?=$smj_only?>></td>
         <th scope="row"><label for="mb_tel">전화번호</label></th>
-        <td><input type="text" name="mb_tel" value="<?php echo $mb['mb_tel'] ?>" id="mb_tel" class="frm_input" size="15" maxlength="13"></td>
+        <td><input type="text" name="mb_tel" value="<?php echo $mb['mb_tel'] ?>" id="mb_tel" class="frm_input" size="15" maxlength="13" <?=$smj_only?>></td>
+    </tr>
+    <tr>
+        <th>주소</th>
+        <?php if ($config['cf_req_addr']) { ?><strong class="sound_only">필수</strong><?php }  ?>
+        <lable for="reg_mb_zip" class="sound_only">우편번호<?php echo $config['cf_req_addr']?'<strong class="sound_only"> 필수</strong>':''; ?></lable>
+        <td><input type="text" name="mb_zip" value="<?php echo $mb['mb_zip1'].$mb['mb_zip2']; ?>" id="reg_mb_zip" <?php echo $config['cf_req_addr']?"required":""; ?> class="frm_input twopart_input <?php echo $config['cf_req_addr']?"required":""; ?>" size="50" maxlength="6"  placeholder="우편번호">
+        <button type="button" class="btn_frmline" onclick="win_zip('fmember', 'mb_zip', 'mb_addr1', 'mb_addr2', 'mb_addr3', 'mb_addr_jibeon');">주소 검색</button></td>
+    </tr>
+    <tr>
+        <th></th>
+        <td><input type="text" name="mb_addr1" value="<?php echo get_text($mb['mb_addr1']) ?>" id="reg_mb_addr1" <?php echo $config['cf_req_addr']?"required":""; ?> class="frm_input frm_address full_input <?php echo $config['cf_req_addr']?"required":""; ?>" size="50"  placeholder="기본주소">
+        <label for="reg_mb_addr1" class="sound_only">기본주소<?php echo $config['cf_req_addr']?'<strong> 필수</strong>':''; ?></label><br></td>
+    </tr>
+    <tr>
+        <th></th>
+        <td>
+        <input type="text" name="mb_addr2" value="<?php echo get_text($mb['mb_addr2']) ?>" id="reg_mb_addr2" class="frm_input frm_address full_input" size="50" placeholder="상세주소">
+        <label for="reg_mb_addr2" class="sound_only">상세주소</label>
+        </td>
+    </tr>
+    <tr>
+        <th></th>
+        <td>
+            <input type="text" name="mb_addr3" value="<?php echo get_text($mb['mb_addr3']) ?>" id="reg_mb_addr3" class="frm_input frm_address full_input" size="50" readonly="readonly" placeholder="참고항목">
+            <label for="reg_mb_addr3" class="sound_only">참고항목</label>
+            <input type="hidden" name="mb_addr_jibeon" value="<?php echo get_text($mb['mb_addr_jibeon']); ?>">
+        </td>
     </tr>
     <tr>
         <th scope="row"><label for="mb_doseongu">도선구</label></th>
-        <td><?php echo get_doseongu_select('mb_doseongu', 0, 12, $mb['mb_doseongu']) ?></td>
+        <td><?php echo get_doseongu_select('mb_doseongu', 0, 12, $mb['mb_doseongu'], $smj_only) ?></td>
         <th scope="row"><label for="mb_lead_code">도선약호</label></th>
         <td><input type="text" name="mb_lead_code" value="<?php echo $mb['mb_lead_code'] ?>" id="mb_lead_code" class="frm_input" size="15" maxlength="20"></td>
     </tr>
     <tr>
         <th scope="row"><label for="mb_sex">성별</label></th>
-        <td><?php echo get_member_sex_select('mb_sex', 1, 2, $mb['mb_sex']) ?></td>
+        <td><?php echo get_member_sex_select('mb_sex', 1, 2, $mb['mb_sex'], $smj_only) ?></td>
         <th scope="row"><label for="mb_birth">생년월일<strong class="sound_only">필수</strong></label></th>
-        <td><input type="text" id="mb_birth" name="mb_birth" class="datepicker required frm_input" required value="<?php echo date_return_empty_space($mb['mb_birth'])?>" maxlength="10" readonly></td>
+        <td><input type="text" id="mb_birth" name="mb_birth" class="datepicker required frm_input" <?=$smj_only?> required value="<?php echo date_return_empty_space($mb['mb_birth'])?>" maxlength="10" readonly></td>
     </tr>
     <tr><th><h1>면허 관리 정보</h1></th></tr>
     <tr>
         <th scope="row"><label for="mb_license_mean">면허 종류</label></th>
-        <td><?php echo get_license_select('mb_license_mean', 0, 3, $mb['mb_license_mean']) ?></td>
+        <td><?php echo get_license_select('mb_license_mean', 0, 4, $mb['mb_license_mean']) ?></td>
         <th scope="row"><label for="mb_first_license_day">최초면허 발급일</label></th>
-        <td><input type="text" id="mb_first_license_day" name="mb_first_license_day" class="datepicker" value="<?php echo date_return_empty_space($mb['mb_first_license_day'])?>" readonly></td>
+        <td><input type="text" id="mb_first_license_day" name="mb_first_license_day" class="datepicker frm_input" value="<?php echo date_return_empty_space($mb['mb_first_license_day'])?>" readonly></td>
     </tr>
     <tr>
         <th scope="row"><label for="mb_license_renewal_day">면허 갱신일</label></th>
-        <td><input type="text" id="mb_license_renewal_day" name="mb_license_renewal_day" class="datepicker" value="<?php echo date_return_empty_space($mb['mb_license_renewal_day'])?>" readonly></td>
+        <td><input type="text" id="mb_license_renewal_day" name="mb_license_renewal_day" class="datepicker frm_input" value="<?php echo date_return_empty_space($mb['mb_license_renewal_day'])?>" readonly></td>
         <th scope="row"><label for="datepicker_from">면허유효기간</label></th>
         <td>
-            <input type="text" id="datepicker_from" name="mb_validity_day_from" value="<?php echo date_return_empty_space($mb['mb_validity_day_from'])?>" readonly>부터 <br>
-            <input type="text" id="datepicker_to" name="mb_validity_day_to" value="<?php echo date_return_empty_space($mb['mb_validity_day_to'])?>" readonly>까지
+            <input type="text" id="datepicker_from" name="mb_validity_day_from" value="<?php echo date_return_empty_space($mb['mb_validity_day_from'])?>" readonly class="frm_input">부터
+            <input type="text" id="datepicker_to" name="mb_validity_day_to" value="<?php echo date_return_empty_space($mb['mb_validity_day_to'])?>" readonly class="frm_input">까지
         </td>
 
     </tr>
@@ -391,22 +458,9 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     <tr>
         <th scope="row"><label for="extension_day">정년연장</label></th>
         <td>
-            <input type="text" id="mb_license_ext_day_from" name="mb_license_ext_day_from" value="<?php echo date_return_empty_space($mb['mb_license_ext_day_from'])?>" readonly>부터<br>
-            <input type="text" id="mb_license_ext_day_to" name="mb_license_ext_day_to" value="<?php echo date_return_empty_space($mb['mb_license_ext_day_to'])?>" readonly>까지
+            <input type="text" id="mb_license_ext_day_from" name="mb_license_ext_day_from" value="<?php echo date_return_empty_space($mb['mb_license_ext_day_from'])?>" readonly class="frm_input" <?=$smj_only?>>부터
+            <input type="text" id="mb_license_ext_day_to" name="mb_license_ext_day_to" value="<?php echo date_return_empty_space($mb['mb_license_ext_day_to'])?>" readonly class="frm_input" <?=$smj_only?>>까지
         </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="mb_applicable_or_not">해심재결 해당여부</label></th>
-        <td><?php echo get_applicable_or_not_select('mb_applicable_or_not', 0, 3, "", 'changePunishmentValue()') ?></td>
-
-        <th scope="row" id="punish_label" style="display: none" class="punishment"><label for="mb_punishment">징계 선택</label></th>
-        <td>
-            <select id="mb_punishment" name="mb_punishment" style="display: none" class="punishment">
-
-            </select>
-        </td>
-        <th scope="row" class="punishment" style="display: none"><label for="mb_punishment_date">징계 선고일</label></th>
-        <td><input type="text" id="mb_punishment_date" name="mb_punishment_date" class="datepicker punishment" value="" style="display: none" readonly></td>
     </tr>
 
     <?php if ($w == 'u') { ?>
@@ -418,7 +472,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     </tr>
 
     <?php } ?>
-
+    <?php if ($smj_only == '') { ?>
         <th scope="row"><label for="mb_leave_date">탈퇴일자</label></th>
         <td>
             <input type="text" name="mb_leave_date" value="<?php echo $mb['mb_leave_date'] ?>" id="mb_leave_date" class="frm_input" maxlength="8">
@@ -426,6 +480,14 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
 this.form.mb_leave_date.value=this.value; } else { this.form.mb_leave_date.value=this.form.mb_leave_date.defaultValue; }">
             <label for="mb_leave_date_set_today">탈퇴일을 오늘로 지정</label>
         </td>
+    <?php } ?>
+    <tr>
+        <th>국가 필수 도선사 여부</th>
+        <td>
+            <input type="text" id="required_pilot_status_from" name="required_pilot_status_from" value="<?php echo date_return_empty_space($mb['required_pilot_status_from'])?>" readonly class="frm_input" <?=$smj_only?>>부터
+            <input type="text" id="required_pilot_status_to" name="required_pilot_status_to" value="<?php echo date_return_empty_space($mb['required_pilot_status_to'])?>" readonly class="frm_input" <?=$smj_only?>>까지
+        </td>
+    </tr>
 <!--        <th scope="row">접근차단일자</th>-->
 <!--        <td>-->
 <!--            <input type="text" name="mb_intercept_date" value="--><?php //echo $mb['mb_intercept_date'] ?><!--" id="mb_intercept_date" class="frm_input" maxlength="8">-->
@@ -435,7 +497,6 @@ this.form.mb_leave_date.value=this.value; } else { this.form.mb_leave_date.value
 <!--            <label for="mb_intercept_date_set_today">접근차단일을 오늘로 지정</label>-->
 <!--        </td>-->
 <!--    </tr>-->
-
     <?php
     //소셜계정이 있다면
     if(function_exists('social_login_link_account') && $mb['mb_id'] ){
@@ -535,6 +596,89 @@ this.form.mb_leave_date.value=this.value; } else { this.form.mb_leave_date.value
     <input type="submit" value="확인" class="btn_submit btn" accesskey='s'>
 </div>
 </form>
+<?php if($w == 'u'){ ?>
+<div style="display: flex; text-align: left" class="tbl_frm01 tbl_wrap">
+    <table>
+        <tr>
+            <th scope="row" style="font-size: 15px"> 교육 신청 현황</th>
+        </tr>
+
+            <?php if(isset($mb_edu_list) &&$mb_edu_list != '' && count($mb_edu_list) != 0){
+                for($i2 = 0; $i2< count($mb_edu_list); $i2++){?>
+                <tr>
+                    <td><?=$mb_edu_list[$i2]['edu_type_name']?>   - <?= substr($mb_edu_list[$i2]['apply_date'],0,10) ?></td>
+                </tr>
+                <?php   }
+            }else{
+                ?>
+                <tr>
+                    <td>신청현황이 없습니다.</td>
+                </tr>
+            <?php } ?>
+    </table>
+    <table>
+        <tr>
+            <th scope="row" style="font-size: 15px"> 교육 이수 현황</th>
+        </tr>
+            <?php if(isset($mb_edu_list) && $mb_edu_list != '' && count($mb_edu_list) != 0){
+                for($i3 =0; $i3< count($mb_edu_list); $i3++){ ?>
+                <tr>
+                    <td><?=$mb_edu_list[$i3]['edu_type_name']?>   - <?php echo ($mb_edu_list[$i3]['lecture_completion_status'] == 'N')? '미이수' : '이수'; ?></td><br>
+                </tr>
+                <?php }
+            } else { ?>
+                <tr>
+                    <td>이수현황이 없습니다.</td>
+                </tr>
+            <?php } ?>
+    </table>
+</div>
+<?php }?>
+<?php if ($w == 'u' && $smj_only == '') { ?>
+    <tr>
+        <th scope="row"><b style="font-size: 15px">해심재결사항 관리</b></th>
+        <td><button type="button" id="modal_open" class="btn btn_03 modal-open" onclick="modal('my_modal_member')"> 관리 </button></td>
+        <div id="my_modal_member">
+            <form name="fpunish" id="fpunish" action="./member_form_punishment_insert.php"  method="post">
+                <h1 class="h2_frm"> 해심재결사항 관리</h1>
+                <input type="hidden" id="member_id" name="member_id" value="<?=$mb['mb_id']?>">
+                <div>
+                    <label for="mb_punishment">징계 선택</label>
+                    <select id="mb_punishment" name="mb_punishment" class="frm_input">
+                        <option value="1">업무 정지</option>
+                        <option value="2">견책</option>
+                        <option value="3">면허 취소</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="mb_punishment_date">징계일자</label>
+                    <input type="date" id="mb_punishment_date" name="mb_punishment_date" class="frm_input">
+                </div>
+                <br>
+                <div>
+                    <label for="mb_punishment_memo">메모</label>
+                    <input type="text" id="mb_punishment_memo" name="mb_punishment_memo" placeholder="내용을 입력해주세요" width="200" height="200" class="frm_input">
+                </div>
+                <br>
+                <div style="text-align: center">
+                    <button type="submit" class="btn btn_03"> 저장 </button>
+                </div>
+
+                <button type="button" class="modal_close_btn btn btn_02">닫기</button>
+            </form>
+        </div>
+        <!--        <td>--><?php //echo get_applicable_or_not_select('mb_applicable_or_not', 0, 3, "", 'changePunishmentValue()') ?><!--</td>-->
+        <!---->
+        <!--        <th scope="row" id="punish_label" style="display: none" class="punishment"><label for="mb_punishment">징계 선택</label></th>-->
+        <!--        <td>-->
+        <!--            <select id="mb_punishment" name="mb_punishment" style="display: none" class="punishment">-->
+        <!---->
+        <!--            </select>-->
+        <!--        </td>-->
+        <!--        <th scope="row" class="punishment" style="display: none"><label for="mb_punishment_date">징계 선고일</label></th>-->
+        <!--        <td><input type="text" id="mb_punishment_date" name="mb_punishment_date" class="datepicker punishment" value="" style="display: none" readonly></td>-->
+    </tr>
+<?php } ?>
 <?php
 //$sql_member_punish_select = " select * form {$g5}";
 $sql_member_punish_select = " from {$g5['member_punishment']} ";
@@ -576,7 +720,7 @@ $sql_sel_punish = " select *
             ";
 $result_punish = sql_query($sql_sel_punish);
 ?>
-    <div><h2>현재 아이디 징계 리스트</h2></div>
+    <div><h2>해심재결사항 기록</h2></div>
     <form name="fauthlist" id="fauthlist" method="post" action="./member_form_punishment_delete.php" onsubmit="return fauthlist_submit(this);">
     <input type="hidden" name="sst" value="<?php echo $sst ?>">
     <input type="hidden" name="sod" value="<?php echo $sod ?>">
@@ -587,7 +731,7 @@ $result_punish = sql_query($sql_sel_punish);
 
     <div class="tbl_head01 tbl_wrap">
         <table>
-            <caption><?php echo $g5['title']; ?> 목록</caption>
+            <caption><?php echo $g5['title']; ?> 목록 </caption>
             <thead>
             <tr>
                 <th scope="col">
@@ -596,8 +740,8 @@ $result_punish = sql_query($sql_sel_punish);
                 </th>
                 <th scope="col"><?php echo subject_sort_link('a.mb_id') ?>회원아이디</a></th>
                 <!--        <th scope="col">--><?php //echo subject_sort_link('mb_nick') ?><!--닉네임</a></th>-->
-                <th scope="col">해당여부</th>
-                <th scope="col">징계</th>
+                <th scope="col">징계사항</th>
+                <th scope="col">상세내용</th>
                 <th scope="col">징계일자</th>
             </tr>
             </thead>
@@ -617,7 +761,7 @@ $result_punish = sql_query($sql_sel_punish);
                 ?>
                 <tr class="<?php echo $bg; ?>">
                     <td class="td_chk">
-                        <input type="hidden" name="mb_applicable_or_not[<?php echo $i ?>]" value="<?php echo $row['mb_applicable_or_not'] ?>">
+                        <input type="hidden" name="mb_punishment_memo[<?php echo $i ?>]" value="<?php echo $row['mb_punishment_memo'] ?>">
                         <input type="hidden" name="mb_punishment[<?php echo $i ?>]" value="<?php echo $row['mb_punishment'] ?>">
                         <input type="hidden" name="mb_punishment_date[<?php echo $i ?>]" value="<?php echo $row['mb_punishment_date'] ?>">
                         <input type="hidden" name="mb_id[<?php echo $i ?>]" value="<?php echo $row['mb_id'] ?>">
@@ -627,9 +771,9 @@ $result_punish = sql_query($sql_sel_punish);
                     <td class="td_mbid"><?php echo $row['mb_id'] ?></a></td>
                     <!--        <td class="td_auth_mbnick">--><?php //echo $mb_nick ?><!--</td>-->
                     <td class="td_applicable_or_not">
-                        <?php echo change_applicable_or_not_to_kr($row['mb_applicable_or_not']) ?>
+                        <?php echo change_applicable_or_not_to_kr($row['mb_punishment']) ?>
                     </td>
-                    <td class="td_punishment"><?php echo change_punishment_to_kr($row['mb_punishment']) ?></td>
+                    <td class="mb_punishment_memo"><?php echo $row['mb_punishment_memo'] ?></td>
                     <td class="mb_punishment_date"><?php echo $row['mb_punishment_date'] ?></td>
                 </tr>
                 <?php
@@ -672,23 +816,22 @@ else
     let nameTest = /^[가-힣a-zA-Z]{2,50}$/;
     let telTest = /^\d{2,3}-\d{3,4}-\d{4}$/;
     /*let updateFlag = <?= isset($w)&&$w!='' ? "'".$w."'" : "'".'a'."'" ?>;*/
-
-    function changePunishmentValue(){
-        let sVal = $('#mb_applicable_or_not').val();
-        let $punish_array = [];
-        let $key;
-        switch (sVal){
-            case '1': $punish_array = ["해심1","해심2","해심3"]; $key = 100; $(".punishment").show();  break;
-            case '2': $punish_array = ["재결1","재결2","재결3"]; $key = 200; $(".punishment").show();  break;
-            case '3': $punish_array = ["종결1","종결2","종결3"]; $key = 300; $(".punishment").show();  break;
-            case '0': $(".punishment").hide();
-            default: break;
-        }
-        $('.punish_value').remove();
-        for($i=0; $i<$punish_array.length; $i++){
-            $('#mb_punishment').append("<option class=punish_value value='"+($key+$i)+"'>"+$punish_array[$i]+"</option>");
-        }
-    }
+    // function changePunishmentValue(){
+    //     let sVal = $('#mb_applicable_or_not').val();
+    //     let $punish_array = [];
+    //     let $key;
+    //     switch (sVal){
+    //         case '1': $punish_array = ["해심1","해심2","해심3"]; $key = 100; $(".punishment").show();  break;
+    //         case '2': $punish_array = ["재결1","재결2","재결3"]; $key = 200; $(".punishment").show();  break;
+    //         case '3': $punish_array = ["종결1","종결2","종결3"]; $key = 300; $(".punishment").show();  break;
+    //         case '0': $(".punishment").hide();
+    //         default: break;
+    //     }
+    //     $('.punish_value').remove();
+    //     for($i=0; $i<$punish_array.length; $i++){
+    //         $('#mb_punishment').append("<option class=punish_value value='"+($key+$i)+"'>"+$punish_array[$i]+"</option>");
+    //     }
+    // }
     $(function(){
         $(".datepicker").datepicker({ changeMonth: true, changeYear: true, dateFormat: "yy-mm-dd", showButtonPanel: false });
     });
@@ -721,6 +864,25 @@ else
             numberOfMonths: 1,  // 한눈에 보이는 월달력수
             onSelect: function( selectedDate ) {
                 let option = this.id === "mb_license_ext_day_from" ? "minDate" : "maxDate",
+                    instance = $( this ).data( "datepicker" ),
+                    date = $.datepicker.parseDate(
+                        instance.settings.dateFormat ||
+                        $.datepicker._defaults.dateFormat,
+                        selectedDate, instance.settings );
+                dates.not( this ).datepicker( "option", option, date );
+            }
+        });
+    })
+    $(function(){
+        // 시작날짜와 끝나는 날짜를 함께 선택해서 사용할때
+        let dates = $( "#required_pilot_status_from, #required_pilot_status_to" ).datepicker({
+            //defaultDate: "+1w",  // 기본선택일이 1 week 이후가 선택되는 옵션
+            changeYear: true,
+            changeMonth: true,
+            dateFormat: "yy-mm-dd",  //  년월일 표시방법  yy-mm-dd 또는 yymmdd
+            numberOfMonths: 1,  // 한눈에 보이는 월달력수
+            onSelect: function( selectedDate ) {
+                let option = this.id === "required_pilot_status_from" ? "minDate" : "maxDate",
                     instance = $( this ).data( "datepicker" ),
                     date = $.datepicker.parseDate(
                         instance.settings.dateFormat ||
@@ -812,7 +974,7 @@ else
             }
 
             if(document.pressed == "선택삭제") {
-                if(!confirm("선택한 자료를 정말 삭제하시겠습니까?")) {
+                if(!confirm("선택한 내용을 정말 삭제하시겠습니까?")) {
                     return false;
                 }
             }

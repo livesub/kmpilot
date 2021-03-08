@@ -46,7 +46,7 @@ $colspan = 4;
         ?>
     </select>
     -->
-    <?= get_group_select('gr_id')?>
+    <?= get_group_select('gr_id','','','no')?>
     <input type="submit" value="선택" class="btn_submit btn" accesskey="s">
 </div>
 </form>

@@ -34,18 +34,16 @@ if ($w == "") {
     // 리퍼러 체크
     referer_check();
 
-//    if (!isset($_POST['agree']) || !$_POST['agree']) {
-//        alert('회원가입약관의 내용에 동의하셔야 회원가입 하실 수 있습니다.', G5_BBS_URL.'/register.php');
-//    }
-//
-//    if (!isset($_POST['agree2']) || !$_POST['agree2']) {
-//        alert('개인정보처리방침안내의 내용에 동의하셔야 회원가입 하실 수 있습니다.', G5_BBS_URL.'/register.php');
-//    }
+    if (!isset($_POST['agree']) || !$_POST['agree']) {
+        alert('회원가입약관의 내용에 동의하셔야 회원가입 하실 수 있습니다.', G5_BBS_URL.'/register.php');
+    }
 
-//    $agree  = preg_replace('#[^0-9]#', '', $_POST['agree']);
-//    $agree2 = preg_replace('#[^0-9]#', '', $_POST['agree2']);
-    $agree  = preg_replace('#[^0-9]#', '', 1);
-    $agree2 = preg_replace('#[^0-9]#', '', 1);
+    if (!isset($_POST['agree2']) || !$_POST['agree2']) {
+        alert('개인정보처리방침안내의 내용에 동의하셔야 회원가입 하실 수 있습니다.', G5_BBS_URL.'/register.php');
+    }
+
+    $agree  = preg_replace('#[^0-9]#', '', $_POST['agree']);
+    $agree2 = preg_replace('#[^0-9]#', '', $_POST['agree2']);
 
     $member['mb_birth'] = '';
     $member['mb_sex']   = '';
@@ -70,7 +68,7 @@ if ($w == "") {
     if (!$is_member)
         alert('로그인 후 이용하여 주십시오.', G5_URL);
 
-    if ($member['mb_id'] != $_POST['mb_id'])
+    if ($member['mb_id'] != $_SESSION['ss_mb_id'])
         alert('로그인된 회원과 넘어온 정보가 서로 다릅니다.');
 
     /*
@@ -115,16 +113,19 @@ if ($w == "") {
     $member['mb_signature']   = get_text($member['mb_signature']);
     $member['mb_recommend']   = get_text($member['mb_recommend']);
     $member['mb_profile']     = get_text($member['mb_profile']);
-//    $member['mb_1']           = get_text($member['mb_1']);
-//    $member['mb_2']           = get_text($member['mb_2']);
-//    $member['mb_3']           = get_text($member['mb_3']);
-//    $member['mb_4']           = get_text($member['mb_4']);
-//    $member['mb_5']           = get_text($member['mb_5']);
-//    $member['mb_6']           = get_text($member['mb_6']);
-//    $member['mb_7']           = get_text($member['mb_7']);
-//    $member['mb_8']           = get_text($member['mb_8']);
-//    $member['mb_9']           = get_text($member['mb_9']);
-//    $member['mb_10']          = get_text($member['mb_10']);
+    $member['mb_doseongu']     = get_text($member['mb_doseongu']);
+    $member['mb_lead_code']     = get_text($member['mb_lead_code']);
+    $member['mb_birth']     = get_text($member['mb_birth']);
+    $member['mb_sex']     = get_text($member['mb_sex']);
+    //그룹을 찾는 쿼리
+    $sql_member_group_sel = " select * from {$g5['group_member_table']} where mb_id = '{$member['mb_id']}'";
+    $row_mb_group = sql_query($sql_member_group_sel);
+    if($row_mb_group){
+        for($i = 0; $i < $row=sql_fetch_array($row_mb_group); $i++){
+            $mb_group[$i] = get_text($row['gr_id']);
+        }
+    }
+    //학력사항을 찾는 쿼리
     $sql_member_academic_sel = " select * from {$g5['member_academic_back']} where mb_id = '{$member['mb_id']}'";
     $row_aca = sql_fetch($sql_member_academic_sel);
     $high_name = get_text($row_aca['high_name']);
@@ -133,6 +134,17 @@ if ($w == "") {
     $university_name = get_text($row_aca['university_name']);
     $university_major= get_text($row_aca['university_major']);
     $university_status= get_text($row_aca['university_status']);
+    //교육신청현황을 찾는 쿼리
+    $sql_edu_apply_list = " SELECT edu_type_name,apply_date, lecture_completion_status FROM kmp_pilot_edu_list a inner JOIN kmp_pilot_edu_apply b ON a.edu_idx = b.edu_idx where mb_id = '{$member['mb_id']}' order by apply_date limit 0,3";
+    $row_edu_apply_list = sql_query($sql_edu_apply_list);
+    if($row_edu_apply_list){
+        for($s = 0; $s < $row_edu = sql_fetch_array($row_edu_apply_list); $s++){
+            $mb_edu_list[$s]['edu_type_name'] = $row_edu['edu_type_name'];
+            $mb_edu_list[$s]['apply_date'] = $row_edu['apply_date'];
+            $mb_edu_list[$s]['lecture_completion_status'] = $row_edu['lecture_completion_status'];
+        }
+    }
+    //alert('나오나요?'. $mb_edu_list[0]['apply_date']);
 } else {
     alert('w 값이 제대로 넘어오지 않았습니다.');
 }

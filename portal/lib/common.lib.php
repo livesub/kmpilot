@@ -955,7 +955,7 @@ function get_category_option($bo_table='', $ca_name='')
 
 
 // 게시판 그룹을 SELECT 형식으로 얻음
-function get_group_select($name, $selected='', $event='', $non='')
+function get_group_select($name, $selected='', $event='', $no='')
 {
     global $g5, $is_admin, $member;
 
@@ -965,7 +965,7 @@ function get_group_select($name, $selected='', $event='', $non='')
                   where b.mb_id = '{$member['mb_id']}' gr_subject != '커뮤니티' and gr_subject != '교육센터' and gr_subject != 'Passage Plan' and gr_subject != '홈페이지' ";
     }else{
         //이벤트가 no일 경우 게시판관련 그룹을 보이지 않게 한다.
-        if($non == 'no'){
+        if($no == 'no'){
             $sql .=" where gr_subject != '커뮤니티' and gr_subject != '교육센터' and gr_subject != 'Passage Plan' and gr_subject != '홈페이지'";
         }
     }
@@ -4052,7 +4052,7 @@ function get_doseongu_select($name, $start_id=0, $end_id=12, $selected="", $even
     return $str;
 }
 //면허종류를 SELECT 형식으로 얻음
-function get_license_select($name, $start_id=0, $end_id=10, $selected="", $event=""){
+function get_license_select($name, $start_id=0, $end_id=4, $selected="", $event=""){
     global $g5;
     $str = "\n<select id=\"{$name}\" name=\"{$name}\"";
     if ($event) $str .= " $event";
@@ -4061,9 +4061,10 @@ function get_license_select($name, $start_id=0, $end_id=10, $selected="", $event
         $value = null;
         switch ($i){
             case 0: $value = "면허없음"; break;
-            case 1: $value = "1종"; break;
-            case 2: $value = "2종"; break;
-            case 3: $value = "3종"; break;
+            case 1: $value = "1급"; break;
+            case 2: $value = "2급"; break;
+            case 3: $value = "3급"; break;
+            case 4: $value = "4급"; break;
         }
         $str .= '<option value="'.$i.'"';
         if ($i == $selected)
@@ -4120,7 +4121,7 @@ function get_punishment_select($name, $start_id=0, $end_id=10, $selected="", $ev
 }
 
 //학력사항상태를 SELECT 형식으로 얻음
-function get_grade_value($name, $start_id=0, $end_id=10, $selected="", $event=""){
+function get_grade_value($name, $start_id=0, $end_id=3, $selected="", $event=""){
     global $g5;
 
     $str = "\n<select id=\"{$name}\" name=\"{$name}\"";
@@ -4162,9 +4163,9 @@ function get_user_doseongu($mb_id){
 function change_applicable_or_not_to_kr($code){
     $value_kr = '';
     switch ($code){
-        case 1 : $value_kr = "해심"; break;
-        case 2 : $value_kr = "재결"; break;
-        case 3 : $value_kr = "종결"; break;
+        case 1 : $value_kr = "업무정지"; break;
+        case 2 : $value_kr = "견책"; break;
+        case 3 : $value_kr = "면허취소"; break;
         default : $value_kr ="값 없음"; break;
     }
     return $value_kr;
@@ -4346,4 +4347,105 @@ function member_secession($mb_id)
     sql_query($sql);
 
     run_event('member_secession_after', $mb_id);
+}
+
+//회원 복구
+function member_return($mb_id)
+{
+    global $config;
+    global $g5;
+
+    $sql = " select mb_memo from {$g5['member_table']} where mb_id= '".$mb_id."' ";
+    $mb = sql_fetch($sql);
+
+    // 이미 탈퇴된 회원은 제외
+//    if(preg_match(' #^[0-9]{8} ', $mb['mb_leave_date']))
+//        return;
+
+    if ($mb['mb_recommend']) {
+        $row = sql_fetch(" select count(*) as cnt from {$g5['member_table']} where mb_id = '".addslashes($mb['mb_recommend'])."' ");
+        if ($row['cnt'])
+            insert_point($mb['mb_recommend'], $config['cf_recommend_point'] * (-1), $mb_id.'님의 회원자료 삭제로 인한 추천인 포인트 반환', "@member", $mb['mb_recommend'], $mb_id.' 추천인 삭제');
+    }
+
+    // 회원탈퇴 시키기
+    $sql = " update {$g5['member_table']} set mb_memo = '' where mb_id = '{$mb_id}'";
+
+    sql_query($sql);
+
+    run_event('member_secession_after', $mb_id);
+}
+
+//면허종류를 반환하는 함수 2021.02.22 kkw
+function get_license_mean($num){
+    $license_mean = '';
+    switch ($num){
+        case 0 : $license_mean = '면허없음'; break;
+        case 1 : $license_mean = '1급'; break;
+        case 2 : $license_mean = '2급'; break;
+        case 3 : $license_mean = '3급'; break;
+        case 4 : $license_mean = '4급'; break;
+    }
+    return $license_mean;
+}
+
+//도선지 내용 분류를 코드가 아닌 한글로 반환하는 함수 2021.02.22 kkw
+function get_code_return_kr($code){
+    $sql = "select TEXT from CMS_BASIC_CODE where VAL = '{$code}'";
+    $rename_code = sql_fetch($sql);
+    return $rename_code['TEXT'];
+}
+
+//연호 코드를 한글로 반환하는 함수 2021.02.12 kkw
+function get_code_return_kr_section($section){
+    $sql_section = "select TEXT from CMS_BASIC_CODE where VAL = '{$section}'";
+    $rename = sql_fetch($sql_section);
+    return $rename['TEXT'];
+}
+
+//도선지 분류를 select 형식으로 가져온다.
+function get_doseonge_mean_value($name, $start_id=0, $end_id=10, $selected="", $event=""){
+
+    $str = "\n<select id=\"{$name}\" name=\"{$name}\"";
+    if ($event) $str .= " $event";
+    $str .= ">\n";
+    $value = '';
+    for ($i=$start_id; $i<=$end_id; $i++) {
+        switch ($i){
+            case 0: $value = "선택해주세요"; break;
+            case 1: $value = "인사말"; break;
+            case 2: $value = "신년사"; break;
+            case 3: $value = "권두언"; break;
+            case 4: $value = "협회소식"; break;
+            case 5: $value = "특별기획"; break;
+            case 6: $value = "초대석"; break;
+            case 7: $value = "인터뷰"; break;
+            case 8: $value = "특집"; break;
+            case 9: $value = "도선기고"; break;
+            case 10: $value = "도선연구"; break;
+            case 11: $value = "도선논단"; break;
+            case 12: $value = "해외정보"; break;
+            case 13: $value = "법률정보"; break;
+            case 14: $value = "단체소식"; break;
+            case 15: $value = "편집후기"; break;
+            case 16: $value = "기타"; break;
+        }
+        $str .= '<option value="'.$value.'"';
+        if ($value == $selected)
+            $str .= ' selected="selected"';
+        $str .= ">{$value}</option>\n";
+    }
+    $str .= "</select>\n";
+    return $str;
+}
+
+function get_grade_status_value($num){
+    $value = '';
+    switch($num){
+        case 0 : $value = ''; break;
+        case 1 : $value = '중퇴'; break;
+        case 2 : $value = '재학'; break;
+        case 3 :  $value = '졸업'; break;
+    }
+    return $value;
 }

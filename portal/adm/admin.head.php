@@ -110,7 +110,7 @@ function imageview(id, w, h)
         <?php if($member['mb_level'] == 9 || $member['mb_level'] == 10) {?>
        <div id="logo"><a href="<?php echo correct_goto_url(G5_ADMIN_URL); ?>"><img src="<?php echo G5_ADMIN_URL ?>/img/logo.png" alt="<?php echo get_text($config['cf_title']); ?> 관리자"></a></div>
         <?php }else{ ?>
-        <div id="logo"><a href="<?php echo correct_goto_url(G5_ADMIN_URL.'/member_list.php'); ?>"><?=$member['mb_doseongu']?> 회원 정보 </a></div>
+        <div id="logo"><a href="<?php echo correct_goto_url(G5_ADMIN_URL.'/member_list.php'); ?>" style="font-size: 20px"><?=get_doseongu_name($member['mb_doseongu'])?> 회원 정보 </a></div>
         <?php } ?>
         <div id="tnb">
             <ul>
