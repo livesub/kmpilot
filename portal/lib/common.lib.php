@@ -4356,7 +4356,6 @@ function member_secession($mb_id)
     run_event('member_secession_after', $mb_id);
 }
 
-<<<<<<< HEAD
 //날짜를 영문 표기 법으로 변경
 function date_change($val){
     $date = date_create($val);
@@ -4380,7 +4379,6 @@ function admin_receipt_status($edu_idx,$edu_type,$count,$type){
         $result_up = sql_query(" update kmp_pilot_edu_list set edu_receipt_status = 'I' where edu_idx = '{$edu_idx}' ");
     }
 }
-=======
 //회원 복구
 function member_return($mb_id)
 {
@@ -4481,4 +4479,3 @@ function get_grade_status_value($num){
     }
     return $value;
 }
->>>>>>> 50aa866c05b35928989e5cb7535734e082927584
