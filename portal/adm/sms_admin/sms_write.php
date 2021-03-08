@@ -4,14 +4,11 @@ include_once("./_common.php");
 
 auth_check_menu($auth, $sub_menu, "r");
 
+
 $g5['title'] = "문자 보내기";
 
 include_once(G5_ADMIN_PATH.'/admin.head.php');
-
-
 ?>
-
-
 
 <link rel="stylesheet" href="https://kmpilot.or.kr/CMS/_css/common.css" type="text/css" />
 <link rel="stylesheet" href="https://kmpilot.or.kr/CMS/_css/layout.css" type="text/css" />
@@ -22,7 +19,8 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 </script>
 
 <script src="<?=G5_ADMIN_URL?>/sms_admin/sms_js/set_js.js" type="text/javascript"></script>
-
+<script src="<?=G5_ADMIN_URL?>/sms_admin/sms_js/sms.js"></script>
+<link rel="stylesheet" type="text/css" href="https://kmpilot.or.kr/CMS/_css/sms.css">
 
 <div id="cont"><!-- 꼭 있어야함 -->
 <div class="contents">
@@ -30,10 +28,6 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 
 
 
-
-	<script src="<?=G5_ADMIN_URL?>/sms_admin/sms_js/sms.js"></script>
-
-	<link rel="stylesheet" type="text/css" href="https://kmpilot.or.kr/CMS/_css/sms.css">
 	<div class="visualphone">
 		<div id="visualphone-wrap">
 			<form name="VisualPhone" id="VisualPhone" method="post" enctype="multipart/form-data" action="./sms_action.php" target="hiddenframe">
@@ -114,7 +108,7 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 					</div>
 					<div class="txt-count-area">
 						<span>잔액</span>
-						<div class="cnavy"><span class="phone-count" id="sms_money"><strong class="cwhite"><?=number_format($money)?></strong></span> 건</div>
+						<div class="cnavy"><span class="phone-count" id="sms_money"><strong class="cwhite"><?=number_format($money)?></strong></span> 원</div>
 					</div>
 					<div class="txt-count-area">
 						<span>받는사람</span>
@@ -188,6 +182,7 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 			</div>
 			<div class="input-area">
 				<form name="upload_form" action="./sms_action.php" enctype="multipart/form-data" method="post" target="hiddenframe">
+					<input id="type_page" name="type_page" type="hidden" value="sms">
 					<input id="image_mode" name="mode" type="hidden" value="up_img">
 					<input name="img1" title="이미지첨부" id="img1" type="file">
 				</form>
@@ -539,6 +534,7 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 		f.goods_id.value = goods_id;
 		f.target = 'ifrm_pop';
 		f.action = 'http://heartcon.surem.com/pop_auto.php';
+		//f.action = 'pop_auto.php';
 		f.submit();
 	}
 
@@ -556,10 +552,8 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 
 	</div>
 </div>
-<!-- 중요
-<iframe width="0" height="0" name='hiddenframe' class="hiddenx"></iframe>
--->
 
+<iframe width="0" height="0" name='hiddenframe' class="hiddenx"></iframe>
 
 
 

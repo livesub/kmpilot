@@ -771,6 +771,51 @@ function get_group($gr_id, $is_cache=false)
 }
 
 
+//접속한 멤버가 그 그룹인지 체크하는 함수
+function get_member_group_check($mb_id, $gr_id){
+    global $g5;
+    $sql = " select * from {$g5['group_member_table']} where mb_id = '$mb_id'and gr_id = '$gr_id' ";
+    //$sql = " select * from kmp_group_member where mb_id = '$mb_id'and gr_id = '$gr_id' ";
+    if(sql_fetch($sql)){
+        return true;
+        //echo $gr_id."그룹에 속한 유저";
+    }else{
+        return false;
+        //echo $gr_id."그룹에 속하지 않은 유저";
+    }
+}
+
+//특정 그룹이 특정 게시판에 들어왔을때 기록하는 함수
+function insert_group_member_check($bo_table, $mb_id, $wr_id, $gr_id, $mb_name, $mb_doseongu){
+    global $g5;
+    $sql = " insert into {$g5['group_member_check_table']}
+                set mb_id = '$mb_id',
+                    bo_table = '".$bo_table."',
+                    wr_id = '".$wr_id."',
+                    gr_id = '".$gr_id."',
+                    mb_name = '".$mb_name."',
+                    mb_doseongu = '".$mb_doseongu."',
+                    gmc_date = '".G5_TIME_YMDHIS."'";
+
+    if(sql_query($sql)){
+        return "완료";
+    }else{
+        return "실패";
+    }
+}
+
+//특정게시판에 특정권한을 가진 user가 특정 글을 열람 했는지 확인하는 함수
+function get_open_board_check($bo_table, $mb_id, $wr_id, $gr_id){
+    global $g5;
+    $sql = " select * from {$g5['group_member_check_table']} where mb_id = '$mb_id'and bo_table= '$bo_table' and wr_id = '$wr_id' and gr_id = '$gr_id' ";
+    if(sql_fetch($sql)){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+
 // 회원 정보를 얻는다.
 function get_member($mb_id, $fields='*', $is_cache=false)
 {
@@ -910,14 +955,19 @@ function get_category_option($bo_table='', $ca_name='')
 
 
 // 게시판 그룹을 SELECT 형식으로 얻음
-function get_group_select($name, $selected='', $event='')
+function get_group_select($name, $selected='', $event='', $non='')
 {
     global $g5, $is_admin, $member;
 
     $sql = " select gr_id, gr_subject from {$g5['group_table']} a ";
     if ($is_admin == "group") {
         $sql .= " left join {$g5['member_table']} b on (b.mb_id = a.gr_admin)
-                  where b.mb_id = '{$member['mb_id']}' ";
+                  where b.mb_id = '{$member['mb_id']}' gr_subject != '커뮤니티' and gr_subject != '교육센터' and gr_subject != 'Passage Plan' and gr_subject != '홈페이지' ";
+    }else{
+        //이벤트가 no일 경우 게시판관련 그룹을 보이지 않게 한다.
+        if($non == 'no'){
+            $sql .=" where gr_subject != '커뮤니티' and gr_subject != '교육센터' and gr_subject != 'Passage Plan' and gr_subject != '홈페이지'";
+        }
     }
     $sql .= " order by a.gr_id ";
 
@@ -925,7 +975,12 @@ function get_group_select($name, $selected='', $event='')
     $str = "<select id=\"$name\" name=\"$name\" $event>\n";
     for ($i=0; $row=sql_fetch_array($result); $i++) {
         if ($i == 0) $str .= "<option value=\"\">선택</option>";
-        $str .= option_selected($row['gr_id'], $selected, $row['gr_subject']);
+        //if($event == "not_board"){
+            //if($row['gr_subject'] != "Passage Plan" && $row['gr_subject'] != "홈페이지" && $row['gr_subject'] != "교육센터")
+            //$str .= option_selected($row['gr_id'], $selected, $row['gr_subject']);
+        //}else{
+            $str .= option_selected($row['gr_id'], $selected, $row['gr_subject']);
+        //}
     }
     $str .= "</select>";
     return $str;
@@ -3602,14 +3657,14 @@ function get_write_token($bo_table)
 function check_write_token($bo_table)
 {
     if(!$bo_table)
-        alert('올바른 방법으로 이용해 주십시오1111111111111.', G5_URL);
+        alert('올바른 방법으로 이용해 주십시오.', G5_URL);
 
     $token = get_session('ss_write_'.$bo_table.'_token');
 
     set_session('ss_write_'.$bo_table.'_token', '');
 
     if(!$token || !$_REQUEST['token'] || $token != $_REQUEST['token'])
-        alert('올바른 방법으로 이용해 주십시오2222222222222.', G5_URL);
+        alert('올바른 방법으로 이용해 주십시오..', G5_URL);
 
     return true;
 }
@@ -4019,9 +4074,12 @@ function get_license_select($name, $start_id=0, $end_id=10, $selected="", $event
     return $str;
 }
 //해심재결 해당여부를 SELECT 형식으로 얻음
-function get_applicable_or_not_select($name, $start_id=0, $end_id=10, $selected="", $event=""){
+function get_applicable_or_not_select($name, $start_id=0, $end_id=10, $selected="", $onchange="", $event=""){
+
     global $g5;
     $str = "\n<select id=\"{$name}\" name=\"{$name}\"";
+    if($onchange)
+    $str.=" onchange= $onchange";
     if ($event) $str .= " $event";
     $str .= ">\n";
     for ($i=$start_id; $i<=$end_id; $i++) {
@@ -4029,7 +4087,7 @@ function get_applicable_or_not_select($name, $start_id=0, $end_id=10, $selected=
             case 0: $value = "해당사항 없음"; break;
             case 1: $value = "해심"; break;
             case 2: $value = "재결"; break;
-            case 3: $value = "심의중"; break;
+            case 3: $value = "종결"; break;
         }
         $str .= '<option value="'.$i.'"';
         if ($i == $selected)
@@ -4061,6 +4119,92 @@ function get_punishment_select($name, $start_id=0, $end_id=10, $selected="", $ev
     return $str;
 }
 
+//학력사항상태를 SELECT 형식으로 얻음
+function get_grade_value($name, $start_id=0, $end_id=10, $selected="", $event=""){
+    global $g5;
+
+    $str = "\n<select id=\"{$name}\" name=\"{$name}\"";
+    if ($event) $str .= " $event";
+    $str .= ">\n";
+    for ($i=$start_id; $i<=$end_id; $i++) {
+        switch ($i){
+            case 0: $value = "선택해주세요"; break;
+            case 1: $value = "중퇴"; break;
+            case 2: $value = "재학"; break;
+            case 3: $value = "졸업"; break;
+        }
+        $str .= '<option value="'.$i.'"';
+        if ($i == $selected)
+            $str .= ' selected="selected"';
+        $str .= ">{$value}</option>\n";
+    }
+    $str .= "</select>\n";
+    return $str;
+}
+
+//관리권한테이블에 특정아이디가 지정 페이지에 권한이 있는지 확인하는 함수
+function get_auth_member_exits($member_id, $au_nenu){
+    global $g5;
+    $sql_sel_auth = " select * from {$g5['auth_table']} where mb_id ='".$member_id."' and au_menu = '".$au_nenu."'";
+    return sql_query($sql_sel_auth);
+}
+
+//그 아이디에 도선구를 얻는 함수
+function get_user_doseongu($mb_id){
+    global $g5;
+    $sql_sel_doseongu = " select mb_doseongu from {$g5['member_table']} where mb_id ='".$mb_id."'";
+    $result = sql_fetch($sql_sel_doseongu);
+    //alert('값은 어떻게? : '.$result['mb_doseongu']);
+    return $result['mb_doseongu'];
+}
+
+//DB 값에 따른 해당여부 해결사항 변환 함수
+function change_applicable_or_not_to_kr($code){
+    $value_kr = '';
+    switch ($code){
+        case 1 : $value_kr = "해심"; break;
+        case 2 : $value_kr = "재결"; break;
+        case 3 : $value_kr = "종결"; break;
+        default : $value_kr ="값 없음"; break;
+    }
+    return $value_kr;
+}
+
+//DB 값에 따른 징계사항 변환 함수
+function change_punishment_to_kr($punishment){
+    $punishment_kr= '';
+    switch ($punishment){
+        case 100 : $punishment_kr = "해심1"; break;
+        case 101 : $punishment_kr = "해심2"; break;
+        case 102 : $punishment_kr = "해심3"; break;
+        case 200 : $punishment_kr = "재결1"; break;
+        case 201 : $punishment_kr = "재결2"; break;
+        case 202 : $punishment_kr = "재결3"; break;
+        case 300 : $punishment_kr = "종결1"; break;
+        case 301 : $punishment_kr = "종결2"; break;
+        case 302 : $punishment_kr = "종결3"; break;
+        default : $punishment_kr ="값 없음"; break;
+    }
+    return $punishment_kr;
+}
+//언어팩 적용 언어 판단
+//alert($_COOKIE['lang_change_portal']);
+switch ($_COOKIE['lang_change_portal']) {
+    case 'en':
+        $lang_file = 'lang_en.php';
+        $lang_type_portal = $_COOKIE['lang_change_portal'];
+        break;
+    case 'kr':
+        $lang_file = 'lang_kr.php';
+        $lang_type_portal = $_COOKIE['lang_change_portal'];
+        break;
+    default:
+        $lang_file = 'lang_kr.php';
+        $lang_type_portal = 'kr';
+        break;
+}
+include_once G5_PATH.'/languages_portal/'.$lang_file;
+
 //SMS 에서 쓰임
 function charConvert($str,$conv=1){
 	$schar  = "euc-kr";
@@ -4079,4 +4223,158 @@ function charConvert($str,$conv=1){
 
 function quote($value) {
     return "\"".$value."\"";
+}
+
+
+//문자전송내역 건별 검색구분을 select 형식으로 가져온다.
+function get_sms_mean_value($name, $start_id=0, $end_id=10, $selected="", $event=""){
+    global $g5;
+
+    $str = "\n<select id=\"{$name}\" name=\"{$name}\" class='reset_form'";
+    if ($event) $str .= " $event";
+    $str .= ">\n";
+    for ($i=$start_id; $i<=$end_id; $i++) {
+        switch ($i){
+            case 0: $value = "선택해주세요"; $op_val = ""; break;
+            case 1: $value = "발송구분(M,S,K로 입력 요망)"; $op_val = "SMS_TYPE"; break;
+            case 2: $value = "발신구분(P,C,K로 입력 요망)"; $op_val = "SEND_TYPE"; break;
+            case 3: $value = "내용"; $op_val = "SMS_MSG"; break;
+            case 4: $value = "전화번호(뒷번호 4자리입력요망)"; $op_val = "SPHONE3"; break;
+        }
+        $str .= '<option value="'.$op_val.'"';
+        if ($op_val == $selected)
+            $str .= ' selected="selected"';
+        $str .= ">{$value}</option>\n";
+    }
+    $str .= "</select>\n";
+    return $str;
+}
+
+
+//도선구 번호를 이름을 변환
+function get_doseongu_name($name){
+    $value = "";
+    switch ($name){
+        case '': $value = "해당사항없음"; break;
+        case 0: $value = "해당사항없음"; break;
+        case 1: $value = "부산항"; break;
+        case 2: $value = "여수항"; break;
+        case 3: $value = "인천항"; break;
+        case 4: $value = "울산항"; break;
+        case 5: $value = "평택항"; break;
+        case 6: $value = "마산항"; break;
+        case 7: $value = "대산항"; break;
+        case 8: $value = "포항항"; break;
+        case 9: $value = "군산항"; break;
+        case 10: $value = "목포항"; break;
+        case 11: $value = "동해항"; break;
+        case 12: $value = "제주항"; break;
+    }
+    return $value;
+}
+
+//그룹 번호를 이름으로 변환하는 함수
+function get_group_name($number){
+    global $g5;
+    $sql_group_sel = " select gr_subject from {$g5['group_table']} where gr_id = $number ";
+    $subject = sql_fetch($sql_group_sel);
+    return $subject['gr_subject'];
+}
+
+//date 또는 datetime의 default 값을 ""로 변환하는 함수
+function date_return_empty_space($value)
+{
+    if ($value == "0000-00-00" || $value == "0000-00-00 00:00:00") {
+        $value = "";
+    }
+    return $value;
+}
+
+
+function edu_type($value){
+    switch ($value){
+        case 'CR':
+            $edu_type = '면허갱신교육';
+            break;
+        case 'CE':
+            $edu_type = '보수교육';
+            break;
+        case 'CC':
+            $edu_type = '필수도선사교육';
+            break;
+        case 'CN':
+            $edu_type = '특별교육';
+            break;
+        case 'CF':
+            $edu_type = '특별교육';
+            break;
+    }
+    return $edu_type;
+}
+
+function edu_receipt_status($value)
+{
+    switch ($value) {
+        case 'I':
+            $edu_receipt_status = "<font color='blue'><b>접수중</b></font>";
+            break;
+        case 'C':
+            $edu_receipt_status = "<font color='red'><b>접수마감</b></font>";
+            break;
+        case 'P':
+            $edu_receipt_status = "<font color='black'><b>준비중</b></font>";
+            break;
+    }
+    return $edu_receipt_status;
+}
+
+// 회원 탈퇴
+function member_secession($mb_id)
+{
+    global $config;
+    global $g5;
+
+    $sql = " select mb_name, mb_ip, mb_recommend, mb_leave_date, mb_level from {$g5['member_table']} where mb_id= '".$mb_id."' ";
+    $mb = sql_fetch($sql);
+
+    // 이미 탈퇴된 회원은 제외
+    if(preg_match(' #^[0-9]{8} ', $mb['mb_leave_date']))
+        return;
+
+    if ($mb['mb_recommend']) {
+        $row = sql_fetch(" select count(*) as cnt from {$g5['member_table']} where mb_id = '".addslashes($mb['mb_recommend'])."' ");
+        if ($row['cnt'])
+            insert_point($mb['mb_recommend'], $config['cf_recommend_point'] * (-1), $mb_id.'님의 회원자료 삭제로 인한 추천인 포인트 반환', "@member", $mb['mb_recommend'], $mb_id.' 추천인 삭제');
+    }
+
+    // 회원탈퇴 시키기
+    $sql = " update {$g5['member_table']} set mb_leave_date = '".date('Ymd', G5_SERVER_TIME)."' where mb_id = '{$mb_id}' ";
+
+    sql_query($sql);
+
+    run_event('member_secession_after', $mb_id);
+}
+
+//날짜를 영문 표기 법으로 변경
+function date_change($val){
+    $date = date_create($val);
+    return date_format($date, "D. d, Y");
+}
+
+//관리자 교육 접수현황 자동 업뎃 시키기
+function admin_receipt_status($edu_idx,$edu_type,$count,$type){
+    //교육의 정원 구하기
+    $row_person = sql_fetch(" select edu_person from kmp_pilot_edu_list where edu_idx='{$edu_idx}' ");
+    //현재 신청자 구하기
+    $row_apply_cnt = sql_fetch(" select count(*) as cnt from kmp_pilot_edu_apply where apply_cancel = 'N' and edu_idx='{$edu_idx}' and edu_type = '{$edu_type}' ");
+    if($type == "in") $now_person = $row_apply_cnt['cnt'] + $count;   //관리자 등록일때 기존 신청자 + 관리자가 등록한 신청자 갯수
+    else if($type == "del") $now_person = $row_apply_cnt['cnt'] - $count;   //관리자 삭제일때 기존 신청자 - 관리자가 삭제한 신청자 갯수
+
+    if($row_person['edu_person'] <= $now_person){
+        //정원보다 신청자가 많아 졌을시 관리자 교육 접수현황 접수마감으로 변경
+        $result_up = sql_query(" update kmp_pilot_edu_list set edu_receipt_status = 'C' where edu_idx = '{$edu_idx}' ");
+    }else{
+        //신청자가 삭제되어 정원 보다 줄었을 경우
+        $result_up = sql_query(" update kmp_pilot_edu_list set edu_receipt_status = 'I' where edu_idx = '{$edu_idx}' ");
+    }
 }

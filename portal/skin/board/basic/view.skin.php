@@ -30,7 +30,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         	<div class="profile_info_ct">
         		<span class="sound_only">작성자</span> <strong><?php echo $view['name'] ?><?php if ($is_ip_view) { echo "&nbsp;($ip)"; } ?></strong><br>
        		 	<span class="sound_only">댓글</span><strong><a href="#bo_vc"> <i class="fa fa-commenting-o" aria-hidden="true"></i> <?php echo number_format($view['wr_comment']) ?>건</a></strong>
-        		<span class="sound_only">조회</span><strong><i class="fa fa-eye" aria-hidden="true"></i> <?php echo number_format($view['wr_hit']) ?>회</strong>
+<!--        		<span class="sound_only">조회</span><strong><i class="fa fa-eye" aria-hidden="true"></i> --><?php //echo number_format($view['wr_hit']) ?><!--회</strong>-->
         		<strong class="if_date"><span class="sound_only">작성일</span><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo date("y-m-d H:i", strtotime($view['wr_datetime'])) ?></strong>
     		</div>
     	</div>
@@ -92,31 +92,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
          ?>
 
         <!-- 본문 내용 시작 { -->
-        <!-- 첨부파일이 PDF 라면 미리보기-->
-        <?php
-        // 가변 파일
-        if($_GET["bo_table"] == "officialDoc"){
-            for ($i=0; $i<count($view['file']); $i++) {
-                if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view']) {
-                    ?>
-                        <div id="pdf_viewer" style="height:400px"></div>
-<!--                --><?php //echo $view['file'][$i]['file'] ?><!--<br>-->
-<!--                --><?php //echo G5_DATA_URL; ?><!--<br>-->
-                        <?php //session_start();
-                            $userid = get_session('ss_mb_id');
-                            if(get_member_group_check($userid, 4)) {
-                                if(!get_open_board_check($_GET["bo_table"],$userid, $_GET["wr_id"], 4)) {
-                                    echo insert_group_member_check($_GET["bo_table"], $userid, $_GET["wr_id"], 4);
-                                }
-                            }
-                        ?>
-                        <script src="<?php echo G5_JS_URL; ?>/pdfobject.min.js"></script>
-                        <script>PDFObject.embed("<?php echo G5_DATA_URL; ?>/file/officialDoc/<?php echo $view['file'][$i]['file'];?>","#pdf_viewer");</script>
-                    <?php
-                }
-            }
-        }
-        ?>
         <div id="bo_v_con"><?php echo get_view_thumbnail($view['content']); ?></div>
         <?php //echo $view['rich_content']; // {이미지:0} 과 같은 코드를 사용할 경우 ?>
         <!-- } 본문 내용 끝 -->
@@ -316,5 +291,12 @@ function excute_good(href, $el, $tx)
         }, "json"
     );
 }
+// 스마트 에디터 링크 새창으로 띄우는 함수 2021.02.19 김관우
+$(function (){
+    //함수 시작
+    $("#bo_v_con a").on("click",function (){
+        $(this).attr("target", "_blank");
+    }); //클릭 함수 종료
+}); // 전체 함수 종료
 </script>
 <!-- } 게시글 읽기 끝 -->

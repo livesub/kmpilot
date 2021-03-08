@@ -69,8 +69,9 @@ $check_keys = array(
     'mb_validity_day_to',
     'mb_license_ext_day_from',
     'mb_license_ext_day_to',
-    'mb_applicable_or_not',
-    'mb_punishment',
+    'mb_group',
+    'required_pilot_status_from',
+    'required_pilot_status_to',
 );
 
 for($i=1;$i<=10;$i++){
@@ -117,8 +118,9 @@ $sql_common = "  mb_name = '{$posts['mb_name']}',
                  mb_validity_day_to = '{$posts['mb_validity_day_to']}',
                  mb_license_ext_day_from = '{$posts['mb_license_ext_day_from']}',
                  mb_license_ext_day_to = '{$posts['mb_license_ext_day_to']}',
-                 mb_applicable_or_not = '{$posts['mb_applicable_or_not']}',
-                 mb_punishment = '{$posts['mb_punishment']}' ";
+                 required_pilot_status_from = '{$posts['required_pilot_status_from']}',
+                 required_pilot_status_to = '{$posts['required_pilot_status_to']}' ";
+$mb_group = $posts['mb_group'];
 
 if ($w == '')
 {
@@ -139,6 +141,14 @@ if ($w == '')
         alert('이미 존재하는 이메일입니다.\\nＩＤ : '.$row['mb_id'].'\\n이름 : '.$row['mb_name'].'\\n메일 : '.$row['mb_email']);
 
     sql_query(" insert into {$g5['member_table']} set mb_id = '{$mb_id}', mb_password = '".get_encrypt_string($mb_password)."', mb_datetime = '".G5_TIME_YMDHIS."', mb_ip = '{$_SERVER['REMOTE_ADDR']}', mb_email_certify = '".G5_TIME_YMDHIS."', {$sql_common} ");
+    //권한 중복 체크
+    $sql_group_select = " select * from {$g5['group_member_table']} where gr_id = '{$mb_group}' and mb_id ='{$mb_id}' ";
+    $row = sql_fetch($sql_group_select);
+    if (isset($row['mb_id']) && $row['mb_id'])
+        alert('똑같은 권한을 가진 아이디가 있습니다.\\nＩＤ : '.$row['mb_id'].'\\n이름 : '.$row['mb_name'].'\\n메일 : '.$row['mb_email']);
+
+    $sql_group_insert = " insert into {$g5['group_member_table']} set gr_id = '{$mb_group}', mb_id = '{$mb_id}', gm_datetime = '".G5_TIME_YMDHIS."'";
+    sql_query($sql_group_insert);
 }
 else if ($w == 'u')
 {
@@ -146,8 +156,10 @@ else if ($w == 'u')
     if (! (isset($mb['mb_id']) && $mb['mb_id']))
         alert('존재하지 않는 회원자료입니다.');
 
-    if ($is_admin != 'super' && $mb['mb_level'] >= $member['mb_level'])
-        alert('자신보다 권한이 높거나 같은 회원은 수정할 수 없습니다.');
+    //if ($is_admin != 'super' && $mb['mb_level'] >= $member['mb_level'])
+        //alert('자신보다 권한이 높거나 같은 회원은 수정할 수 없습니다.');
+    if($is_admin != 'super' && $mb['mb_level'] >= $member['mb_level'] && $mb['mb_id'] != $member['mb_id'])
+        alert($mb['mb_id'].' : 본인이 아니거나 자신보다 권한이 높거나 같은 회원은 수정할 수 없습니다.');
 
     if ($is_admin !== 'super' && is_admin($mb['mb_id']) === 'super' ) {
         alert('최고관리자의 비밀번호를 수정할수 없습니다.');
@@ -190,6 +202,21 @@ else
 
 if( $w == '' || $w == 'u' ){
 
+    //징계사항 중복 확인
+    $sql_punish_select = " select * from {$g5['member_punishment']} where mb_id = '{$mb_id}'and mb_applicable_or_not='{$posts['mb_applicable_or_not']}' and mb_punishment='{$posts['mb_punishment']}' and mb_punishment_date='{$posts['mb_punishment_date']}'";
+    $row_sel_punish = sql_fetch($sql_punish_select);
+    //alert('성공 or 실패 '.$sql_punish_select);
+    if (isset($row_sel_punish['mb_id']) && $row_sel_punish['mb_id']){
+        alert('이미 존재하는 징계사항입니다.\\nＩＤ : '.$row_sel_punish['mb_id'].'\\n해심재결 해당여부 : '.$row_sel_punish['mb_applicable_or_not'].'\\n징계사항 : '.$row_sel_punish['mb_punishment'].'\\n징계 선고일: '.$row_sel_punish['mb_punishment_date']);
+    }
+    //징계사항은 수정이 없기 때문에 둘다 일 경우에도 진행되어야 한다.( 단 값이 있을 경우 에만)
+    if(isset($posts['mb_applicable_or_not']) && $posts['mb_applicable_or_not'] != '' && isset($posts['mb_punishment']) && $posts['mb_punishment'] && isset($posts['mb_punishment_date']) && $posts['mb_punishment_date']){
+        $sql_punish = " insert into {$g5['member_punishment']} set mb_id = '{$mb_id}', mb_applicable_or_not='{$posts['mb_applicable_or_not']}', mb_punishment='{$posts['mb_punishment']}', mb_punishment_date='{$posts['mb_punishment_date']}'";
+        $result_sql_punish = sql_query($sql_punish);
+        if(!$result_sql_punish){
+            alert('징계사항 정보 등록을 실패했습니다. 잠시 후에 시도해 주세요');
+        }
+    }
     $mb_dir = substr($mb_id,0,2);
     $mb_license_img = get_mb_icon_name($mb_id).'.gif';
 
@@ -244,9 +271,12 @@ if( $w == '' || $w == 'u' ){
     $mb_img_dir .= substr($mb_id,0,2);
 
     // 회원 이미지 삭제
-    if (isset($del_mb_img) && $del_mb_img)
+    if (isset($del_mb_img) && $del_mb_img){
         @unlink($mb_img_dir.'/'.$mb_license_img);
-
+        //폴더도 같이 삭제
+        if(is_dir($mb_img_dir))
+            @rmdir($mb_img_dir);
+    }
     // 회원 이미지 업로드
     if (isset($_FILES['mb_img']) && is_uploaded_file($_FILES['mb_img']['tmp_name'])) {
         if (!preg_match($image_regex, $_FILES['mb_img']['name'])) {
@@ -291,10 +321,13 @@ if( $w == '' || $w == 'u' ){
     $mb_license_dir .= substr($mb_id,0,2);
 
     // 면허사본 삭제
-    if (isset($del_mb_license) && $del_mb_license)
+    if (isset($del_mb_license) && $del_mb_license){
         @unlink($mb_license_dir.'/'.$mb_license_img);
-
-    // 아이콘 업로드
+        //폴더도 같이 삭제
+        if(is_dir($mb_license_dir))
+        @rmdir($mb_license_dir);
+    }
+    // 최신 면허 사본 업로드
     if (isset($_FILES['mb_license']) && is_uploaded_file($_FILES['mb_license']['tmp_name'])) {
         if (!preg_match($image_regex, $_FILES['mb_license']['name'])) {
             alert($_FILES['mb_license']['name'] . '은(는) 이미지 파일이 아닙니다.');

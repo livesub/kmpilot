@@ -17,6 +17,7 @@ $countgap = 10; // 몇건씩 보낼지 설정
 $maxscreen = 500; // 몇건씩 화면에 보여줄건지?
 $sleepsec = 200;  // 천분의 몇초간 쉴지 설정
 
+
 echo "<span style='font-size:9pt;'>";
 echo "<p>메일 발송중 ...<p><font color=crimson><b>[끝]</b></font> 이라는 단어가 나오기 전에는 중간에 중지하지 마세요.<p>";
 echo "</span>";
@@ -32,6 +33,24 @@ ob_flush();
 
 $ma_id = isset($_POST['ma_id']) ? (int) $_POST['ma_id'] : 0;
 $select_member_list = isset($_POST['ma_list']) ? trim($_POST['ma_list']) : '';
+
+if($select_member_list == ""){
+    //교육으로 들어 왔을 경우
+    $ma_list_edu = "";
+    $cr = "";
+    for ($i=0; $i<count($_POST['chk']); $i++)
+    {
+        $sql_edu = " select mb_id, mb_name, mb_email, mb_datetime from {$g5['member_table']} where mb_id = '{$_POST[chk][$i]}' ";
+        $result_edu = sql_query($sql_edu);
+        while ($row_edu=sql_fetch_array($result_edu)) {
+            $ma_list_edu .= $cr . $row_edu['mb_email'] . "||" . $row_edu['mb_id'] . "||" . get_text($row_edu['mb_name']) . "||" . $row_edu['mb_nick'] . "||" . $row_edu['mb_datetime'];
+            $cr = "\n";
+        }
+    }
+
+    $select_member_list = trim($ma_list_edu);
+}
+
 
 //print_r2($_POST); EXIT;
 $member_list = explode("\n", conv_unescape_nl($select_member_list));
@@ -57,11 +76,10 @@ for ($i=0; $i<count($member_list); $i++)
 
         $content = $ma['ma_content'];
         $content = preg_replace("/{이름}/", $name, $content);
-        //$content = preg_replace("/{닉네임}/", $nick, $content);
         $content = preg_replace("/{회원아이디}/", $mb_id, $content);
         $content = preg_replace("/{이메일}/", $to_email, $content);
 
-        $content = $content . "<hr size=0><p><span style='font-size:9pt; font-familye:굴림'>▶ 더 이상 정보 수신을 원치 않으시면 [<a href='".G5_BBS_URL."/email_stop.php?mb_id={$mb_id}&amp;mb_md5={$mb_md5}' target='_blank'>수신거부</a>] 해 주십시오.</span></p>";
+        //$content = $content . "<hr size=0><p><span style='font-size:9pt; font-familye:굴림'>▶ 더 이상 정보 수신을 원치 않으시면 [<a href='".G5_BBS_URL."/email_stop.php?mb_id={$mb_id}&amp;mb_md5={$mb_md5}' target='_blank'>수신거부</a>] 해 주십시오.</span></p>";
 
         mailer($config['cf_admin_email_name'], $config['cf_admin_email'], $to_email, $subject, $content, 1, $_FILES["files"]);
 
@@ -83,3 +101,7 @@ for ($i=0; $i<count($member_list); $i++)
 }
 ?>
 <script> document.all.cont.innerHTML += "<br><br>총 <?php echo number_format($cnt) ?>건 발송<br><br><font color=crimson><b>[끝]</b></font>"; document.body.scrollTop += 1000; </script>
+
+<div class="btn_fixed_top">
+    <a href="./mail_list.php" id="mail_add" class="btn btn_01">목록</a>
+</div>

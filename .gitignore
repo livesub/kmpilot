@@ -3,7 +3,13 @@ portal/install
 portal/data/session/
 portal/data/tmp/
 portal/data/cache/
+portal/data/editor/
 portal/data/log/
 portal/data/member_image/
 portal/data/file/
+portal/data/smsFile/
+edu/data/session
 edu/data/
+edu/config.php
+portal/config.php
+.vscode/

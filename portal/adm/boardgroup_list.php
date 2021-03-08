@@ -93,14 +93,16 @@ $colspan = 10;
             <label for="chkall" class="sound_only">그룹 전체</label>
             <input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
         </th>
+        <?php if($member['mb_level'] == 10){?>
         <th scope="col"><?php echo subject_sort_link('gr_id') ?>그룹아이디</a></th>
+        <?php }?>
         <th scope="col"><?php echo subject_sort_link('gr_subject') ?>제목</a></th>
-<!--        <th scope="col">--><?php //echo subject_sort_link('gr_admin') ?><!--그룹관리자</a></th>-->
+
         <th scope="col">게시판</th>
-        <th scope="col">접근<br>사용</th>
+
         <th scope="col">접근<br>회원수</th>
-<!--        <th scope="col">--><?php //echo subject_sort_link('gr_order') ?><!--출력<br>순서</a></th>-->
-        <th scope="col">접속기기</th>
+
+<!--        <th scope="col">접속기기</th>-->
         <th scope="col">관리</th>
     </tr>
     </thead>
@@ -127,7 +129,9 @@ $colspan = 10;
             <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo get_text($row['gr_subject']); ?> 그룹</label>
             <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>">
         </td>
+        <?php if($member['mb_level'] == 10){?>
         <td class="td_left"><a href="<?php echo G5_BBS_URL ?>/group.php?gr_id=<?php echo $row['gr_id'] ?>"><?php echo $row['gr_id'] ?></a></td>
+        <?php }?>
         <td class="td_input">
             <label for="gr_subject_<?php echo $i; ?>" class="sound_only">그룹제목</label>
             <input type="text" name="gr_subject[<?php echo $i ?>]" value="<?php echo get_text($row['gr_subject']) ?>" id="gr_subject_<?php echo $i ?>" class="tbl_input">
@@ -141,16 +145,16 @@ $colspan = 10;
 <!--        --><?php //} ?>
 <!--        </td>-->
         <td class="td_num"><a href="./board_list.php?sfl=a.gr_id&amp;stx=<?php echo $row['gr_id'] ?>"><?php echo $row2['cnt'] ?></a></td>
-        <td class="td_numsmall">
-             <label for="gr_use_access_<?php echo $i; ?>" class="sound_only">접근회원 사용</label>
-            <input type="checkbox" name="gr_use_access[<?php echo $i ?>]" <?php echo $row['gr_use_access']?'checked':'' ?> value="1" id="gr_use_access_<?php echo $i ?>">
-        </td>
+<!--        <td class="td_numsmall">-->
+<!--             <label for="gr_use_access_--><?php //echo $i; ?><!--" class="sound_only">접근회원 사용</label>-->
+<!--            <input type="checkbox" name="gr_use_access[--><?php //echo $i ?><!--]" --><?php //echo $row['gr_use_access']?'checked':'' ?><!-- value="1" id="gr_use_access_--><?php //echo $i ?><!--">-->
+<!--        </td>-->
         <td class="td_num"><a href="./boardgroupmember_list.php?gr_id=<?php echo $row['gr_id'] ?>"><?php echo $row1['cnt'] ?></a></td>
 <!--        <td class="td_numsmall">-->
 <!--            <label for="gr_order_--><?php //echo $i; ?><!--" class="sound_only">메인메뉴 출력순서</label>-->
 <!--            <input type="text" name="gr_order[--><?php //echo $i ?><!--]" value="--><?php //echo $row['gr_order'] ?><!--" id="gr_order_--><?php //echo $i ?><!--" class="tbl_input" size="2">-->
 <!--        </td>-->
-        <td class="td_mng">
+       <!-- <td class="td_mng">
             <label for="gr_device_<?php echo $i; ?>" class="sound_only">접속기기</label>
             <select name="gr_device[<?php echo $i ?>]" id="gr_device_<?php echo $i ?>">
                 <option value="both"<?php echo get_selected($row['gr_device'], 'both'); ?>>모두</option>
@@ -158,6 +162,7 @@ $colspan = 10;
                 <option value="mobile"<?php echo get_selected($row['gr_device'], 'mobile'); ?>>모바일</option>
             </select>
         </td>
+        -->
         <td class="td_mng td_mng_s"><?php echo $s_upd ?></td>
     </tr>
 
@@ -172,15 +177,17 @@ $colspan = 10;
 <div class="btn_fixed_top">
     <input type="submit" name="act_button" onclick="document.pressed=this.value" value="선택수정" class="btn btn_02">
     <input type="submit" name="act_button" onclick="document.pressed=this.value" value="선택삭제" class="btn btn_02">
+    <?php if($member['mb_id'] == 'yongsanzip'){?>
     <a href="./boardgroup_form.php" class="btn btn_01">게시판그룹 추가</a>
+    <?php }?>
 </div>
 </form>
 
 <div class="local_desc01 local_desc">
-    <p>
-        접근사용 옵션을 설정하시면 관리자가 지정한 회원만 해당 그룹에 접근할 수 있습니다.<br>
-        접근사용 옵션은 해당 그룹에 속한 모든 게시판에 적용됩니다.
-    </p>
+<!--    <p>-->
+<!--        접근사용 옵션을 설정하시면 관리자가 지정한 회원만 해당 그룹에 접근할 수 있습니다.<br>-->
+<!--        접근사용 옵션은 해당 그룹에 속한 모든 게시판에 적용됩니다.-->
+<!--    </p>-->
 </div>
 
 <?php

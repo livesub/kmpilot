@@ -4,8 +4,8 @@
     상수 선언
 ********************/
 
-define('G5_VERSION', '그누보드5');
-define('G5_GNUBOARD_VER', '5.4.4.3');
+define('G5_VERSION', '한국도선사협회');
+define('G5_GNUBOARD_VER', '');
 
 // 이 상수가 정의되지 않으면 각각의 개별 페이지는 별도로 실행될 수 없음
 define('_GNUBOARD_', true);
@@ -75,10 +75,15 @@ define('G5_CONTENT_DIR',    'content');
 if (G5_DOMAIN) {
     define('G5_URL', G5_DOMAIN);
 } else {
-    if (isset($g5_path['url']))
+    if (isset($g5_path['url'])){
         define('G5_URL', $g5_path['url']);
-    else
+        define('G5_URL_EN', $g5_path['url'].'_en');
+    }
+    else{
         define('G5_URL', '');
+        define('G5_URL_EN', '');
+    }
+
 }
 
 if (isset($g5_path['path'])) {
@@ -224,7 +229,8 @@ define('G5_THUMB_JPG_QUALITY', 90);
 define('G5_THUMB_PNG_COMPRESS', 5);
 
 // 모바일 기기에서 DHTML 에디터 사용여부를 설정합니다.
-define('G5_IS_MOBILE_DHTML_USE', false);
+//define('G5_IS_MOBILE_DHTML_USE', false);
+define('G5_IS_MOBILE_DHTML_USE', true);
 
 // MySQLi 사용여부를 설정합니다.
 define('G5_MYSQLI_USE', true);
@@ -250,5 +256,9 @@ if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') {   //https 통신일때
 }
 
 //메인 이미지 사이즈 강제 정의
-define('G5_MAIN_IMG_WIDTH', '500');
-define('G5_MAIN_IMG_HEIGHT', '500');
+define('G5_MAIN_IMG_WIDTH', '1920');
+define('G5_MAIN_IMG_HEIGHT', '980');
+
+define('G5_YELLOWID_KEY', '78f24ac95be220e45f9c7b0a7dd4d42d0c7c6dcd');  //발신프로필키(40 자)
+
+define('EDU_URL_PATH', 'http://localhost/edu/skin');

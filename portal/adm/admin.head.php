@@ -107,12 +107,15 @@ function imageview(id, w, h)
     <h1><?php echo $config['cf_title'] ?></h1>
     <div id="hd_top">
         <button type="button" id="btn_gnb" class="btn_gnb_close <?php echo $adm_menu_cookie['btn_gnb'];?>">메뉴</button>
+        <?php if($member['mb_level'] == 9 || $member['mb_level'] == 10) {?>
        <div id="logo"><a href="<?php echo correct_goto_url(G5_ADMIN_URL); ?>"><img src="<?php echo G5_ADMIN_URL ?>/img/logo.png" alt="<?php echo get_text($config['cf_title']); ?> 관리자"></a></div>
-
+        <?php }else{ ?>
+        <div id="logo"><a href="<?php echo correct_goto_url(G5_ADMIN_URL.'/member_list.php'); ?>" style="font-size: 20px"><?=get_doseongu_name($member['mb_doseongu'])?> 회원 정보 </a></div>
+        <?php } ?>
         <div id="tnb">
             <ul>
                 <li class="tnb_li"><a href="<?php echo G5_URL ?>/" class="tnb_community" target="_blank" title="커뮤니티 바로가기">커뮤니티 바로가기</a></li>
-                <li class="tnb_li"><a href="<?php echo G5_ADMIN_URL ?>/service.php" class="tnb_service">부가서비스</a></li>
+<!--                <li class="tnb_li"><a href="--><?php //echo G5_ADMIN_URL ?><!--/service.php" class="tnb_service">부가서비스</a></li>-->
                 <li class="tnb_li"><button type="button" class="tnb_mb_btn">관리자<span class="./img/btn_gnb.png">메뉴열기</span></button>
                     <ul class="tnb_mb_area">
                         <li><a href="<?php echo G5_ADMIN_URL ?>/member_form.php?w=u&amp;mb_id=<?php echo $member['mb_id'] ?>">관리자정보</a></li>

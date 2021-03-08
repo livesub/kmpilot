@@ -333,7 +333,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
         </tr>
         <tr>
             <th scope="row"><label for="cf_admin">최고관리자<strong class="sound_only">필수</strong></label></th>
-            <td colspan="3"><?php echo get_member_id_select('cf_admin', 10, $config['cf_admin'], 'required') ?></td>
+            <td colspan="3"><?php echo get_member_id_select('cf_admin', 9, $config['cf_admin'], 'required') ?></td>
         </tr>
         <tr>
             <th scope="row"><label for="cf_admin_email">관리자 메일 주소<strong class="sound_only">필수</strong></label></th>
@@ -753,14 +753,14 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
             <td><?php echo get_member_level_select('cf_icon_level', 1, 9, $config['cf_icon_level']) ?> 이상</td>
         </tr>
         <tr>
-            <th scope="row"><label for="cf_member_icon_size">회원아이콘 용량</label></th>
+            <th scope="row"><label for="cf_member_icon_size">최신면허사본 용량</label></th>
             <td><input type="text" name="cf_member_icon_size" value="<?php echo $config['cf_member_icon_size'] ?>" id="cf_member_icon_size" class="frm_input" size="10"> 바이트 이하</td>
-            <th scope="row">회원아이콘 사이즈</th>
+            <th scope="row">최신면허사본 사이즈</th>
             <td>
                 <label for="cf_member_icon_width">가로</label>
-                <input type="text" name="cf_member_icon_width" value="<?php echo $config['cf_member_icon_width'] ?>" id="cf_member_icon_width" class="frm_input" size="2">
+                <input type="text" name="cf_member_icon_width" value="<?php echo $config['cf_member_icon_width'] ?>" id="cf_member_icon_width" class="frm_input" size="5">
                 <label for="cf_member_icon_height">세로</label>
-                <input type="text" name="cf_member_icon_height" value="<?php echo $config['cf_member_icon_height'] ?>" id="cf_member_icon_height" class="frm_input" size="2">
+                <input type="text" name="cf_member_icon_height" value="<?php echo $config['cf_member_icon_height'] ?>" id="cf_member_icon_height" class="frm_input" size="5">
                 픽셀 이하
             </td>
         </tr>
@@ -770,9 +770,9 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
             <th scope="row">회원이미지 사이즈</th>
             <td>
                 <label for="cf_member_img_width">가로</label>
-                <input type="text" name="cf_member_img_width" value="<?php echo $config['cf_member_img_width'] ?>" id="cf_member_img_width" class="frm_input" size="2">
+                <input type="text" name="cf_member_img_width" value="<?php echo $config['cf_member_img_width'] ?>" id="cf_member_img_width" class="frm_input" size="5">
                 <label for="cf_member_img_height">세로</label>
-                <input type="text" name="cf_member_img_height" value="<?php echo $config['cf_member_img_height'] ?>" id="cf_member_img_height" class="frm_input" size="2">
+                <input type="text" name="cf_member_img_height" value="<?php echo $config['cf_member_img_height'] ?>" id="cf_member_img_height" class="frm_input" size="5">
                 픽셀 이하
             </td>
         </tr>

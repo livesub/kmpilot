@@ -210,8 +210,8 @@ $pg_anchor = '<ul class="anchor">
     <li><a href="#anc_bo_auth">권한 설정</a></li>
     <li><a href="#anc_bo_function">기능 설정</a></li>
     <li><a href="#anc_bo_design">디자인/양식</a></li>
-    
-    
+
+
 </ul>';
 //<li><a href="#anc_bo_point">포인트 설정</a></li>
 //<li><a href="#anc_bo_extra">여분필드</a></li> 위 빈칸에  추가시 화면에 표시된다.
@@ -264,30 +264,7 @@ $pg_anchor = '<ul class="anchor">
                 <input type="text" name="bo_subject" value="<?php echo get_text($board['bo_subject']) ?>" id="bo_subject" required class="required frm_input" size="80" maxlength="120">
             </td>
         </tr>
-        <tr>
-            <th scope="row"><label for="bo_mobile_subject">모바일 게시판 제목</label></th>
-            <td colspan="2">
-                <?php echo help("모바일에서 보여지는 게시판 제목이 다른 경우에 입력합니다. 입력이 없으면 기본 게시판 제목이 출력됩니다.") ?>
-                <input type="text" name="bo_mobile_subject" value="<?php echo get_text($board['bo_mobile_subject']) ?>" id="bo_mobile_subject" class="frm_input" size="80" maxlength="120">
-            </td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="bo_device">접속기기</label></th>
-            <td>
-                <?php echo help("PC 와 모바일 사용을 구분합니다.") ?>
-                <select id="bo_device" name="bo_device">
-                    <option value="both"<?php echo get_selected($board['bo_device'], 'both'); ?>>PC와 모바일에서 모두 사용</option>
-                    <option value="pc"<?php echo get_selected($board['bo_device'], 'pc'); ?>>PC 전용</option>
-                    <option value="mobile"<?php echo get_selected($board['bo_device'], 'mobile'); ?>>모바일 전용</option>
-                </select>
-            </td>
-            <td class="td_grpset">
-                <input type="checkbox" name="chk_grp_device" value="1" id="chk_grp_device">
-                <label for="chk_grp_device">그룹적용</label>
-                <input type="checkbox" name="chk_all_device" value="1" id="chk_all_device">
-                <label for="chk_all_device">전체적용</label>
-            </td>
-        </tr>
+
         <tr>
             <th scope="row"><label for="bo_category_list">분류</label></th>
             <td>
@@ -498,6 +475,7 @@ $pg_anchor = '<ul class="anchor">
                 <label for="chk_all_count_delete">전체적용</label>
             </td>
         </tr>
+<!--
         <tr>
             <th scope="row"><label for="bo_use_sideview">글쓴이 사이드뷰</label></th>
             <td>
@@ -511,6 +489,7 @@ $pg_anchor = '<ul class="anchor">
                 <label for="chk_all_use_sideview">전체적용</label>
             </td>
         </tr>
+-->
         <tr>
             <th scope="row"><label for="bo_use_secret">비밀글 사용</label></th>
             <td>
@@ -542,6 +521,7 @@ $pg_anchor = '<ul class="anchor">
                 <label for="chk_all_use_dhtml_editor">전체적용</label>
             </td>
         </tr>
+
         <tr>
             <th scope="row"><label for="bo_select_editor">게시판 에디터 선택</label></th>
             <td>
@@ -1197,7 +1177,7 @@ $pg_anchor = '<ul class="anchor">
                 <?php echo help('리스트에서 기본으로 정렬에 사용할 필드를 선택합니다. "기본"으로 사용하지 않으시는 경우 속도가 느려질 수 있습니다.') ?>
                 <select id="bo_sort_field" name="bo_sort_field">
                     <?php foreach( get_board_sort_fields($board) as $v ){
-                        
+
                         $option_value = $order_by_str = $v[0];
                         if( $v[0] === 'wr_num, wr_reply' ){
                             $selected = (! $board['bo_sort_field']) ? 'selected="selected"' : '';
@@ -1205,7 +1185,7 @@ $pg_anchor = '<ul class="anchor">
                         } else {
                             $selected = ($board['bo_sort_field'] === $v[0]) ? 'selected="selected"' : '';
                         }
-                        
+
                         if( $order_by_str !== 'wr_num, wr_reply' ){
                             $tmp = explode(',', $v[0]);
                             $order_by_str = $tmp[0];

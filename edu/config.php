@@ -4,8 +4,8 @@
     상수 선언
 ********************/
 
-define('G5_VERSION', '그누보드5');
-define('G5_GNUBOARD_VER', '5.4.4.3');
+define('G5_VERSION', '한국도선사협회');
+define('G5_GNUBOARD_VER', '');
 
 // 이 상수가 정의되지 않으면 각각의 개별 페이지는 별도로 실행될 수 없음
 define('_GNUBOARD_', true);
@@ -19,6 +19,8 @@ date_default_timezone_set("Asia/Seoul");
 //다른 디랙토리에 data 디렉토리(첨부파일) 을 portal/data ㅇ에서 같이 쓰기 위해 강제로 쎄팅
 define('PORTAL_DATA_URL', 'http://localhost/portal/data');
 define('PORTAL_DATA_PATH', '/var/www/html/portal/data');
+//다른 디렉토리에서 lib디렉토리 를 edu에서도 같이 쓰기 위해 설정
+define('PORTAL_LIB_PATH', '/var/www/html/portal/lib');
 
 
 
@@ -144,7 +146,7 @@ define('G5_PHPMAILER_PATH', G5_PLUGIN_PATH.'/'.G5_PHPMAILER_DIR);
 //------------------------------------------------------------------------------
 define('G5_SET_DEVICE', 'both');
 
-define('G5_USE_MOBILE', true); // 모바일 홈페이지를 사용하지 않을 경우 false 로 설정
+define('G5_USE_MOBILE', false); // 모바일 홈페이지를 사용하지 않을 경우 false 로 설정
 define('G5_USE_CACHE',  true); // 최신글등에 cache 기능 사용 여부
 
 

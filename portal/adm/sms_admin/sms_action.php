@@ -1,6 +1,7 @@
 <?php
 include_once("./_common.php");
 //require_once(G5_ADMIN_PATH."/sms_admin/lib/class.WebApp.php");
+include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 require_once(G5_ADMIN_PATH."/sms_admin/lib/class.SURESMS.php");
 include_once(G5_ADMIN_PATH."/sms_admin/lib/lib.file.php");
 
@@ -35,6 +36,7 @@ switch($_POST['mode']){
                 $_where[] = "mb_hp like '%".trim($_POST["addr_sw"])."%' OR mb_name like '%".trim($_POST["addr_sw"])."%'";
             }
 		}
+
 		if($_POST['addr_group_type']=="B"){
 /*
 			$_where[] = "trim(M.USER_ID)=trim(MB.USERID)";
@@ -42,9 +44,10 @@ switch($_POST['mode']){
 
             $qry_table = $MEM->_Tables["member"]." M,(SELECT USERID,USER_GROUPID from ".$MEM->_Tables["membership"].") MB";
 */
+		}if($_POST['addr_group_type']=="E"){
+
 		}else{
 			if($_POST['addr_group']){
-
 				//$_where[] = "gr_id = '".$_POST['addr_group']."'";
 			}
 			$qry_table = $MEM->_Tables["member"];
@@ -56,13 +59,13 @@ switch($_POST['mode']){
 
         //그룹으로 들어 왔을 경우
         if($_POST['addr_group_type']=="G"){
-
             if (count($_where) > 0){
                 $_where = " (a.mb_hp like '%".trim($_POST["addr_sw"])."%' OR a.mb_name like '%".trim($_POST["addr_sw"])."%')";
                 $retValue = " and ".$_where;
             }
 
-            $result = sql_query(" select a.mb_no as mb_no, a.mb_name as mb_name, a.mb_hp as mb_hp from {$g5['member_table']} a INNER JOIN {$g5['group_member_table']} b ON a.mb_id = b.mb_id and b.gr_id='{$_POST[addr_group]}' and mb_hp != '' ".$retValue." ORDER BY mb_no desc ");
+			$result = sql_query(" select a.mb_no as mb_no, a.mb_name as mb_name, a.mb_hp as mb_hp from {$g5['member_table']} a INNER JOIN {$g5['group_member_table']} b ON a.mb_id = b.mb_id and b.gr_id='{$_POST[addr_group]}' and mb_hp != '' ".$retValue." ORDER BY mb_no desc ");
+
             while($row = sql_fetch_array($result)){
                 $get_list[] = $row;
             }
@@ -79,8 +82,20 @@ switch($_POST['mode']){
                 $get_list[] = $row;
             }
 
-        }else{
-			$result = sql_query("select * from {$g5['member_table']}  where  ".$retValue." and mb_hp != '' ORDER BY mb_no desc ");
+		}else if($_POST['addr_group_type']=="E"){
+            if (count($_where) > 0){
+                $_where = " (a.mb_hp like '%".trim($_POST["addr_sw"])."%' OR a.mb_name like '%".trim($_POST["addr_sw"])."%')";
+                $retValue = " and ".$_where;
+            }
+
+			$result = sql_query(" select a.mb_no as mb_no, a.mb_name as mb_name, a.mb_hp as mb_hp,b.lecture_completion_status from {$g5['member_table']} a INNER JOIN kmp_pilot_edu_apply b ON a.mb_id = b.mb_id and b.edu_idx ='{$_POST[addr_group]}' and b.apply_cancel = 'N' and mb_hp != '' ".$retValue." ORDER BY mb_no desc ");
+
+            while($row = sql_fetch_array($result)){
+                $get_list[] = $row;
+            }
+
+		}else{
+			$result = sql_query("select * from {$g5['member_table']}  ".$retValue." and mb_hp != '' ORDER BY mb_no desc ");
             while($row = sql_fetch_array($result)){
                 $get_list[] = $row;
             }
@@ -89,8 +104,13 @@ switch($_POST['mode']){
 		$mList = $get_list;
 		print "{\"count\":".count($mList).",\"list\":[";
 		foreach($mList as $_idx=>$_list){
+			$st_ment = "";
+			if($_POST['addr_group_type']=="E"){
+				if($_list['lecture_completion_status'] == "N") $st_ment = "(미수료)";
+				else $st_ment = "(수료)";
+			}
             //$_xml[] = '{"m_id":"'.$_list['USER_ID'].'","m_name":"'.$_list['USER_NAME'].'","m_key":"'.$_list['USER_KEY'].'","m_idx":"'.$_list['IDX'].'","m_phone":"'.$_list['USER_MOBILE'].'"}';
-            $_xml[] = '{"mb_id":"'.$_list['mb_id'].'","mb_name":"'.$_list['mb_name'].'","mb_no":"'.$_list['mb_no'].'","mb_hp":"'.$_list['mb_hp'].'"}';
+            $_xml[] = '{"mb_id":"'.$_list['mb_id'].'","mb_name":"'.$_list['mb_name'].$st_ment.'","mb_no":"'.$_list['mb_no'].'","mb_hp":"'.$_list['mb_hp'].'"}';
 		}
 		print @implode(",",$_xml);
 		print "]}";
@@ -133,13 +153,16 @@ switch($_POST['mode']){
 
     //교육 리스트
 	case "edu_addr":
-        print "{\"count\":12,\"list\":[";
+		$result = sql_query(" select * from kmp_pilot_edu_list where edu_del_type = 'N' and edu_cal_start like '%{$_POST['now_year']}%' ");
 
-        $eduList = array(1 => "부산항도선사회");
-        $edu_apply_count = 0;
-        $ment = "교육명들어감";
+        while($row = sql_fetch_array($result)){
+            $eduList[] = $row;
+        }
+		print "{\"count\":".count($eduList).",\"list\":[";
 		foreach($eduList as $_idx=>$_list){
-            $_xml[] = '{"edu_key":"'.$_idx.'","edu_name":"'.$ment.'","edu_count":"'.$edu_apply_count.'"}';
+            $row_apply = sql_fetch(" select count(*) as cnt from kmp_pilot_edu_apply where edu_idx = '{$_list['edu_idx']}' and edu_type = '{$_list['edu_type']}' and apply_cancel = 'N' ");
+            $apply_cnt = $row_apply['cnt'];
+            $_xml[] = '{"edu_idx":"'.$_list['edu_idx'].'","edu_name_kr":"'.$_list['edu_name_kr'].'","apply_cnt":"'.$apply_cnt.'"}';
 		}
 		print @implode(",",$_xml);
 		print "]}";
@@ -171,18 +194,11 @@ switch($_POST['mode']){
 		print "]}";
 		exit;
 	break;
+
 	case "send_sms":
 		$result = $SMS->send_mobile($_POST);
-		alert("발송되었습니다.","sms_write.php");
-/*
-		if($result == "" || $result == 0){
-			alert("발송에 실패 하였습니다.");
-			exit;
-		}else{
-			alert("발송되었습니다.","sms_write.php");
-			exit;
-		}
-*/
+		echo "<script>alert('발송되었습니다.'); parent.document.location.reload(); </script>";
+		exit;
 	break;
 
 	case "config_modify":
@@ -234,11 +250,31 @@ switch($_POST['mode']){
 			exit;
 		}
 		break;
+
+		case "up_img_kakao":
+			$result = $SMS->up_img_kakao($_FILES);
+			if(is_file($result['pathFile'])){
+				echo "<script type=\"text/javascript\">";
+				echo "window.parent.imageProcFunc('".$result['pathFile']."','".$result['fileName']."','".$result['fileFolder']."','".G5_DATA_URL."');";
+				echo "</script>";
+				exit;
+			}else{
+				//$Wapp->alertReload("등록 파일이 없습니다.","top");
+				alert("등록 파일이 없습니다.");
+				exit;
+			}
+			break;
+
 	case "del_img":
 		$result = $SMS->delete_sms_img($_POST);
 		print "{\"count\":".$result."}";
 		exit;
 		break;
+
+	case "kakao":
+		$result = $SMS->send_kakao($_POST);
+		alert("발송되었습니다.","kakao_write.php");
+	break;
 }
 
 ?>

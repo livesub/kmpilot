@@ -1,10 +1,14 @@
 $(document).ready(function(){
 	$("#s_message").focus();
 });
+
 $(function(){
 	/* 전역 변수 선언 */
-	var global_msg_flag = "sms";
-
+	if($("#mode").val() == "kakao"){
+		var global_msg_flag = "kakao";
+	}else{
+		var global_msg_flag = "sms";
+	}
 	/* 기능함수 모음 */
 	// 1. checklen() - sms/lms/mms 메세지 길이 체크 함수
 	// 2. checklen_mms() - lms/mms 메세지 길이 체크 함수
@@ -45,6 +49,31 @@ $(function(){
                 $("#max_len").text(limit_len);
             }
 		}else if (tmp_num > limit_len){
+			tmp_num = 0;
+			alert("최대 전송 메시지 길이를 초과하였습니다.");
+			var remsg = txtmsg.substring(0,str_len);
+			$("#s_message").val(remsg);
+			for(tmp_num=i=0; c=remsg.charCodeAt(i++); tmp_num+=c>>11?2:c>>7?2:1);
+		}
+		$("#msglen").text(tmp_num);
+	}
+
+	function kakao_checklen(){
+		var txtmsg = $("#s_message").val();
+		var msglength = txtmsg.length;
+		var tmp_num = 0;
+		var str_len = 0;
+		var sms_len = 400;
+		var limit_len = 400;
+
+		for(tmp_num=i=0; c=txtmsg.charCodeAt(i++); tmp_num+=c>>11?2:c>>7?2:1){
+			if (tmp_num<=limit_len)
+			{
+				str_len = i-1;
+			}
+		}
+
+		if (tmp_num > limit_len){
 			tmp_num = 0;
 			alert("최대 전송 메시지 길이를 초과하였습니다.");
 			var remsg = txtmsg.substring(0,str_len);
@@ -184,6 +213,8 @@ $(function(){
 			checklen();
 		}else if (global_msg_flag=="mms"){
 			checklen_mms();
+		}else if (global_msg_flag=="kakao"){
+			kakao_checklen();
 		}
 	});
 
@@ -239,12 +270,19 @@ $(function(){
 	});
 	//이미지 선택시
 	$("input:file").change(function(){
-
 		if ($(this).attr("id") == "img1"){
-			if (parseInt($("#s_filecnt").val()) == 2){
-				alert("이미지는 최대 2개까지 첨부 가능합니다.");
-				$(".ly-mms-file").css("display","none");
-				return false;
+			if($("#type_page").val() == "kakao"){
+				if (parseInt($("#s_filecnt").val()) == 1){
+					alert("이미지는 1개 첨부 가능합니다.");
+					$(".ly-mms-file").css("display","none");
+					return false;
+				}
+			}else{
+				if (parseInt($("#s_filecnt").val()) == 2){
+					alert("이미지는 최대 2개까지 첨부 가능합니다.");
+					$(".ly-mms-file").css("display","none");
+					return false;
+				}
 			}
 			$("form[name=upload_form]").attr("target","hiddenframe");
 			$("form[name=upload_form]").submit();
@@ -254,8 +292,14 @@ $(function(){
 	// 이미지 체인지
 	$(document).change("#s_filecnt",function(){
 		var filecnt = $("#s_filecnt").val();
-		var limit_len = 2000;
-		var sms_len = 90;
+		if($("#mode").val() == "kakao"){
+			var limit_len = 1000;
+			var sms_len = 1000;
+		}else{
+			var limit_len = 2000;
+			var sms_len = 90;
+		}
+
 		if (filecnt > 0){
 			$("#add_img_box").css("display","block");
 			if ($("#s_msgflag").val() == "sms"){
@@ -266,15 +310,21 @@ $(function(){
 			global_msg_flag = "mms";
 			checklen_mms();
 		}else if (filecnt == 0){
-			$("#add_img_box").css("display","none");
-			if ($("#s_msgflag").val() == "mms"){
-				$("#visualphone-wrap").css("background-position","0px 0px");
-                $("#s_title").val("");
-                $("#max_len").text(sms_len);
-                $("#s_msgflag").val("sms");
-            }
-			global_msg_flag = "sms";
-			checklen();
+			if($("#mode").val() != "kakao"){
+				$("#add_img_box").css("display","none");
+				if ($("#s_msgflag").val() == "mms"){
+					$("#visualphone-wrap").css("background-position","0px 0px");
+					$("#s_title").val("");
+					$("#max_len").text(sms_len);
+					$("#s_msgflag").val("sms");
+				}
+				global_msg_flag = "sms";
+				checklen();
+			}else{
+				$("#max_len").text(sms_len);
+				global_msg_flag = "kakao";
+				kakao_checklen();
+			}
 		}
 	});
 	//이미지 삭제
@@ -314,8 +364,10 @@ $(function(){
 				var bind_results = $.parseJSON(data);
 				if(bind_results.count > 0){
 					alert('삭제할 이미지가 없습니다.');
+					location.reload();
 				}else{
 					alert('삭제 되었습니다.');
+					location.reload();
 				}
 			}
 		});
@@ -329,6 +381,9 @@ $(function(){
 		}else if (global_msg_flag=="mms")
 		{
 			checklen_mms();
+		}else if(global_msg_flag=="kakao")
+		{
+			kakao_checklen();
 		}
 	});
 	//특수문자

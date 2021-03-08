@@ -19,8 +19,8 @@ function valid_mb_id($reg_mb_id)
 
 function count_mb_id($reg_mb_id)
 {
-    if (strlen($reg_mb_id) < 3)
-        return "회원아이디는 최소 3글자 이상 입력하세요.";
+    if (strlen($reg_mb_id) < 2)
+        return "회원아이디는 최소 2글자 이상 입력하세요.";
     else
         return "";
 }

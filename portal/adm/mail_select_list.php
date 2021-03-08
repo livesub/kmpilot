@@ -36,7 +36,7 @@ if ($gr_id) {
     }
 
     if (!$group_member)
-        alert('선택하신 게시판 그룹회원이 한명도 없습니다.');
+        alert('선택하신 그룹회원이 한명도 없습니다.');
 
     $sql_where .= " and mb_id in ($group_member) ";
 }
@@ -78,7 +78,7 @@ include_once('./admin.head.php');
         <th scope="col">번호</th>
         <th scope="col">회원아이디</th>
         <th scope="col">이름</th>
-        <th scope="col">닉네임</th>
+<!--        <th scope="col">닉네임</th>-->
         <th scope="col">E-mail</th>
     </tr>
     </thead>
@@ -93,14 +93,13 @@ include_once('./admin.head.php');
         $i++;
         $ma_list .= $cr . $row['mb_email'] . "||" . $row['mb_id'] . "||" . get_text($row['mb_name']) . "||" . $row['mb_nick'] . "||" . $row['mb_datetime'];
         $cr = "\n";
-
         $bg = 'bg'.($i%2);
     ?>
     <tr class="<?php echo $bg; ?>">
         <td class="td_num"><?php echo $i ?></td>
         <td class="td_mbid"><?php echo $row['mb_id'] ?></td>
         <td class="td_mbname"><?php echo get_text($row['mb_name']); ?></td>
-        <td class="td_mbname"><?php echo $row['mb_nick'] ?></td>
+<!--        <td class="td_mbname">--><?php //echo $row['mb_nick'] ?><!--</td>-->
         <td><?php echo $row['mb_email'] ?></td>
     </tr>
     <?php } ?>

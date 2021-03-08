@@ -94,17 +94,17 @@ $colspan = 15;
         </th>
         <th scope="col"><?php echo subject_sort_link('a.gr_id') ?>그룹</a></th>
         <th scope="col"><?php echo subject_sort_link('bo_table') ?>TABLE</a></th>
-<!--        <th scope="col">--><?php //echo subject_sort_link('bo_skin', '', 'desc') ?><!--스킨</a></th>-->
-<!--        <th scope="col">--><?php //echo subject_sort_link('bo_mobile_skin', '', 'desc') ?><!--모바일<br>스킨</a></th>-->
+<!--        <th scope="col">--><?php //echo subject_sort_link('bo_skin', '', 'desc') ?><!--스킨</a></th>
+       <th scope="col">--><?php //echo subject_sort_link('bo_mobile_skin', '', 'desc') ?><!--모바일<br>스킨</a></th>-->
         <th scope="col"><?php echo subject_sort_link('bo_subject') ?>제목</a></th>
-<!--        <th scope="col">읽기P<span class="sound_only">포인트</span></th>-->
-<!--        <th scope="col">쓰기P<span class="sound_only">포인트</span></th>-->
-<!--        <th scope="col">댓글P<span class="sound_only">포인트</span></th>-->
-<!--        <th scope="col">다운P<span class="sound_only">포인트</span></th>-->
-<!--        <th scope="col">--><?php //echo subject_sort_link('bo_use_sns') ?><!--SNS<br>사용</a></th>-->
+<!--        <th scope="col">읽기P<span class="sound_only">포인트</span></th>
+       <th scope="col">쓰기P<span class="sound_only">포인트</span></th>
+       <th scope="col">댓글P<span class="sound_only">포인트</span></th>
+      <th scope="col">다운P<span class="sound_only">포인트</span></th>
+       <th scope="col">--><?php //echo subject_sort_link('bo_use_sns') ?><!--SNS<br>사용</a></th>-->
         <th scope="col"><?php echo subject_sort_link('bo_use_search') ?>검색<br>사용</a></th>
-<!--        <th scope="col">--><?php //echo subject_sort_link('bo_order') ?><!--출력<br>순서</a></th>-->
-        <th scope="col">접속기기</th>
+<!--        <th scope="col">--><?php //echo subject_sort_link('bo_order') ?><!--출력<br>순서</a></th>
+            <th scope="col">접속기기</th>-->
         <th scope="col">관리</th>
     </tr>
     </thead>
@@ -163,7 +163,8 @@ $colspan = 15;
 <!--        </td>-->
 <!--        <td class="td_numsmall">-->
 <!--            <label for="bo_use_sns_--><?php //echo $i; ?><!--" class="sound_only">SNS<br>사용</label>-->
-<!--            <input type="checkbox" name="bo_use_sns[--><?php //echo $i ?><!--]" value="1" id="bo_use_sns_--><?php //echo $i ?><!--" --><?php //echo $row['bo_use_sns']?"checked":"" ?><!---->
+<!--            <input type="checkbox" name="bo_use_sns[--><?php //echo $i ?><!--]" value="1" id="bo_use_sns_--><?php //echo $i ?><!--" --><?php //echo $row['bo_use_sns']?"checked":"" ?><!-- >-->
+
 <!--        </td>-->
         <td class="td_numsmall">
             <label for="bo_use_search_<?php echo $i; ?>" class="sound_only">검색<br>사용</label>
@@ -173,14 +174,14 @@ $colspan = 15;
 <!--            <label for="bo_order_--><?php //echo $i; ?><!--" class="sound_only">출력<br>순서</label>-->
 <!--            <input type="text" name="bo_order[--><?php //echo $i ?><!--]" value="--><?php //echo $row['bo_order'] ?><!--" id="bo_order_--><?php //echo $i ?><!--" class="tbl_input" size="2">-->
 <!--        </td>-->
-        <td class="td_mngsmall">
-            <label for="bo_device_<?php echo $i; ?>" class="sound_only">접속기기</label>
-            <select name="bo_device[<?php echo $i ?>]" id="bo_device_<?php echo $i ?>">
-                <option value="both"<?php echo get_selected($row['bo_device'], 'both', true); ?>>모두</option>
-                <option value="pc"<?php echo get_selected($row['bo_device'], 'pc'); ?>>PC</option>
-                <option value="mobile"<?php echo get_selected($row['bo_device'], 'mobile'); ?>>모바일</option>
-            </select>
-        </td>
+<!--        <td class="td_mngsmall">-->
+<!--            <label for="bo_device_--><?php //echo $i; ?><!--" class="sound_only">접속기기</label>-->
+<!--            <select name="bo_device[--><?php //echo $i ?><!--]" id="bo_device_--><?php //echo $i ?><!--">-->
+<!--                <option value="both"--><?php //echo get_selected($row['bo_device'], 'both', true); ?><!-- >모두</option>-->
+<!--                <option value="pc"--><?php //echo get_selected($row['bo_device'], 'pc'); ?><!-- >PC</option>-->
+<!--                <option value="mobile"--><?php //echo get_selected($row['bo_device'], 'mobile'); ?><!-- >모바일</option>
+            </select>-->
+<!--        </td>-->
         <td class="td_mng td_mng_m">
             <?php echo $one_update ?>
             <?php echo $one_copy ?>

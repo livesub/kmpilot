@@ -24,27 +24,27 @@ function mailer($fname, $fmail, $to, $subject, $content, $type=0, $file="", $cc=
 //            $mail->Port = G5_SMTP_PORT;
 //    }
     //구글 이용 시 메일 사항 주석제거후 사용
-    if(defined('G5_SMTP_GOOGLE') && G5_SMTP_GOOGLE){
-        $mail->IsSMTP();
-        $mail->SMTPSecure = "ssl";
-        $mail->SMTPAuth = true;
-        $mail->Host = G5_SMTP_GOOGLE;
-        if(defined('G5_SMTP_GOOGLE_PORT') && G5_SMTP_GOOGLE_PORT)
-        $mail->Port = G5_SMTP_GOOGLE_PORT;
-        $mail->Username = G5_GOOGLE_ID;
-        $mail->Password = G5_GOOGLE_PASSWORD;
-    }
-    //네이버 이용 시 주석제거후 사용 (구글 or 네이버 하나만을 이용해서 사용)
-//    if(defined('G5_SMTP_NAVER') && G5_SMTP_NAVER){
+//    if(defined('G5_SMTP_GOOGLE') && G5_SMTP_GOOGLE){
 //        $mail->IsSMTP();
-//        $mail->SMTPSecure = "TLS";
+//        $mail->SMTPSecure = "ssl";
 //        $mail->SMTPAuth = true;
-//        $mail->Host = G5_SMTP_NAVER;
-//        if(defined('G5_SMTP_NAVER_PORT') && G5_SMTP_NAVER_PORT)
-//            $mail->Port = G5_SMTP_NAVER_PORT;
-//        $mail->Username = G5_SMTP_NAVER_ID;
-//        $mail->Password = G5_SMTP_NAVER_PASSWORD;
+//        $mail->Host = G5_SMTP_GOOGLE;
+//        if(defined('G5_SMTP_GOOGLE_PORT') && G5_SMTP_GOOGLE_PORT)
+//        $mail->Port = G5_SMTP_GOOGLE_PORT;
+//        $mail->Username = G5_GOOGLE_ID;
+//        $mail->Password = G5_GOOGLE_PASSWORD;
 //    }
+    //네이버 이용 시 주석제거후 사용 (구글 or 네이버 하나만을 이용해서 사용)
+    if(defined('G5_SMTP_NAVER') && G5_SMTP_NAVER){
+        $mail->IsSMTP();
+        $mail->SMTPSecure = "TLS";
+        $mail->SMTPAuth = true;
+        $mail->Host = G5_SMTP_NAVER;
+        if(defined('G5_SMTP_NAVER_PORT') && G5_SMTP_NAVER_PORT)
+            $mail->Port = G5_SMTP_NAVER_PORT;
+        $mail->Username = G5_SMTP_NAVER_ID;
+        $mail->Password = G5_SMTP_NAVER_PASSWORD;
+    }
     $mail->CharSet = 'UTF-8';
     $mail->From = $fmail;
     $mail->FromName = $fname;

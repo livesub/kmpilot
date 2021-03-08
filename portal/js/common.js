@@ -69,7 +69,7 @@ function number_format(data)
     var cutlen = 3;
     var comma = ',';
     var i;
-    
+
     data = data + '';
 
     var sign = data.match(/^[\+\-]/);
@@ -416,7 +416,7 @@ var win_zip = function(frm_name, frm_zip, frm_addr1, frm_addr2, frm_addr3, frm_j
         if(of[frm_jibeon] !== undefined){
             of[frm_jibeon].value = data.userSelectedType;
         }
-        
+
         setTimeout(function(){
             of[frm_addr2].focus();
         } , 100);
@@ -745,3 +745,70 @@ $(function() {
         return true;
     });
 });
+
+
+function modal(id) {
+    let zIndex = 9999;
+    let modal = $('#' + id);
+    //console.log('모달 함수 들어옴');
+    $('#back_div').remove();
+    // 모달 div 뒤에 희끄무레한 레이어
+    let bg = $('<div id=back_div>')
+        .css({
+            position: 'fixed',
+            zIndex: zIndex,
+            left: '0px',
+            top: '0px',
+            width: '100%',
+            height: '100%',
+            overflow: 'hidden',
+            // 레이어 색갈은 여기서 바꾸면 됨
+            backgroundColor: 'rgba(0,0,0,0.7)'
+        })
+        .appendTo('body');
+
+    modal
+        .css({
+            position: 'fixed',
+            boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+
+            // 시꺼먼 레이어 보다 한칸 위에 보이기
+            zIndex: zIndex + 1,
+
+            // div center 정렬
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            msTransform: 'translate(-50%, -50%)',
+            webkitTransform: 'translate(-50%, -50%)'
+        })
+        .show()
+        // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
+        .find('.modal_close_btn')
+        .on('click', function() {
+            $('html').css('overflowY','scroll');
+            bg.remove();
+            modal.hide();
+        });
+        $('html').css('overflowY','hidden');
+}
+
+function reLogin() {
+    //modal('my_modal');
+    //console.log('들어왔어용');
+    $('#popup_open_btn').trigger('click');
+    //modal('my_modal');
+    //alert('회원만 이용 가능한 곳입니다. 회원이시라면 로그인을 해주세요.');
+    $('#back_div').css('background', 'rgba(0,0,0,0.9)');
+    $('.modal_close_btn').off('click').on('click', function () {
+        //닫기 클릭 시 메인으로 이동
+        location.replace(g5_url);
+    });
+}
+
+function inNumber(){
+    if(event.keyCode<48 || event.keyCode>57){
+        event.returnValue=false;
+    }
+
+}

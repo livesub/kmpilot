@@ -22,11 +22,12 @@ $colspan = 4;
 <div class="local_ov01 local_ov">
     <span class="btn_ov01"><span class="ov_txt"> 아이디</span><span class="ov_num"><?php echo $mb['mb_id'] ?></span></span>
     <span class="btn_ov01"><span class="ov_txt"> 이름</span><span class="ov_num"><?php echo get_text($mb['mb_name']); ?></span></span>
-    <span class="btn_ov01"><span class="ov_txt"> 닉네임</span><span class="ov_num"><?php echo $mb['mb_nick'] ?></span></span>
+<!--    <span class="btn_ov01"><span class="ov_txt"> 닉네임</span><span class="ov_num">--><?php //echo $mb['mb_nick'] ?><!--</span></span>-->
 </div>    
 <div class="local_cmd01 local_cmd">
 
     <label for="gr_id">그룹지정</label>
+    <!--
     <select name="gr_id" id="gr_id">
         <option value="">접근가능 그룹을 선택하세요.</option>
         <?php
@@ -44,6 +45,8 @@ $colspan = 4;
         }
         ?>
     </select>
+    -->
+    <?= get_group_select('gr_id','','','no')?>
     <input type="submit" value="선택" class="btn_submit btn" accesskey="s">
 </div>
 </form>
