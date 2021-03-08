@@ -69,10 +69,9 @@ $check_keys = array(
     'mb_validity_day_to',
     'mb_license_ext_day_from',
     'mb_license_ext_day_to',
-    'mb_applicable_or_not',
-    'mb_punishment',
     'mb_group',
-    'mb_punishment_date'
+    'required_pilot_status_from',
+    'required_pilot_status_to',
 );
 
 for($i=1;$i<=10;$i++){
@@ -118,7 +117,9 @@ $sql_common = "  mb_name = '{$posts['mb_name']}',
                  mb_validity_day_from = '{$posts['mb_validity_day_from']}',
                  mb_validity_day_to = '{$posts['mb_validity_day_to']}',
                  mb_license_ext_day_from = '{$posts['mb_license_ext_day_from']}',
-                 mb_license_ext_day_to = '{$posts['mb_license_ext_day_to']}' ";
+                 mb_license_ext_day_to = '{$posts['mb_license_ext_day_to']}',
+                 required_pilot_status_from = '{$posts['required_pilot_status_from']}',
+                 required_pilot_status_to = '{$posts['required_pilot_status_to']}' ";
 $mb_group = $posts['mb_group'];
 
 if ($w == '')
@@ -326,7 +327,7 @@ if( $w == '' || $w == 'u' ){
         if(is_dir($mb_license_dir))
         @rmdir($mb_license_dir);
     }
-    // 아이콘 업로드
+    // 최신 면허 사본 업로드
     if (isset($_FILES['mb_license']) && is_uploaded_file($_FILES['mb_license']['tmp_name'])) {
         if (!preg_match($image_regex, $_FILES['mb_license']['name'])) {
             alert($_FILES['mb_license']['name'] . '은(는) 이미지 파일이 아닙니다.');

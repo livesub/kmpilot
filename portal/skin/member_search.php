@@ -8,6 +8,9 @@ if(!$is_member) {
         reLogin();
     </script>";
 }
+
+$row_member = '';
+
 if($is_member) {
     $sql_common = " from {$g5['member_table']} ";
     $sql_del_mem = " and mb_memo = '' and {$g5['member_table']}.mb_id != 'yongsanzip' ";
@@ -61,7 +64,7 @@ if($is_member) {
 
     $sql_order = " order by {$sst} {$sod} ";
 
-    $sql = " select count(*) as cnt {$sql_common} left join {$g5['group_member_table']} on {$g5['member_table']}.mb_id = {$g5['group_member_table']}.mb_id {$sql_search} {$sql_group_sel} {$sql_del_mem} {$sql_doseongu} {$sql_order} ";
+    $sql = " select count(*) as cnt {$sql_common} {$sql_join} {$sql_search} {$sql_group_sel} {$sql_del_mem} {$sql_doseongu} {$sql_order} ";
     $row = sql_fetch($sql);
     $total_count = $row['cnt'];
 
@@ -74,7 +77,7 @@ if($is_member) {
 //alert('서버 네임'.$_SERVER['SCRIPT_NAME']);
     $g5['title'] = '회원검색';
 
-    $sql = " select * {$sql_common} left join {$g5['group_member_table']} on {$g5['member_table']}.mb_id = {$g5['group_member_table']}.mb_id {$sql_search} {$sql_group_sel} {$sql_del_mem} {$sql_doseongu} {$sql_order} limit {$from_record}, {$rows} ";
+    $sql = " select * {$sql_common} {$sql_join} {$sql_search} {$sql_group_sel} {$sql_del_mem} {$sql_doseongu} {$sql_order} limit {$from_record}, {$rows} ";
 //alert('쿼리문을 달라'.$sql);
     $result = sql_query($sql);
 //alert('조건문 확인 :'.$sql);
@@ -131,39 +134,40 @@ if($is_member) {
                 </thead>
                 <tbody>
                 <?php
-                for ($i=0; $row=sql_fetch_array($result); $i++) {
+                for ($i=0; $row_member=sql_fetch_array($result); $i++) {
                     // 접근가능한 그룹수
-                    $sql2 = " select count(*) as cnt from {$g5['group_member_table']} where mb_id = '{$row['mb_id']}' ";
-                    $row2 = sql_fetch($sql2);
+                    $sql2 = " select count(*) as cnt from {$g5['group_member_table']} where mb_id = '{$row_member['mb_id']}' ";
+                    $row_member2 = sql_fetch($sql2);
+
                     $group = '';
-                    if ($row2['cnt'])
-                        $group = '<a href="./boardgroupmember_form.php?mb_id='.$row['mb_id'].'">'.$row2['cnt'].'</a>';
+                    if ($row_member2['cnt'])
+                        $group = '<a href="./boardgroupmember_form.php?mb_id='.$row_member['mb_id'].'">'.$row_member2['cnt'].'</a>';
 
                     if ($is_admin == 'group') {
                         $s_mod = '';
                     } else {
-                        $s_mod = '<a href="./member_form.php?'.$qstr.'&amp;w=u&amp;mb_id='.$row['mb_id'].'" class="btn btn_03">수정</a>';
+                        $s_mod = '<a href="./member_form.php?'.$qstr.'&amp;w=u&amp;mb_id='.$row_member['mb_id'].'" class="btn btn_03">수정</a>';
                     }
-                    $s_grp = '<a href="./boardgroupmember_form.php?mb_id='.$row['mb_id'].'" class="btn btn_02">그룹</a>';
+                    $s_grp = '<a href="./boardgroupmember_form.php?mb_id='.$row_member['mb_id'].'" class="btn btn_02">그룹</a>';
 
-                    $leave_date = $row['mb_leave_date'] ? $row['mb_leave_date'] : date('Ymd', G5_SERVER_TIME);
-                    $intercept_date = $row['mb_intercept_date'] ? $row['mb_intercept_date'] : date('Ymd', G5_SERVER_TIME);
-                    $mb_id = $row['mb_id'];
+                    $leave_date = $row_member['mb_leave_date'] ? $row_member['mb_leave_date'] : date('Ymd', G5_SERVER_TIME);
+                    $intercept_date = $row_member['mb_intercept_date'] ? $row_member['mb_intercept_date'] : date('Ymd', G5_SERVER_TIME);
+                    //$mb_id = $row_member['mb_id'];
 
-                    $address = $row['mb_zip1'] ? print_address($row['mb_addr1'], $row['mb_addr2'], $row['mb_addr3'], $row['mb_addr_jibeon']) : '';
+                    $address = $row_member['mb_zip1'] ? print_address($row_member['mb_addr1'], $row_member['mb_addr2'], $row_member['mb_addr3'], $row_member['mb_addr_jibeon']) : '';
 
                     $bg = 'bg'.($i%2);
                     ?>
 
                     <tr class="<?php echo $bg; ?>">
                         <td headers="mb_list_id" colspan="" class="td_name sv_use">
-                            <?php echo get_doseongu_name($row['mb_doseongu']) ?>
+                            <?php echo get_doseongu_name($row_member['mb_doseongu']) ?>
                         </td>
-                        <?php $user_group = get_group_name($row['gr_id']);?>
+                        <?php $user_group = get_group_name($row_member['gr_id']);?>
                         <td headers="mb_list_name" class="td_mbname"><?php echo get_text($user_group); ?></td>
-                        <td headers="mb_list_name" class="td_mbname"><?php echo get_text($row['mb_name']); ?></td>
-                        <td headers="mb_list_mobile" class="td_tel"><?php echo get_text($row['mb_hp']); ?></td>
-                        <td headers="mb_list_mobile" class="td_tel"><?php echo get_text($row['mb_email']); ?></td>
+                        <td headers="mb_list_name" class="td_mbname"> <a href="#" onclick="open_popup('<?=$row_member['mb_id']?>',500,500)"><?php echo $row_member['mb_name']; ?></a></td>
+                        <td headers="mb_list_mobile" class="td_tel"><?php echo get_text($row_member['mb_hp']); ?></td>
+                        <td headers="mb_list_mobile" class="td_tel"><?php echo get_text($row_member['mb_email']); ?></td>
 <!--                        <td headers="mb_list_mng" rowspan="" class="td_mng td_mng_s">--><?php //echo $s_mod ?><!--</td>-->
 <!--                        <td headers="mb_list_mng" rowspan="" class="td_mng td_mng_s">--><?php //echo $s_grp ?><!--</td>-->
                     </tr>
@@ -182,3 +186,26 @@ if($is_member) {
 <?php
 }
 ?>
+
+<form name="pop_submit" id="pop_submit" method="POST" action="">
+    <input type="hidden" name="member_id" id="member_id" value="">
+</form>
+
+<script>
+    function open_popup(id,width,height){
+        $("#member_id").val(id);
+        let popupX = (window.screen.width / 2) - (width / 2);
+        // 만들 팝업창 좌우 크기의 1/2 만큼 보정값으로 빼주었음
+        //console.log($("#member_id").val());
+        let popupY= (window.screen.height /2) - (height / 2);
+        // 만들 팝업창 상하 크기의 1/2 만큼 보정값으로 빼주었음
+        let pop = $("#pop_submit");
+        pop.attr("action", "member_info.php");
+        pop.attr("target", "member_info"); //window.open 두번째 인자와 값이 같아야 한다.
+
+
+        window.open('member_info.php', 'member_info', 'status=no, height='+height+', width='+width+', ' +
+            'left='+ popupX + ', top='+ popupY + ', screenX='+ popupX + ', screenY= '+ popupY);
+        $("#pop_submit").submit();
+    }
+</script>

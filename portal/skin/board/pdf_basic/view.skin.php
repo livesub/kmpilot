@@ -30,7 +30,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         	<div class="profile_info_ct">
         		<span class="sound_only">작성자</span> <strong><?php echo $view['name'] ?><?php if ($is_ip_view) { echo "&nbsp;($ip)"; } ?></strong><br>
        		 	<span class="sound_only">댓글</span><strong><a href="#bo_vc"> <i class="fa fa-commenting-o" aria-hidden="true"></i> <?php echo number_format($view['wr_comment']) ?>건</a></strong>
-        		<span class="sound_only">조회</span><strong><i class="fa fa-eye" aria-hidden="true"></i> <?php echo number_format($view['wr_hit']) ?>회</strong>
+<!--        		<span class="sound_only">조회</span><strong><i class="fa fa-eye" aria-hidden="true"></i> --><?php //echo number_format($view['wr_hit']) ?><!--회</strong>-->
         		<strong class="if_date"><span class="sound_only">작성일</span><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo date("y-m-d H:i", strtotime($view['wr_datetime'])) ?></strong>
     		</div>
     	</div>
@@ -105,11 +105,11 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 <!--                --><?php //echo G5_DATA_URL; ?><!--<br>-->
                         <?php //session_start();
                             $userid = get_session('ss_mb_id');
-                            if(get_member_group_check($userid, 4)) {
-                                if(!get_open_board_check($_GET["bo_table"],$userid, $_GET["wr_id"], 4)) {
+                            if(get_member_group_check($userid, 3)) {
+                                if(!get_open_board_check($_GET["bo_table"],$userid, $_GET["wr_id"], 3)) {
                                     $sql_sel_member = " select * from {$g5['member_table']} where mb_id = $userid";
                                     $result = sql_fetch($sql_sel_member);
-                                    insert_group_member_check($_GET["bo_table"], $userid, $_GET["wr_id"], 4, $result['mb_name'], $result['mb_doseongu']);
+                                    insert_group_member_check($_GET["bo_table"], $userid, $_GET["wr_id"], 3, $result['mb_name'], $result['mb_doseongu']);
                                 }
                             }
                         ?>
@@ -126,7 +126,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             확인자 명단
             <br>
             <?php
-                $sql_sel_open_board = " select * from {$g5['group_member_check_table']} where gr_id = 4 and bo_table = '{$_GET['bo_table']}' and wr_id = '{$_GET['wr_id']}'     ";
+                $sql_sel_open_board = " select * from {$g5['group_member_check_table']} where gr_id = 3 and bo_table = '{$_GET['bo_table']}' and wr_id = '{$_GET['wr_id']}'     ";
                 $result_sel_open = sql_query($sql_sel_open_board);
                 for($i = 0; $row = sql_fetch_array($result_sel_open); $i++){
                     $doseongu = get_doseongu_name($row['mb_doseongu']);

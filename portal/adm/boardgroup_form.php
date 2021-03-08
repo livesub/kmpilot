@@ -76,17 +76,17 @@ include_once('./admin.head.php');
             ?>
         </td>
     </tr>
-    <tr>
-        <th scope="row"><label for="gr_device">접속기기</label></th>
-        <td>
-            <?php echo help("PC 와 모바일 사용을 구분합니다.") ?>
-            <select id="gr_device" name="gr_device">
-                <option value="both"<?php echo get_selected($group['gr_device'], 'both', true); ?>>PC와 모바일에서 모두 사용</option>
-                <option value="pc"<?php echo get_selected($group['gr_device'], 'pc'); ?>>PC 전용</option>
-                <option value="mobile"<?php echo get_selected($group['gr_device'], 'mobile'); ?>>모바일 전용</option>
-            </select>
-        </td>
-    </tr>
+<!--    <tr>-->
+<!--        <th scope="row"><label for="gr_device">접속기기</label></th>-->
+<!--        <td>-->
+<!--            --><?php //echo help("PC 와 모바일 사용을 구분합니다.") ?>
+<!--            <select id="gr_device" name="gr_device">-->
+<!--                <option value="both"--><?php //echo get_selected($group['gr_device'], 'both', true); ?><!-- >PC와 모바일에서 모두 사용</option>-->
+<!--                <option value="pc"--><?php //echo get_selected($group['gr_device'], 'pc'); ?><!-- >PC 전용</option>-->
+<!--                <option value="mobile"--><?php //echo get_selected($group['gr_device'], 'mobile'); ?><!-- >모바일 전용</option>-->
+<!--            </select>-->
+<!--        </td>-->
+<!--    </tr>-->
 <!--    <tr>-->
 <!--        <th scope="row">--><?php //if ($is_admin == 'super') { ?><!--<label for="gr_admin">--><?php //} ?><!--그룹 관리자--><?php //if ($is_admin == 'super') { ?><!--</label>--><?php //} ?><!--</th>-->
 <!--        <td>-->

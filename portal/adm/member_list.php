@@ -15,9 +15,13 @@ if($member['mb_level'] == 9){
 if($member['mb_level'] == 10){
     $sql_del_mem = null;
 }
+
+$g5['title'] = '회원관리';
+
 if(get_auth_member_exits($member['mb_id'], 200100) && !$is_admin){
    $doseongu =  get_user_doseongu($member['mb_id']);
    $sql_del_mem = " and mb_memo = '' and mb_id != 'yongsanzip' and mb_doseongu = '".$doseongu."'";
+   $g5['title'] = get_doseongu_name($member['mb_doseongu'])." 회원관리";
 }
 
 $sql_search = " where (1) ";
@@ -72,7 +76,7 @@ $intercept_count = $row['cnt'];
 
 $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목록</a>';
 
-$g5['title'] = '회원관리';
+
 include_once('./admin.head.php');
 
 $sql = " select * {$sql_common} {$sql_search} {$sql_del_mem} {$sql_order} limit {$from_record}, {$rows} ";
@@ -96,11 +100,11 @@ $colspan = 16;
 <!--    <option value="mb_nick"--><?php //echo get_selected($sfl, "mb_nick"); ?><!-- >닉네임</option>-->
     <option value="mb_name"<?php echo get_selected($sfl, "mb_name"); ?>>이름</option>
 <!--    <option value="mb_level"--><?php //echo get_selected($sfl, "mb_level"); ?><!-- >권한</option>-->
-    <option value="mb_email"<?php echo get_selected($sfl, "mb_email"); ?>>E-MAIL</option>
-    <option value="mb_tel"<?php echo get_selected($sfl, "mb_tel"); ?>>전화번호</option>
+<!--    <option value="mb_email"--><?php //echo get_selected($sfl, "mb_email"); ?><!-- >E-MAIL</option>-->
+<!--    <option value="mb_tel"--><?php //echo get_selected($sfl, "mb_tel"); ?><!-- >전화번호</option>-->
     <option value="mb_hp"<?php echo get_selected($sfl, "mb_hp"); ?>>휴대폰번호</option>
 <!--    <option value="mb_point"--><?php //echo get_selected($sfl, "mb_point"); ?><!-- >포인트</option>-->
-    <option value="mb_datetime"<?php echo get_selected($sfl, "mb_datetime"); ?>>가입일시</option>
+<!--    <option value="mb_datetime"--><?php //echo get_selected($sfl, "mb_datetime"); ?><!-- >가입일시</option>-->
 <!--    <option value="mb_ip"--><?php //echo get_selected($sfl, "mb_ip"); ?><!-- >IP</option>-->
 <!--    <option value="mb_recommend"--><?php //echo get_selected($sfl, "mb_recommend"); ?><!-- >추천인</option> -->
 </select>
@@ -338,6 +342,7 @@ $colspan = 16;
     <input type="submit" name="act_button" value="선택수정" onclick="document.pressed=this.value" class="btn btn_02">
     <?php if($is_admin =='super'){ ?>
         <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value" class="btn btn_02">
+        <input type="submit" name="act_button" value="선택삭제복구" onclick="document.pressed=this.value" class="btn btn_02">
     <?php } else {?>
         <input type="submit" name="act_button" value="선택탈퇴" onclick="document.pressed=this.value" class="btn btn_02">
     <?php }?>
@@ -361,7 +366,13 @@ function fmemberlist_submit(f)
     }
 
     if(document.pressed == "선택삭제") {
-        if(!confirm("선택한 자료를 정말 삭제하시겠습니까?")) {
+        if(!confirm("선택한 회원을 정말 삭제하시겠습니까?")) {
+            return false;
+        }
+    }
+
+    if(document.pressed == "선택삭제복구") {
+        if(!confirm("선택한 회원을 정말 복구하시겠습니까?\n (복구 시 회원정보들을 다시 입력하셔야합니다.)")) {
             return false;
         }
     }

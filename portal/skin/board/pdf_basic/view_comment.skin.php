@@ -7,6 +7,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 var char_min = parseInt(<?php echo $comment_min ?>); // 최소
 var char_max = parseInt(<?php echo $comment_max ?>); // 최대
 </script>
+<?php if($member['mb_level'] == 10){?>
 <button type="button" class="cmt_btn"><span class="total"><b>댓글</b> <?php echo $view['wr_comment']; ?></span><span class="cmt_more"></span></button>
 <!-- 댓글 시작 { -->
 <section id="bo_vc">
@@ -168,7 +169,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
     </div>
     </form>
 </aside>
-
+    <?php }?>
 <script>
 var save_before = '';
 var save_html = document.getElementById('bo_vc_w').innerHTML;

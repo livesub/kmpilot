@@ -345,7 +345,7 @@ if ($w == '') {
 
     //{$sql_nick_date} 빈칸에 다시넣으면 된다.
     //학력사항 업데이트
-    $sql_sel_mb_academic = "insert into {$g5['member_academic_back']}}
+    $sql_sel_mb_academic = "insert into {$g5['member_academic_back']}
                             set 
                                 mb_id = '{$mb_id}', 
                                 high_name = '{$high_name}',

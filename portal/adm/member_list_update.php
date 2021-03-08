@@ -14,6 +14,7 @@ check_admin_token();
 
 $mb_datas = array();
 $msg = '';
+$msg2 = '';
 
 if ($_POST['act_button'] == "선택수정") {
 
@@ -92,7 +93,7 @@ if ($_POST['act_button'] == "선택수정") {
         } else if ($member['mb_id'] == $mb['mb_id']) {
             $msg .= $mb['mb_id'].' : 로그인 중인 관리자는 탈퇴 할 수 없습니다.\\n';
         } else if (is_admin($mb['mb_id']) == 'super') {
-            $msg .= $mb['mb_id'].' : 최고 관리자는 탈할 수 없습니다.\\n';
+            $msg .= $mb['mb_id'].' : 최고 관리자는 탈퇴퇴할 수 없습니다.\\n';
         } else if ($is_admin != 'super' && $mb['mb_level'] >= $member['mb_level']) {
             $msg .= $mb['mb_id'].' : 자신보다 권한이 높거나 같은 회원은 탈퇴할 수 없습니다.\\n';
         } else {
@@ -100,12 +101,28 @@ if ($_POST['act_button'] == "선택수정") {
             member_secession($mb['mb_id']);
         }
     }
+} else if($_POST['act_button'] == "선택삭제복구"){
+    for ($i=0; $i<count($_POST['chk']); $i++)
+    {
+        // 실제 번호를 넘김
+        $k = isset($_POST['chk'][$i]) ? (int) $_POST['chk'][$i] : 0;
+
+        $mb_datas[] = $mb = get_member($_POST['mb_id'][$k]);
+
+        if (!$mb['mb_id']) {
+            $msg .= $mb['mb_id'].' : 회원자료가 존재하지 않습니다.\\n';
+        } else if ($mb['mb_memo'] == '') {
+            $msg .= $mb['mb_id'].' : 삭제가 되지 않은 회원은 복구 할 수 없습니다.\\n';
+        } else {
+            // 삭제회원 복구
+            member_return($mb['mb_id']);
+        }
+    }
 }
 
 if ($msg)
     //echo '<script> alert("'.$msg.'"); </script>';
     alert($msg);
-
 run_event('admin_member_list_update', $_POST['act_button'], $mb_datas);
 
 goto_url('./member_list.php?'.$qstr);

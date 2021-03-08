@@ -174,7 +174,9 @@ echo $pagelist;
     <div class="local_desc01 local_desc">
         <p>
             다음 양식에서 회원에게 관리권한을 부여하실 수 있습니다.<br>
-            권한 <strong>r</strong>은 읽기권한, <strong>w</strong>는 쓰기권한, <strong>d</strong>는 삭제권한입니다.
+            권한 <strong>r</strong>은 읽기권한, <strong>w</strong>는 쓰기권한, <strong>d</strong>는 삭제권한입니다. <br>
+            그룹만 선택 시 그 그룹에 해당하는 모든 회원에게 관리권한을 부여 <br>
+            둘 다 입력 시 그 그룹안에 있는 해당 아아디에 관리권한을 부여
         </p>
     </div>
 
@@ -197,7 +199,7 @@ echo $pagelist;
             <th scope="row"><label for="mb_group">그룹</label></th>
             <td>
 <!--                <strong id="msg_mb_id" class="msg_sound_only"></strong>-->
-                <?php echo get_group_select("mb_group"); ?>
+                <?php echo get_group_select("mb_group",'','','no'); ?>
             </td>
         </tr>
         <tr>

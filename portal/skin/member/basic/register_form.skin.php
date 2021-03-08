@@ -39,13 +39,20 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
                 </li>
                 <li>
                     <label for="mb_group">그룹</label><br>
-                    <?php for($i1 =0; $i1< count($mb_group); $i1++){?>
+                    <?php if(isset($mb_group[0]) && $mb_group[0] != ''){
+                            for($i1 =0; $i1< count($mb_group); $i1++){?>
                     <input type="text" id="mb_group" readonly class="frm_input" size="50" value="<?php echo get_group_name($mb_group[$i1]) ?>"><br>
-                    <?php }?>
+                    <?php
+                            }
+                        }else { ?>
+                        <input type="text" id="mb_group" readonly class="frm_input" size="50" value="속한 그룹이 없습니다."><br>
+                    <?php
+                        }
+                    ?>
                 </li>
                 <li>
                     <label for="mb_birth">생년월일</label><br>
-                    <input type="text" id="mb_birth" readonly class="frm_input" size="50" value="<?php echo $member['mb_birth'] ?>">
+                    <input type="date" id="mb_birth" class="frm_input" size="50" value="<?php echo $member['mb_birth'] ?>">
                 </li>
                 <li>
                     <label for="mb_sex">성별</label><br>
@@ -54,15 +61,29 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
                 <li>
                     <label for="$mb_edu_list">교육신청현황</label><br>
 <!--                    $mb_edu_list 회원 교육신청 및 이수관련 정보를 담는 변수-->
-                    <?php for($i2 = 0; $i2< count($mb_edu_list); $i2++){?>
-                        <input type="text" readonly id="$mb_edu_list" class="frm_input" size="50" value="<?=$mb_edu_list[$i2]['edu_type_name']?>   - <?= substr($mb_edu_list[$i2]['apply_date'],0,10) ?>">
-                    <?php }?>
+                    <?php if(isset($mb_edu_list) &&$mb_edu_list != ''){
+                                for($i2 = 0; $i2< count($mb_edu_list); $i2++){?>
+                                <input type="text" readonly id="$mb_edu_list_1" class="frm_input" size="50" value="<?=$mb_edu_list[$i2]['edu_type_name']?>   - <?= substr($mb_edu_list[$i2]['apply_date'],0,10) ?>">
+                        <?php   }
+                            }else{
+                        ?>
+                        <input type="text" readonly id="$mb_edu_list_1" class="frm_input" size="50" value="신청현황이 없습니다.">
+                        <?php ?>
+                    <?php
+                    } ?>
                 </li>
                 <li>
                     <label for="$mb_edu_com">교육이수현황</label><br>
-                    <?php for($i3 =0; $i3< count($mb_edu_list); $i3++){?>
-                        <input type="text" readonly id="$mb_edu_list" class="frm_input" size="50" value="<?=$mb_edu_list[$i3]['edu_type_name']?>   - <?php echo ($mb_edu_list[$i3]['lecture_completion_status'] == 'N')? '미이수' : '이수'; ?>">
-                    <?php }?>
+                    <?php if(isset($mb_edu_list) && $mb_edu_list != ''){
+                    for($i3 =0; $i3< count($mb_edu_list); $i3++){?>
+                        <input type="text" readonly id="$mb_edu_list_2" class="frm_input" size="50" value="<?=$mb_edu_list[$i3]['edu_type_name']?>   - <?php echo ($mb_edu_list[$i3]['lecture_completion_status'] == 'N')? '미이수' : '이수'; ?>">
+                    <?php }
+                        }else{
+                        ?>
+                        <input type="text" readonly id="$mb_edu_list_2" class="frm_input" size="50" value="이수현황이 없습니다.">
+                        <?php
+                    }
+                    ?>
                 </li>
             </ul>
         </div>
@@ -83,11 +104,11 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 	            </li>
 	            <li class="half_input left_input margin_input">
 	                <label for="reg_mb_password">비밀번호<strong class="sound_only">필수</strong></label>
-	                <input type="password" name="mb_password" id="reg_mb_password" <?php echo $required ?> class="frm_input full_input <?php echo $required ?>" minlength="3" maxlength="20" placeholder="비밀번호">
+	                <input type="password" name="mb_password" id="reg_mb_password" <?php echo $required ?> class="frm_input full_input <?php echo $required ?>" minlength="3" maxlength="20" placeholder="비밀번호" autocomplete="off">
 				</li>
 	            <li class="half_input left_input">
 	                <label for="reg_mb_password_re">비밀번호 확인<strong class="sound_only">필수</strong></label>
-	                <input type="password" name="mb_password_re" id="reg_mb_password_re" <?php echo $required ?> class="frm_input full_input <?php echo $required ?>" minlength="3" maxlength="20" placeholder="비밀번호 확인">
+	                <input type="password" name="mb_password_re" id="reg_mb_password_re" <?php echo $required ?> class="frm_input full_input <?php echo $required ?>" minlength="3" maxlength="20" placeholder="비밀번호 확인" autocomplete="off">
 	            </li>
 	        </ul>
 	    </div>
@@ -259,14 +280,14 @@ gif, jpg, png파일만 가능하며 용량 <?php echo number_format($config['cf_
 	                	<span class="tooltip">이미지 크기는 가로 <?php echo $config['cf_member_img_width'] ?>픽셀, 세로 <?php echo $config['cf_member_img_height'] ?>픽셀 이하로 해주세요.<br>
 	                    gif, jpg, png파일만 가능하며 용량 <?php echo number_format($config['cf_member_img_size']) ?>바이트 이하만 등록됩니다.</span>
 	                </label>
-<!--	                s-->
 
 	                <?php if ($w == 'u' && file_exists($mb_img_path)) {  ?>
 	                <img src="<?php echo $mb_img_url ?>" alt="회원이미지">
 <!--	                <input type="checkbox" name="del_mb_img" value="1" id="del_mb_img">-->
 <!--	                <label for="del_mb_img" class="inline">삭제</label>-->
-	                <?php }  ?>
-
+	                <?php }else{ ?>
+                    등록된 이미지가 없습니다.
+                    <?php }?>
 	            </li>
 	            <?php } ?>
 
@@ -343,29 +364,29 @@ gif, jpg, png파일만 가능하며 용량 <?php echo number_format($config['cf_
                 <ul>
                     <li>
                         <label for="mb_license_mean">면허 종류</label>
-                        <input type="text" id="mb_license_mean" readonly class="frm_input" size="50" value="<?=$member['mb_license_mean']?>">
+                        <input type="text" id="mb_license_mean" readonly class="frm_input" size="50" value="<?=get_license_mean($member['mb_license_mean'])?>">
                     </li>
                     <li>
                         <label for="mb_first_license_day">최초 면허 발급일</label>
                         <input type="text" id="mb_first_license_day" readonly class="frm_input" size="50" value="<?=date_return_empty_space($member['mb_first_license_day'])?>">
                         <label for="mb_license_renewal_day">면허 갱신일</label>
+                        <?php if($member['mb_license_renewal_day'] != ''){?>
                         <input type="text" id="mb_license_renewal_day" readonly class="frm_input" size="50" value="<?=date_return_empty_space($member['mb_license_renewal_day'])?>">
+                        <?php }else{?>
+                        <input type="text" id="mb_license_renewal_day" readonly class="frm_input" size="50" value="면허 갱신 현황이 없습니다.">
+                        <?php }?>
                     </li>
                     <li>
                         <label for="mb_validity_day_from">면허 유효기간</label>
+                        <?php if($member['mb_validity_day_from'] != ''){?>
                         <input type="text" id="mb_validity_day_from" readonly  class="frm_input" size="50"value="<?=date_return_empty_space($member['mb_validity_day_from'])?> ">부터
                         <br>
                         <input type="text" id="mb_validity_day_to" readonly value="<?=date_return_empty_space($member['mb_validity_day_to'])?>" class="frm_input" size="50">까지
+                        <?php } ?>
+                        등록된 면허 유호기간이 없습니다.
                     </li>
                     <li>
                         <label>최신 면허 사본</label>
-<!--                        --><?php
-//                        $mb_dir = substr($member['mb_id'],0,2);
-//                        $icon_file = G5_DATA_PATH.'/member_license/'.$mb_dir.'/'.get_mb_icon_name($member['mb_id']).'.gif';
-//                        if (file_exists($icon_file)) {
-//                            echo get_member_profile_img($member['mb_id']);
-//                        }
-//                        ?>
                         <?php
                         $mb_dir = substr($member['mb_id'],0,2);
                         $icon_file2 = G5_DATA_PATH.'/member_license/'.$mb_dir.'/'.get_mb_icon_name($member['mb_id']).'.gif';
@@ -374,12 +395,27 @@ gif, jpg, png파일만 가능하며 용량 <?php echo number_format($config['cf_
                             $icon_filemtile2 = (defined('G5_USE_MEMBER_IMAGE_FILETIME') && G5_USE_MEMBER_IMAGE_FILETIME) ? '?'.filemtime($icon_file2) : '';
                             echo '<img src="'.$icon_url.$icon_filemtile2.'" alt="">';
 
+                        }else{?>
+                            등록된 사진이 없습니다.
+                            <?php
                         }
                         ?>
                     </li>
                     <li>
                         <label>정년연정현황</label>
+                        <?php if($member['mb_license_ext_day_from']!= '' && $member['mb_license_ext_day_to'] != ''){?>
                         <input type="text" id="mb_license_ext_day_from" readonly class="frm_input" size="50" value="연장됨(기간: <?=date_return_empty_space($member['mb_license_ext_day_from'])?> ~ <?=date_return_empty_space($member['mb_license_ext_day_to'])?>)">
+                        <?php }else{?>
+                            <input type="text" id="mb_license_ext_day_from" readonly class="frm_input" size="50" value="연장현황이 없습니다.">
+                        <?php }?>
+                    </li>
+                    <li>
+                        <label>국가 필수 도선사 여부</label>
+                        <?php if($member['required_pilot_status_from']!= '' && $member['required_pilot_status_to'] != ''){?>
+                            <input type="text" id="required_pilot" readonly class="frm_input" size="50" value="해당(기간 : <?=$member['required_pilot_status_from']?> ~ <?=$member['required_pilot_status_to']?>)">
+                        <?php }else{?>
+                            <input type="text" id="required_pilot" readonly class="frm_input" size="50" value="설정 교육이 없습니다.">
+                        <?php }?>
                     </li>
                     <li>
                         <label>해심 재결 사항</label>
@@ -402,7 +438,6 @@ gif, jpg, png파일만 가능하며 용량 <?php echo number_format($config['cf_
                             }
                         ?>
                     </li>
-
                 </ul>
             </div>
         </div>
