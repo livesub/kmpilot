@@ -281,7 +281,7 @@ function off_apply_list_submit(f)
             return false;
         }
 
-        if(confirm("수료 획인 하시겠습니까?")) {
+        if(confirm(ment + " 하시겠습니까?")) {
             $("#edu_complet_type").val(choice);
             var ajaxUrl = "ajax_edu_complet.php";
             var queryString = $("form[name=off_apply_list_from]").serialize() ;
