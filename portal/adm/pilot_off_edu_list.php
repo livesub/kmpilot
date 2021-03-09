@@ -184,10 +184,10 @@ function edu_list_submit(f)
 </script>
 
 <form name="form_submit" id="form_submit" method="POST" action="">
-    <input type="hidden" name="edu_idx" id="edu_idx" vlaue="">
-    <input type="hidden" name="edu_type" id="edu_type" vlaue="">
-    <input type="hidden" name="edu_onoff_type" id="edu_onoff_type" vlaue="">
-    <input type="hidden" name="choice_type" id="choice_type" vlaue="">
+    <input type="hidden" name="edu_idx" id="edu_idx" value="">
+    <input type="hidden" name="edu_type" id="edu_type" value="">
+    <input type="hidden" name="edu_onoff_type" id="edu_onoff_type" value="">
+    <input type="hidden" name="choice_type" id="choice_type" value="">
 </form>
 
 <script>
