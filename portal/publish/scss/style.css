@@ -1,0 +1,1634 @@
+div.inlineBlock {
+    display: inline-block;
+}
+/*table*/
+.thead {
+    display: flex;
+    width: 100%;
+    background-color: #f7f7f7;
+    border-bottom: 4px solid #000000;
+}
+.thead .th {
+    height: 80px;
+    line-height: 80px;
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    color: #000000;
+}
+.thead .cnt {
+    font-size: 18px;
+    letter-spacing: -0.9px;
+    color: #000000;
+    padding-bottom: 24px;
+}
+.row {
+    display: flex;
+    width: 100%;
+    border-bottom: 1px solid #f0f0f0;
+}
+.row > a {
+    width: 100%;
+}
+.row .col {
+    min-height: 80px;
+    line-height: 80px;
+    font-size: 20px;
+    text-align: left;
+    color: #000000;
+}
+.row .col.bold {
+    font-weight: bold;
+}
+
+/* tab panel */
+.tab-panel ul {
+    display: flex;
+}
+.tab-panel ul li {
+    flex: 1;
+}
+.tab-panel div.tab-title {
+    height: 100px;
+    line-height: 100px;
+    font-size: 32px;
+    font-weight: bold;
+    color: #999999;
+    background-color: #f7f7f7;
+    border-top: solid 2px #bbbbbb;
+    border-right: solid 2px #bbbbbb;
+    border-left: solid 2px #bbbbbb;
+    text-align: center;
+}
+.tab-panel ul li.active > div.tab-title {
+    color: #0070bf;
+    border-top: solid 2px #0070bf;
+    border-right: solid 2px #0070bf;
+    border-left: solid 2px #0070bf;
+    background-color: #ffffff;
+    border-bottom: 0;
+}
+.tab-panel ul li.active + li > div.tab-title {
+    border-left: 0;
+}
+.tab-panel ul li:not(.active) > div.tab-title {
+    border-right: 0;
+    border-bottom: solid 2px #bbbbbb;
+}
+.tab-panel ul li:last-child > div.tab-title {
+    border-right: solid 2px #bbbbbb;
+}
+.tab-panel ul li.active:last-child > div.tab-title {
+    border-right: solid 2px #0070bf;
+}
+.tab-panel ul li > div.tab-content {
+    padding-top: 90px;
+    display: none;
+}
+.tab-panel .tab-content > div {
+    display: none;
+    padding-top: 90px;
+}
+.tab-panel .tab-content > div.active {
+    display: block;
+}
+
+/*input */
+input[type=text], input[type=number] {
+    width: 200px;
+    height: 48px;
+    border: solid 1px #999999;
+    background-color: #ffffff;
+    font-size: 20px;
+    color: #000000;
+    padding: 0 14px;
+}
+select {
+    height: 48px;
+    border: solid 1px #999999;
+    background-color: #ffffff;
+    padding: 0 14px;
+    font-size: 22px;
+    line-height: 1.5;
+    color: #000000;
+    -moz-appearance:none; /* Firefox */
+    -webkit-appearance:none; /* Safari and Chrome */
+    appearance:none;
+}
+.select:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 24px;
+    height: 24px;
+    background-image: url(../resources/icons/icon-arrow-bottom.png);
+    background-size: 24px;
+    background-position: center;
+}
+input[type=checkbox] {
+    display: none;
+}
+input[type=checkbox] + label {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    border: solid 1px #999999;
+    cursor: pointer;
+}
+input[type=checkbox]:checked + label {
+    background: url("../resources/icons/icon-snav-pulldown.png") #0070BF;
+}
+input[type=radio] {
+    width: 20px;
+    height: 20px;
+    margin-right: 6px;
+    border: 1px solid #999999;
+    border-radius: 50%;
+    outline: none;
+    background: #ffffff;
+    -webkit-appearance: none;
+}
+input[type='radio']:before {
+    content:'';
+    display:block;
+    width:60%;
+    height:60%;
+    margin: 20% auto;
+    border-radius:50%;
+}
+input[type='radio']:checked:before {
+    background:#999999;
+}
+.text-overflow {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.text-overflow-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.main-container .thumbnails {
+    height: 980px;
+    overflow: hidden;
+    background: #ffffff;
+}
+.main-container .thumbnails .swiper-slide {
+    height: 980px;
+    background-position: center center;
+    /*background-size: 100% auto;*/
+    background-repeat: no-repeat;
+}
+
+.main-container .thumbnails .swiper-pagination {
+    position: absolute;
+    left: 320px;
+    bottom: 150px;
+    height: 45px;
+    border-radius: 22.5px;
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 0 32px;
+}
+
+.main-container .thumbnails .swiper-pagination-bullet {
+    width: 16px;
+    height: 16px;
+    background-color: rgba(255, 255, 255, 1);
+    margin: 15px 10px 0 0;
+    border-radius: 8px;
+    transition: all ease-in-out .3s;
+}
+.main-container .thumbnails .swiper-pagination-bullet:last-child {
+    margin-right: 0;
+}
+.main-container .thumbnails .swiper-pagination-bullet-active {
+    width: 56px;
+    background-color: #0070bf;
+}
+
+.main-container .notice-news {
+    max-width: 1751px;
+    height: 730px;
+    margin: 100px 0;
+}
+.main-container .notice-news:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 1150px;
+    max-width: 100%;
+    height: 100%;
+    background-image: url("../resources/background-sample/main_thumb2.png");
+}
+
+.main-container .notice-news .title {
+    position: absolute;
+    top: 0;
+    right: 0;
+    text-align: right;
+    color: #000000;
+}
+.main-container .notice-news .title > div:nth-child(2){
+    margin-top: 50px;
+}
+.main-container .notice-news .title > div:nth-child(2) dt {
+    font-size: 62px;
+    font-weight: 900;
+    line-height: normal;
+    letter-spacing: normal;
+    margin-bottom: 17px;
+}
+.main-container .notice-news .title > div:nth-child(2) dd {
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: -1px;
+}
+.main-container .notice-news .title .icon {
+    display: inline-block;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: normal;
+    letter-spacing: normal;
+}
+.main-container .notice-news .title .icon:before {
+    content: '';
+    position: absolute;
+    top: 11px;
+    left: -68px;
+    width: 50px;
+    height: 5px;
+    background-color: #006fbe;
+}
+.main-container .notice-news .contents {
+    position: absolute;
+    right: 0;
+    bottom: 64px;
+}
+.main-container .notice-news .contents > div {
+    display: inline-block;
+    width: 614px;
+    height: 323px;
+    padding: 30px 30px 50px 40px;
+    background-color: #006fbe;
+    margin-right: 37px;
+    color: #ffffff;
+}
+.main-container .notice-news .contents > div:nth-child(2) {
+    background-color: #3349a4;
+    margin-right: 0;
+}
+
+.main-container .notice-news .contents > div .box-title {
+    font-size: 32px;
+    font-weight: 900;
+    margin-bottom: 34px;
+}
+
+.main-container .notice-news .contents > div .box-title a {
+    position: absolute;
+    right: 0;
+    font-size: 18px;
+    font-weight: normal;
+    letter-spacing: -1px;
+    padding-right: 42px;
+}
+.main-container .notice-news .contents > div .box-title a:after {
+    content: '';
+    position: absolute;
+    display: inline-block;
+    right: 0;
+    bottom: 0;
+    width: 24px;
+    height: 24px;
+    background-image: url("../resources/icons/icon-24-more.png");
+    background-size: cover;
+}
+.main-container .notice-news .contents > div .box-contents {
+    font-size: 22px;
+    font-weight: normal;
+}
+.main-container .notice-news .contents > div .box-contents ul {
+    list-style: none;
+}
+.main-container .notice-news .contents > div .box-contents li {
+    display: flex;
+    padding-bottom: 10px;
+}
+.main-container .notice-news .contents > div .box-contents li:last-child {
+    padding-bottom: 0;
+}
+.main-container .notice-news .contents > div .box-contents li > div:first-child {
+    flex: 1;
+    max-width: 430px;
+    margin-right: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.main-container .notice-news .contents > div .box-contents li > div:first-child:before {
+    content: '· ';
+}
+
+.main-container .introduce {
+    min-height: 900px;
+    background: url("../resources/background-sample/main_thumb3.png") no-repeat center;
+    background-size: cover;
+}
+.main-container .introduce > div {
+    width: fit-content;
+    margin: 0 auto;
+    padding-top: 100px;
+}
+.main-container .introduce > div > .title {
+    width: 275px;
+    color: #ffffff;
+}
+.main-container .introduce > div > .title > div:nth-child(2){
+    margin-top: 50px;
+}
+.main-container .introduce > div > .title > div:nth-child(2) dt {
+    font-size: 62px;
+    font-weight: 900;
+    line-height: normal;
+    letter-spacing: normal;
+    margin-bottom: 17px;
+}
+.main-container .introduce > div > .title > div:nth-child(2) dd {
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: -1px;
+    word-break: break-word;
+}
+.main-container .introduce > div > .title > div:nth-child(2) dd:last-child {
+    display: none;
+}
+.main-container .introduce > div > .title .icon {
+    display: inline-block;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: normal;
+    letter-spacing: normal;
+}
+.main-container .introduce > div > .title .icon:after {
+    content: '';
+    position: absolute;
+    top: 11px;
+    right: -70px;
+    width: 50px;
+    height: 5px;
+    background-color: #006fbe;
+}
+.main-container .introduce > div > .contents {
+    position: relative;
+    left: 75px;
+    padding-top: 100px;
+}
+.main-container .introduce > div > .contents > div > div {
+    width: 932px;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.9);
+}
+.main-container .introduce > div > .contents > div > div:nth-child(2){
+    display: none;
+    width: 100%;
+    height: 482px;
+    padding: 20px;
+}
+.main-container .introduce > div > .contents .box-title {
+    border-bottom: solid 1px rgba(255, 255, 255, 0.1);
+}
+.main-container .introduce > div > .contents .box-title ul {
+    list-style: none;
+}
+.main-container .introduce > div > .contents .box-title li {
+    display: inline-block;
+    width: 77px;
+    height: 60px;
+    line-height: 60px;
+    background-color: rgba(0, 112, 191, 0);
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+}
+.main-container .introduce > div > .contents .box-title li.active {
+    background-color: #0070bf;
+}
+.main-container .introduce > div > .contents .box-contents {
+    height: 530px;
+    padding: 50px 52px 0 60px;
+    margin-bottom: 110px;
+}
+.main-container .introduce > div > .contents .box-contents > div {
+    display: inline-block;
+    width: 520px;
+}
+.main-container .introduce > div > .contents .box-contents > div.hide {
+    display: none;
+}
+.main-container .introduce > div > .contents .box-contents > div .title {
+    padding-bottom: 35px;
+    font-size: 40px;
+    font-weight: 900;
+}
+.main-container .introduce > div > .contents .box-contents > div .title > div {
+    display: inline-block;
+    vertical-align: middle;
+}
+.main-container .introduce > div > .contents .box-contents > div .title span {
+    font-weight: 500;
+}
+.main-container .introduce > div > .contents .box-contents > div .title img {
+    margin-left: 43px;
+}
+.main-container .introduce > div > .contents .box-contents > div .contents {
+    font-size: 22px;
+    font-weight: 500;
+    padding-left: 45px;
+}
+
+.main-container .introduce > div > .contents .box-contents > div .contents > div {
+    padding-bottom: 10px;
+}
+.main-container .introduce > div > .contents .box-contents > div .contents > div:before {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    top: 5px;
+    left: -45px;
+}
+.main-container .introduce > div > .contents .box-contents > div .contents .phone:before {
+    background: url("../resources/icons/phone.png") center no-repeat;
+    background-size: 24px 24px;
+}
+.main-container .introduce > div > .contents .box-contents > div .contents .fax:before {
+    background: url("../resources/icons/fax.png") center no-repeat;
+}
+.main-container .introduce > div > .contents .box-contents > div .contents .address:before {
+    background: url("../resources/icons/marker-black.png") center no-repeat;
+}
+.main-container .introduce > div > .contents .box-contents > div .contents .site a {
+    color: #0070bf;
+    text-decoration: underline;
+}
+.main-container .introduce > div > .contents .box-contents > div .contents .site:before {
+    background: url("../resources/icons/home.png") center no-repeat;
+}
+.main-container .introduce > div > .contents .box-contents .map {
+    width: 295px;
+    height: 413px;
+    background: url("../resources/map/map.png") center;
+    background-size: cover;
+}
+.main-container .introduce > div > .contents .box-contents .map .marker {
+    position: absolute;
+    width: 24px;
+    height: 32px;
+    background: url("../resources/map/img_mak-nor.png") center;
+    background-size: cover;
+    cursor: pointer;
+}
+.main-container .introduce > div > .contents .box-contents .map .marker.active, .main-container .introduce > div > .contents .box-contents .map .marker:hover {
+    width: 35px;
+    height: 47px;
+    background: url("../resources/map/img_main_map.png") center;
+    background-size: cover;
+    z-index: 1;
+}
+.main-container .introduce > div > .contents .box-contents .map .marker:hover {
+    z-index: 2;
+}
+.main-container .introduce > div > .contents .box-contents .map .marker.busan {
+    bottom: 124px;
+    left: 200px;
+}
+.main-container .introduce > div > .contents .box-contents .map .marker.busan.active, .main-container .introduce > div > .contents .box-contents .map .marker.busan:hover {
+    left: 196px;
+}
+.main-container .introduce > div > .contents .box-contents .map .marker.yeosu {
+    bottom: 60px;
+    left: 75px;
+}
+.main-container .introduce > div > .contents .box-contents .map .marker.yeosu.active, .main-container .introduce > div > .contents .box-contents .map .marker.yeosu:hover {
+    left: 70px;
+}
+.main-container .introduce > div > .contents .box-contents .map .marker.incheon {
+    bottom: 317px;
+    left: 33px;
+}
+.main-container .introduce > div > .contents .box-contents .map .marker.incheon.active, .main-container .introduce > div > .contents .box-contents .map .marker.incheon:hover {
+    left: 29px;
+}
+.main-container .introduce > div > .contents .box-contents .map .marker.ulsan {
+    bottom: 149px;
+    left: 233px;
+}
+.main-container .introduce > div > .contents .box-contents .map .marker.ulsan.active, .main-container .introduce > div > .contents .box-contents .map .marker.ulsan:hover {
+    left: 229px;
+}
+.main-container .introduce > div > .contents .box-contents .map .marker.pyeongtaek {
+    bottom: 278px;
+    left: 51px;
+}
+.main-container .introduce > div > .contents .box-contents .map .marker.pyeongtaek.active, .main-container .introduce > div > .contents .box-contents .map .marker.pyeongtaek:hover {
+    left: 47px;
+}
+.main-container .introduce > div > .contents .box-contents .map .marker.masan {
+    bottom: 95px;
+    left: 164px;
+}
+.main-container .introduce > div > .contents .box-contents .map .marker.masan.active, .main-container .introduce > div > .contents .box-contents .map .marker.masan:hover {
+    left: 160px;
+}
+.main-container .introduce > div > .contents .box-contents .map .marker.daesan {
+    bottom: 264px;
+    left: 23px;
+}
+.main-container .introduce > div > .contents .box-contents .map .marker.daesan.active, .main-container .introduce > div > .contents .box-contents .map .marker.daesan:hover {
+    left: 19px;
+}
+.main-container .introduce > div > .contents .box-contents .map .marker.pohang {
+    bottom: 186px;
+    left: 244px;
+}
+.main-container .introduce > div > .contents .box-contents .map .marker.pohang.active, .main-container .introduce > div > .contents .box-contents .map .marker.pohang:hover {
+    left: 240px;
+}
+.main-container .introduce > div > .contents .box-contents .map .marker.gunsan {
+    bottom: 187px;
+    left: 50px;
+}
+.main-container .introduce > div > .contents .box-contents .map .marker.gunsan.active, .main-container .introduce > div > .contents .box-contents .map .marker.gunsan:hover {
+    left: 46px;
+}
+.main-container .introduce > div > .contents .box-contents .map .marker.mokpo {
+    bottom: 72px;
+    left: 9px;
+}
+.main-container .introduce > div > .contents .box-contents .map .marker.mokpo.active, .main-container .introduce > div > .contents .box-contents .map .marker.mokpo:hover {
+    left: 5px;
+}
+.main-container .introduce > div > .contents .box-contents .map .marker.donghae {
+    bottom: 321px;
+    left: 201px;
+}
+.main-container .introduce > div > .contents .box-contents .map .marker.donghae.active, .main-container .introduce > div > .contents .box-contents .map .marker.donghae:hover {
+    left: 197px;
+}
+.main-container .introduce > div > .contents .box-contents .map .marker.jeju {
+    bottom: 15px;
+    left: 36px;
+}
+.main-container .introduce > div > .contents .box-contents .map .marker.jeju.active, .main-container .introduce > div > .contents .box-contents .map .marker.jeju:hover {
+    left: 32px;
+}
+
+.main-container .links {
+    margin: 140px 0 250px 0;
+    text-align: center;
+}
+.main-container .links > div {
+    display: inline-block;
+    width: 420px;
+    height: 200px;
+    margin-top: 10px;
+    margin-right: 10px;
+    padding: 25px 0 0 30px;
+    font-size: 32px;
+    font-weight: 900;
+    color: #ffffff;
+    text-align: left;
+    cursor: pointer;
+}
+.main-container .links > div:last-child {
+    margin-right: 0;
+}
+.main-container .links > div.passage-plan {
+    background: url("../resources/background-sample/main_thumb1.png") center;
+    background-size: cover;
+}
+.main-container .links > div > div:last-child {
+    font-size: 27px;
+    font-weight: normal;
+}
+.main-container .links > div > div:last-child span:after {
+    content: '';
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top: 12px;
+    right: -24px;
+    background: url("../resources/icons/icon-navigation-arrow-forward-white.png") 16px 16px;
+    background-size: cover;
+}
+.sub-container .sub-title {
+    width: 100%;
+    height: 400px;
+}
+.introduce-container .sub-title {
+    background: url("../resources/background-sample/greet.png") center no-repeat;
+    background-size: cover;
+}
+.news-container .sub-title {
+    background: url("../resources/background-sample/news.png") center no-repeat;
+    background-size: cover;
+}
+.sub-container .sub-title dt {
+    padding-top: 128px;
+    font-size: 62px;
+    font-weight: 900;
+    text-align: center;
+    color: #ffffff;
+}
+.sub-container .sub-title dd {
+    font-size: 40px;
+    text-align: center;
+    color: #ffffff;
+}
+.sub-container .navigation {
+    width: 100%;
+    height: 70px;
+    background-color: #e9edf1;
+}
+.sub-container .navigation > div {
+    width: 1280px;
+    margin: 0 auto;
+}
+.sub-container .navigation > div > div {
+    display: inline-block;
+    font-size: 20px;
+    color: #000000;
+}
+.sub-container .navigation > div > div > div {
+    width: 230px;
+    min-height: 70px;
+    padding-top: 19px;
+    border: solid 1px #ffffff;
+    padding-left: 20px;
+    cursor: pointer;
+}
+.sub-container .navigation > div > div > div:after {
+    content: '';
+    position: absolute;
+    top: 23px;
+    right: 16px;
+    width: 24px;
+    height: 24px;
+    background: url("../resources/icons/icon-arrow-bottom.png") center no-repeat;
+    background-size: 24px 24px;
+}
+.sub-container .navigation > div > div.home > div {
+    width: 70px;
+    padding: 0;
+    background: url("../resources/icons/icon-home.png") center no-repeat;
+    background-size: 24px 24px;
+    font-size: 0;
+}
+.sub-container .navigation > div > div.home > div:after {
+    display: none;
+}
+.sub-container .navigation > div > div.home > div > a {
+    width: 68px;
+    height: 68px;
+}
+.sub-container .navigation > div > div ul {
+    position: absolute;
+    z-index: 2;
+    width: 230px;
+    height: 0;
+    border: solid 1px #ffffff;
+    background-color: #e9edf1;
+    margin-top: -1px;
+    margin-left: -1px;
+    transition: height .3s linear;
+}
+.sub-container .navigation > div > div:hover ul {
+    height: auto;
+}
+.sub-container .navigation > div > div ul li {
+    display: none;
+    height: 30px;
+    margin: 30px 0 0 20px;
+    cursor: pointer;
+}
+.sub-container .navigation > div > div:hover ul li {
+    display: block;
+}
+.sub-container .navigation > div > div ul li:last-child {
+    margin-bottom: 30px;
+}
+.sub-container .navigation > div > div > div:hover, .sub-container .navigation > div > div ul li.active, .sub-container .navigation > div > div ul li:hover {
+    color: #0070bf;
+}
+.sub-container .contents {
+    background: #ffffff;
+    padding-top: 130px;
+    padding-bottom: 250px;
+}
+.sub-container .contents > div {
+    width: 1280px;
+    margin: 0 auto;
+}
+.sub-container .contents .contents-title {
+    font-size: 62px;
+    font-weight: 900;
+    color: #000000;
+    margin-bottom: 80px;
+}
+.introduce-container .contents .greet {
+    display: flex;
+    font-size: 22px;
+    line-height: 2;
+    color: #000000;
+}
+.introduce-container .contents .greet > div:last-child {
+    flex: 1;
+    padding-left: 120px;
+}
+.introduce-container .contents .greet > div p:not(:first-child) {
+    padding: 30px 0;
+}
+.introduce-container .contents .greet > div > div {
+    height: 54px;
+    font-size: 28px;
+    text-align: right;
+    color: #000000;
+    line-height: 57px;
+}
+.introduce-container .contents .greet > div > div span.name {
+    font-size: 36px;
+    font-weight: bold;
+}
+.introduce-container .contents .history .tab-content .history > div:first-child {
+    width: 420px;
+    height: 560px;
+    background-image: url("../resources/images/history.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+.introduce-container .contents .history .tab-content .history > div:first-child > div {
+    position: absolute;
+    bottom: -145px;
+    width: 100%;
+    font-size: 100px;
+    font-weight: 900;
+    text-align: right;
+    color: #e9edf1;
+}
+.introduce-container .contents .history .tab-content .history > div:last-child img {
+    margin-left: 83px;
+    width: 777px;
+}
+.introduce-container .contents .history .tab-content .history > div:last-child img:last-child {
+    display: none;
+}
+.introduce-container .contents .history .tab-content .organ > div:first-child {
+    font-size: 32px;
+    line-height: 1.5;
+    color: #000000;
+}
+.introduce-container .contents .history .tab-content .organ > div:last-child {
+    padding-top: 80px;
+    text-align: center;
+}
+.introduce-container .contents .history .tab-content .organ > div:last-child img:last-child {
+    display: none;
+}
+
+.introduce-container .contents .honer .honorable > div {
+    display: inline-block;
+    font-size: 22px;
+    text-align: center;
+    color: #999999;
+}
+.introduce-container .contents .honer .honorable > div:not(:last-child) {
+    margin-right: 26px;
+}
+.introduce-container .contents .honer .honorable > div > img {
+    width: 300px;
+    height: 394px;
+}
+.introduce-container .contents .honer .honorable > div > div:not(:last-child) {
+    font-size: 28px;
+    color: #000000;
+}
+.introduce-container .contents .honer .honorable > div > div:not(:last-child) span {
+    font-weight: bold;
+}
+.introduce-container .contents .honer .summary {
+    font-size: 22px;
+    line-height: 2;
+    color: #000000;
+    padding: 100px 0 140px 0;
+}
+.introduce-container .contents .honer .honerList .list-title {
+    font-size: 42px;
+    font-weight: 900;
+    color: #000000;
+    margin-bottom: 56px;
+}
+.introduce-container .contents .honer .honerList .list-search form > * {
+    display: inline-block;
+}
+
+.introduce-container .contents .honer .honerList .list-search .search-bar > * {
+    display: inline-block;
+}
+.introduce-container .contents .honer .honerList .list-search .search-bar > * > * {
+    display: inline-block;
+    margin-right: 10px;
+}
+.introduce-container .contents .honer .honerList .list-search .search-bar > * > * > * {
+    width: 100%;
+    height: 60px;
+    border: solid 1px #999999;
+    background-color: #ffffff;
+    padding-left: 20px;
+    font-size: 22px;
+    line-height: 1.5;
+    color: #000000;
+}
+.introduce-container .contents .honer .honerList .list-search .search-bar > * > *:first-child,
+.introduce-container .contents .honer .honerList .list-search .search-bar > *:nth-child(2) > *:first-child {
+    width: 300px;
+}
+.introduce-container .contents .honer .honerList .list-search .search-bar > * > *:nth-child(2){
+    width: 200px;
+}
+.introduce-container .contents .honer .honerList .list-search .search-bar .select:after {
+    top: 18px;
+    right: 16px;
+}
+.introduce-container .contents .honer .honerList .list-search .search-bar button.btn {
+    width: 180px;
+    height: 60px;
+    margin-left: 10px;
+    padding: 0;
+    background-color: #0070bf;
+    font-size: 28px;
+    color: #ffffff;
+}
+.introduce-container .contents .honer .honerList .list {
+    margin-top: 50px;
+}
+.introduce-container .contents .honer .honerList .list:last-child {
+    display: none;
+}
+.introduce-container .contents .honer .honerList .list .thead .th {
+    width: calc(100% / 6);
+}
+.introduce-container .contents .honer .honerList .list .row {
+}
+.introduce-container .contents .honer .honerList .list .row .col {
+    width: calc(100% / 6);
+    text-align: center;
+}
+
+.passage-container .contents .calculation .input .thead .th:first-child, .passage-container .contents .calculation .input .row .col:first-child {
+    min-width: 200px;
+    text-align: center;
+}
+.passage-container .contents .calculation .input .thead .th:not(:first-child) {
+    flex: 1;
+}
+.passage-container .contents .calculation .input .row .col:not(:first-child) {
+    flex: 1;
+    padding-left: 20px;
+}
+.passage-container .contents .calculation .input .row .col > div {
+    padding: 15px 0;
+}
+.passage-container .contents .calculation .input .row .col > div > * {
+    vertical-align: middle;
+}
+.passage-container .contents .calculation .input .row .col .select:after {
+    top: 28px;
+    right: 16px;
+}
+.passage-container .contents .calculation .input .row .col > div.select, .passage-container .contents .calculation .input .row .col select {
+    width: 355px;
+}
+.passage-container .contents .calculation .input .row .col > div > label {
+    display: inline-block;
+    width: 480px;
+}
+.passage-container .contents .calculation .input .row .col > div > label > * {
+    vertical-align: middle;
+    line-height: 48px;
+}
+.passage-container .contents .calculation .input .row .col span {
+    height: 48px;
+    margin-left: 20px;
+}
+.passage-container .contents .calculation .input .row .col label span+input {
+    margin-left: 20px;
+}
+.passage-container .contents .calculation .input .row .col input[type=number].small {
+    width: 64px;
+}
+.passage-container .contents .calculation .btns {
+    padding: 110px 0 70px 0;
+    text-align: right;
+}
+.passage-container .contents .calculation .btns > * {
+    width: 240px;
+    height: 65px;
+    line-height: 65px;
+}
+.passage-container .contents .calculation .btns > *:not(:last-child) {
+    margin-right: 10px;
+}
+.passage-container .contents .calculation .btns .btn.calc {
+    position: relative;
+    background: #3349a4;
+    color: #ffffff;
+}
+.passage-container .contents .calculation .btns .btn.calc img {
+    display: inline-block;
+    vertical-align: sub;
+    margin-right: 5px;
+    font-size: 0;
+}
+.passage-container .contents .calculation .btns .btn.calc img:last-child {
+    display: none;
+}
+.passage-container .contents .calculation .result .th {
+    flex: 1;
+}
+.passage-container .contents .calculation .result .col:first-child {
+    width: 200px;
+    text-align: center;
+}
+.passage-container .contents .calculation .result .col:last-child {
+    font-size: 32px;
+    font-weight: bold;
+    color: #d11e14;
+    padding-left: 20px;
+}
+.passage-container .contents .calculation .result .col:last-child span {
+    vertical-align: baseline;
+}
+.passage-container .contents .calculation .alert {
+    padding-top: 10px;
+    font-size: 20px;
+    line-height: 1.5;
+    color: #0070bf;
+}
+.news-container .contents .contents-title a.webzine {
+    position: absolute;
+    top: 22px;
+    right: 0;
+    width: 195px;
+    height: 48px;
+    line-height: 44px;
+    border: solid 2px #000000;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    color: #000000;
+}
+.news-container .contents .contents-title a.webzine img {
+    width: 24px;
+    height: 24px;
+    vertical-align: sub;
+}
+.news-container .contents .search-bar {
+    margin-bottom: 50px;
+}
+.news-container .contents .search-bar > * {
+    display: inline-block;
+}
+.news-container .contents .search-bar > * > * {
+    display: inline-block;
+    margin-right: 10px;
+}
+.news-container .contents .search-bar > * .select:after {
+    top: 18px;
+    right: 16px;
+}
+.news-container .contents .search-bar > * select {
+    width: 200px;
+    height: 60px;
+    line-height: 60px;
+}
+.news-container .contents .search-bar > * input {
+    width: 300px;
+    height: 60px;
+    line-height: 60px;
+}
+.news-container .contents .search-bar > * button {
+    width: 180px;
+    height: 60px;
+    line-height: 60px;
+    margin-left: 10px;
+}
+.news-container .contents .notice .list .thead .th:first-child, .news-container .contents .notice .list .row .col:first-child,
+.news-container .contents .notice .list .thead .th:nth-child(3), .news-container .contents .notice .list .row .col:nth-child(3) {
+    width: 120px;
+    text-align: center;
+}
+.news-container .contents .notice .list .thead .th:nth-child(2), .news-container .contents .notice .list .row .col:nth-child(2) {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.news-container .contents .notice .list .thead .th:nth-child(4), .news-container .contents .notice .list .row .col:nth-child(4) {
+    width: 180px;
+    text-align: center;
+}
+.news-container .contents .notice .list .thead .th:nth-child(5), .news-container .contents .notice .list .row .col:nth-child(5) {
+    width: 200px;
+    text-align: center;
+}
+.news-container .contents .notice .list .row .col img {
+    vertical-align: sub;
+}
+.news-container .contents .list .row:last-child {
+    border-bottom: solid 2px #bbbbbb;
+}
+.news-container .contents .photoNews .list .row .col {
+    min-height: 300px;
+    line-height: inherit;
+    font-size: 0;
+    padding: 50px 0;
+}
+.news-container .contents .photoNews .list .row .col:first-child img {
+    width: 300px;
+    height: 200px;
+    margin: 0 40px;
+}
+.news-container .contents .photoNews .list .row .col:nth-child(2) {
+    flex: 1;
+    max-width: calc(100% - 380px - 64px);
+}
+.news-container .contents .photoNews .list .row .col:nth-child(2) > div:first-child {
+    font-size: 28px;
+    font-weight: bold;
+    line-height: 1.57;
+    color: #000000;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.news-container .contents .photoNews .list .row .col:nth-child(2) > div:nth-child(2) > div {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 18px;
+    color: #999999;
+}
+.news-container .contents .photoNews .list .row .col:nth-child(2) > div:nth-child(2) > div:not(:last-child) {
+    margin-right: 40px;
+}
+.news-container .contents .photoNews .list .row .col:nth-child(2) > div:last-child {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 100px;
+    font-size: 22px;
+    line-height: 1.5;
+    color: #000000;
+    margin-top: 30px;
+}
+.news-container .contents .photoNews .list .row .col:last-child {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.news-container .contents .promotionVideo .row {
+    display: inline-block;
+    width: calc(100% / 3);
+    min-height: 500px;
+    padding: 50px 40px;
+    border-bottom: 0;
+}
+.news-container .contents .promotionVideo .row:last-child, .news-container .contents .promotionVideo .row:nth-last-child(2), .news-container .contents .promotionVideo .row:nth-last-child(3) {
+    padding-bottom: 120px;
+    border-bottom: solid 2px #bbbbbb;
+}
+.news-container .contents .promotionVideo .row .col {
+    min-height: auto;
+    line-height: initial;
+}
+.news-container .contents .promotionVideo .row .col:first-child {
+    text-align: center;
+}
+.news-container .contents .promotionVideo .row .col:first-child img {
+    width: 100%;
+    height: auto;
+}
+.news-container .contents .promotionVideo .row .col:nth-child(2) {
+    font-size: 28px;
+    font-weight: bold;
+    color: #000000;
+    margin-top: 30px;
+}
+.news-container .contents .promotionVideo .row .col:nth-child(3) {
+    font-size: 22px;
+    line-height: 1.5;
+    color: #000000;
+    margin-top: 20px;
+}
+.news-container .contents .passage .tab-panel .tab-content > div {
+    padding-top: 50px;
+}
+.news-container .contents .passage .all .list {
+    border-bottom: solid 2px #bbbbbb;
+}
+.news-container .contents .passage .all .list > div {
+    text-align: center;
+}
+.news-container .contents .passage .all .list .thead {
+    margin-bottom: 50px;
+}
+.news-container .contents .passage .all .list .row {
+    display: inline-block;
+    width: calc((100% / 4) - 25px);
+    padding-bottom: 80px;
+    border-bottom: 0;
+}
+.news-container .contents .passage .all .list .row:not(:nth-child(4n+1)) {
+    margin-right: 25px;
+}
+.news-container .contents .passage .all .list .row:last-child {
+    border-bottom: 0;
+}
+.news-container .contents .passage .all .list .row .col:first-child img {
+    width: 100%;
+    height: auto;
+}
+.news-container .contents .passage .all .list .row .col:last-child {
+    background-color: #0070bf;
+    padding: 20px 30px;
+}
+.news-container .contents .passage .all .list .row .col:last-child > div {
+    font-size: 18px;
+    letter-spacing: -0.64px;
+    color: #ffffff;
+}
+.news-container .contents .passage .all .list .row .col:last-child > div > div {
+    display: inline-block;
+}
+.news-container .contents .passage .all .list .row .col:last-child > div > div:first-child {
+    width: 70px;
+    margin-right: 10px;
+}
+.news-container .contents .passage .all .list .row .col:last-child > div:first-child {
+    font-size: 22px;
+    font-weight: bold;
+    line-height: 1.27;
+    color: #ffffff;
+    margin-bottom: 15px;
+}
+.news-container .contents .passage .other .list .row .col img {
+    vertical-align: sub;
+}
+.news-container .contents .passage .other .list .thead .th:first-child,
+.news-container .contents .passage .other .list .row .col:first-child {
+    width: 160px;
+    text-align: center;
+}
+.news-container .contents .passage .other .list .thead .th:nth-child(2),
+.news-container .contents .passage .other .list .row .col:nth-child(2) {
+    width: 240px;
+    text-align: center;
+}
+.news-container .contents .passage .other .list .thead .th:nth-child(3),
+.news-container .contents .passage .other .list .row .col:nth-child(3) {
+    width: 180px;
+    text-align: center;
+    font-weight: bold;
+    color: #0070bf;
+}
+.news-container .contents .passage .other .list .thead .th:nth-child(4),
+.news-container .contents .passage .other .list .row .col:nth-child(4) {
+    flex: 1;
+    padding: 0 22px;
+}
+.news-container .contents .passage .other .list .thead .th:nth-child(5),
+.news-container .contents .passage .other .list .row .col:nth-child(5) {
+    width: 140px;
+    text-align: center;
+}
+
+.detail-content .title {
+    padding: 40px;
+    border-top: solid 4px #000000;
+    border-bottom: solid 1px #f0f0f0;
+}
+.detail-content .title > div:first-child {
+    font-size: 32px;
+    letter-spacing: -1.6px;
+    color: #000000;
+}
+.detail-content .title > div:last-child > div {
+    display: inline-block;
+    font-size: 18px;
+    color: #999999;
+    margin: 15px 30px 0 0;
+}
+.detail-content .content {
+    padding: 80px 40px;
+    font-size: 22px;
+    line-height: 2;
+    letter-spacing: -1px;
+    color: #000000;
+}
+.detail-content .list {
+    border-top: solid 2px #bbbbbb;
+    border-bottom: solid 2px #bbbbbb;
+}
+.detail-content .attached > div {
+    font-size: 20px;
+    line-height: 2.2;
+    color: #000000;
+    padding: 18px 0 18px 95px;
+}
+.detail-content .list > div:not(:last-child) {
+    border-bottom: solid 2px #f0f0f0;
+}
+.detail-content .attached > div.pdf:before {
+    content: '';
+    position: absolute;
+    top: 24px;
+    left: 40px;
+    width: 24px;
+    height: 32px;
+    background-image: url("../resources/icons/icon-pdf-24.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.detail-content .btns {
+    padding: 50px 0;
+    text-align: right;
+}
+.detail-content .btns > button {
+    width: 240px;
+    height: 65px;
+}
+.detail-content .histories {
+    margin-top: 50px;
+}
+.detail-content .histories > div {
+    height: 80px;
+    line-height: 80px;
+    font-size: 22px;
+    color: #999999;
+    padding-left: 230px;
+}
+.detail-content .histories > div.prev:before {
+    content: '다음글';
+    position: absolute;
+    left: 48px;
+    width: 122px;
+    background-image: url("../resources/icons/icon-arrow-up.png");
+    background-repeat: no-repeat;
+    background-position: right;
+    color: #000000;
+    letter-spacing: -0.79px;
+}
+.detail-content .histories > div.next:before {
+    content: '이전글';
+    position: absolute;
+    left: 48px;
+    width: 122px;
+    background-image: url("../resources/icons/icon-arrow-bottom.png");
+    background-repeat: no-repeat;
+    background-position: right;
+    color: #000000;
+    letter-spacing: -0.79px;
+}
+.detail-content.passage .content {
+    font-size: 0;
+    border-bottom: solid 2px #bbbbbb;
+}
+.detail-content.passage .content > div {
+    display: inline-block;
+}
+.detail-content.passage .content > div:first-child img {
+    width: 250px;
+    height: auto;
+}
+.detail-content.passage .content > div:last-child {
+    width: calc(100% - 250px);
+    padding-left: 60px;
+}
+.detail-content.passage .content > div .passage-info > div > div {
+    display: inline-block;
+    margin: 0 15px 12px 0;
+}
+.detail-content.passage .content > div .passage-info > div > div:first-child {
+    width: 90px;
+    font-size: 28px;
+    letter-spacing: -0.93px;
+    color: #999999;
+}
+.detail-content.passage .content > div .passage-info > div > div:last-child {
+    font-size: 28px;
+    font-weight: 500;
+    color: #000000;
+}
+.detail-content.passage .content > div .files {
+    padding-top: 66px;
+}
+.detail-content.passage .content > div .files dl {
+    width: 100%;
+    border-bottom: solid 1px #f0f0f0;
+    padding: 20px 0;
+}
+.detail-content.passage .content > div .files dl dt {
+    font-size: 28px;
+    font-weight: bold;
+    color: #0070bf;
+}
+.detail-content.passage .content > div .files dl dd > div {
+    display: inline-block;
+    vertical-align: middle;
+}
+.detail-content.passage .content > div .files dl dd > div:first-child {
+    width: calc(100% - 100px);
+    font-size: 22px;
+    line-height: 2;
+    letter-spacing: -1px;
+    color: #000000;
+}
+.detail-content.passage .content > div .files dl dd > div:last-child {
+    width: 100px;
+    text-align: center;
+}
+
+.list-pagination {
+    margin-top: 120px;
+}
+.list-pagination > div {
+    text-align: center;
+}
+.list-pagination a {
+    display: inline-block;
+    width: 48px;
+    height: 48px;
+    line-height: 48px;
+    font-size: 18px;
+    text-align: center;
+    color: #000000;
+}
+.list-pagination a.active {
+    background-color: #0070bf;
+    color: #ffffff;
+}
+.list-pagination a.firstpage {
+    background-image: url("../resources/icons/firstpage.png");
+}
+.list-pagination a.lastpage {
+    background-image: url("../resources/icons/lastpage.png");
+}
+.list-pagination a.pre {
+    background-image: url("../resources/icons/pre.png");
+    margin-right: 40px;
+}
+.list-pagination a.next {
+    background-image: url("../resources/icons/next.png");
+    margin-left: 40px;
+}
+
+
+.modal {
+    position: fixed;
+    display: block;
+    width: 100vw !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999;
+    height: 0;
+}
+.modal .modal-background {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 100vh;
+    background-color: #000;
+    opacity: .5;
+}
+.modal .modal-dialog {
+    width: 200px;
+    height: auto;
+    max-height: calc(100vh - 300px);
+    background-color: #fff;
+    margin: 150px auto 0 auto;
+    padding: 40px 60px 0 60px;
+    overflow: hidden;
+}
+.modal .modal-dialog .modal-dialog-title {
+    font-size: 36px;
+    font-weight: 900;
+    letter-spacing: -1px;
+    color: #000000;
+    margin-bottom: 10px;
+}
+.modal .modal-dialog .modal-dialog-title .btn-close {
+    position: absolute;
+    top: 7px;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    background-image: url("../resources/icons/btn-ui-40-close.png");
+    background-size: 40px 40px;
+}
+.modal .modal-dialog .modal-dialog-description {
+    font-size: 22px;
+    font-weight: normal;
+    letter-spacing: -1px;
+    color: #000000;
+}
+.modal .modal-dialog .modal-dialog-contents {
+    width: 100%;
+    max-height: calc(100vh - 160px - 325px);
+    overflow-y: auto;
+}
+.modal .modal-dialog .modal-dialog-contents dl dt {
+    font-size: 28px;
+    font-weight: bold;
+    line-height: 1.57;
+    color: #000000;
+    padding-bottom: 40px;
+}
+.modal .modal-dialog .modal-dialog-contents dl dd {
+
+}
+.modal .modal-dialog .modal-dialog-contents p {
+    font-size: 22px;
+    font-weight: normal;
+    letter-spacing: -1px;
+    color: #000000;
+    padding-bottom: 40px;
+}
+.modal .modal-dialog .modal-dialog-contents p.depth2 {
+    padding-left: 40px;
+    /*padding-bottom: 0;*/
+}
+.modal .modal-dialog .modal-dialog-contents input {
+    display: block;
+    width: -webkit-fill-available;
+    height: 70px;
+    border: solid 2px #f0f0f0;
+    font-size: 22px;
+    padding: 0 20px;
+    margin: 10px 0 0 0;
+}
+.modal .modal-dialog .modal-dialog-contents input::placeholder {
+    color: #999999;
+}
+.modal .modal-dialog .modal-dialog-footer {
+    padding-bottom: 60px;
+}
+.modal .modal-dialog .btn {
+    width: 100%;
+    height: 90px;
+    padding: 23px 0 22px 0;
+    text-align: center;
+}
+.modal .modal-dialog .btn.normal {
+    border: solid 1px #f0f0f0;
+    background-color: #006fbe;
+    font-size: 30px;
+    letter-spacing: -1px;
+    color: #ffffff;
+}
+.fade {
+    opacity: 0;
+    display: none;
+}
+.fade.in {
+    display: block;
+    -webkit-animation: fadein .2s linear forwards;
+    animation: fadein .2s linear forwards;
+}
+
+@keyframes fadein {
+    100% {
+        opacity: 1;
+        display: block;
+    }
+}
+
+.modal.login .modal-dialog {
+    width: 800px;
+}
+.modal.login .modal-dialog .modal-dialog-contents {
+    padding-top: 40px;
+}
+.modal.login .modal-dialog .btn {
+    margin-top: 37px;
+    width: 100%;
+}
+
+.modal.privacy-policy .modal-dialog, .modal.location .modal-dialog {
+    width: 1000px;
+    max-height: calc(100vh - 160px);
+    margin: 80px auto 0 auto;
+}
+.modal.privacy-policy .modal-dialog .modal-dialog-title, .modal.location .modal-dialog .modal-dialog-title {
+    padding-bottom: 41px;
+    margin-bottom: 40px;
+    border-bottom: 2px solid #f0f0f0;
+}
+.modal.location .modal-dialog .modal-dialog-contents {
+    font-size: 22px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 2;
+    letter-spacing: -1px;
+    color: #000000;
+    padding-bottom: 65px;
+}
+.modal.location .modal-dialog-contents .info {
+    margin-top: 45px;
+}
+.modal.location .modal-dialog-contents .info > div {
+    padding-bottom: 15px;
+}
+.modal.location .modal-dialog-contents .info > div:last-child {
+    padding-bottom: 0;
+}
+.modal.location .modal-dialog-contents .info > div > div {
+    display: inline-block;
+    vertical-align: top;
+    font-size: 22px;
+    line-height: 1.5;
+    letter-spacing: -1px;
+    color: #000000;
+    max-width: calc(100% - 100px);
+}
+.modal.location .modal-dialog-contents .info > div > div:first-child {
+    width: 70px;
+    height: 28px;
+    line-height: 28px;
+    border-radius: 13.5px;
+    background-color: #dbe7f0;
+    font-size: 16px;
+    letter-spacing: -1px;
+    color: #0070bf;
+    text-align: center;
+    margin-right: 30px;
+}
+.modal.location .modal-dialog-contents .map {
+    width: 100%;
+    height: 450px;
+}
+.modal.location .modal-dialog-contents .direction {
+    margin-top: 65px;
+}
+.modal.location .modal-dialog-contents .direction > div:first-child {
+    font-size: 28px;
+    font-weight: bold;
+    line-height: 1.57;
+    letter-spacing: -1.27px;
+    color: #000000;
+    margin-bottom: 30px;
+}
+.modal.location .modal-dialog-contents .direction > div:last-child {
+    padding: 25px 40px 25px 40px;
+    background-color: #f0f0f0;
+}
+.modal.location .modal-dialog-contents .direction > div:last-child dl {
+    padding-top: 40px;
+}
+.modal.location .modal-dialog-contents .direction > div:last-child dl:first-child {
+    padding-top: 0;
+}
+.modal.location .modal-dialog-contents .direction > div:last-child dt {
+    font-size: 22px;
+    font-weight: bold;
+    line-height: 1.5;
+    letter-spacing: -1px;
+    color: #000000;
+}
+.modal.location .modal-dialog-contents .direction > div:last-child dd {
+    margin-top: 20px;
+    font-size: 22px;
+    font-weight: normal;
+    line-height: 1.5;
+    letter-spacing: -1px;
+    color: #000000;
+}
+.modal.location .modal-dialog-contents .direction > div:last-child dd.notice {
+    color: #006fbe;
+}
+.modal.location .modal-dialog-contents .direction > div:last-child dd img {
+    top: 3px;
+    margin-right: 10px;
+}
