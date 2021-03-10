@@ -14,9 +14,10 @@
     .row:last-child {
         border-bottom: solid 1px #bbbbbb;
     }
-    .row .col {
+    .row {
         min-height: 40px;
-        line-height: 40px;
+    }
+    .row .col {
         font-size: 14px;
     }
 
@@ -33,7 +34,7 @@
         width: 100%;
     }
 
-    input[type=text], input[type=number] {
+    input[type=text], input[type=number], input[type=password] {
         width: 120px;
         height: 30px;
         font-size: 14px;
@@ -402,7 +403,7 @@
         width: 100%;
         height: 40px;
         background-color: #0070bf;
-        padding: 9px 18px;
+        padding: 0 18px;
         font-size: 15px;
         font-weight: bold;
         color: #ffffff;
@@ -852,32 +853,32 @@
         width: 16px;
         height: 16px;
     }
-    .news-container .contents .search-bar {
+    .contents .search-bar {
         margin-bottom: 35px;
     }
-    .news-container .contents .search-bar > *:nth-child(2) > *:first-child {
+    .contents .search-bar > *:nth-child(2) > *:first-child {
         width: calc(100% - 90px);
     }
-    .news-container .contents .search-bar > * .select:after {
+    .contents .search-bar > * .select:after {
         top: 8px;
         right: 6px;
     }
-    .news-container .contents .search-bar > *:last-child > *:last-child {
+    .contents .search-bar > *:last-child > *:last-child {
         margin-right: 0;
     }
-    .news-container .contents .search-bar > * select {
+    .contents .search-bar > * select {
         width: 105px;
         height: 40px;
         line-height: 40px;
     }
-    .news-container .contents .search-bar > * input {
+    .contents .search-bar > * input {
         height: 40px;
         line-height: 40px;
     }
-    .news-container .contents .search-bar > * input {
+    .contents .search-bar > * input {
         width: 100%;
     }
-    .news-container .contents .search-bar > * button {
+    .contents .search-bar > * button {
         width: 80px;
         height: 40px;
         line-height: 40px;
@@ -885,51 +886,56 @@
         letter-spacing: -0.91px;
         margin-left: 0;
     }
-    .news-container .contents .notice .list .thead .th {
+    .board .list .thead .th {
         display: none;
     }
-    .news-container .contents .notice .list .row {
+    .board .list .row {
         display: block;
+        padding: 10px;
     }
-    .news-container .contents .list .row:last-child {
+    .board .row:last-child {
         border-bottom: solid 1px #bbbbbb;
     }
-    .news-container .contents .notice .list .row .col {
+    .board .list .row .col {
         display: inline-block;
         min-height: auto;
         line-height: 36px;
     }
-    .news-container .contents .notice .list .row .col:first-child {
+    .board .list .row .col:first-child {
         display: none;
     }
-    .news-container .contents .notice .list .row .col:nth-child(2) {
+    .board .list .row .col:nth-child(2) {
+        display: block;
         width: calc(100% - 35px);
         font-size: 16px;
-        padding-left: 10px;
+        padding: 0;
+        /*padding-left: 10px;*/
     }
-    .news-container .contents .notice .list .row .col:nth-child(3) {
-        width: 35px;
-        padding: 0 10px;
-    }
-    .news-container .contents .notice .list .row .col:nth-child(3) img {
-        width: 15px;
-        height: 20px;
-    }
-    .news-container .contents .notice .list .row .col:nth-child(4) {
+    .board .list .row .col:nth-child(3) {
         width: auto;
         font-size: 14px;
         color: #999999;
-        padding-left: 10px;
         margin-right: 10px;
     }
-    .news-container .contents .notice .list .row .col:nth-child(5) {
+    .board .list .row .col:nth-child(4) {
         width: auto;
         font-size: 14px;
         color: #999999;
     }
-    .news-container .contents .photoNews .list .row .col {
-        min-height: auto;
-        padding: 10px 0;
+    .board .list .row .col:nth-child(5) {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 15px;
+        height: 20px;
+        padding: 0;
+    }
+    .board .list .row .col:nth-child(5) > a {
+        font-size: 0;
+    }
+    .board .list .row .col:nth-child(5) img {
+        width: 100%;
+        height: 100%;
     }
     .news-container .contents .photoNews .list .row .col:first-child img {
         width: 100px;
@@ -1097,7 +1103,7 @@
         color: #999999;
         margin: 10px 10px 0 0;
     }
-    .detail-content .content {
+    .detail-content > .content {
         padding: 20px 10px 40px 10px;
         font-size: 16px;
     }
@@ -1120,6 +1126,72 @@
         top: 15px;
         left: 10px;
     }
+    .detail-content .reply {
+        margin-top: 30px;
+    }
+    .detail-content .reply .title {
+        height: 50px;
+        line-height: 50px;
+        font-size: 16px;
+        padding: 0;
+    }
+    .detail-content .reply .title .cnt {
+        margin-left: 10px;
+    }
+    .detail-content .reply ul {
+        border-top: solid 1px #bbbbbb;
+    }
+    .detail-content .reply li > div {
+        padding: 20px 0;
+    }
+    .detail-content .reply li > div > div.profileImg {
+        width: 40px;
+    }
+    .detail-content .reply li > div > div.profileImg img {
+        width: 30px;
+        height: 30px;
+    }
+    .detail-content .reply li > div > div.content .writer {
+        font-size: 16px;
+    }
+    .detail-content .reply li > div > div.content .content {
+        font-size: 16px;
+        margin-top: 10px;
+    }
+    .detail-content .reply li > div > div.content .createdAt {
+        font-size: 14px;
+        margin-top: 10px;
+    }
+    .detail-content .reply li > div > div.content > div:last-child > button {
+        font-size: 14px;
+    }
+    .detail-content .reply li > div > div.content > div:last-child > button:not(:nth-child(2)) {
+        margin-right: 10px;
+    }
+    .detail-content .reply .write-reply {
+        padding: 20px 0;
+    }
+    .detail-content .reply .write-reply > div {
+        padding: 10px;
+    }
+    .detail-content .reply .write-reply > div > textarea {
+        padding: 17px 10px;
+        font-size: 16px;
+    }
+    .detail-content .reply .write-reply > div > textarea + div {
+        margin-top: 10px;
+    }
+    .detail-content .reply .write-reply > div > textarea + div label + span {
+        font-size: 14px;
+    }
+    .detail-content .reply .write-reply > div > textarea + div button {
+        width: 70px;
+        height: 35px;
+        line-height: 35px;
+        font-size: 16px;
+        margin-left: 20px;
+    }
+
     .detail-content .btns {
         padding: 20px 0;
     }
@@ -1182,6 +1254,75 @@
     .detail-content.passage .content > div .files dl dd > div:last-child {
         width: 50px;
     }
+    .community-container .contents .board > .btns {
+        margin-top: 30px;
+    }
+    .community-container .contents .board > .btns button {
+        width: 80px;
+        height: 40px;
+        font-size: 18px;
+    }
+    .community-container .contents .board.write .write-form .col input,
+    .community-container .contents .board.write .write-form .col input[type=password]{
+        min-width: unset;
+        width: 100%;
+        font-size: 14px;
+        line-height: normal;
+    }
+    .community-container .contents .board.write .write-form .col textarea {
+        height: 235px;
+        font-size: 14px;
+        line-height: normal;
+        padding: 5px 10px;
+    }
+    .community-container .contents .board.write .write-form .col:first-child {
+        width: 90px;
+        font-size: 14px;
+    }
+    .community-container .contents .board.write .write-form .col:not(:first-child) {
+        padding: 10px;
+    }
+    .community-container .contents .board.write .write-form .col .file_uploader {
+        width: 68px;
+        height: 30px;
+        font-size: 14px;
+        padding-top: 5px;
+    }
+    .community-container .contents .board.write .write-form .col .file_uploader > label {
+        padding: 5px 10px;
+    }
+    .community-container .contents .board.write .write-form .col .files > div {
+        font-size: 14px;
+        line-height: normal;
+    }
+    .community-container .contents .board.write .write-form .col .files > div > div.remove {
+        width: 16px;
+        height: 16px;
+        margin-left: 10px;
+    }
+    .community-container .contents .board.write .privacy-policy {
+        margin-top: 30px;
+    }
+    .community-container .contents .board.write .privacy-policy > div:first-child {
+        font-size: 16px;
+        letter-spacing: -1px;
+    }
+    .community-container .contents .board.write .privacy-policy > div:nth-child(2) {
+        height: 210px;
+        margin-top: 10px;
+        padding: 10px;
+        font-size: 14px;
+    }
+    .community-container .contents .board.write .privacy-policy > div:last-child {
+        margin-top: 10px;
+    }
+    .community-container .contents .board.write .privacy-policy > div:last-child label+span {
+        font-size: 16px;
+        margin-left: 10px;
+    }
+    .community-container .contents .board.write .btns button {
+        margin-left: 5px;
+    }
 
     .footer {
         height: auto;
@@ -1242,6 +1383,8 @@
     }
 
     .modal .modal-dialog {
+        width: calc(100vw - 40px) !important;
+        max-width: 500px;
         padding: 20px 30px 0 30px;
         margin: 70px auto 0 auto;
         max-height: calc(100vh - 140px);
@@ -1290,10 +1433,6 @@
         font-size: 22px;
     }
 
-    .modal.login .modal-dialog, .modal.privacy-policy .modal-dialog, .modal.location .modal-dialog {
-        width: calc(100vw - 20px);
-        max-width: 500px;
-    }
     .modal.login .modal-dialog .btn {
         margin-top: 20px;
     }
@@ -1342,23 +1481,27 @@
         width: 20px;
         height: 20px;
     }
+    .modal.pwdCheck .modal-dialog .modal-dialog-footer {
+        margin-top: 20px;
+    }
+
 }
 @media screen and (max-width: 480px) {
-    .news-container .contents .search-bar > * {
+    .contents .search-bar > * {
         width: 100%;
         max-width: 430px;
     }
-    .news-container .contents .search-bar > *:not(:first-child) {
+    .contents .search-bar > *:not(:first-child) {
         margin-top: 10px;
     }
-    .news-container .contents .search-bar > *:first-child > * {
+    .contents .search-bar > *:first-child > * {
         width: 100%;
         margin-right: 0;
     }
-    .news-container .contents .search-bar > * > *:last-child {
+    .contents .search-bar > * > *:last-child {
         margin-right: 0;
     }
-    .news-container .contents .search-bar > * select {
+    .contents .search-bar > * select {
         width: 100%;
     }
     .news-container .contents .promotionVideo .row {
