@@ -4029,7 +4029,7 @@ function get_doseongu_select($name, $start_id=0, $end_id=12, $selected="", $even
     for ($i=$start_id; $i<=$end_id; $i++) {
         $value = null;
         switch ($i){
-            case 0: $value = "도선구없음"; break;
+            case 0: $value = "해당사항없음"; break;
             case 1: $value = "부산항"; break;
             case 2: $value = "여수항"; break;
             case 3: $value = "인천항"; break;
@@ -4256,6 +4256,7 @@ function get_sms_mean_value($name, $start_id=0, $end_id=10, $selected="", $event
 function get_doseongu_name($name){
     $value = "";
     switch ($name){
+        case '': $value = "도선구없음"; break;
         case 0: $value = "도선구없음"; break;
         case 1: $value = "부산항"; break;
         case 2: $value = "여수항"; break;
@@ -4301,6 +4302,12 @@ function edu_type($value){
             break;
         case 'CC':
             $edu_type = '필수도선사교육';
+            break;
+        case 'CN':
+            $edu_type = '특별교육';
+            break;
+        case 'CF':
+            $edu_type = '특별교육';
             break;
     }
     return $edu_type;
@@ -4349,6 +4356,30 @@ function member_secession($mb_id)
     run_event('member_secession_after', $mb_id);
 }
 
+
+//날짜를 영문 표기 법으로 변경
+function date_change($val){
+    $date = date_create($val);
+    return date_format($date, "D. d, Y");
+}
+
+//관리자 교육 접수현황 자동 업뎃 시키기
+function admin_receipt_status($edu_idx,$edu_type,$count,$type){
+    //교육의 정원 구하기
+    $row_person = sql_fetch(" select edu_person from kmp_pilot_edu_list where edu_idx='{$edu_idx}' ");
+    //현재 신청자 구하기
+    $row_apply_cnt = sql_fetch(" select count(*) as cnt from kmp_pilot_edu_apply where apply_cancel = 'N' and edu_idx='{$edu_idx}' and edu_type = '{$edu_type}' ");
+    if($type == "in") $now_person = $row_apply_cnt['cnt'] + $count;   //관리자 등록일때 기존 신청자 + 관리자가 등록한 신청자 갯수
+    else if($type == "del") $now_person = $row_apply_cnt['cnt'] - $count;   //관리자 삭제일때 기존 신청자 - 관리자가 삭제한 신청자 갯수
+
+    if($row_person['edu_person'] <= $now_person){
+        //정원보다 신청자가 많아 졌을시 관리자 교육 접수현황 접수마감으로 변경
+        $result_up = sql_query(" update kmp_pilot_edu_list set edu_receipt_status = 'C' where edu_idx = '{$edu_idx}' ");
+    }else{
+        //신청자가 삭제되어 정원 보다 줄었을 경우
+        $result_up = sql_query(" update kmp_pilot_edu_list set edu_receipt_status = 'I' where edu_idx = '{$edu_idx}' ");
+    }
+}
 //회원 복구
 function member_return($mb_id)
 {
@@ -4449,3 +4480,6 @@ function get_grade_status_value($num){
     }
     return $value;
 }
+
+
+

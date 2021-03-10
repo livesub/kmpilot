@@ -26,7 +26,8 @@ if ($stx) {
 }
 
 if (!$sst) {
-    $sst = "H_RETIRE_DATE ASC, IDX DESC";
+    //$sst = "H_RETIRE_DATE ASC, IDX DESC";
+    $sst = "IDX DESC";
     //$sod = "desc";
 }
 
@@ -36,20 +37,11 @@ $sql = " select count(*) as cnt {$sql_common} {$sql_search}  {$sql_order} ";
 $row = sql_fetch($sql);
 $total_count = $row['cnt'];
 
-$rows = $config['cf_page_rows'];
+$rows = $config['cf_page_rows']; //한페이지당 보여줄것 
 $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if ($page < 1) $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
-//// 탈퇴회원수
-//$sql = " select count(*) as cnt {$sql_common} {$sql_search} and mb_leave_date <> '' {$sql_order} ";
-//$row = sql_fetch($sql);
-//$leave_count = $row['cnt'];
-//
-//// 차단회원수
-//$sql = " select count(*) as cnt {$sql_common} {$sql_search} and mb_intercept_date <> '' {$sql_order} ";
-//$row = sql_fetch($sql);
-//$intercept_count = $row['cnt'];
 
 $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목록</a>';
 
@@ -61,6 +53,18 @@ $sql = " select * {$sql_common} {$sql_search} {$sql_order} limit {$from_record},
 $result = sql_query($sql);
 
 $colspan = 16;
+
+if($_GET['msg'] == 'm'){
+    echo "<script> alert('수정되었습니다.'); 
+    location.replace('honor_member_list.php') ;
+    </script>";
+
+}else if($_GET['msg'] == 'd'){
+    echo "<script> alert('삭제되었습니다..');
+    location.replace('honor_member_list.php') ;
+    </script>";
+
+}
 ?>
 
     <div class="local_ov01 local_ov">
@@ -81,7 +85,7 @@ $colspan = 16;
 
     </form>
 
-    <form name="fmemberlist" id="fmemberlist" action="./member_list_update.php" onsubmit="return fmemberlist_submit(this);" method="post">
+    <form name="fmemberlist" id="fmemberlist" action="./honor_member_list_update.php" onsubmit="return fmemberlist_submit(this);" method="post">
         <input type="hidden" name="sst" value="<?php echo $sst ?>">
         <input type="hidden" name="sod" value="<?php echo $sod ?>">
         <input type="hidden" name="sfl" value="<?php echo $sfl ?>">
@@ -109,13 +113,13 @@ $colspan = 16;
                 <tbody>
                 <?php
                 for ($i=0; $row=sql_fetch_array($result); $i++) {
-                    $mb_id = $row['mb_id'];
+                    
                     $bg = 'bg'.($i%2);
                     ?>
 
                     <tr class="<?php echo $bg; ?>">
                         <td headers="mb_list_chk" class="td_chk" rowspan="">
-                            <input type="hidden" name="IDX_[<?php echo $i ?>]" value="<?php echo $row['IDX'] ?>" id="IDX_<?php echo $i ?>">
+                            <input type="hidden" name="IDX_<?php echo $i ?>" value="<?php echo $row['IDX'] ?>" id="IDX_<?php echo $i ?>">
                             <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo get_text($row['mb_name']); ?></label>
                             <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>">
                         </td>
@@ -126,7 +130,7 @@ $colspan = 16;
                         <td headers="mb_list_name" class="td_mbname"><?php echo get_text($row['H_USER_BIRTH']); ?></td>
                         <td headers="mb_list_name" class="td_mbname" ><?php echo get_text($row['H_RETIRE_DATE']); ?></td>
                         <td headers="mb_list_name" class="td_mbname">
-                            <select id="H_POSITION" name="H_POSITION">
+                            <select id="H_POSITION_<?=$i?>" name="H_POSITION_<?=$i?>">
                                 <option value="" <?=get_selected($row['H_POSITION'],'')?>>선택</option>
                                 <option value="1" <?=get_selected($row['H_POSITION'],1)?>>감사</option>
                                 <option value="2" <?=get_selected($row['H_POSITION'],2)?>>부회장</option>
@@ -172,6 +176,12 @@ $colspan = 16;
 
             if(document.pressed == "선택삭제") {
                 if(!confirm("선택한 회원을 정말 삭제하시겠습니까?")) {
+                    return false;
+                }
+            }
+
+            if(document.pressed == "선택수정") {
+                if(!confirm("선택한 회원을 정말 수정하시겠습니까?")) {
                     return false;
                 }
             }

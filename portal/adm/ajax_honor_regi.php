@@ -29,10 +29,10 @@ if($m == 'r'){
     $sql_sel_honor = " select * from kmp_MEMBER_HONOR where H_USER_ID = '{$mb_id}' ";
     $result_sel_honor = sql_fetch($sql_sel_honor);
     if($result_sel_honor['H_USER_ID']){
-        echo "이미 등록된 회원입니다.";
+        echo "1";
         exit;
     }else{
-        echo "등록 가능한 회원입니다.";
+        echo "2";
         exit;
     }
 
@@ -75,7 +75,7 @@ if($m == 'r'){
             echo "명예도선사 insert 구문 오류!";
             exit;
         }
-        echo "등록이 완료되었습니다.";
+        echo "3";
         exit;
     }
 //수정하기 일 경우 테스트 완료 kkw 2021.03.10 10:30
@@ -86,11 +86,12 @@ if($m == 'r'){
 
     //명예도선사 이미지 삭제가 있을 경우 삭제 하기 또는 이미지가 들어왔을 경우
     if((isset($_POST['del_m_image']) && $_POST['del_m_image'] != '') || (isset($_FILES['honor_pic']) && $_FILES['honor_pic'] != '')){
-        $sql_sel_user_img = " select * from kmp_MEMBER_HONOR where H_USER_ID = {$_POST['m_regi_id']} ";
+        $sql_sel_user_img = " select * from kmp_MEMBER_HONOR where H_USER_ID = '{$_POST['m_regi_id']}' ";
         $result_sel_user_img = sql_fetch($sql_sel_user_img);
         //이름을 찾아 그 파일 삭제
         $del_name = $honor_img_dir.$result_sel_user_img['H_USER_PHOTO'];
         unlink($del_name);
+
     }
     //이미지가 들어왔을 경우 넣고 DB에 저장
     if(isset($_FILES['honor_pic']) && $_FILES['honor_pic']){
@@ -103,7 +104,7 @@ if($m == 'r'){
         }
 
         //오류사항 점검
-        if(UPLOAD_ERR_OK !=$content_file['error']) {
+        if(UPLOAD_ERR_OK != $content_file['error']) {
             switch ($content_file['error']) {
                 case UPLOAD_ERR_INI_SIZE:
                     $message = "The uploaded file exceeds the upload_max_filesize directive in php.ini";
@@ -140,13 +141,13 @@ if($m == 'r'){
             @chmod($honor_img_dir, G5_DIR_PERMISSION);
 
             //파일이름 암호화 해놓기
-            $md_name_modi = md5($content_file['name']);
+            $md_name_modi = md5($content_file['name'].rand(0,9));
             //확장자 나누기
             $ext_file = explode('/', $content_file['type']);
 
             //저장될 이름
             $save_name = $md_name_modi.".".$ext_file[1];
-
+            $dest_path = '';
             $dest_path = $honor_img_dir.$md_name_modi.".".$ext_file[1];
 
             move_uploaded_file($content_file['tmp_name'], $dest_path);
@@ -155,10 +156,10 @@ if($m == 'r'){
         }
 
     }
-    $save_name_query = '';
-    if($save_name != ''){
-        $save_name_query = "H_USER_PHOTO = '{$save_name}' ,";
-    }
+    
+    
+    $save_name_query = "H_USER_PHOTO = '{$save_name}' ,";
+    
     
     //DB에 추가 하기
     $sql_up_honor = "update kmp_MEMBER_HONOR set H_USER_GROUP_KEY = '{$_POST['H_USER_GROUP_KEY']}' , H_USER_NAME = '{$_POST['H_USER_NAME']}' , {$save_name_query} H_POSITION = '{$_POST['H_POSITION']}' , H_USER_BIRTH = '{$_POST['H_USER_BIRTH']}' ,
@@ -168,13 +169,105 @@ if($m == 'r'){
         echo "update 문 오류 발생";
         exit;
     }
-    echo "수정이 완료되었습니다.";
+    echo "4";
     exit;
 
 
 //신규등록 일 경우
 }else if($m =='n'){
-    echo "신규등록입니다.";
-    exit;
+    //신규 등록 시 테이블 등록된 거랑 같은게 있는지 확인
+    $sql_sel_new_reg = "select * from kmp_MEMBER_HONOR where H_USER_GROUP_KEY = '{$_POST['new_doseongu']}' and  H_USER_NAME = '{$_POST['new_name']}' and H_POSITION = '{$_POST['new_position']}' and H_USER_BIRTH = '{$_POST['new_birth_year']}' and H_RETIRE_DATE = '{$_POST['new_retire_year']}' ";
+    $result_sel_new_reg = sql_fetch($sql_sel_new_reg);
+    if($result_sel_new_reg['H_USER_NAME']){
+        echo" 동일한 회원이 등록되어있습니다!";
+        exit;
+    }
+
+    $save_name_new = ''; //저장될 이름을 담는 변수
+    $new_file = '';
+    //파일이 있을 경우 업로드 필요
+    if(isset($_FILES['new_photo']) && $_FILES['new_photo'] != ''){
+        
+        $new_file = $_FILES['new_photo'];
+
+        //형식이 맞지 않을 경우 돌려보내기
+        if (!preg_match($image_regex, $new_file['name'])) {
+            echo $new_file['name']." 은(는) 이미지 파일이 아닙니다.";
+            exit;
+        }
+        //형식이 맞을 경우 실행
+        if (preg_match($image_regex, $new_file['name'])) {
+
+            //폴더 있는지 확인 없을 경우 생성
+            if( !is_dir($honor_img_dir) ){
+                @mkdir($honor_img_dir, G5_DIR_PERMISSION);
+                @chmod($honor_img_dir, G5_DIR_PERMISSION);
+            }
+
+            //오류사항 점검
+            if(UPLOAD_ERR_OK !=$new_file['error']) {
+                switch ($new_file['error']) {
+                    case UPLOAD_ERR_INI_SIZE:
+                        $message = "The uploaded file exceeds the upload_max_filesize directive in php.ini";
+                        break;
+                    case UPLOAD_ERR_FORM_SIZE:
+                        $message = "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form";
+                        break;
+                    case UPLOAD_ERR_PARTIAL:
+                        $message = "The uploaded file was only partially uploaded";
+                        break;
+                    case UPLOAD_ERR_NO_FILE:
+                        $message = "No file was uploaded";
+                        break;
+                    case UPLOAD_ERR_NO_TMP_DIR:
+                        $message = "Missing a temporary folder";
+                        break;
+                    case UPLOAD_ERR_CANT_WRITE:
+                        $message = "Failed to write file to disk";
+                        break;
+                    case UPLOAD_ERR_EXTENSION:
+                        $message = "File upload stopped by extension";
+                        break;
+                    default:
+                        $message = "Unknown upload error";
+                        break;
+                }
+            echo "신규 등록 파일 오류 사항 : ".$message;
+            exit;
+            }
+
+            //파일이름 암호화하기
+            //파일이름 암호화 해놓기
+            $md_name_new = md5($new_file['name'].rand(0,9));
+            //확장자 나누기
+            $ext_file = explode('/', $new_file['type']);
+
+            //저장될 이름
+            $save_name_new = $md_name_new.".".$ext_file[1];
+            $dest_path = '';
+            $dest_path = $honor_img_dir.$md_name_new.".".$ext_file[1];
+
+            move_uploaded_file($new_file['tmp_name'], $dest_path);
+            chmod($dest_path, G5_FILE_PERMISSION);
+            
+        }
+    }
+
+        $save_name_new_query = '';
+
+        if($save_name_new != ''){
+            $save_name_new_query = "H_USER_PHOTO = '{$save_name_new}' ,";
+        }
+
+        $sql_in_new_honor =  "insert into kmp_MEMBER_HONOR set H_USER_GROUP_KEY = '{$_POST['new_doseongu']}' ,  H_USER_NAME = '{$_POST['new_name']}' , {$save_name_new_query} H_POSITION = '{$_POST['new_position']}' , H_USER_BIRTH = '{$_POST['new_birth_year']}' ,
+                                H_RETIRE_DATE = '{$_POST['new_retire_year']}', REG_DATE = now() , REG_IP = '{$_SERVER["REMOTE_ADDR"]}'";
+                            
+        $result_new_honor = sql_query($sql_in_new_honor);
+        if(!$result_new_honor){
+            echo "신규등록 오류! : ".$sql_in_new_honor;
+            exit;
+        }
+        echo "5";
+        exit;
     
 }

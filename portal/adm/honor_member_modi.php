@@ -4,6 +4,7 @@ include_once ("./_common.php");
 //alert('들어왔나?');
 ?>
  <script src="../js/jquery-1.12.4.min.js"></script>
+ <script src="../js/jquery.form.js"></script>
 <?php
 $w = $_GET['w'];
 if($w == 'u'){
@@ -30,7 +31,7 @@ if($w == 'u'){
         <tr>
             <input type="hidden" name="m_regi_id" id="m_regi_id" value="<?=$result_honor['H_USER_ID']?>">
             <th>이름(한글)</th>
-            <td><input type="text" id="H_USER_NAME" name="H_USER_NAME" value="<?=$result_honor['H_USER_NAME']?>"></td>
+            <td><input type="text" id="H_USER_NAME" name="H_USER_NAME" value="<?=$result_honor['H_USER_NAME']?>" required pattern="[가-힣]+"></td>
         </tr>
         <tr>
             <th>사진</th>
@@ -50,11 +51,11 @@ if($w == 'u'){
         </tr>
         <tr>
             <th>생년</th>
-            <td><input type="text" id="H_USER_BIRTH" name="H_USER_BIRTH" value="<?=$result_honor['H_USER_BIRTH']?>" maxlength="4">ex) 1996</td>
+            <td><input type="text" id="H_USER_BIRTH" name="H_USER_BIRTH" value="<?=$result_honor['H_USER_BIRTH']?>" minlength="4" maxlength="4" >ex) 1996</td>
         </tr>
         <tr>
             <th>퇴직</th>
-            <td><input type="text" id="H_RETIRE_DATE" name="H_RETIRE_DATE" value="<?=$result_honor['H_RETIRE_DATE']?>" maxlength="4">ex) 1996</td>
+            <td><input type="text" id="H_RETIRE_DATE" name="H_RETIRE_DATE" value="<?=$result_honor['H_RETIRE_DATE']?>" minlength="4" maxlength="4" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">ex) 1996</td>
         </tr>
         <tr>
             <th>소속</th>
@@ -79,7 +80,7 @@ if($w == 'u'){
 </form>
 
 <?php } else if($w == 'i'){?>
-<!-- <body onbeforeunload="close_pop()"> -->
+<body onbeforeunload="close_pop()">
     <label for="regi_user">
         <input type="radio" name="regi_user" id="regi_user" onclick="checked_div()">
         사용자 지정
@@ -93,7 +94,7 @@ if($w == 'u'){
             <table>
                 <tr>
                     <th>이름(한글)</th>
-                    <td><input type="text" id="regi_name" name="regi_name" readonly><button type="button" onclick="open_popup('',450,450,'honor_member_search.php','honor_member_search')">사용자 찾기</button></td>
+                    <td><input type="text" id="regi_name" name="regi_name" readonly required pattern="[가-힣]+"><button type="button" onclick="open_popup('',450,450,'honor_member_search.php','honor_member_search')">사용자 찾기</button></td>
                     <input type="hidden" id="regi_id" name="regi_id" value="">
                 </tr>
                 <tr>
@@ -103,11 +104,11 @@ if($w == 'u'){
         </form>
     </div>
     <div id="new_div" onbeforeunload="close_pop()">
-        <form id="new_form" name="new_form" method="post" onsubmit="ajax_honor_sel('n', 'new_form')">
+        <form id="new_form" name="new_form" method="post" enctype="multipart/form-data" onsubmit="ajax_honor_sel('n', 'new_form')">
             <table>
                 <tr>
                     <th>이름(한글)</th>
-                    <td><input type="text" id="new_name" name="new_name"></td>
+                    <td><input type="text" id="new_name" name="new_name" required pattern="[가-힣]+"></td>
                 </tr>
                 <tr>
                     <th>사진</th>
@@ -115,11 +116,11 @@ if($w == 'u'){
                 </tr>
                 <tr>
                     <th>생년</th>
-                    <td><input type="text" id="new_birth_year" name="new_birth_year">ex) 1996</td>
+                    <td><input type="text" id="new_birth_year" name="new_birth_year" minlength="4" maxlength="4" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">ex) 1996</td>
                 </tr>
                 <tr>
                     <th>퇴직년</th>
-                    <td><input type="text" id="new_retire_year" name="new_retire_year" minlength="4" maxlength="4">ex) 1996</td>
+                    <td><input type="text" id="new_retire_year" name="new_retire_year" minlength="4" maxlength="4" maxlength="4" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">ex) 1996</td>
                 </tr>
                 <tr>
                     <th>소속</th>
@@ -143,7 +144,7 @@ if($w == 'u'){
             </table>
         </form>
     </div>
-<!-- s -->
+</body>
 <?php }?>
 <script>
     let child = '';
@@ -152,16 +153,19 @@ if($w == 'u'){
     //     checked_div();
     // });
     function checked_div(){
-        let new_div = document.getElementById('new_div');
-        let regi_div = document.getElementById('regi_div');
+        
+        let new_div = $('#new_div');
+        let regi_div = $('#regi_div');
         if($('input[id="regi_user"]').is(':checked')){
             //console.log('사용자 지정 체크');
-            new_div.style.display = 'none';
-            regi_div.style.display = 'block';
+            new_div.css("display", "none");
+            regi_div.css("display", "block");
+            
         }else if($('input[id="new_user"]').is(':checked')){
             //console.log('신규 등록 체크');
-            new_div.style.display = 'block';
-            regi_div.style.display = 'none';
+            new_div.css("display", "block");
+            regi_div.css("display", "none");
+            
         }
     }
     function open_popup(id,width,height,action,target){
@@ -182,54 +186,83 @@ if($w == 'u'){
 
     //text 창 값 변화 시 ajax를 이용 honor 멤버 체크를 하는 함수
     function ajax_honor_sel(id,form){
-        console.log(2);
+        //console.log(2);
         //if(document.getElementById('regi_name').value != ''){
         //console.log(document.getElementById('regi_id').value);
         let ajaxUrl_1 = '';
         ajaxUrl_1 = "ajax_honor_regi.php?m="+id;
-        console.log(ajaxUrl_1);
+        //console.log(ajaxUrl_1);
         let form_id = "#"+form;
-        //let queryString_regi_form = $("form[name=regi_form]").serialize();
-        let queryString_regi_form = $(form_id).serialize();
-        $.ajax({
-            type		: "POST",
-            dataType    : "text",
-            url			: ajaxUrl_1,
-            data        : queryString_regi_form,
-            success: function(data){
-                switch (data){
-                    case "이미 등록된 회원입니다." : alert(data);  $('#save_regi').attr('disabled',true); break;
-                    case "등록 가능한 회원입니다." : alert(data); $('#save_regi').attr('disabled',false); break;
-                    case "등록이 완료되었습니다." : alert(data);  opener.parent.location.reload();
+    
+        // let queryString_regi_form = $(form_id).serialize();
+        // $.ajax({
+        //     type		: "POST",
+        //     dataType    : "text",
+        //     url			: ajaxUrl_1,
+        //     data        : queryString_regi_form,
+        //     success: function(data){
+        //         switch (data){
+        //             case "이미 등록된 회원입니다." : alert(data);  $('#save_regi').attr('disabled',true); break;
+        //             case "등록 가능한 회원입니다." : alert(data); $('#save_regi').attr('disabled',false); break;
+        //             case "등록이 완료되었습니다." : alert(data);  opener.parent.location.reload();
+        //                 window.close(); break;
+        //             case "수정이 완료되었습니다." : alert(data);  opener.parent.location.reload();
+        //                 window.close(); break;
+        //             case "신규등록이 완료되었습니다.": alert(data);  opener.parent.location.reload();
+        //                 window.close(); break;
+        //             default : alert(data); opener.parent.location.reload();
+        //                 window.close(); break;
+        //         }
+        //     },
+        //     error: function () {
+        //         console.log('error');
+        //     }
+        // });
+        $(form_id).ajaxSubmit({
+                url : ajaxUrl_1,
+                beforeSubmit: function (data,form,option) {
+                    //validation체크
+                    //막기위해서는 return false를 잡아주면됨
+                    //alert('보내기 전 입니다.')
+                    return true;
+                },
+                success: function(data){
+                    //성공후 서버에서 받은 데이터 처리
+                    switch (data){
+                    case "1" : 
+                                alert('이미 등록된 회원입니다. \n 다시 선택해주세요');
+                                $('#regi_name').val('');
+                                $('#save_regi').attr('disabled',true); 
+                                break;
+                    case "2" : alert("등록 가능한 회원입니다."); $('#save_regi').attr('disabled',false); break;
+                    case "3" : alert("등록이 완료되었습니다.");  opener.parent.location.reload();
                         window.close(); break;
-                    // case "수정하기 입니다." : alert(data);  opener.parent.location.reload();
-                    //     window.close(); break;
-                    default : alert(data); opener.parent.location.reload();
+                    case "4" : alert("수정이 완료되었습니다.");  opener.parent.location.reload();
                         window.close(); break;
+                    case "5": alert("신규등록이 완료되었습니다.");  opener.parent.location.reload();
+                        window.close(); break;
+                    default : alert(data); break;
                 }
-            },
-            error: function () {
-                console.log('error');
-            }
-        });
-        //    }
+                },
+                error: function(data){
+                    //에러발생을 위한 code페이지
+                    console.log('에러발생 : '+data);
+                }
+            });
     }
 
-
     function data_sel(data,data2){
-        console.log(1);
-        let regi_name = document.getElementById('regi_name').setAttribute('value',data);
-        let regi_id = document.getElementById('regi_id').setAttribute('value',data2);
-        //regi_name.value = data;
-        //regi_name.setAttribute('value',data);
-        //regi_id.setAttribute('value',data2);
-        //regi_id.value = data2;
-        //console.log(regi_id.value);
+        //console.log(1);
+        // let regi_name = document.getElementById('regi_name').setAttribute('value',data);
+        // let regi_id = document.getElementById('regi_id').setAttribute('value',data2);
+        $('#regi_name').val(data);
+        $('#regi_id').val(data2);
+    
         ajax_honor_sel('r','regi_form');
     }
 
     function close_pop(){
-        console.log(33333);
+        //console.log(33333);
         window.close();
         if(child != ''){
             child.close();
