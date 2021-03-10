@@ -42,10 +42,24 @@ $ajaxpage = G5_URL.'/lang_change_portal.php';
 	            <li><a href="<?php echo G5_BBS_URL ?>/new.php">새글</a></li>
 	            <li><a href="<?php echo G5_BBS_URL ?>/current_connect.php" class="visit"><?=$lang['connect_user']?><strong class="visit-num"><?php echo connect(); // 현재 접속자수, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정 ?></strong></a></li>
 	            <li>
+<?php
+    if($lang_type_portal == "kr" || $lang_type_portal == ""){
+?>
+    <a href="javascript:lang_change('en');">ENG</a>
+<?php
+    }else{
+?>
+    <a href="javascript:lang_change('kr');">KOR</a>
+<?php
+    }
+?>
+
+<!--
 	            <select name="lang_change" id="lang_change" onchange="lang_change();">
                     <option value="kr" <?php if($lang_type_portal == "kr" || $lang_type_portal == "") echo "selected"?>>KOREA</option>
                     <option value="en" <?php if($lang_type_portal == "en") echo "selected"?>>ENGLISH</option>
                 </select>
+-->
                 </li>
 	        </ul>
 		</div>
@@ -277,7 +291,8 @@ $ajaxpage = G5_URL.'/lang_change_portal.php';
                     $("#gnb_all, #gnb_all_bg").hide();
                 });
             });
-            function lang_change()
+
+            function lang_change(lang_type)
             {
                 var ajaxUrl = "<?=$ajaxpage?>";
                 $.ajax({
@@ -285,7 +300,7 @@ $ajaxpage = G5_URL.'/lang_change_portal.php';
                     dataType    : "text",
                     url			: ajaxUrl,
                     data		: {
-                        "lang_type" : $("#lang_change").val(),
+                        "lang_type" : lang_type,
                     },
                     success: function(data){
                         if(trim(data) == "en"){
