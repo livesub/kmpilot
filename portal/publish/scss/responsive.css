@@ -1,5 +1,9 @@
 @charset "UTF-8";
 @media screen and (max-width: 1024px) {
+    .modal-open {
+        padding-right: 0;
+    }
+
     body::-webkit-scrollbar { display:none; }
 
     .thead .th {

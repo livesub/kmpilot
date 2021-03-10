@@ -161,6 +161,7 @@
 
 .modal-open {
     overflow: hidden;
+    padding-right: 17px;
 }
 .main-container {
     display: block;
