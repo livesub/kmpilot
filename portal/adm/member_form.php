@@ -329,6 +329,13 @@ if($row_edu_apply_list){
         </td>
     </tr>
     <tr>
+        <th scope="row"><label for="mb_retire_date">퇴직년도</label></th>
+        <td><label for="chk_retire">퇴직처리</label>
+            <input type="checkbox" name="chk_retire" id="chk_retire" onclick="retire_check()">
+            <input type="text" maxlength="4" minlength="4" name="mb_retire_date" id="mb_retire_date" <?php echo $mb['mb_retire_date']? '': 'disabled' ?>>ex) 1996
+        </td>
+    </tr>
+    <tr>
         <th scope="row"><label for="mb_doseongu">도선구</label></th>
         <td><?php echo get_doseongu_select('mb_doseongu', 0, 12, $mb['mb_doseongu'], $smj_only) ?></td>
         <th scope="row"><label for="mb_lead_code">도선약호</label></th>
@@ -720,6 +727,7 @@ $sql_sel_punish = " select *
             ";
 $result_punish = sql_query($sql_sel_punish);
 ?>
+<?php if($w == 'u'){?>
     <div><h2>해심재결사항 기록</h2></div>
     <form name="fauthlist" id="fauthlist" method="post" action="./member_form_punishment_delete.php" onsubmit="return fauthlist_submit(this);">
     <input type="hidden" name="sst" value="<?php echo $sst ?>">
@@ -786,11 +794,13 @@ $result_punish = sql_query($sql_sel_punish);
             </tbody>
         </table>
     </div>
-
+        <?php if ($w == 'u' && $smj_only == '') { ?>
     <div class="btn_list01 btn_list">
         <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value" class="btn btn_02">
     </div>
+       <?php }?>
 
+    <?php } ?>
 <?php
 //if (isset($stx))
 //    echo '<script>document.fsearch.sfl.value = "'.$sfl.'";</script>'."\n";
@@ -832,6 +842,15 @@ else
     //         $('#mb_punishment').append("<option class=punish_value value='"+($key+$i)+"'>"+$punish_array[$i]+"</option>");
     //     }
     // }
+    //퇴직처리 함수
+    function retire_check(){
+        let chk_box = $("input:checkbox[name=chk_retire]");
+        if(chk_box.is(":checked")){
+            $('#mb_retire_date').attr('disabled', false);
+        }else if(!chk_box.is(":checked")){
+            $('#mb_retire_date').attr('disabled', true);
+        }
+    }
     $(function(){
         $(".datepicker").datepicker({ changeMonth: true, changeYear: true, dateFormat: "yy-mm-dd", showButtonPanel: false });
     });

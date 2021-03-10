@@ -17,7 +17,7 @@ date_default_timezone_set("Asia/Seoul");
     경로 상수
 ********************/
 //다른 디랙토리에 data 디렉토리(첨부파일) 을 portal/data ㅇ에서 같이 쓰기 위해 강제로 쎄팅
-define('PORTAL_DATA_URL', 'http://localhost/kmpilot/portal/data');
+define('PORTAL_DATA_URL', 'http://localhost/portal/data');
 define('PORTAL_DATA_PATH', $_SERVER['DOCUMENT_ROOT'].'/portal/data');
 //define('PORTAL_DATA_PATH', '/var/www/html/portal/data');
 //다른 디렉토리에서 lib디렉토리 를 edu에서도 같이 쓰기 위해 설정

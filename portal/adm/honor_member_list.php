@@ -134,7 +134,7 @@ $colspan = 16;
                                 <option value="4" <?=get_selected($row['H_POSITION'],4)?>>고문</option>
                             </select>
                         </td>
-                        <td headers="mb_list_mng" rowspan="" class="td_mng td_mng_s"><button type="button" class="btn btn_03" onclick="open_popup(<?=$row['IDX']?>,500,500,'honor_member_modi.php?w=u','honor_member_modi','honor_member_id')">수정</button></td>
+                        <td headers="mb_list_mng" rowspan="" class="td_mng td_mng_s"><button type="button" class="btn btn_03" onclick="open_popup(<?=$row['IDX']?>,600,500,'honor_member_modi.php?w=u','honor_member_modi','honor_member_id')">수정</button></td>
                     </tr>
                     <?php
                 }

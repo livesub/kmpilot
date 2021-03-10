@@ -4029,7 +4029,7 @@ function get_doseongu_select($name, $start_id=0, $end_id=12, $selected="", $even
     for ($i=$start_id; $i<=$end_id; $i++) {
         $value = null;
         switch ($i){
-            case 0: $value = "해당사항없음"; break;
+            case 0: $value = "도선구없음"; break;
             case 1: $value = "부산항"; break;
             case 2: $value = "여수항"; break;
             case 3: $value = "인천항"; break;
@@ -4256,7 +4256,7 @@ function get_sms_mean_value($name, $start_id=0, $end_id=10, $selected="", $event
 function get_doseongu_name($name){
     $value = "";
     switch ($name){
-        case 0: $value = "해당사항없음"; break;
+        case 0: $value = "도선구없음"; break;
         case 1: $value = "부산항"; break;
         case 2: $value = "여수항"; break;
         case 3: $value = "인천항"; break;
