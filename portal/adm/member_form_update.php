@@ -72,6 +72,7 @@ $check_keys = array(
     'mb_group',
     'required_pilot_status_from',
     'required_pilot_status_to',
+    'mb_retire_date',
 );
 
 for($i=1;$i<=10;$i++){
@@ -119,7 +120,8 @@ $sql_common = "  mb_name = '{$posts['mb_name']}',
                  mb_license_ext_day_from = '{$posts['mb_license_ext_day_from']}',
                  mb_license_ext_day_to = '{$posts['mb_license_ext_day_to']}',
                  required_pilot_status_from = '{$posts['required_pilot_status_from']}',
-                 required_pilot_status_to = '{$posts['required_pilot_status_to']}' ";
+                 required_pilot_status_to = '{$posts['required_pilot_status_to']}',
+                 mb_retire_date = '{$posts['mb_retire_date']}'  ";
 $mb_group = $posts['mb_group'];
 
 if ($w == '')
@@ -147,8 +149,10 @@ if ($w == '')
     if (isset($row['mb_id']) && $row['mb_id'])
         alert('똑같은 권한을 가진 아이디가 있습니다.\\nＩＤ : '.$row['mb_id'].'\\n이름 : '.$row['mb_name'].'\\n메일 : '.$row['mb_email']);
 
-    $sql_group_insert = " insert into {$g5['group_member_table']} set gr_id = '{$mb_group}', mb_id = '{$mb_id}', gm_datetime = '".G5_TIME_YMDHIS."'";
-    sql_query($sql_group_insert);
+    if($mb_group != ''){
+        $sql_group_insert = " insert into {$g5['group_member_table']} set gr_id = '{$mb_group}', mb_id = '{$mb_id}', gm_datetime = '".G5_TIME_YMDHIS."'";
+        sql_query($sql_group_insert);    
+    }
 }
 else if ($w == 'u')
 {
@@ -365,6 +369,12 @@ if( $w == '' || $w == 'u' ){
 }
 
 run_event('admin_member_form_update', $w, $mb_id);
-
-goto_url('./member_form.php?'.$qstr.'&amp;w=u&amp;mb_id='.$mb_id, false);
+$msg = '';
+if($w == ''){
+    $msg='i&';
+}else if($w == 'u'){
+    $msg='u&';
+}
+//여기서 alert 창에 대한 분기점이 필요할 듯 하다.
+goto_url('./member_form.php?msg='.$msg.$qstr.'&amp;w=u&amp;mb_id='.$mb_id, false);
 //goto_url('./member_list.php', false);

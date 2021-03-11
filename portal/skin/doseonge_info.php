@@ -10,6 +10,9 @@ if($idx == '' || $idx == null){
 
 $sql_list_sel_info = " select * from CMS_MAGAZINE_NEW_TEST where IDX = {$idx} ";
 $result_list_sel = sql_fetch($sql_list_sel_info);
+if(!$result_list_sel){
+    alert('해당되는 도선지가 없습니다! \n다시 시도해주세요');
+}
 
 $sql_info_sel = " select * from CMS_MAGAZINE_NEW_TEST where PARENTIDX = {$idx} order by IDX";
 $result_info_sel = sql_query($sql_info_sel);

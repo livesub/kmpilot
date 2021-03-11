@@ -52,7 +52,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
                 </li>
                 <li>
                     <label for="mb_birth">생년월일</label><br>
-                    <input type="date" id="mb_birth" class="frm_input" size="50" value="<?php echo $member['mb_birth'] ?>">
+                    <input type="date" id="mb_birth" name="mb_birth" class="frm_input" size="50" value="<?php echo $member['mb_birth'] ?>">
                 </li>
                 <li>
                     <label for="mb_sex">성별</label><br>

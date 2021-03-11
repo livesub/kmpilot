@@ -339,10 +339,13 @@ $m_idx = '';
                 },
                 success: function(data){
                     //성공후 서버에서 받은 데이터 처리
-                    if (trim(data) == "ok") {
-                        alert("등록 및 수정 되었습니다.");
+                    if (trim(data) == "ok_mo") {
+                        alert("수정 되었습니다.");
                         //location.replace("<?=G5_ADMIN_URL?>/magazine_form.php?idx=<?=$m_idx?>");
                         location.reload(true);
+                    }else if(trim(data) == "ok_in"){
+                        alert("등록 되었습니다.");
+                        location.replace("<?=G5_ADMIN_URL?>/magazine_list.php");
                     }else if (trim(data) == "no") {
                         alert("문제가 발생 하였습니다. 개발자에게 문의 하세요.");
                         location.reload(true);

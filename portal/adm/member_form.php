@@ -41,6 +41,18 @@ $mb = array(
 'mb_punishment' => null,
 );
 
+$msg='';
+
+if(isset($_GET['msg']) && $_GET['msg'] != ''){
+    $msg = $_GET['msg'];
+    if($msg == 'i'){
+        echo "<script> alert('등록되었습니다.'); location.replace('./member_form.php?w=u&mb_id=".$_GET['mb_id']."'); </script>";
+    }else if($msg == 'u'){
+        echo "<script> alert('수정되었습니다.'); location.replace('./member_form.php?w=u&mb_id=".$_GET['mb_id']."'); </script>";
+    }
+}
+
+
 $sound_only = '';
 $required_mb_id_class = '';
 $required_mb_password = '';
@@ -226,6 +238,10 @@ if($row_edu_apply_list){
         html.modal-open {
             overflow-y: hidden;
         }
+        textarea {
+            width :340px;
+            height: 135px;
+        }
     </style>
 
 <form name="fmember" id="fmember" action="./member_form_update.php" onsubmit="return fmember_submit(this);" method="post" enctype="multipart/form-data">
@@ -329,10 +345,34 @@ if($row_edu_apply_list){
         </td>
     </tr>
     <tr>
+        <th>경력사항</th>
+        <?php if(isset($mb['mb_signature']) && $mb['mb_signature'] != '' ){?>
+            <td>
+                <textarea name="mb_signature" id="mb_signature" width="340px" height="135px" ><?=$mb['mb_signature']?></textarea>
+            </td>
+        <?php }else{?>
+            <td>
+                회원이 입력한 경력사항이 없습니다.
+            </td>
+        <?php }?>
+    </tr>
+    <tr>
+        <th>기타사항</th>
+        <?php if(isset($mb['mb_profile']) && $mb['mb_profile'] != '' ){?>
+            <td>
+                <textarea name="mb_profile" id="mb_profile" width="340px" height="135px" ><?=$mb['mb_profile']?></textarea>
+            </td>
+        <?php }else{?>
+            <td>
+                회원이 입력한 기타사항이 없습니다.
+            </td>
+        <?php }?>
+    </tr>
+    <tr>
         <th scope="row"><label for="mb_retire_date">퇴직년도</label></th>
         <td><label for="chk_retire">퇴직처리</label>
-            <input type="checkbox" name="chk_retire" id="chk_retire" onclick="retire_check()">
-            <input type="text" maxlength="4" minlength="4" name="mb_retire_date" id="mb_retire_date" <?php echo $mb['mb_retire_date']? '': 'disabled' ?>>ex) 1996
+            <input type="checkbox" name="chk_retire" id="chk_retire" onclick="retire_check()" <?=$mb['mb_retire_date']? 'checked' : '' ?>>
+            <input type="text" maxlength="4" minlength="4" name="mb_retire_date" id="mb_retire_date" <?php echo $mb['mb_retire_date']? '': 'disabled' ?> value="<?=$mb['mb_retire_date']?>">ex) 1996
         </td>
     </tr>
     <tr>

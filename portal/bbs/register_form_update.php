@@ -218,6 +218,7 @@ if ($w == '') {
                      mb_nick_date = '".G5_TIME_YMD."',
                      mb_email = '{$mb_email}',
                      mb_homepage = '{$mb_homepage}',
+                     mb_birth = '{$mb_birth}',
                      mb_tel = '{$mb_tel}',
                      mb_zip1 = '{$mb_zip1}',
                      mb_zip2 = '{$mb_zip2}',
@@ -328,6 +329,7 @@ if ($w == '') {
     $sql_up_member = " update {$g5['member_table']}
                 set 
                     mb_email = '{$mb_email}',
+                    mb_birth = '{$mb_birth}',
                     mb_tel = '{$mb_tel}',
                     mb_zip1 = '{$mb_zip1}',
                     mb_zip2 = '{$mb_zip2}',

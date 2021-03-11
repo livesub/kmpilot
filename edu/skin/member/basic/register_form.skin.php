@@ -55,7 +55,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
                     </li>
                     <li>
                         <label for="mb_birth">생년월일</label><br>
-                        <input type="text" id="mb_birth" readonly class="frm_input" size="50" value="<?php echo $member['mb_birth'] ?>">
+                        <input type="date" id="mb_birth" class="frm_input" size="50" name="mb_birth" value="<?php echo $member['mb_birth'] ?>">
                     </li>
                     <li>
                         <label for="mb_sex">성별</label><br>
@@ -404,6 +404,14 @@ gif, jpg, png파일만 가능하며 용량 <?php echo number_format($config['cf_
                             <li>
                                 <label>정년연정현황</label>
                                 <input type="text" id="mb_license_ext_day_from" readonly class="frm_input" size="50" value="연장됨(기간: <?=date_return_empty_space($member['mb_license_ext_day_from'])?> ~ <?=date_return_empty_space($member['mb_license_ext_day_to'])?>)">
+                            </li>
+                            <li>
+                                <label>국가 필수 도선사 여부</label>
+                                <?php if($member['required_pilot_status_from']!= '' && $member['required_pilot_status_to'] != ''){?>
+                                    <input type="text" id="required_pilot" readonly class="frm_input" size="50" value="해당(기간 : <?=$member['required_pilot_status_from']?> ~ <?=$member['required_pilot_status_to']?>)">
+                                <?php }else{?>
+                                    <input type="text" id="required_pilot" readonly class="frm_input" size="50" value="설정 교육이 없습니다.">
+                                <?php }?>
                             </li>
                             <li>
                                 <label>해심 재결 사항</label>

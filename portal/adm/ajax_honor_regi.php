@@ -83,7 +83,7 @@ if($m == 'r'){
     // echo "수정하기 입니다.";
     // exit;
     $save_name = '';
-
+    
     //명예도선사 이미지 삭제가 있을 경우 삭제 하기 또는 이미지가 들어왔을 경우
     if((isset($_POST['del_m_image']) && $_POST['del_m_image'] != '') || (isset($_FILES['honor_pic']) && $_FILES['honor_pic'] != '')){
         $sql_sel_user_img = " select * from kmp_MEMBER_HONOR where H_USER_ID = '{$_POST['m_regi_id']}' ";
@@ -91,7 +91,6 @@ if($m == 'r'){
         //이름을 찾아 그 파일 삭제
         $del_name = $honor_img_dir.$result_sel_user_img['H_USER_PHOTO'];
         unlink($del_name);
-
     }
     //이미지가 들어왔을 경우 넣고 DB에 저장
     if(isset($_FILES['honor_pic']) && $_FILES['honor_pic']){
@@ -157,9 +156,16 @@ if($m == 'r'){
 
     }
     
-    
-    $save_name_query = "H_USER_PHOTO = '{$save_name}' ,";
-    
+    //이미지가 변경 없이 수정 될 경우 분기
+    //값이 있고 첨부된 파일은 없고 삭제한 경우가 아닐경우 확인
+    $sql_check_image = " select * from kmp_MEMBER_HONOR where H_USER_ID = '{$_POST['m_regi_id']}' ";
+    $result_check = sql_fetch($sql_check_image);
+
+    if($result_check['H_USER_PHOTO'] != '' && $_FILES['honor_pic'] == '' && $_POST['del_m_image'] == ''){
+        $save_name_query = '';
+    }else{
+        $save_name_query = "H_USER_PHOTO = '{$save_name}' ,";
+    }
     
     //DB에 추가 하기
     $sql_up_honor = "update kmp_MEMBER_HONOR set H_USER_GROUP_KEY = '{$_POST['H_USER_GROUP_KEY']}' , H_USER_NAME = '{$_POST['H_USER_NAME']}' , {$save_name_query} H_POSITION = '{$_POST['H_POSITION']}' , H_USER_BIRTH = '{$_POST['H_USER_BIRTH']}' ,

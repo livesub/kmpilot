@@ -213,6 +213,7 @@ if ($config['cf_cert_use'] && $cert_type && $md5_cert_no) {
 if ($w == '') {
     $sql = " insert into {$g5['member_table']}
                 set mb_id = '{$mb_id}',
+                    mb_birth = '{$mb_birth}',
                      mb_password = '".get_encrypt_string($mb_password)."',
                      mb_name = '{$mb_name}',
                      mb_nick_date = '".G5_TIME_YMD."',
@@ -327,6 +328,7 @@ if ($w == '') {
     //alert('결과값 확인'.$mb_zip1.','.$mb_zip2.', 기본주소'.$mb_addr1.', 상세주소'.$mb_addr2.', 참고항목'.$mb_addr3);
     $sql_up_member = " update {$g5['member_table']}
                 set 
+                    mb_birth = '{$mb_birth}',
                     mb_email = '{$mb_email}',
                     mb_tel = '{$mb_tel}',
                     mb_zip1 = '{$mb_zip1}',

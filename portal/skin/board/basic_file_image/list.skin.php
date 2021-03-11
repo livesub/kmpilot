@@ -126,20 +126,18 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                     if ($list[$i]['icon_new']) echo "<span class=\"new_icon\">N<span class=\"sound_only\">새글</span></span>";
                     // if ($list[$i]['file']['count']) { echo '<'.$list[$i]['file']['count'].'>'; }
                     if (isset($list[$i]['icon_hot'])) echo rtrim($list[$i]['icon_hot']);
-                    //if (isset($list[$i]['icon_file'])) echo rtrim($list[$i]['icon_file']);
+//                    if (isset($list[$i]['icon_file'])) echo rtrim($list[$i]['icon_file']);
                     if (isset($list[$i]['icon_link'])) echo rtrim($list[$i]['icon_link']);
                     ?>
                     <?php if ($list[$i]['comment_cnt']) { ?><span class="sound_only">댓글</span><span class="cnt_cmt"><?php echo $list[$i]['wr_comment']; ?></span><span class="sound_only">개</span><?php } ?>
                 </div>
             </td>
-<!--            글쓴이를 보여주는 부분-->
-            <td class="td_name sv_use"><?php echo $list[$i]['wr_name'] ?></td>
+            <td class="td_name sv_use"><?php echo $list[$i]['name'] ?></td>
 <!--            <td class="td_num">--><?php //echo $list[$i]['wr_hit'] ?><!--</td>-->
             <?php if ($is_good) { ?><td class="td_num"><?php echo $list[$i]['wr_good'] ?></td><?php } ?>
             <?php if ($is_nogood) { ?><td class="td_num"><?php echo $list[$i]['wr_nogood'] ?></td><?php } ?>
             <td class="td_datetime"><?php echo $list[$i]['datetime2'] ?></td>
-            <!-- 아이콘 파일 보여주는 곳 -->
-            <td class="td_datetime"><?php if (isset($list[$i]['icon_file'])) echo rtrim($list[$i]['icon_file']); ?></td>
+            <td class="td_datetime"><?php if (isset($list[$i]['icon_file'])) echo rtrim($list[$i]['icon_file']);?></td>
 
         </tr>
         <?php } ?>

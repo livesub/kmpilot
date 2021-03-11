@@ -11,7 +11,7 @@ if(isset($_POST['form_count']) && $_POST['form_count'] != ''){
     $real_count_total = count($real_count); // 총 배열의 수
 }
 
-
+$mode = '';
 $magazine_del = ''; //정보 등록 유형
 $result_last_id = ''; //마지막 insert 번호 저장 변수
 $result_main = ''; //main 쿼리문에 관한 결과 값 저장 변수
@@ -128,6 +128,7 @@ if($magazine_del == "수정" || $magazine_del == "저장"){
             exit;
         }
         $result_last_id = $_POST['M_IDX'];
+        $mode='m';
     }else{
         //없을 경우 insert
         $sql_main_insert = '';
@@ -142,6 +143,7 @@ if($magazine_del == "수정" || $magazine_del == "저장"){
             echo "insert 문 오류 : ".$sql_main_insert;
             exit;
         }
+        $mode='i';
     }
     //2021.02.25 16:26 등록 수정 파일 없이 등록 수정 test 이상 없음 -kkw
 
@@ -291,8 +293,11 @@ if($magazine_del == "수정" || $magazine_del == "저장"){
     }
     //2021.02.25 17:46 insert update 문제 없음 - kkw
 
-    if($result_main && $result_data){
-        echo "ok";
+    if($result_main && $result_data && $mode == 'm'){
+        echo "ok_mo";
+        exit;
+    }else if($result_main && $result_data && $mode == 'i'){
+        echo "ok_in";
         exit;
     }else{
         echo "no";
