@@ -1408,7 +1408,7 @@ input[type='radio']:checked:before {
 
 .passage-container .contents  .passage-plan .ports-list li {
     display: inline-block;
-    width: 200px;
+    width: calc(100% / 6);
     font-size: 22px;
     font-weight: bold;
     line-height: 1.27;
