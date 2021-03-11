@@ -658,6 +658,10 @@ input[type='radio']:checked:before {
     background: url("../resources/background-sample/community.png") center no-repeat;
     background-size: cover;
 }
+.passage-container .sub-title {
+    background: url("../resources/background-sample/passagePlan.png") center no-repeat;
+    background-size: cover;
+}
 .sub-container .sub-title dt {
     padding-top: 128px;
     font-size: 62px;
@@ -1374,6 +1378,110 @@ input[type='radio']:checked:before {
 }
 .community-container .contents .board.write .btns button {
     margin-left: 20px;
+}
+.passage-container .contents  .passage-plan .ports-list .select {
+    display: none;
+}
+.passage-container .contents  .passage-plan .ports-list .select:after {
+    content: '';
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    width: 16px;
+    height: 16px;
+    background-image: url(../resources/icons/icon-arrow-bottom-white.png);
+    background-size: 16px 16px;
+    background-position: center;
+}
+.passage-container .contents  .passage-plan .ports-list .select select {
+    width: 100%;
+    height: 40px;
+    background-color: #0070bf;
+    padding: 0 18px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #ffffff;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.passage-container .contents  .passage-plan .ports-list li {
+    display: inline-block;
+    width: 200px;
+    font-size: 22px;
+    font-weight: bold;
+    line-height: 1.27;
+    text-align: center;
+    color: #000000;
+    border: solid 1px #f0f0f0;
+    padding: 16px 0;
+}
+.passage-container .contents  .passage-plan .ports-list li.active {
+    background-color: #0070bf;
+    color: #ffffff;
+}
+.passage-container .contents  .passage-plan .plan-list {
+    padding-top: 100px;
+}
+.passage-container .contents  .passage-plan .plan-list .port-title {
+    font-size: 32px;
+    font-weight: 900;
+    letter-spacing: -0.76px;
+    color: #000000;
+}
+.passage-container .contents  .passage-plan .plan-list .list {
+    padding-top: 50px;
+}
+.passage-container .contents  .passage-plan .plan-list .list .row:last-child {
+    border-bottom: solid 2px #bbbbbb;
+}
+.passage-container .contents  .passage-plan .plan-list .list .thead .th:first-child,
+.passage-container .contents  .passage-plan .plan-list .list .row .col:first-child {
+    flex: 1;
+}
+.passage-container .contents  .passage-plan .plan-list .list .row .col:first-child {
+     padding: 0 20px;
+}
+.passage-container .contents  .passage-plan .plan-list .list .thead .th:nth-child(2),
+.passage-container .contents  .passage-plan .plan-list .list .row .col:nth-child(2) {
+    width: 100px;
+    text-align: center;
+}
+.passage-container .contents  .passage-plan .info-notice {
+    background-color: #f7f7f7;
+    padding: 50px 70px 90px;
+    margin-top: 150px;
+}
+.passage-container .contents  .passage-plan .info-notice .info-notice-title {
+    font-size: 22px;
+    font-weight: bold;
+    color: #d11e14;
+    padding-left: 40px;
+}
+.passage-container .contents  .passage-plan .info-notice .info-notice-title:before {
+    content: '';
+    position: absolute;
+    top: 7px;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    background-image: url("../resources/icons/alerts-alt-1.png");
+    background-repeat: no-repeat;
+}
+.passage-container .contents  .passage-plan .info-notice .info-notice-content {
+    display: none;
+    padding-top: 20px;
+}
+.passage-container .contents  .passage-plan .info-notice .info-notice-content.active {
+    display: block;
+}
+.passage-container .contents  .passage-plan .info-notice .info-notice-content p {
+    font-size: 20px;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: #000000;
+    padding: 10px 0;
 }
 
 .detail-content .title {
