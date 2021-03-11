@@ -54,6 +54,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
         <col>
     </colgroup>
     <tbody>
+
     <tr>
         <th scope="row"><label for="nw_device">접속기기</label></th>
         <td>
@@ -65,6 +66,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
             </select>
         </td>
     </tr>
+
     <tr>
         <th scope="row"><label for="nw_disable_hours">시간<strong class="sound_only"> 필수</strong></label></th>
         <td>

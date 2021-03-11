@@ -2,7 +2,11 @@
 $sub_menu = '100310';
 include_once('./_common.php');
 
-$nw_id = isset($_POST['nw_id']) ? preg_replace('/[^0-9]/', '', $_POST['nw_id']) : 0;
+if ($w == 'd'){
+    $nw_id = isset($_GET['nw_id']) ? preg_replace('/[^0-9]/', '', $_GET['nw_id']) : 0;
+}else{
+    $nw_id = isset($_POST['nw_id']) ? preg_replace('/[^0-9]/', '', $_POST['nw_id']) : 0;
+}
 
 if ($w == "u" || $w == "d")
     check_demo();
@@ -15,6 +19,7 @@ else
 check_admin_token();
 
 $nw_subject = isset($_POST['nw_subject']) ? strip_tags(clean_xss_attributes($_POST['nw_subject'])) : '';
+$en_nw_subject = isset($_POST['en_nw_subject']) ? strip_tags(clean_xss_attributes($_POST['en_nw_subject'])) : '';
 $posts = array();
 
 $check_keys = array(
@@ -27,6 +32,7 @@ $check_keys = array(
 'nw_height'=>'int',
 'nw_width'=>'int',
 'nw_content'=>'text',
+'en_nw_content'=>'text',
 'nw_content_html'=>'text',
 );
 
@@ -50,6 +56,8 @@ $sql_common = " nw_device = '{$posts['nw_device']}',
                 nw_width = '{$posts['nw_width']}',
                 nw_subject = '{$nw_subject}',
                 nw_content = '{$posts['nw_content']}',
+                en_nw_subject = '{$en_nw_subject}',
+                en_nw_content = '{$posts['en_nw_content']}',
                 nw_content_html = '{$posts['nw_content_html']}' ";
 
 if($w == "")
