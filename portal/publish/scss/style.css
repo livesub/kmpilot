@@ -333,12 +333,15 @@ input[type='radio']:checked:before {
     flex: 1;
     max-width: 430px;
     margin-right: 20px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
 }
 .main-container .notice-news .contents > div .box-contents li > div:first-child:before {
     content: '· ';
+}
+.main-container .notice-news .contents > div .box-contents li > div > a {
+    width: calc(100% - 20px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .main-container .introduce {
