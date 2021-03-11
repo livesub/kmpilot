@@ -8,27 +8,69 @@ $lang_type = 'en';
 $lang = array();
 
 //title 관련
-$lang['Korea Marti']= '';
+$lang['title']='eng한국도선사협회';
 
 //Menu 관련
-$lang['about_association']='About Association';
-$lang['welcome_message']='Welcome Message';
-$lang['history']='History';
-$lang['history2'] ='History · Organization';
-$lang['honor_pilot']='Honor Pilot';
-$lang['menu_notice'] = 'NOTICE';
-$lang['menu_movie'] = 'MOVIE';
-$lang['new_pr']='News · PR';
-$lang['news']='News';
-$lang['magazine']='Magazine';
-//헤더 관련
-$lang['connect_user'] = 'CONNECT USER';
-$lang['member_check'] = 'member_check';
+//협회소개
+$lang['about_association']='eng협회소개';
+$lang['welcome_message']='eng인사말';
+$lang['history']='eng연혁 · 조직';
+$lang['honor_pilot']='eng명예도선사';
+
+//소식,홍보
+$lang['menu_news']='eng소식 · 홍보';
+$lang['menu_notice'] = 'eng공지사항';
+$lang['menu_poto'] = 'eng포토뉴스';
+$lang['menu_movie'] = 'eng홍보영상';
+$lang['magazine']='eng도선지';
+
+//커뮤니티
+$lang['menu_community']='eng커뮤니티';
+$lang['menu_free_board']='eng자유게시판';
+$lang['menu_pds_board']='eng자료실';
+
+//교육센터
+$lang['menu_edu']='교육센터';
+
+
+//회원 메뉴
+$lang['menu_member']='회원메뉴';
+$lang['menu_conference']='회의 · 공문서';
+$lang['menu_newsletter']='경조사 · 뉴스레터';
+$lang['menu_info']='정보게시판';
+$lang['menu_member_search']='회원검색';
+$lang['menu_member_info']='회원정보';
+
+
+//화상회의
+$lang['button_meeting']='eng화상회의';
 
 //회원 관련
 $lang['member_modi'] = 'Member_modify';
 $lang['member_logout'] = 'LOG OUT';
 $lang['member_login'] = 'LOG IN';
+$lang['member_login_ment'] = 'eng로그인 하시면 보다 많은 다양한 서비스를 이용하실 수 있습니다.';
+$lang['member_id'] = 'ID';
+$lang['member_pw'] = 'PASSWORD';
+$lang['member_id_chk'] = 'eng 아이디를 입력 하세요.';
+$lang['member_pw_chk'] = 'eng비밀번호를 입력 하세요.';
+$lang['member_no'] = 'eng가입된 회원아이디가 아니거나 비밀번호가 틀립니다.\\n비밀번호는 대소문자를 구분합니다.';
+$lang['member_access_no'] = 'eng회원님의 아이디는 접근이 금지되어 있습니다.';
+$lang['member_secession'] = 'eng탈퇴한 아이디이므로 접근하실 수 없습니다.';
+$lang['member_login_chk'] = 'eng로그인 되었습니다.';
+$lang['member_logout_chk'] = 'eng로그아웃 되었습니다.';
+
+
+//main 관련
+$lang['main_notice'] = 'eng공지&뉴스';
+$lang['main_notice_ment'] = 'eng도선사 협회의 주요 공지사항 및<br>뉴스를 전해드립니다.';
+$lang['main_notice_bbs'] = 'eng 공지사항';
+$lang['main_notice_more'] = 'eng더보기';
+
+$lang['main_news_bbs'] = 'eng뉴스';
+$lang['main_news_more'] = 'eng더보기';
+
+
 $lang['member_mypage'] = 'eng회원정보';
 $lang['member_sign_up'] = 'SIGN UP';
 

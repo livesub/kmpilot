@@ -17,7 +17,7 @@ if (is_array($files)) {
     }
 }
 
-include_once(G5_PATH.'/head.sub.php');
+include_once(G5_PATH.'/bbs/_head.sub.admin.php');
 
 function print_menu1($key, $no='')
 {

@@ -13,7 +13,7 @@ $nw = array(
 'nw_content'=>'',
 );
 
-$html_title = "팝업레이어";
+$html_title = "협회 팝업레이어";
 if ($w == "u")
 {
     $html_title .= " 수정";
@@ -54,6 +54,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
         <col>
     </colgroup>
     <tbody>
+
     <tr>
         <th scope="row"><label for="nw_device">접속기기</label></th>
         <td>
@@ -65,6 +66,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
             </select>
         </td>
     </tr>
+
     <tr>
         <th scope="row"><label for="nw_disable_hours">시간<strong class="sound_only"> 필수</strong></label></th>
         <td>
@@ -113,15 +115,27 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="nw_subject">팝업 제목<strong class="sound_only"> 필수</strong></label></th>
+        <th scope="row"><label for="nw_subject">한글 팝업 제목<strong class="sound_only"> 필수</strong></label></th>
         <td>
             <input type="text" name="nw_subject" value="<?php echo get_sanitize_input($nw['nw_subject']); ?>" id="nw_subject" required class="frm_input required" size="80">
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="nw_content">내용</label></th>
+        <th scope="row"><label for="nw_content">한글 내용</label></th>
         <td><?php echo editor_html('nw_content', get_text(html_purifier($nw['nw_content']), 0)); ?></td>
     </tr>
+
+    <tr>
+        <th scope="row"><label for="en_nw_subject">영문 팝업 제목<strong class="sound_only"> 필수</strong></label></th>
+        <td>
+            <input type="text" name="en_nw_subject" value="<?php echo get_sanitize_input($nw['en_nw_subject']); ?>" id="en_nw_subject" required class="frm_input required" size="80">
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="en_nw_content">영문 내용</label></th>
+        <td><?php echo editor_html('en_nw_content', get_text(html_purifier($nw['en_nw_content']), 0)); ?></td>
+    </tr>
+
     </tbody>
     </table>
 </div>
@@ -139,8 +153,10 @@ function frmnewwin_check(f)
     errfld = "";
 
     <?php echo get_editor_js('nw_content'); ?>
+    <?php echo get_editor_js('en_nw_content'); ?>
 
     check_field(f.nw_subject, "제목을 입력하세요.");
+    check_field(f.en_nw_subject, "영문 제목을 입력하세요.");
 
     if (errmsg != "") {
         alert(errmsg);

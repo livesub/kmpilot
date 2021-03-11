@@ -4479,3 +4479,8 @@ function get_grade_status_value($num){
     }
     return $value;
 }
+
+//날짜를 콤마로 표기 법으로 변경
+function date_point_change($val){
+    return str_replace("-", ".", $val);;
+}

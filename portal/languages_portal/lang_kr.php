@@ -7,25 +7,74 @@ Language: KOREA
 $lang_type = 'kr';
 $lang = array();
 
+
+$lang['title']='한국도선사협회';
+
 //Menu 관련
+//협회소개
 $lang['about_association']='협회소개';
 $lang['welcome_message']='인사말';
 $lang['history']='연혁 · 조직';
 $lang['honor_pilot']='명예도선사';
+
+//소식,홍보
+$lang['menu_news']='소식 · 홍보';
 $lang['menu_notice'] = '공지사항';
-$lang['menu_movie'] = '동영상';
-$lang['new_pr']='소식 · 홍보';
-$lang['news']='공지사항';
+$lang['menu_poto'] = '포토뉴스';
+$lang['menu_movie'] = '홍보영상';
 $lang['magazine']='도선지';
-//헤더 관련
-$lang['connect_user'] = '접속자';
-$lang['member_check'] = '회원관리';
+
+//커뮤니티
+$lang['menu_community']='커뮤니티';
+$lang['menu_free_board']='자유게시판';
+$lang['menu_pds_board']='자료실';
+
+//교육센터
+$lang['menu_edu']='교육센터';
+
+//회원 메뉴
+$lang['menu_member']='회원메뉴';
+$lang['menu_conference']='회의 · 공문서';
+$lang['menu_newsletter']='경조사 · 뉴스레터';
+$lang['menu_info']='정보게시판';
+$lang['menu_member_search']='회원검색';
+$lang['menu_member_info']='회원정보';
+
+//화상회의
+$lang['button_meeting']='화상회의';
+
+
 //회원 관련
-$lang['member_modi'] = '정보수정';
+$lang['member_modi'] = 'Member_modify';
 $lang['member_logout'] = '로그아웃';
 $lang['member_login'] = '로그인';
-$lang['member_mypage'] = '회원정보';
-$lang['member_sign_up'] = '회원가입';
+$lang['member_login_ment'] = '로그인 하시면 보다 많은 다양한 서비스를 이용하실 수 있습니다.';
+$lang['member_id'] = '아이디';
+$lang['member_pw'] = '비밀번호';
+$lang['member_id_chk'] = '아이디를 입력 하세요.';
+$lang['member_pw_chk'] = '비밀번호를 입력 하세요.';
+$lang['member_no'] = '가입된 회원아이디가 아니거나 비밀번호가 틀립니다.\\n비밀번호는 대소문자를 구분합니다.';
+$lang['member_access_no'] = '회원님의 아이디는 접근이 금지되어 있습니다.';
+$lang['member_secession'] = '탈퇴한 아이디이므로 접근하실 수 없습니다.';
+$lang['member_login_chk'] = '로그인 되었습니다.';
+$lang['member_logout_chk'] = '로그아웃 되었습니다.';
+
+//main 관련
+$lang['main_notice'] = '공지&뉴스';
+$lang['main_notice_ment'] = '도선사 협회의 주요 공지사항 및<br>뉴스를 전해드립니다.';
+$lang['main_notice_bbs'] = '공지사항';
+$lang['main_notice_more'] = '더보기';
+
+$lang['main_news_bbs'] = '뉴스';
+$lang['main_news_more'] = '더보기';
+
+
+
+
+
+$lang['member_mypage'] = 'eng회원정보';
+$lang['member_sign_up'] = 'SIGN UP';
+
 
 //팝업 관련
 $lang['pop_time'] = '시간 동안 다시 열람하지 않습니다.';
