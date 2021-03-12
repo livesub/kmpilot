@@ -85,7 +85,7 @@
 #visualphone-wrap .message-area{*zoom:1;width:100%;margin:0 auto;background-color: #e9edf1;border-radius: 10px;padding:10px 0;}
 #visualphone-wrap .message-area:after{clear:both;display:block;content:''}
 #visualphone-wrap.mms .message-area {background-color: #f7e0df;}
-#visualphone-wrap .message-area .message-box{height:110px}
+#visualphone-wrap .message-area .message-box{height:110px;padding:0 15px;}
 #visualphone-wrap .message-area .img-box{display:none;position:absolute;top:0;left:380px;border:0;background:#fff;width:160px}
 #visualphone-wrap .message-area .img-box strong{
     font-size: 24px;
@@ -147,7 +147,7 @@
 #visualphone-wrap .message-area .message-text{
     width:100%;
     height:110px;
-    padding:0px 15px;
+    padding:0;
     line-height:16px;
     background:none;
     border:0 none;
@@ -241,7 +241,7 @@
 }
 #visualphone-wrap .phone-area .btn-phone-controll button img {vertical-align: baseline;margin-right: 5px;}
 #visualphone-wrap .phone-area .sel-phone{display:block;width:100%;height:125px;padding:0;margin-top:10px;margin-bottom: 12px;}
-#visualphone-wrap .phone-area .sel-phone ul{float:left;width:100%;height:125px;border:1px solid #bbb; background:url('/CMS/_img/sms/bg_dotline_02.gif') repeat-y 0 0; overflow-y:auto; overflow-x:hidden}
+#visualphone-wrap .phone-area .sel-phone ul{float:left;width:100%;height:125px;border:1px solid #bbb; background:#ffffff; overflow-y:auto; overflow-x:hidden}
 #visualphone-wrap .phone-area .sel-phone ul li {
     float:left;
     width:100%;
@@ -332,7 +332,6 @@
 #visualphone-wrap .btn-send-area button {
     flex: 1;
     height: 40px;
-    margin-right: 10px;
     border-radius: 8px;
     background-color: #bbbbbb;
     font-size: 18px;
@@ -347,6 +346,7 @@
 }
 #visualphone-wrap .btn-send-area button:first-child {
     background-color: #0070bf;
+    margin-right: 10px;
 }
 #visualphone-wrap .send-type{
     position: absolute;
@@ -429,9 +429,9 @@
 
 /* ë ˆì´ì–´ > ì´ë¯¸ì§€ ì²¨ë¶€ */
 .ly-mms-file{
-    width: 312px;
-    top: 316px;
-    left: 0;
+    width: 240px;
+    top: 310px;
+    left: 36px;
     padding:20px;
 }
 .ly-mms-file .tit-mms-file {
@@ -444,7 +444,7 @@
     color: #000000;
 }
 .ly-mms-file .ly-wrap{width:100%;margin:15px auto 0;}
-.ly-mms-file .desc{text-align:left;letter-spacing:-2px;line-height:1.5;margin-bottom:45px}
+.ly-mms-file .desc{text-align:left;letter-spacing:-2px;line-height:1.5;margin-bottom:55px}
 .ly-mms-file .desc > * {
     font-size: 14px;
     font-weight: normal;
