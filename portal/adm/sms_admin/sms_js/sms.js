@@ -35,19 +35,23 @@ $(function(){
 			}
 		}
 		if (tmp_num <= sms_len){
-            if ($("#s_msgflag").val() == "mms"){
-				$("#visualphone-wrap").css("background-position","0px 0px");
-                $("#s_title").val("");
-                $("#max_len").text(sms_len);
-                $("#s_msgflag").val("sms");
-            }
+			if ($("#s_msgflag").val() == "mms"){
+				// $("#visualphone-wrap").css("background-position","0px 0px");
+				$("#s_title").val("");
+				$("#max_len").text(sms_len);
+				$("#msg-type").text("sms").removeClass("mms");
+				$("#visualphone-wrap").removeClass("mms");
+				$("#s_msgflag").val("sms");
+			}
 		}
 		if (sms_len < tmp_num && tmp_num <= limit_len){
-            if ($("#s_msgflag").val() == "sms"){
-				$("#visualphone-wrap").css("background-position","-230px 0px");
-                $("#s_msgflag").val("mms");
-                $("#max_len").text(limit_len);
-            }
+			if ($("#s_msgflag").val() == "sms"){
+				// $("#visualphone-wrap").css("background-position","-230px 0px");
+				$("#msg-type").text("MMS").addClass("mms");
+				$("#visualphone-wrap").addClass("mms");
+				$("#s_msgflag").val("mms");
+				$("#max_len").text(limit_len);
+			}
 		}else if (tmp_num > limit_len){
 			tmp_num = 0;
 			alert("최대 전송 메시지 길이를 초과하였습니다.");
@@ -96,13 +100,13 @@ $(function(){
 			}
 		}
 		if (tmp_num <= limit_len){
-            if ($("#s_msgflag").val() == "sms"){
-                $(".message-area .txt-byte").css("margin-top","0px");
-                $("#visualphone-wrap").css("background","url(/visualphone/img/mms_2009_vp_bg.gif) no-repeat 0 0");
+			if ($("#s_msgflag").val() == "sms"){
+				$(".message-area .txt-byte").css("margin-top","0px");
+				$("#visualphone-wrap").css("background","url(/visualphone/img/mms_2009_vp_bg.gif) no-repeat 0 0");
 
-                $("#s_msgflag").val("mms");
-                $("#max_len").text(limit_len);
-            }
+				$("#s_msgflag").val("mms");
+				$("#max_len").text(limit_len);
+			}
 		}else if (tmp_num > limit_len){
 			tmp_num = 0;
 			alert("최대 전송 메시지 길이를 초과하였습니다.");
@@ -240,19 +244,19 @@ $(function(){
 	}
 
 	function commaNum(num) {
-        var len, point, str;
-        num = num + "";
-        point = num.length % 3
-        len = num.length;
+		var len, point, str;
+		num = num + "";
+		point = num.length % 3
+		len = num.length;
 
-        str = num.substring(0, point);
-        while (point < len) {
-            if (str != "") str += ",";
-            str += num.substring(point, point + 3);
-            point += 3;
-        }
-        return str;
-    }
+		str = num.substring(0, point);
+		while (point < len) {
+			if (str != "") str += ",";
+			str += num.substring(point, point + 3);
+			point += 3;
+		}
+		return str;
+	}
 
 	//이미지 첨부
 	$(document).on("click","#imgadd_btn",function(){
@@ -303,19 +307,23 @@ $(function(){
 		if (filecnt > 0){
 			$("#add_img_box").css("display","block");
 			if ($("#s_msgflag").val() == "sms"){
-				$("#visualphone-wrap").css("background-position","-230px 0px");
-                $("#s_msgflag").val("mms");
-                $("#max_len").text(limit_len);
-            }
+				// $("#visualphone-wrap").css("background-position","-230px 0px");
+				$("#msg-type").text("MMS").addClass("mms");
+				$("#visualphone-wrap").addClass("mms");
+				$("#s_msgflag").val("mms");
+				$("#max_len").text(limit_len);
+			}
 			global_msg_flag = "mms";
 			checklen_mms();
 		}else if (filecnt == 0){
 			if($("#mode").val() != "kakao"){
 				$("#add_img_box").css("display","none");
 				if ($("#s_msgflag").val() == "mms"){
-					$("#visualphone-wrap").css("background-position","0px 0px");
+					// $("#visualphone-wrap").css("background-position","0px 0px");
 					$("#s_title").val("");
 					$("#max_len").text(sms_len);
+					$("#msg-type").text("SMS").removeClass("mms");
+					$("#visualphone-wrap").removeClass("mms");
 					$("#s_msgflag").val("sms");
 				}
 				global_msg_flag = "sms";
