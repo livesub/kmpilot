@@ -19,7 +19,7 @@
 }
 
 /* Visualphone */
-.visualphone {z-index:100;position:relative;width: 312px;height: 652px;}
+.visualphone {z-index:98;position:relative;width: 312px;height: 652px;}
 
 
 
@@ -86,9 +86,62 @@
 #visualphone-wrap .message-area:after{clear:both;display:block;content:''}
 #visualphone-wrap.mms .message-area {background-color: #f7e0df;}
 #visualphone-wrap .message-area .message-box{height:110px}
-#visualphone-wrap .message-area .img-box{display:none;position:absolute;top:5px;right:-152px;border:1px solid #ccc;background:#fff;width:145px}
-#visualphone-wrap .message-area .img-box strong{display:block;padding-top:10px;text-align:center}
-#visualphone-wrap .message-area .img-box .img-box-wrap{padding:10px 10px 0}
+#visualphone-wrap .message-area .img-box{display:none;position:absolute;top:0;left:380px;border:0;background:#fff;width:160px}
+#visualphone-wrap .message-area .img-box strong{
+    font-size: 24px;
+    font-weight: 900;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #000000;
+}
+#visualphone-wrap .message-area .img-box .img-box-wrap{padding:0}
+#visualphone-wrap .message-area .img-box .img-box-wrap > div {
+    margin-top:20px;
+    text-align: right;
+}
+#visualphone-wrap .message-area .img-box .img-box-wrap > div div {
+    font-size: 12px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #000000;
+    text-align: left;
+}
+#visualphone-wrap .message-area .img-box .img-box-wrap > div img {
+    margin-top: 5px;
+}
+#visualphone-wrap .message-area .img-box .img-box-wrap > div button {
+    position: relative;
+    width: 60px;
+    height: 26px;
+    padding-left: 19px;
+    margin-top: 10px;
+    border:0;
+    border-radius: 8px;
+    background-color: #d11e14;
+    font-size: 14px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.43;
+    letter-spacing: normal;
+    text-align: center;
+    color: #ffffff;
+}
+#visualphone-wrap .message-area .img-box .img-box-wrap > div button::before {
+    content:'';
+    position: absolute;
+    top: 6px;
+    left: 8px;
+    width: 14px;
+    height: 14px;
+    background-image: url("../img/icon-remove.png");
+    background-size: cover;
+}
 #visualphone-wrap .message-area .img-box img{clear:both;width:100%;margin-bottom:5px;cursor:pointer;border:1px solid #e0e0e0}
 #visualphone-wrap .message-area .img-box p{margin-top:6px;text-align:center;padding-bottom:10px;}
 #visualphone-wrap .message-area .message-text{

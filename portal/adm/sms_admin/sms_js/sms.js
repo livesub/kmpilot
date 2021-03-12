@@ -336,7 +336,7 @@ $(function(){
 		}
 	});
 	//이미지 삭제
-	$(document).on("click",".added-img",function(){
+	$(document).on("click",".added-img-remove",function(){
 		var img_cnt = $(".added-img").length;
 		var img_id = $(this).attr("id");
 		if (img_cnt == "1"){
@@ -1144,12 +1144,12 @@ function upload_complete(cnt, img1, img2, imgname1, imgname2,folderPath,url_path
 	if (cnt == 0)
 	{
 	}else if (cnt == 1){
-		$("#add_img_div").append("<img src='"+url_path+"/smsFile/"+folderPath+"/"+imgname1+"' class='added-img' id='added_img1'>");
+		$("#add_img_div").append("<div><div>"+imgname1+"</div><img src='"+url_path+"/smsFile/"+folderPath+"/"+imgname1+"' class='added-img' id='added_img1'><button type='button' class='added-img-remove'>삭제</button></div>");
 		$("#filepath1").val(path1.replace(/\\/gi,"/"));
 		$("#s_message").focus();
 	}else if (cnt == 2){
-		$("#add_img_div").append("<img src='"+url_path+"/smsFile/"+folderPath+"/"+imgname1+"' class='added-img' id='added_img1'>");
-		$("#add_img_div").append("<img src='"+url_path+"/smsFile/"+folderPath+"/"+imgname2+"' class='added-img' id='added_img2'>");
+		$("#add_img_div").append("<div><div>"+imgname1+"</div><img src='"+url_path+"/smsFile/"+folderPath+"/"+imgname1+"' class='added-img' id='added_img1'><button type='button' class='added-img-remove'>삭제</button></div>");
+		$("#add_img_div").append("<div><div>"+imgname2+"</div><img src='"+url_path+"/smsFile/"+folderPath+"/"+imgname2+"' class='added-img' id='added_img2'><button type='button' class='added-img-remove'>삭제</button></div>");
 		$("#filepath1").val(path1.replace(/\\/gi,"/"));
 		$("#filepath2").val(path2.replace(/\\/gi,"/"));
 		$("#s_message").focus();
