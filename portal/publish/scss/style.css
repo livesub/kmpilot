@@ -4,13 +4,15 @@ div.inlineBlock {
 /*table*/
 .thead {
     display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
     width: 100%;
+    min-height: 80px;
     background-color: #f7f7f7;
     border-bottom: 4px solid #000000;
 }
 .thead .th {
-    height: 80px;
-    line-height: 80px;
     font-size: 22px;
     font-weight: bold;
     text-align: center;
@@ -147,6 +149,7 @@ input[type=checkbox] + label {
 }
 input[type=checkbox]:checked + label {
     background: url("../resources/icons/icon-snav-pulldown.png") #0070BF;
+    background-size: cover;
 }
 input[type=radio] {
     width: 20px;
@@ -656,6 +659,7 @@ input[type='radio']:checked:before {
 .sub-container .sub-title {
     width: 100%;
     height: 400px;
+    background: url("../resources/background-sample/greet.png") center no-repeat;
 }
 .introduce-container .sub-title {
     background: url("../resources/background-sample/greet.png") center no-repeat;
@@ -671,6 +675,10 @@ input[type='radio']:checked:before {
 }
 .passage-container .sub-title {
     background: url("../resources/background-sample/passagePlan.png") center no-repeat;
+    background-size: cover;
+}
+.member-container .sub-title {
+    background: url("../resources/background-sample/members.png") center no-repeat;
     background-size: cover;
 }
 .sub-container .sub-title dt {
@@ -1245,6 +1253,8 @@ input[type='radio']:checked:before {
 .board .list .row .col:nth-child(4) {
     width: 150px;
     text-align: center;
+    overflow: hidden;
+    line-height: unset;
 }
 .board .list .thead .th:nth-child(2),
 .board .list .row .col:nth-child(2) {
@@ -1434,10 +1444,10 @@ input[type='radio']:checked:before {
     font-size: 22px;
     color: #555555;
 }
-.passage-container .contents  .passage-plan .ports-list .select {
+.passage-container .contents .passage-plan .ports-list .select {
     display: none;
 }
-.passage-container .contents  .passage-plan .ports-list .select:after {
+.passage-container .contents .passage-plan .ports-list .select:after {
     content: '';
     position: absolute;
     top: 12px;
@@ -1448,7 +1458,7 @@ input[type='radio']:checked:before {
     background-size: 16px 16px;
     background-position: center;
 }
-.passage-container .contents  .passage-plan .ports-list .select select {
+.passage-container .contents .passage-plan .ports-list .select select {
     width: 100%;
     height: 40px;
     background-color: #0070bf;
@@ -1461,7 +1471,7 @@ input[type='radio']:checked:before {
     appearance: none;
 }
 
-.passage-container .contents  .passage-plan .ports-list li {
+.passage-container .contents .passage-plan .ports-list li {
     display: inline-block;
     width: calc(100% / 6);
     font-size: 22px;
@@ -1472,49 +1482,49 @@ input[type='radio']:checked:before {
     border: solid 1px #f0f0f0;
     padding: 16px 0;
 }
-.passage-container .contents  .passage-plan .ports-list li.active {
+.passage-container .contents .passage-plan .ports-list li.active {
     background-color: #0070bf;
     color: #ffffff;
 }
-.passage-container .contents  .passage-plan .plan-list {
+.passage-container .contents .passage-plan .plan-list {
     padding-top: 100px;
 }
-.passage-container .contents  .passage-plan .plan-list .port-title {
+.passage-container .contents .passage-plan .plan-list .port-title {
     font-size: 32px;
     font-weight: 900;
     letter-spacing: -0.76px;
     color: #000000;
 }
-.passage-container .contents  .passage-plan .plan-list .list {
+.passage-container .contents .passage-plan .plan-list .list {
     padding-top: 50px;
 }
-.passage-container .contents  .passage-plan .plan-list .list .row:last-child {
+.passage-container .contents .passage-plan .plan-list .list .row:last-child {
     border-bottom: solid 2px #bbbbbb;
 }
-.passage-container .contents  .passage-plan .plan-list .list .thead .th:first-child,
-.passage-container .contents  .passage-plan .plan-list .list .row .col:first-child {
+.passage-container .contents .passage-plan .plan-list .list .thead .th:first-child,
+.passage-container .contents .passage-plan .plan-list .list .row .col:first-child {
     flex: 1;
 }
-.passage-container .contents  .passage-plan .plan-list .list .row .col:first-child {
+.passage-container .contents .passage-plan .plan-list .list .row .col:first-child {
      padding: 0 20px;
 }
-.passage-container .contents  .passage-plan .plan-list .list .thead .th:nth-child(2),
-.passage-container .contents  .passage-plan .plan-list .list .row .col:nth-child(2) {
+.passage-container .contents .passage-plan .plan-list .list .thead .th:nth-child(2),
+.passage-container .contents .passage-plan .plan-list .list .row .col:nth-child(2) {
     width: 100px;
     text-align: center;
 }
-.passage-container .contents  .passage-plan .info-notice {
+.passage-container .contents .passage-plan .info-notice {
     background-color: #f7f7f7;
     padding: 50px 70px 90px;
     margin-top: 150px;
 }
-.passage-container .contents  .passage-plan .info-notice .info-notice-title {
+.passage-container .contents .passage-plan .info-notice .info-notice-title {
     font-size: 22px;
     font-weight: bold;
     color: #d11e14;
     padding-left: 40px;
 }
-.passage-container .contents  .passage-plan .info-notice .info-notice-title:before {
+.passage-container .contents .passage-plan .info-notice .info-notice-title:before {
     content: '';
     position: absolute;
     top: 7px;
@@ -1524,19 +1534,73 @@ input[type='radio']:checked:before {
     background-image: url("../resources/icons/alerts-alt-1.png");
     background-repeat: no-repeat;
 }
-.passage-container .contents  .passage-plan .info-notice .info-notice-content {
+.passage-container .contents .passage-plan .info-notice .info-notice-content {
     display: none;
     padding-top: 20px;
 }
-.passage-container .contents  .passage-plan .info-notice .info-notice-content.active {
+.passage-container .contents .passage-plan .info-notice .info-notice-content.active {
     display: block;
 }
-.passage-container .contents  .passage-plan .info-notice .info-notice-content p {
+.passage-container .contents .passage-plan .info-notice .info-notice-content p {
     font-size: 20px;
     line-height: 1.5;
     letter-spacing: normal;
     color: #000000;
     padding: 10px 0;
+}
+.member-container .contents .read-list {
+    background-color: #f7f7f7;
+    padding: 30px 40px 50px;
+    border-bottom: solid 2px #bbbbbb;
+}
+.member-container .contents .read-list > div:first-child {
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: -0.69px;
+    color: #000000;
+    margin-bottom: 30px;
+}
+.member-container .contents .read-list li {
+    display: inline-block;
+    height: 50px;
+    line-height: 50px;
+    background-color: #3349a4;
+    margin: 10px 10px 0 0;
+}
+.member-container .contents .read-list li div {
+    line-height: inherit;
+}
+.member-container .contents .read-list li > div {
+    padding: 0 12px;
+}
+.member-container .contents .read-list li > div:after {
+    content: '';
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 16px;
+    height: 16px;
+    background:url("../resources/icons/icon-check-white.png") no-repeat;
+    background-size: cover;
+}
+.member-container .contents .read-list li > div > div {
+    display: inline-block;
+    font-size: 18px;
+    color: #ffffff;
+    padding: 0 45px 0 15px;
+}
+.member-container .contents .read-list li > div > div:first-child {
+    font-weight: bold;
+    padding: 0 15px 0 0;
+}
+.member-container .contents .read-list li > div > div:first-child:after {
+    content: '';
+    position: absolute;
+    top: 18px;
+    right: 0;
+    width: 1px;
+    height: 16px;
+    background: #ffffff;
 }
 
 .detail-content .title {
