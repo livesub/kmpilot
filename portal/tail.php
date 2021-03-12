@@ -229,42 +229,29 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 </body>
 </html>
 
-<script>
+    <script>
         function showBranch(index) {
-            const branchBox = document.querySelector('.introduce').querySelector('.contents');
-            const branchBoxTitle = branchBox.querySelector('.box-title');
-            const branchBoxContent = branchBox.querySelector('.box-contents');
+            const branchBox = document.querySelector('.introduce').querySelector('.contents .box-contents');
+            const branchSelectBox = branchBox.querySelector('select');
+            const branchInfoBox = branchBox.querySelectorAll('.branch-info');
+            const mapBox = branchBox.querySelectorAll('.map > *');
 
-            let idx = 0;
-            for (let el of branchBoxTitle.querySelectorAll('li')) {
-                idx === index ? el.classList.add('active') : el.classList.remove('active');
-                idx++;
-            }
+            branchSelectBox.value = index;
 
-            idx = 0;
-            for (let el of branchBoxContent.children) {
-                if(el.classList.value === 'map') continue;
-                idx === index? el.classList = "" : el.classList = "hide";
-                idx++;
-            }
+            branchInfoBox.forEach(function(el, idx){
+                el.classList.remove("active");
+                if(idx === Number(index)) el.classList.add("active");
+            });
 
-            idx = 0;
-            for (let el of branchBoxContent.querySelector('.map').children) {
-                idx === index ? el.classList.add('active') : el.classList.remove('active');
-                idx++;
-            }
-        }
-
-        function selectBranchOption(index) {
-            document.querySelector('.introduce .box-title select').value = index;
-            showBranch(index);
-            closeBranchModal();
-            document.querySelectorAll(".branchModal")[index].classList.add("show");
+            mapBox.forEach(function(el, idx){
+                el.classList.remove("active");
+                if(idx === Number(index)) el.classList.add("active");
+            });
         }
 
         function closeBranchModal() {
-            document.querySelectorAll(".branchModal").forEach(function(el){
-                el.classList.remove("show");
+            document.querySelectorAll('.introduce .contents .box-contents .branch-info.active').forEach(function(el){
+                el.classList.remove("active");
             });
         }
 
