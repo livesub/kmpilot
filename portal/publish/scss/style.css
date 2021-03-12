@@ -46,6 +46,9 @@ div.inlineBlock {
 .row .col img {
     vertical-align: baseline;
 }
+.row .col a > img {
+    vertical-align: middle;
+}
 
 /* tab panel */
 .tab-panel ul {
@@ -503,6 +506,7 @@ input[type='radio']:checked:before {
     height: 413px;
     background: url("../resources/map/map.png") center;
     background-size: cover;
+    margin-left: 105px;
 }
 .main-container .introduce > div > .contents .box-contents .map .marker {
     position: absolute;
@@ -695,11 +699,14 @@ input[type='radio']:checked:before {
     font-size: 20px;
     color: #000000;
 }
+.sub-container .navigation > div > div:last-child {
+    border-right: solid 1px #ffffff;
+}
 .sub-container .navigation > div > div > div {
     width: 230px;
     min-height: 70px;
     padding-top: 19px;
-    border: solid 1px #ffffff;
+    border-left: solid 1px #ffffff;
     padding-left: 20px;
     cursor: pointer;
 }
@@ -732,14 +739,15 @@ input[type='radio']:checked:before {
     z-index: 2;
     width: 230px;
     height: 0;
-    border: solid 1px #ffffff;
     background-color: #e9edf1;
-    margin-top: -1px;
-    margin-left: -1px;
+    margin-top: 0;
+    margin-left: 0;
     transition: height .3s linear;
 }
 .sub-container .navigation > div > div:hover ul {
     height: auto;
+    border-top: solid 1px #ffffff;
+    border-left: solid 1px #ffffff;
 }
 .sub-container .navigation > div > div ul li {
     display: none;
@@ -1386,6 +1394,45 @@ input[type='radio']:checked:before {
 }
 .community-container .contents .board.write .btns button {
     margin-left: 20px;
+}
+.community-container .contents .reference .references-link ul li {
+    display: inline-block;
+    width: calc((100% / 3) - 15.4px);
+    height: 70px;
+    line-height: 70px;
+    font-size: 22px;
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 10px;
+    padding: 0 30px;
+    background-color: #3349a4;
+}
+.community-container .contents .reference .references-link ul li:not(:nth-child(3n)) {
+    margin-right: 23px;
+}
+.community-container .contents .reference .references-link ul li:hover {
+    background-color: #0070bf;
+}
+.community-container .contents .reference .references-link ul li:after {
+    content: '';
+    position: absolute;
+    top: 16px;
+    right: 24px;
+    width: 36px;
+    height: 36px;
+    background-image: url("../resources/icons/icon-edit-search.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.community-container .contents .reference .references-link ul li > a {
+    width: 100%;
+}
+.community-container .contents .reference .references-link .desc {
+    margin: 15px 0 75px;
+}
+.community-container .contents .reference .references-link .desc > p {
+    font-size: 22px;
+    color: #555555;
 }
 .passage-container .contents  .passage-plan .ports-list .select {
     display: none;

@@ -447,9 +447,8 @@
         right: 20px;
         width: 16px;
         height: 16px;
-        background: url(../resources/icons/btn-ui-40-close-white.png) transparent;
-        background-size: 16px 16px;
-        background-position: center;
+        background: url(../resources/icons/btn-ui-40-close-white.png) center;
+        background-size: 16px;
         border: 0;
         font-size: 0;
     }
@@ -1315,6 +1314,32 @@
     .community-container .contents .board.write .btns button {
         margin-left: 5px;
     }
+    .community-container .contents .reference .references-link ul li {
+        width: calc((100% / 2) - 10px);
+        height: 40px;
+        line-height: 40px;
+        margin-bottom: 5px;
+        padding: 0 10px;
+        font-size: 14px;
+    }
+    .community-container .contents .reference .references-link ul li:not(:nth-child(3n)) {
+        margin-right: 0;
+    }
+    .community-container .contents .reference .references-link ul li:not(:nth-child(2n)) {
+        margin-right: 10px;
+    }
+    .community-container .contents .reference .references-link ul li:after {
+        width: 20px;
+        height: 20px;
+        top: 11px;
+        right: 7px;
+    }
+    .community-container .contents .reference .references-link .desc {
+        margin: 10px 0 40px;
+    }
+    .community-container .contents .reference .references-link .desc > p {
+        font-size: 16px;
+    }
     .passage-container .contents  .passage-plan .ports-list .select {
         display: block;
     }
@@ -1437,7 +1462,7 @@
     }
     .modal .modal-dialog .modal-dialog-title .btn-close {
         top: 8px;
-        width: 20px;1
+        width: 20px;
         height: 20px;
         background-size: 20px 20px;
     }
