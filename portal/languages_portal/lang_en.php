@@ -89,6 +89,7 @@ $lang['bbs_list_subject'] = 'eng제목';
 $lang['bbs_list_wr_name'] = 'eng작성자';
 $lang['bbs_list_regi'] = 'eng등록일';
 $lang['bbs_list_file'] = 'eng파일';
+$lang['bbs_list_notice'] = 'eng공지';
 
 
 
