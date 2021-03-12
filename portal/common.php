@@ -639,8 +639,14 @@ if (G5_IS_MOBILE) {
     $faq_skin_path      = get_skin_path('faq', $config['cf_mobile_faq_skin']);
     $faq_skin_url       = get_skin_url('faq', $config['cf_mobile_faq_skin']);
 } else {
-    $board_skin_path    = get_skin_path('board', $board['bo_skin']);
-    $board_skin_url     = get_skin_url('board', $board['bo_skin']);
+    if(strpos($_SERVER['PHP_SELF'], "/adm/bbs") !== false) {
+        //프론트 게시판과 관리자 게시판 분리 시킴
+        $board_skin_path    = get_skin_path('board', "adm_".$board['bo_skin']);
+        $board_skin_url     = get_skin_url('board', "adm_".$board['bo_skin']);
+    } else {
+        $board_skin_path    = get_skin_path('board', $board['bo_skin']);
+        $board_skin_url     = get_skin_url('board', $board['bo_skin']);
+    }
     $member_skin_path   = get_skin_path('member', $config['cf_member_skin']);
     $member_skin_url    = get_skin_url('member', $config['cf_member_skin']);
     $new_skin_path      = get_skin_path('new', $config['cf_new_skin']);

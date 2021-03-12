@@ -12,17 +12,18 @@ $lang['title']='eng한국도선사협회';
 
 //Menu 관련
 //협회소개
-$lang['about_association']='eng협회소개';
-$lang['welcome_message']='eng인사말';
-$lang['history']='eng연혁 · 조직';
-$lang['honor_pilot']='eng명예도선사';
+$lang['about_association']='About Association';
+$lang['welcome_message']='Welcome Message';
+$lang['history']='History';
+$lang['honor_pilot']='Honor Pilot';
 
 //소식,홍보
-$lang['menu_news']='eng소식 · 홍보';
-$lang['menu_notice'] = 'eng공지사항';
+$lang['menu_news']='News · PR';
+$lang['menu_notice'] = 'Notice';
 $lang['menu_poto'] = 'eng포토뉴스';
+$lang['menu_eng_news'] = 'News';
 $lang['menu_movie'] = 'eng홍보영상';
-$lang['magazine']='eng도선지';
+$lang['magazine']='Magazine';
 
 //커뮤니티
 $lang['menu_community']='eng커뮤니티';
@@ -64,11 +65,34 @@ $lang['member_logout_chk'] = 'eng로그아웃 되었습니다.';
 //main 관련
 $lang['main_notice'] = 'eng공지&뉴스';
 $lang['main_notice_ment'] = 'eng도선사 협회의 주요 공지사항 및<br>뉴스를 전해드립니다.';
-$lang['main_notice_bbs'] = 'eng 공지사항';
+$lang['main_notice_bbs'] = 'Notice';
 $lang['main_notice_more'] = 'eng더보기';
 
-$lang['main_news_bbs'] = 'eng뉴스';
+$lang['main_news_bbs'] = 'News';
 $lang['main_news_more'] = 'eng더보기';
+
+//서브 페이지 관련
+$lang['sub_news_ment'] = 'eng도선사협회의 소식을 전합니다.';
+$lang['sub_ferry_fee'] = 'eng도선료 계산';
+$lang['sub_passage_plan'] = 'Passage Plan';
+
+
+//게시판
+$lang['bbs_subject'] = 'eng제목';
+$lang['bbs_content'] = 'eng내용';
+$lang['bbs_sub_con'] = 'eng제목+내용';
+$lang['bbs_wr_name'] = 'eng작성자';
+$lang['bbs_search'] = 'eng검색';
+
+$lang['bbs_list_no'] = 'eng번호';
+$lang['bbs_list_subject'] = 'eng제목';
+$lang['bbs_list_wr_name'] = 'eng작성자';
+$lang['bbs_list_regi'] = 'eng등록일';
+$lang['bbs_list_file'] = 'eng파일';
+
+
+
+
 
 
 $lang['member_mypage'] = 'eng회원정보';

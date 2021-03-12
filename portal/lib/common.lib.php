@@ -57,6 +57,51 @@ function get_paging($write_pages, $cur_page, $total_page, $url, $add="")
         return "";
 }
 
+
+// 프론트에서 만 쓰는 페이징 디자인(한페이지에 보여줄 행, 현재페이지, 총페이지수, URL)
+function get_paging_front($write_pages, $cur_page, $total_page, $url, $add="")
+{
+    //$url = preg_replace('#&amp;page=[0-9]*(&amp;page=)$#', '$1', $url);
+    $url = preg_replace('#(&amp;)?page=[0-9]*#', '', $url);
+	$url .= substr($url, -1) === '?' ? 'page=' : '&amp;page=';
+
+    $str = '';
+
+    $str .= '<a href="'.$url.'1'.$add.'" class="firstpage"></a>'.PHP_EOL;
+
+    $start_page = ( ( (int)( ($cur_page - 1 ) / $write_pages ) ) * $write_pages ) + 1;
+    $end_page = $start_page + $write_pages - 1;
+
+    if ($end_page >= $total_page) $end_page = $total_page;
+
+        //$str .= '<a href="'.$url.($start_page-1).$add.'" class="pre"></a>'.PHP_EOL;
+        if($cur_page > 1) $min = $cur_page-1;
+        else $min = 1;
+
+        $str .= '<a href="'.$url.$min.$add.'" class="pre"></a>'.PHP_EOL;
+
+        for ($k=$start_page;$k<=$end_page;$k++) {
+            if ($cur_page != $k){
+                $str .= '<a href="'.$url.$k.$add.'">'.$k.PHP_EOL;
+            }else{
+                $str .= '<a href="javascript:void(0);" class="active">'.$k.'</strong>'.PHP_EOL;
+            }
+        }
+
+    if($total_page <= $cur_page) $max = $total_page;
+    else $max = $cur_page+1;
+
+    $str .= '<a href="'.$url.$max.$add.'" class="next"></a>'.PHP_EOL;
+
+    $str .= '<a href="'.$url.$total_page.$add.'" class="lastpage"></a>'.PHP_EOL;
+
+    if ($str)
+        return "{$str}";
+    else
+        return "";
+}
+
+
 // 페이징 코드의 <nav><span> 태그 다음에 코드를 삽입
 function page_insertbefore($paging_html, $insert_html)
 {

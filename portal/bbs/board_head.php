@@ -14,3 +14,13 @@ if (G5_IS_MOBILE) {
     }
     echo html_purifier(stripslashes($board['bo_content_head']));
 }
+?>
+
+<div class="sub-container news-container">
+
+<?php
+    include_once(G5_PATH.'/sub_menu/sub_menu.php');
+?>
+        <div class="contents">
+            <div class="contents-title"><?=$lang['menu_notice']?></div>
+            <div class="notice board">

@@ -105,6 +105,10 @@ if (!$is_search_bbs) {
         $list[$i] = get_list($row, $board, $board_skin_url, G5_IS_MOBILE ? $board['bo_mobile_subject_len'] : $board['bo_subject_len']);
         $list[$i]['is_notice'] = true;
         $list[$i]['num'] = 0;
+
+        $wr_datetime_cut = explode(" ",$row['wr_datetime']);
+        $list[$i]['wr_datetime'] = date_point_change($wr_datetime_cut[0]);
+
         $i++;
         $notice_count++;
 
@@ -183,7 +187,7 @@ if ($is_search_bbs) {
 // 페이지의 공지개수가 목록수 보다 작을 때만 실행
 if($page_rows > 0) {
     $result = sql_query($sql);
-
+echo "sql======> ".$sql;
     $k = 0;
 
     while ($row = sql_fetch_array($result))
@@ -200,6 +204,9 @@ if($page_rows > 0) {
         $list_num = $total_count - ($page - 1) * $list_page_rows - $notice_count;
         $list[$i]['num'] = $list_num - $k;
 
+        $wr_datetime_cut = explode(" ",$row['wr_datetime']);
+        $list[$i]['wr_datetime'] = date_point_change($wr_datetime_cut[0]);
+
         $i++;
         $k++;
     }
@@ -207,7 +214,7 @@ if($page_rows > 0) {
 
 g5_latest_cache_data($board['bo_table'], $list);
 
-$write_pages = get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, get_pretty_url($bo_table, '', $qstr.'&amp;page='));
+$write_pages = get_paging_front(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, get_pretty_url($bo_table, '', $qstr.'&amp;page='));
 
 $list_href = '';
 $prev_part_href = '';

@@ -21,6 +21,7 @@ $lang['honor_pilot']='명예도선사';
 $lang['menu_news']='소식 · 홍보';
 $lang['menu_notice'] = '공지사항';
 $lang['menu_poto'] = '포토뉴스';
+$lang['menu_eng_news'] = '뉴스';
 $lang['menu_movie'] = '홍보영상';
 $lang['magazine']='도선지';
 
@@ -67,6 +68,29 @@ $lang['main_notice_more'] = '더보기';
 
 $lang['main_news_bbs'] = '뉴스';
 $lang['main_news_more'] = '더보기';
+
+//서브 페이지 관련
+$lang['sub_news_ment'] = '도선사협회의 소식을 전합니다.';
+$lang['sub_ferry_fee'] = '도선료 계산';
+$lang['sub_passage_plan'] = 'Passage Plan';
+
+
+//게시판
+$lang['bbs_subject'] = '제목';
+$lang['bbs_content'] = '내용';
+$lang['bbs_sub_con'] = '제목+내용';
+$lang['bbs_wr_name'] = '작성자';
+$lang['bbs_search'] = '검색';
+
+$lang['bbs_list_no'] = '번호';
+$lang['bbs_list_subject'] = '제목';
+$lang['bbs_list_wr_name'] = '작성자';
+$lang['bbs_list_regi'] = '등록일';
+$lang['bbs_list_file'] = '파일';
+
+
+
+
 
 
 

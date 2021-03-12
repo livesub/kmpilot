@@ -30,7 +30,7 @@ $ajaxpage = G5_URL.'/lang_change_portal.php';
             <div class="header-main">
                 <ul class="header-menu">
                     <li>
-                        <a href="#"><?=$lang['about_association']?></a>
+                        <?=$lang['about_association']?>
                         <div class="header-sub-menu">
                             <ul>
                                 <li><a href="./pages/introduce/greet.html"><?=$lang['welcome_message']?></a></li>
@@ -40,18 +40,32 @@ $ajaxpage = G5_URL.'/lang_change_portal.php';
                         </div>
                     </li>
                     <li>
-                        <a href="#"><?=$lang['menu_news']?></a>
+                        <?=$lang['menu_news']?>
                         <div class="header-sub-menu">
                             <ul>
-                                <li><a href="bbs/board.php?bo_table=notice_kr"><?=$lang['menu_notice']?></a></li>
+                                <li><a href="<?=G5_URL?>/bbs/board.php?bo_table=notice_<?=$lang_type?>"><?=$lang['menu_notice']?></a></li>
+<?php
+    if($lang_type == "kr" || $lang_type == ""){
+?>
                                 <li><a href="../../pages/news/photoNews.html"><?=$lang['menu_poto']?></a></li>
                                 <li><a href="../../pages/news/promotionVideo.html"><?=$lang['menu_movie']?></a></li>
+<?php
+    }else{
+?>
+                                <li><a href="../../pages/news/photoNews.html"><?=$lang['menu_eng_news']?></a></li>
+<?php
+    }
+?>
                                 <li><a href="../../pages/news/passage.html"><?=$lang['magazine']?></a></li>
                             </ul>
                         </div>
                     </li>
+
+<?php
+    if($lang_type == "kr" || $lang_type == ""){
+?>
                     <li>
-                        <a href="#"><?=$lang['menu_community']?></a>
+                        <?=$lang['menu_community']?>
                         <div class="header-sub-menu">
                             <ul>
                                 <li><a href="#"><?=$lang['menu_community']?></a></li>
@@ -61,16 +75,19 @@ $ajaxpage = G5_URL.'/lang_change_portal.php';
                         </div>
                     </li>
                     <li>
-                        <a href="#"><?=$lang['menu_edu']?></a>
+                        <?=$lang['menu_edu']?>
                         <div class="header-sub-menu">
                         </div>
                     </li>
+<?php
+    }
+?>
                     <!-- 로그인 시 표시 -->
 <?php
-    if ($is_member) {
+    if ($is_member && ($lang_type == "kr" || $lang_type == "")) {
 ?>
                     <li>
-                        <a href="#"><?=$lang['menu_member']?></a>
+                        <?=$lang['menu_member']?>
                         <div class="header-sub-menu">
                             <ul>
                                 <li><a href="#"><?=$lang['menu_conference']?></a></li>
@@ -156,13 +173,27 @@ $ajaxpage = G5_URL.'/lang_change_portal.php';
                             <div onclick="onClickHeaderMenu(event)"><?=$lang['menu_news']?></div>
                             <div class="header-sub-menu">
                                 <ul>
-                                    <li><a href="bbs/board.php?bo_table=notice_kr"><?=$lang['menu_notice']?></a></li>
+                                    <li><a href="<?=G5_URL?>/bbs/board.php?bo_table=notice_<?=$lang_type?>"><?=$lang['menu_notice']?></a></li>
+<?php
+    if($lang_type == "kr" || $lang_type == ""){
+?>
                                     <li><a href="../../pages/news/photoNews.html"><?=$lang['menu_poto']?></a></li>
                                     <li><a href="../../pages/news/promotionVideo.html"><?=$lang['menu_movie']?></a></li>
+<?php
+    }else{
+?>
+                                    <li><a href="../../pages/news/photoNews.html"><?=$lang['menu_eng_news']?></a></li>
+<?php
+    }
+?>
+
                                     <li><a href="../../pages/news/passage.html"><?=$lang['magazine']?></a></li>
                                 </ul>
                             </div>
                         </li>
+<?php
+    if($lang_type == "kr" || $lang_type == ""){
+?>
                         <li>
                             <div onclick="onClickHeaderMenu(event)"><?=$lang['menu_community']?></div>
                             <div class="header-sub-menu">
@@ -176,9 +207,12 @@ $ajaxpage = G5_URL.'/lang_change_portal.php';
                         <li>
                             <div onclick="onClickHeaderMenu(event)"><a href="#"><?=$lang['menu_edu']?></a></div>
                         </li>
+<?php
+    }
+?>
                         <!-- 로그인 시 표시 -->
 <?php
-    if ($is_member) {
+    if ($is_member && ($lang_type == "kr" || $lang_type == "")) {
 ?>
                         <li>
                             <div onclick="onClickHeaderMenu(event)"><?=$lang['menu_member']?></div>

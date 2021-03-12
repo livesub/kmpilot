@@ -4,6 +4,14 @@ include_once('./_common.php');
 define('_INDEX_', true);
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 include_once(G5_PATH.'/head.php');
+
+if($lang_type == "kr"){
+    $table_chk = "kmp_write_photo_news";
+    $table_link = "photo_news";
+}else{
+    $table_chk = "kmp_write_news_en";
+    $table_link = "news_en";
+}
 ?>
 
 <div class="main-container">
@@ -49,49 +57,44 @@ include_once(G5_PATH.'/head.php');
         </div>
     </div>
     <div class="contents">
-<?php
-    if($lang_type == "kr"){
-?>
+
         <div>
             <div class="box-title">
                 <?=$lang['main_notice_bbs']?>
-                <a class="more" href="bbs/board.php?bo_table=notice_kr"><?=$lang['main_notice_more']?></a>
+                <a class="more" href="bbs/board.php?bo_table=notice_<?=$lang_type?>"><?=$lang['main_notice_more']?></a>
             </div>
             <div class="box-contents">
                 <ul>
 <?php
-        //공지사항
-        $sql_notice = " select wr_id,wr_subject,wr_datetime from kmp_write_notice_kr order by wr_id DESC limit 0,4 ";
-        $result_notice = sql_query($sql_notice);
-        for ($j=0; $row_notice=sql_fetch_array($result_notice); $j++) {
-            $wr_datetime_cut = explode(" ",$row_notice['wr_datetime']);
+    //공지사항
+    $sql_notice = " select wr_id,wr_subject,wr_datetime from kmp_write_notice_{$lang_type} order by wr_id DESC limit 0,4 ";
+    $result_notice = sql_query($sql_notice);
+    for ($j=0; $row_notice=sql_fetch_array($result_notice); $j++) {
+        $wr_datetime_cut = explode(" ",$row_notice['wr_datetime']);
 ?>
-                    <li><div><a href="bbs/board.php?bo_table=notice_kr&wr_id=<?=$row_notice['wr_id']?>"><?=$row_notice['wr_subject']?></a></div><div><?=date_point_change($wr_datetime_cut[0])?></div></li>
+                    <li><div><a href="bbs/board.php?bo_table=notice_<?=$lang_type?>&wr_id=<?=$row_notice['wr_id']?>"><?=$row_notice['wr_subject']?></a></div><div><?=date_point_change($wr_datetime_cut[0])?></div></li>
 <?php
-        }
+    }
 ?>
                 </ul>
             </div>
         </div>
-<?php
-    }
-?>
 
         <div>
             <div class="box-title">
                 <?=$lang['main_news_bbs']?>
-                <a class="more" href="bbs/board.php?bo_table=news_en"><?=$lang['main_news_more']?></a>
+                <a class="more" href="bbs/board.php?bo_table=<?=$table_link?>"><?=$lang['main_news_more']?></a>
             </div>
             <div class="box-contents">
                 <ul>
 <?php
     //뉴스
-    $sql_news = " select wr_id,wr_subject,wr_datetime from kmp_write_news_en order by wr_id DESC limit 0,4 ";
+    $sql_news = " select wr_id,wr_subject,wr_datetime from {$table_chk} order by wr_id DESC limit 0,4 ";
     $result_news = sql_query($sql_news);
     for ($j=0; $row_news=sql_fetch_array($result_news); $j++) {
         $news_wr_datetime_cut = explode(" ",$row_news['wr_datetime']);
 ?>
-                    <li><div><a href="bbs/board.php?bo_table=news_en&wr_id=<?=$row_news['wr_id']?>"><?=$row_news['wr_subject']?></a></div><div><?=date_point_change($news_wr_datetime_cut[0])?></div></li>
+                    <li><div><a href="bbs/board.php?bo_table=<?=$table_link?>&wr_id=<?=$row_news['wr_id']?>"><?=$row_news['wr_subject']?></a></div><div><?=date_point_change($news_wr_datetime_cut[0])?></div></li>
 <?php
     }
 ?>

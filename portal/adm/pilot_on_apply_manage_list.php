@@ -296,7 +296,7 @@ function on_apply_list_submit(f)
         $("#edu_onoff_type_print").val("<?=$edu_onoff_type?>");
         $("#choice_type_print").val("<?=$choice_type?>");
         //$("#form_print").attr("action", "pilot_certificate_print.php");
-        $("#form_print").attr("action", "<?=EDU_URL_PATH?>/pilot_certificate_print.php");
+        $("#form_print").attr("action", "<?=EDU_URL_PATH_SKIN?>/pilot_certificate_print.php");
         $('#form_print').attr("target", "");
         $('#form_print').attr("method", "POST");
         $("#form_print").submit();
