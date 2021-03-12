@@ -4,13 +4,15 @@ div.inlineBlock {
 /*table*/
 .thead {
     display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
     width: 100%;
+    min-height: 80px;
     background-color: #f7f7f7;
     border-bottom: 4px solid #000000;
 }
 .thead .th {
-    height: 80px;
-    line-height: 80px;
     font-size: 22px;
     font-weight: bold;
     text-align: center;
@@ -45,6 +47,9 @@ div.inlineBlock {
 }
 .row .col img {
     vertical-align: baseline;
+}
+.row .col a > img {
+    vertical-align: middle;
 }
 
 /* tab panel */
@@ -129,7 +134,7 @@ select {
     width: 24px;
     height: 24px;
     background-image: url(../resources/icons/icon-arrow-bottom.png);
-    background-size: 24px;
+    background-size: cover;
     background-position: center;
 }
 input[type=checkbox] {
@@ -144,6 +149,7 @@ input[type=checkbox] + label {
 }
 input[type=checkbox]:checked + label {
     background: url("../resources/icons/icon-snav-pulldown.png") #0070BF;
+    background-size: cover;
 }
 input[type=radio] {
     width: 20px;
@@ -401,61 +407,68 @@ input[type='radio']:checked:before {
 }
 .main-container .introduce > div > .contents > div > div {
     width: 932px;
+    min-height: 540px;
     color: #fff;
     background-color: rgba(0, 0, 0, 0.9);
-}
-.main-container .introduce > div > .contents > div > div:nth-child(2){
-    display: none;
-    width: 100%;
-    height: 482px;
-    padding: 20px;
-}
-.main-container .introduce > div > .contents .box-title {
-    border-bottom: solid 1px rgba(255, 255, 255, 0.1);
-}
-.main-container .introduce > div > .contents .box-title ul {
-    list-style: none;
-}
-.main-container .introduce > div > .contents .box-title li {
-    display: inline-block;
-    width: 77px;
-    height: 60px;
-    line-height: 60px;
-    background-color: rgba(0, 112, 191, 0);
-    font-size: 20px;
-    font-weight: bold;
-    text-align: center;
-    cursor: pointer;
-}
-.main-container .introduce > div > .contents .box-title li.active {
-    background-color: #0070bf;
-}
-.main-container .introduce > div > .contents .box-contents {
-    height: 530px;
-    padding: 50px 52px 0 60px;
+    padding: 50px 52px 50px 60px;
     margin-bottom: 110px;
 }
+
 .main-container .introduce > div > .contents .box-contents > div {
     display: inline-block;
-    width: 520px;
+    width: 420px;
 }
-.main-container .introduce > div > .contents .box-contents > div.hide {
+.main-container .introduce > div > .contents .box-contents .select {
+    height: 60px;
+    line-height: 60px;
+    background-color: #0070bf;
+    font-size: 24px;
+}
+.main-container .introduce > div > .contents .box-contents .select:after {
+    top: 19px;
+    right: 19px;
+    background-image: url(../resources/icons/icon-arrow-bottom-white.png);
+}
+.main-container .introduce > div > .contents .box-contents .select select {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: 0;
+    font-weight: bold;
+    letter-spacing: -0.92px;
+    color: #ffffff;
+}
+.main-container .introduce > div > .contents .box-contents .select option {
+    color: #000;
+}
+.main-container .introduce > div > .contents .box-contents .branch-info {
+    display: none;
+    padding-top: 45px;
+}
+.main-container .introduce > div > .contents .box-contents .branch-info.active {
+    display: block;
+}
+.main-container .introduce > div > .contents .box-contents .branch-info > button {
     display: none;
 }
-.main-container .introduce > div > .contents .box-contents > div .title {
-    padding-bottom: 35px;
+.main-container .introduce > div > .contents .box-contents .branch-info > div.title {
+    padding-bottom: 40px;
     font-size: 40px;
-    font-weight: 900;
+    font-weight: 500;
+    line-height: 50px;
 }
 .main-container .introduce > div > .contents .box-contents > div .title > div {
     display: inline-block;
     vertical-align: middle;
 }
 .main-container .introduce > div > .contents .box-contents > div .title span {
-    font-weight: 500;
+    font-weight: 900;
 }
 .main-container .introduce > div > .contents .box-contents > div .title img {
-    margin-left: 43px;
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    margin-left: 20px;
 }
 .main-container .introduce > div > .contents .box-contents > div .contents {
     font-size: 22px;
@@ -496,6 +509,7 @@ input[type='radio']:checked:before {
     height: 413px;
     background: url("../resources/map/map.png") center;
     background-size: cover;
+    margin-left: 105px;
 }
 .main-container .introduce > div > .contents .box-contents .map .marker {
     position: absolute;
@@ -645,6 +659,7 @@ input[type='radio']:checked:before {
 .sub-container .sub-title {
     width: 100%;
     height: 400px;
+    background: url("../resources/background-sample/greet.png") center no-repeat;
 }
 .introduce-container .sub-title {
     background: url("../resources/background-sample/greet.png") center no-repeat;
@@ -656,6 +671,14 @@ input[type='radio']:checked:before {
 }
 .community-container .sub-title {
     background: url("../resources/background-sample/community.png") center no-repeat;
+    background-size: cover;
+}
+.passage-container .sub-title {
+    background: url("../resources/background-sample/passagePlan.png") center no-repeat;
+    background-size: cover;
+}
+.member-container .sub-title {
+    background: url("../resources/background-sample/members.png") center no-repeat;
     background-size: cover;
 }
 .sub-container .sub-title dt {
@@ -684,11 +707,14 @@ input[type='radio']:checked:before {
     font-size: 20px;
     color: #000000;
 }
+.sub-container .navigation > div > div:last-child {
+    border-right: solid 1px #ffffff;
+}
 .sub-container .navigation > div > div > div {
     width: 230px;
     min-height: 70px;
     padding-top: 19px;
-    border: solid 1px #ffffff;
+    border-left: solid 1px #ffffff;
     padding-left: 20px;
     cursor: pointer;
 }
@@ -721,14 +747,15 @@ input[type='radio']:checked:before {
     z-index: 2;
     width: 230px;
     height: 0;
-    border: solid 1px #ffffff;
     background-color: #e9edf1;
-    margin-top: -1px;
-    margin-left: -1px;
+    margin-top: 0;
+    margin-left: 0;
     transition: height .3s linear;
 }
 .sub-container .navigation > div > div:hover ul {
     height: auto;
+    border-top: solid 1px #ffffff;
+    border-left: solid 1px #ffffff;
 }
 .sub-container .navigation > div > div ul li {
     display: none;
@@ -1226,12 +1253,15 @@ input[type='radio']:checked:before {
 .board .list .row .col:nth-child(4) {
     width: 150px;
     text-align: center;
+    overflow: hidden;
+    line-height: unset;
 }
 .board .list .thead .th:nth-child(2),
 .board .list .row .col:nth-child(2) {
     flex: 1;
     max-width: 730px;
-    padding: 0 27px;
+    padding: 25px 27px;
+    line-height: 1.31;
 }
 .board .list .thead .th:nth-child(5),
 .board .list .row .col:nth-child(5) {
@@ -1374,6 +1404,203 @@ input[type='radio']:checked:before {
 }
 .community-container .contents .board.write .btns button {
     margin-left: 20px;
+}
+.community-container .contents .reference .references-link ul li {
+    display: inline-block;
+    width: calc((100% / 3) - 15.4px);
+    height: 70px;
+    line-height: 70px;
+    font-size: 22px;
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 10px;
+    padding: 0 30px;
+    background-color: #3349a4;
+}
+.community-container .contents .reference .references-link ul li:not(:nth-child(3n)) {
+    margin-right: 23px;
+}
+.community-container .contents .reference .references-link ul li:hover {
+    background-color: #0070bf;
+}
+.community-container .contents .reference .references-link ul li:after {
+    content: '';
+    position: absolute;
+    top: 16px;
+    right: 24px;
+    width: 36px;
+    height: 36px;
+    background-image: url("../resources/icons/icon-edit-search.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.community-container .contents .reference .references-link ul li > a {
+    width: 100%;
+}
+.community-container .contents .reference .references-link .desc {
+    margin: 15px 0 75px;
+}
+.community-container .contents .reference .references-link .desc > p {
+    font-size: 22px;
+    color: #555555;
+}
+.passage-container .contents .passage-plan .ports-list .select {
+    display: none;
+}
+.passage-container .contents .passage-plan .ports-list .select:after {
+    content: '';
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    width: 16px;
+    height: 16px;
+    background-image: url(../resources/icons/icon-arrow-bottom-white.png);
+    background-size: 16px 16px;
+    background-position: center;
+}
+.passage-container .contents .passage-plan .ports-list .select select {
+    width: 100%;
+    height: 40px;
+    background-color: #0070bf;
+    padding: 0 18px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #ffffff;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.passage-container .contents .passage-plan .ports-list li {
+    display: inline-block;
+    width: calc(100% / 6);
+    font-size: 22px;
+    font-weight: bold;
+    line-height: 1.27;
+    text-align: center;
+    color: #000000;
+    border: solid 1px #f0f0f0;
+    padding: 16px 0;
+}
+.passage-container .contents .passage-plan .ports-list li.active {
+    background-color: #0070bf;
+    color: #ffffff;
+}
+.passage-container .contents .passage-plan .plan-list {
+    padding-top: 100px;
+}
+.passage-container .contents .passage-plan .plan-list .port-title {
+    font-size: 32px;
+    font-weight: 900;
+    letter-spacing: -0.76px;
+    color: #000000;
+}
+.passage-container .contents .passage-plan .plan-list .list {
+    padding-top: 50px;
+}
+.passage-container .contents .passage-plan .plan-list .list .row:last-child {
+    border-bottom: solid 2px #bbbbbb;
+}
+.passage-container .contents .passage-plan .plan-list .list .thead .th:first-child,
+.passage-container .contents .passage-plan .plan-list .list .row .col:first-child {
+    flex: 1;
+}
+.passage-container .contents .passage-plan .plan-list .list .row .col:first-child {
+     padding: 0 20px;
+}
+.passage-container .contents .passage-plan .plan-list .list .thead .th:nth-child(2),
+.passage-container .contents .passage-plan .plan-list .list .row .col:nth-child(2) {
+    width: 100px;
+    text-align: center;
+}
+.passage-container .contents .passage-plan .info-notice {
+    background-color: #f7f7f7;
+    padding: 50px 70px 90px;
+    margin-top: 150px;
+}
+.passage-container .contents .passage-plan .info-notice .info-notice-title {
+    font-size: 22px;
+    font-weight: bold;
+    color: #d11e14;
+    padding-left: 40px;
+}
+.passage-container .contents .passage-plan .info-notice .info-notice-title:before {
+    content: '';
+    position: absolute;
+    top: 7px;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    background-image: url("../resources/icons/alerts-alt-1.png");
+    background-repeat: no-repeat;
+}
+.passage-container .contents .passage-plan .info-notice .info-notice-content {
+    display: none;
+    padding-top: 20px;
+}
+.passage-container .contents .passage-plan .info-notice .info-notice-content.active {
+    display: block;
+}
+.passage-container .contents .passage-plan .info-notice .info-notice-content p {
+    font-size: 20px;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: #000000;
+    padding: 10px 0;
+}
+.member-container .contents .read-list {
+    background-color: #f7f7f7;
+    padding: 30px 40px 50px;
+    border-bottom: solid 2px #bbbbbb;
+}
+.member-container .contents .read-list > div:first-child {
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: -0.69px;
+    color: #000000;
+    margin-bottom: 30px;
+}
+.member-container .contents .read-list li {
+    display: inline-block;
+    height: 50px;
+    line-height: 50px;
+    background-color: #3349a4;
+    margin: 10px 10px 0 0;
+}
+.member-container .contents .read-list li div {
+    line-height: inherit;
+}
+.member-container .contents .read-list li > div {
+    padding: 0 12px;
+}
+.member-container .contents .read-list li > div:after {
+    content: '';
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 16px;
+    height: 16px;
+    background:url("../resources/icons/icon-check-white.png") no-repeat;
+    background-size: cover;
+}
+.member-container .contents .read-list li > div > div {
+    display: inline-block;
+    font-size: 18px;
+    color: #ffffff;
+    padding: 0 45px 0 15px;
+}
+.member-container .contents .read-list li > div > div:first-child {
+    font-weight: bold;
+    padding: 0 15px 0 0;
+}
+.member-container .contents .read-list li > div > div:first-child:after {
+    content: '';
+    position: absolute;
+    top: 18px;
+    right: 0;
+    width: 1px;
+    height: 16px;
+    background: #ffffff;
 }
 
 .detail-content .title {

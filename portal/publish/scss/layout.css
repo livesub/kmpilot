@@ -47,11 +47,10 @@
     height: 100px;
     font-size: 20px;
     font-weight: bold;
-
     padding-top: 36px;
-
     letter-spacing: -1px;
     text-align: center;
+    cursor: default;
 }
 .header .navigation .header-menu li:hover {
     color: #0070bf;

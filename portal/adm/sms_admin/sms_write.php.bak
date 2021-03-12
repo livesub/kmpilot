@@ -10,9 +10,9 @@ $g5['title'] = "문자 보내기";
 include_once(G5_ADMIN_PATH.'/admin.head.php');
 ?>
 
-<!--<link rel="stylesheet" href="https://kmpilot.or.kr/CMS/_css/common.css" type="text/css" />-->
-<!--<link rel="stylesheet" href="https://kmpilot.or.kr/CMS/_css/layout.css" type="text/css" />-->
-<!--<link rel="stylesheet" href="https://kmpilot.or.kr/_css/board_default.css" type="text/css" />-->
+<link rel="stylesheet" href="https://kmpilot.or.kr/CMS/_css/common.css" type="text/css" />
+<link rel="stylesheet" href="https://kmpilot.or.kr/CMS/_css/layout.css" type="text/css" />
+<link rel="stylesheet" href="https://kmpilot.or.kr/_css/board_default.css" type="text/css" />
 
 <script type="text/javascript">
     CMS_FOLDER = "<?=G5_ADMIN_URL?>/sms_admin";
@@ -57,14 +57,14 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
                     !-->
                     <div class="message-area">
                         <div class="img-box" id="add_img_box">
-                            <strong>첨부 이미지</strong>
+                            <strong>&lt;첨부 이미지&gt;</strong>
                             <div class="img-box-wrap" id="add_img_div"></div>
-<!--                            <p>이미지를 클릭하시면<br>삭제하실 수 있습니다.</p>-->
+                            <p>이미지를 클릭하시면<br>삭제하실 수 있습니다.</p>
                         </div>
                         <div class="message-box">
                             <textarea name="s_message" class="message-text" id="s_message" rows="1" cols="1"></textarea>
                         </div>
-                        <div class="txt-byte"><span class="txt-message-byte" id="msglen">0</span> / <span class="txt-max-byte" id="max_len">90</span>byte</div>
+                        <div class="txt-byte"><span class="txt-message-byte" id="msglen">0</span> / <span class="txt-max-byte" id="max_len">90</span> byte</div>
                     </div>
                     <!--<
                     <div class="btn-message-area">

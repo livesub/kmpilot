@@ -391,60 +391,48 @@
         padding: 0;
     }
     .main-container .introduce > div > .contents > div > div {
-        display: none;
-    }
-    .main-container .introduce > div > .contents > div > div:nth-child(2) {
-        display: block;
-    }
-    .main-container .introduce > div > .contents .box-title {
-        border-bottom: 0;
-    }
-    .main-container .introduce > div > .contents .box-title select {
         width: 100%;
-        height: 40px;
-        background-color: #0070bf;
-        padding: 0 18px;
-        font-size: 15px;
-        font-weight: bold;
-        color: #ffffff;
-        -moz-appearance:none; /* Firefox */
-        -webkit-appearance:none; /* Safari and Chrome */
-        appearance:none;
-    }
-    .main-container .introduce > div > .contents .box-title:after {
-        content: '';
-        position: absolute;
-        top: 12px;
-        right: 16px;
-        width: 16px;
-        height: 16px;
-        background-image: url(../resources/icons/icon-arrow-bottom-white.png);
-        background-size: 16px 16px;
-        background-position: center;
+        min-height: 484px;
+        padding: 20px;
+        margin: 0;
     }
     .main-container .introduce > div > .contents .box-contents {
-        margin-top: 37px;
+        margin-top: 0;
         padding: 0;
         margin-bottom: 0;
     }
-    .main-container .introduce > div > .contents .box-contents .branchModal {
+    .main-container .introduce > div > .contents .box-contents > div {
+        width: 100%;
+    }
+    .main-container .introduce > div > .contents .box-contents .select {
+        height: 40px;
+        line-height: 40px;
+        font-size: 15px;
+    }
+    .main-container .introduce > div > .contents .box-contents .select:after {
+        width: 16px;
+        height: 16px;
+        top: 12px;
+        right: 16px;
+    }
+    .main-container .introduce > div > .contents .box-contents .branch-info {
         display: none;
         position: absolute;
-        top: 0;
+        top: 77px;
         z-index: 3;
         width: 100%;
-        height: 345px;
+        min-height: 345px;
         border: solid 1px #666666;
         background-color: #000000;
         padding: 46px 20px 0;
     }
-    .main-container .introduce > div > .contents .box-contents .branchModal.show {
+    .main-container .introduce > div > .contents .box-contents .branchModal.active {
         display: block;
     }
-    .main-container .introduce > div > .contents .box-contents > div .title {
+    .main-container .introduce > div > .contents .box-contents .branch-info > div.title {
         padding-bottom: 30px;
         font-size: 24px;
-        font-weight: 900;
+        font-weight: 500;
         letter-spacing: -1.2px;
     }
     .main-container .introduce > div > .contents .box-contents > div .title img {
@@ -452,15 +440,15 @@
         width: 60px;
         height: 60px;
     }
-    .main-container .introduce > div > .contents .box-contents > div .title .btn-close {
+    .main-container .introduce > div > .contents .box-contents .branch-info > button.btn-close {
+        display: block;
         position: absolute;
-        top: -30px;
-        right: 0;
+        top: 20px;
+        right: 20px;
         width: 16px;
         height: 16px;
-        background: url(../resources/icons/btn-ui-40-close-white.png) transparent;
-        background-size: 16px 16px;
-        background-position: center;
+        background: url(../resources/icons/btn-ui-40-close-white.png) center;
+        background-size: 16px;
         border: 0;
         font-size: 0;
     }
@@ -482,7 +470,7 @@
         display: block;
         width: 240px;
         height: 337px;
-        margin: 0 auto;
+        margin: 45px auto 0 auto;
     }
     .main-container .introduce > div > .contents .box-contents .map .marker {
         width: 20px;
@@ -585,16 +573,19 @@
         width: 100%;
         height: 80px;
         margin: 0 auto 10px;
-        padding: 10px 0 0 20px;
+        padding: 0;
         font-size: 18px
     }
     .main-container .links > div:last-child {
         margin: 0 auto;
     }
-    .main-container .links > div > div:last-child {
+    .main-container .links > div > a {
+        padding: 10px 20px;
+    }
+    .main-container .links > div > a > div:last-child {
         font-size: 14px;
     }
-    .main-container .links > div > div:last-child span:after {
+    .main-container .links > div > a > div:last-child span:after {
         width: 8px;
         height: 8px;
         top: 7px;
@@ -627,7 +618,7 @@
         height: 50px;
     }
     .sub-container .navigation > div > div > div {
-        width: 135px;
+        width: 155px;
         min-height: 50px;
         padding-top: 12px;
         padding-left: 12px;
@@ -638,6 +629,7 @@
     }
     .sub-container .navigation > div > div:hover ul {
         padding: 10px 0;
+        width: 155px;
     }
     .sub-container .navigation > div > div ul li {
         height: 24px;
@@ -1323,6 +1315,115 @@
     .community-container .contents .board.write .btns button {
         margin-left: 5px;
     }
+    .community-container .contents .reference .references-link ul li {
+        width: calc((100% / 2) - 10px);
+        height: 40px;
+        line-height: 40px;
+        margin-bottom: 5px;
+        padding: 0 10px;
+        font-size: 14px;
+    }
+    .community-container .contents .reference .references-link ul li:not(:nth-child(3n)) {
+        margin-right: 0;
+    }
+    .community-container .contents .reference .references-link ul li:not(:nth-child(2n)) {
+        margin-right: 10px;
+    }
+    .community-container .contents .reference .references-link ul li:after {
+        width: 20px;
+        height: 20px;
+        top: 11px;
+        right: 7px;
+    }
+    .community-container .contents .reference .references-link .desc {
+        margin: 10px 0 40px;
+    }
+    .community-container .contents .reference .references-link .desc > p {
+        font-size: 16px;
+    }
+    .member-container .contents .read-list {
+        padding: 10px;
+        border-width: 1px;
+    }
+    .member-container .contents .read-list > div:first-child {
+        font-size: 16px;
+        letter-spacing: -1px;
+        margin-bottom: 5px;
+    }
+    .member-container .contents .read-list li {
+        height: 46px;
+        line-height: unset;
+    }
+    .member-container .contents .read-list li > div {
+        padding: 5px;
+    }
+    .member-container .contents .read-list li > div:after {
+        top: 26px;
+        right: 5px;
+        width: 12px;
+        height: 12px;
+    }
+    .member-container .contents .read-list li > div > div {
+        display: block;
+        font-size: 12px;
+        padding: 0 22px 0 0;
+    }
+    .member-container .contents .read-list li > div > div:first-child {
+        padding: 0;
+    }
+    .member-container .contents .read-list li > div > div:first-child:after {
+        display: none;
+    }
+    .passage-container .contents  .passage-plan .ports-list .select {
+        display: block;
+    }
+    .passage-container .contents  .passage-plan .ports-list ul {
+        display: none;
+    }
+    .passage-container .contents .passage-plan .plan-list {
+        padding-top: 30px;
+    }
+    .passage-container .contents .passage-plan .plan-list .port-title {
+        font-size: 20px;
+    }
+    .passage-container .contents .passage-plan .plan-list .list {
+        padding-top: 20px;
+    }
+    .passage-container .contents .passage-plan .plan-list .list .thead {
+        border-bottom: 3px solid #000000;
+    }
+    .passage-container .contents .passage-plan .plan-list .list .thead .th {
+        display: none;
+    }
+    .passage-container .contents .passage-plan .plan-list .list .row:last-child {
+        border-bottom: solid 1px #bbbbbb;
+    }
+    .passage-container .contents .passage-plan .plan-list .list .row .col {
+        font-size: 16px;
+        line-height: 1.31;
+        color: #000000;
+        padding: 10px 0;
+    }
+    .passage-container .contents .passage-plan .plan-list .list .row .col:first-child {
+        padding: 10px;
+    }
+    .passage-container .contents .passage-plan .info-notice {
+        padding: 25px 20px 30px;
+        margin-top: 50px;
+    }
+    .passage-container .contents .passage-plan .info-notice .info-notice-title {
+        padding-left: 30px;
+        font-size: 18px;
+    }
+    .passage-container .contents .passage-plan .info-notice .info-notice-title:before {
+        top: 4px;
+    }
+    .passage-container .contents .passage-plan .info-notice .info-notice-content {
+        padding-top: 20px;
+    }
+    .passage-container .contents .passage-plan .info-notice .info-notice-content p {
+        font-size: 16px;
+    }
 
     .footer {
         height: auto;
@@ -1395,7 +1496,7 @@
     }
     .modal .modal-dialog .modal-dialog-title .btn-close {
         top: 8px;
-        width: 20px;1
+        width: 20px;
         height: 20px;
         background-size: 20px 20px;
     }

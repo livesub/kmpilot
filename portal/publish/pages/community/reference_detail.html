@@ -291,11 +291,11 @@
 
 
 
-    <div class="sub-container news-container">
+    <div class="sub-container community-container">
         <div class="sub-title">
             <dl>
-                <dt>소식 · 홍보</dt>
-                <dd>도선사협회의 소식을 전합니다.</dd>
+                <dt>커뮤니티</dt>
+                <dd>도선사와 소통하세요.</dd>
             </dl>
         </div>
         <div class="navigation">
@@ -304,15 +304,15 @@
                     <div><a href="../../main.html">home</a></div>
                 </div>
                 <div depth="1">
-                    <div>소식 · 홍보</div>
+                    <div>커뮤니티</div>
                     <ul>
                         <li>
                             <a href="../introduce/greet.html">협회소개</a>
                         </li>
-                        <li class="active">
+                        <li>
                             <a href="../../pages/news/notice.html">소식 · 홍보</a>
                         </li>
-                        <li>
+                        <li class="active">
                             <a href="../../pages/community/board.html">커뮤니티</a>
                         </li>
                         <li>
@@ -331,29 +331,23 @@
                     </ul>
                 </div>
                 <div depth="2">
-                    <div>공지사항</div>
+                    <div>자료실</div>
                     <ul>
+                        <li>
+                            <a href="./board.html">자유게시판</a>
+                        </li>
                         <li class="active">
-                            <a href="./notice.html">공지사항</a>
-                        </li>
-                        <li>
-                            <a href="./photoNews.html">포토뉴스</a>
-                        </li>
-                        <li>
-                            <a href="./promotionVideo.html">홍보영상</a>
-                        </li>
-                        <li>
-                            <a href="./passage.html">도선지</a>
+                            <a href="./reference.html">자료실</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
         <div class="contents">
-            <div class="contents-title">공지사항</div>
-            <div class="notice detail-content">
+            <div class="contents-title">자료실</div>
+            <div class="board detail-content">
                 <div class="title">
-                    <div>도선사 중대 공지사항 필독! 안보면 혼남</div>
+                    <div>마음대로 써봅니다</div>
                     <div>
                         <div>관리자</div>
                         <div>2021.02.15 13:33:15</div>
@@ -372,6 +366,51 @@
                 <div class="histories list">
                     <div class="prev"><a href="#">도선사 사업자 선정 재공고</a></div>
                     <div class="next"><a href="#">도선사 협회 공지사항</a></div>
+                </div>
+            </div>
+
+            <script>
+                let doCallback = null;
+                let board_id = null;
+                function openPwdCheckModal(callback, id){
+                    doCallback = callback;
+                    board_id = id;
+                    document.querySelector('body').classList.add('modal-open');
+                    document.querySelector('.modal.pwdCheck').classList.add('in');
+                }
+                function closeBoardModal() {
+                    document.querySelector('body').classList.remove('modal-open');
+                    document.querySelector('.modal.pwdCheck').classList.remove('in');
+                }
+                function checkPassword() {
+                    closeBoardModal();
+
+                    //if the password correct
+                    if(doCallback != null && board_id != null) doCallback(board_id);
+                    //or not
+                    return;
+                }
+                function modifyBoard(id) {
+                    location.href = "./board_write.html?board_id="+id;
+                }
+                function removeBoard(id) {
+                    //removeBoard
+                    alert("remove this board "+id);
+                }
+            </script>
+            <div class="pwdCheck modal fade">
+                <div class="modal-background" onclick="closeBoardModal()"></div>
+                <div class="modal-dialog">
+                    <div class="modal-dialog-title">비밀번호 확인<div class="btn-close" onclick="closeBoardModal()"></div></div>
+                    <div class="modal-dialog-description">본 게시물의 비밀번호를 확인합니다.<br><span class="urgent">* 글 작성시 사용한 패스워드를 입력해 주세요</span></div>
+                    <div class="modal-dialog-contents">
+                        <div>
+                            <input type="password" placeholder="패스워드">
+                        </div>
+                    </div>
+                    <div class="modal-dialog-footer">
+                        <button class="btn normal" onclick="checkPassword()">확인</button>
+                    </div>
                 </div>
             </div>
         </div>

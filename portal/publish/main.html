@@ -22,40 +22,27 @@
 
     <script>
         function showBranch(index) {
-            const branchBox = document.querySelector('.introduce').querySelector('.contents');
-            const branchBoxTitle = branchBox.querySelector('.box-title');
-            const branchBoxContent = branchBox.querySelector('.box-contents');
+            const branchBox = document.querySelector('.introduce').querySelector('.contents .box-contents');
+            const branchSelectBox = branchBox.querySelector('select');
+            const branchInfoBox = branchBox.querySelectorAll('.branch-info');
+            const mapBox = branchBox.querySelectorAll('.map > *');
 
-            let idx = 0;
-            for (let el of branchBoxTitle.querySelectorAll('li')) {
-                idx === index ? el.classList.add('active') : el.classList.remove('active');
-                idx++;
-            }
+            branchSelectBox.value = index;
+            
+            branchInfoBox.forEach(function(el, idx){
+                el.classList.remove("active");
+                if(idx === Number(index)) el.classList.add("active");
+            });
 
-            idx = 0;
-            for (let el of branchBoxContent.children) {
-                if(el.classList.value === 'map') continue;
-                idx === index? el.classList = "" : el.classList = "hide";
-                idx++;
-            }
-
-            idx = 0;
-            for (let el of branchBoxContent.querySelector('.map').children) {
-                idx === index ? el.classList.add('active') : el.classList.remove('active');
-                idx++;
-            }
-        }
-
-        function selectBranchOption(index) {
-            document.querySelector('.introduce .box-title select').value = index;
-            showBranch(index);
-            closeBranchModal();
-            document.querySelectorAll(".branchModal")[index].classList.add("show");
+            mapBox.forEach(function(el, idx){
+                el.classList.remove("active");
+                if(idx === Number(index)) el.classList.add("active");
+            });
         }
 
         function closeBranchModal() {
-            document.querySelectorAll(".branchModal").forEach(function(el){
-                el.classList.remove("show");
+            document.querySelectorAll('.introduce .contents .box-contents .branch-info.active').forEach(function(el){
+                el.classList.remove("active");
             });
         }
 
@@ -154,11 +141,11 @@
                         <a href="#">회원메뉴</a>
                         <div class="header-sub-menu">
                             <ul>
-                                <li><a href="#">회의 · 공문서</a></li>
-                                <li><a href="#">경조사 · 뉴스레터</a></li>
-                                <li><a href="#">정보게시판</a></li>
-                                <li><a href="#">회원검색</a></li>
-                                <li><a href="#">회원정보</a></li>
+                                <li><a href="../../pages/members/diploma.html">회의 · 공문서</a></li>
+                                <li><a href="../../pages/members/letter.html">경조사 · 뉴스레터</a></li>
+                                <li><a href="../../pages/members/infoBoard.html">정보게시판</a></li>
+                                <li><a href="../../pages/members/searchMember.html">회원검색</a></li>
+                                <li><a href="../../pages/members/memberInfo.html">회원정보</a></li>
                             </ul>
                         </div>
                     </li>
@@ -231,11 +218,11 @@
                             <div onclick="onClickHeaderMenu(event)">회원메뉴</div>
                             <div class="header-sub-menu">
                                 <ul>
-                                    <li><a href="#">회의 · 공문서</a></li>
-                                    <li><a href="#">경조사 · 뉴스레터</a></li>
-                                    <li><a href="#">정보게시판</a></li>
-                                    <li><a href="#">회원검색</a></li>
-                                    <li><a href="#">회원정보</a></li>
+                                    <li><a href="../../pages/members/diploma.html">회의 · 공문서</a></li>
+                                    <li><a href="../../pages/members/letter.html">경조사 · 뉴스레터</a></li>
+                                    <li><a href="../../pages/members/infoBoard.html">정보게시판</a></li>
+                                    <li><a href="../../pages/members/searchMember.html">회원검색</a></li>
+                                    <li><a href="../../pages/members/memberInfo.html">회원정보</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -373,400 +360,222 @@
                 <div class="contents inlineBlock">
                     <div>
                         <div>
-                            <div class="box-title">
-                                <ul>
-                                    <li class="active" onclick="showBranch(0)">부산</li><li onclick="showBranch(1)">여수</li><li onclick="showBranch(2)">인천</li><li onclick="showBranch(3)">울산</li><li onclick="showBranch(4)">평택</li><li onclick="showBranch(5)">마산</li><li onclick="showBranch(6)">대산</li><li onclick="showBranch(7)">포항</li><li onclick="showBranch(8)">군산</li><li onclick="showBranch(9)">목포</li><li onclick="showBranch(10)">동해</li><li onclick="showBranch(11)">제주</li>
-                                </ul>
-                            </div>
                             <div class="box-contents">
                                 <div>
-                                    <div class="title">
-                                        <div>부산항 도선사회<br/><span>협회장 최상문</span></div>
-                                        <div>
-                                            <img src="resources/branches/busan.jfif" alt="">
+                                    <div class="select">
+                                        <select id="branch" onchange="showBranch(event.target.value)">
+                                            <option value="">지역을 선택하세요</option>
+                                            <option value="0">부산</option>
+                                            <option value="1">여수</option>
+                                            <option value="2">인천</option>
+                                            <option value="3">울산</option>
+                                            <option value="4">평택</option>
+                                            <option value="5">마산</option>
+                                            <option value="6">대산</option>
+                                            <option value="7">포항</option>
+                                            <option value="8">군산</option>
+                                            <option value="9">목포</option>
+                                            <option value="10">동해</option>
+                                            <option value="11">제주</option>
+                                        </select>
+                                    </div>
+                                    <div class="branch-info">
+                                        <div class="title">
+                                            <div>협회장<br/><span>최상문</span></div>
+                                            <div>
+                                                <img src="resources/branches/busan.jfif" alt="">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="contents">
-                                        <div class="phone">051-465-1651~4</div>
-                                        <div class="fax">051-463-1652</div>
-                                        <div class="address">[48943] 부산시 중구 충장대로 24, 201호<br>(구) 국제여객터미널</div>
-                                        <div class="site"><a>www.busanpilot.co.kr</a></div>
-                                    </div>
-                                </div>
-                                <div class="hide">
-                                    <div class="title">
-                                        <div>여수항 도선사회<br/><span>협회장 임형도</span></div>
-                                        <div>
-                                            <img src="resources/branches/yeosu.jfif" alt="">
+                                        <div class="contents">
+                                            <div class="phone">051-465-1651~4</div>
+                                            <div class="fax">051-463-1652</div>
+                                            <div class="address">[48943] 부산시 중구 충장대로 24, 201호<br>(구) 국제여객터미널</div>
+                                            <div class="site"><a>www.busanpilot.co.kr</a></div>
                                         </div>
+                                        <button class="btn btn-close" onclick="closeBranchModal()">닫기</button>
                                     </div>
-                                    <div class="contents">
-                                        <div class="phone">061-660-1383</div>
-                                        <div class="fax">061-666-0322</div>
-                                        <div class="address">[59744]전남 여수시 공화북6길 37(덕충동)</div>
-                                        <div class="site"><a>www.yspilot.co.kr</a></div>
-                                    </div>
-                                </div>
-                                <div class="hide">
-                                    <div class="title">
-                                        <div>인천항 도선사회<br/><span>협회장 하용구</span></div>
-                                        <div>
-                                            <img src="resources/branches/incheon.jfif" alt="">
+                                    <div class="branch-info">
+                                        <div class="title">
+                                            <div>협회장<br/><span>임형도</span></div>
+                                            <div>
+                                                <img src="resources/branches/yeosu.jfif" alt="">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="contents">
-                                        <div class="phone">032-883-8111∼4</div>
-                                        <div class="fax">032-884-7091</div>
-                                        <div class="address">[22332]인천시 중구 서해대로366, 정석빌딩<br> 신관 812호</div>
-                                        <div class="site"><a>www.incheonpilot.com</a></div>
-                                    </div>
-                                </div>
-                                <div class="hide">
-                                    <div class="title">
-                                        <div>울산항 도선사회<br/><span>협회장 전필호</span></div>
-                                        <div>
-                                            <img src="resources/branches/ulsan.jfif" alt="">
+                                        <div class="contents">
+                                            <div class="phone">061-660-1383</div>
+                                            <div class="fax">061-666-0322</div>
+                                            <div class="address">[59744]전남 여수시 공화북6길 37(덕충동)</div>
+                                            <div class="site"><a>www.yspilot.co.kr</a></div>
                                         </div>
+                                        <button class="btn btn-close" onclick="closeBranchModal()">닫기</button>
                                     </div>
-                                    <div class="contents">
-                                        <div class="phone">052-261-7703</div>
-                                        <div class="fax">052-266-4256</div>
-                                        <div class="address">[44780]울산시 남구 장생포고래로 205</div>
-                                        <div class="site"><a>www.ulsanpilot.co.kr</a></div>
-                                    </div>
-                                </div>
-                                <div class="hide">
-                                    <div class="title">
-                                        <div>평택항 도선사회<br/><span>협회장 전복연</span></div>
-                                        <div>
-                                            <img src="resources/branches/pyeongtaek.jfif" alt="">
+                                    <div class="branch-info">
+                                        <div class="title">
+                                            <div>협회장<br/><span>하용구</span></div>
+                                            <div>
+                                                <img src="resources/branches/incheon.jfif" alt="">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="contents">
-                                        <div class="phone">031-683-2691~2</div>
-                                        <div class="fax">031-683-2183</div>
-                                        <div class="address">[17952]경기도 평택시 포승읍<br>포승공단순환로 466-5번지</div>
-                                        <div class="site"><a>www.ptpilot.co.kr</a></div>
-                                    </div>
-                                </div>
-                                <div class="hide">
-                                    <div class="title">
-                                        <div>마산항 도선사회<br/><span>협회장 조영균</span></div>
-                                        <div>
-                                            <img src="resources/branches/masan.jfif" alt="">
+                                        <div class="contents">
+                                            <div class="phone">032-883-8111∼4</div>
+                                            <div class="fax">032-884-7091</div>
+                                            <div class="address">[22332]인천시 중구 서해대로366, 정석빌딩<br> 신관 812호</div>
+                                            <div class="site"><a>www.incheonpilot.com</a></div>
                                         </div>
+                                        <button class="btn btn-close" onclick="closeBranchModal()">닫기</button>
                                     </div>
-                                    <div class="contents">
-                                        <div class="phone">055-222-8122~5</div>
-                                        <div class="fax">055-222-8126</div>
-                                        <div class="address">[51716]경남 창원시 마산합포구<br>제2부두로 32(신포동1가)</div>
-                                        <div class="site"><a>www.mspilot.co.kr</a></div>
-                                    </div>
-                                </div>
-                                <div class="hide">
-                                    <div class="title">
-                                        <div>대산항 도선사회<br/><span>협회장 정준권</span></div>
-                                        <div>
-                                            <img src="resources/branches/daesan.jfif" alt="">
+                                    <div class="branch-info">
+                                        <div class="title">
+                                            <div>협회장<br/><span>전필호</span></div>
+                                            <div>
+                                                <img src="resources/branches/ulsan.jfif" alt="">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="contents">
-                                        <div class="phone">041-664-5684</div>
-                                        <div class="fax">041-681-4968</div>
-                                        <div class="address">[31909]충남 서산시 대산읍 대산1로 81<br>2층 201호</div>
-                                        <div class="site"><a>www.ds-pilot.co.kr</a></div>
-                                    </div>
-                                </div>
-                                <div class="hide">
-                                    <div class="title">
-                                        <div>포항항 도선사회<br/><span>협회장 최만택</span></div>
-                                        <div>
-                                            <img src="resources/branches/pohang.jfif" alt="">
+                                        <div class="contents">
+                                            <div class="phone">052-261-7703</div>
+                                            <div class="fax">052-266-4256</div>
+                                            <div class="address">[44780]울산시 남구 장생포고래로 205</div>
+                                            <div class="site"><a>www.ulsanpilot.co.kr</a></div>
                                         </div>
+                                        <button class="btn btn-close" onclick="closeBranchModal()">닫기</button>
                                     </div>
-                                    <div class="contents">
-                                        <div class="phone">054-242-5221~2</div>
-                                        <div class="fax">054-242-5223</div>
-                                        <div class="address">[37703]경북 포항시 북구 용당로 175,<br>3층</div>
-                                    </div>
-                                </div>
-                                <div class="hide">
-                                    <div class="title">
-                                        <div>군산항 도선사회<br/><span>협회장 승병준</span></div>
-                                        <div>
-                                            <img src="resources/branches/gunsan.jfif" alt="">
+                                    <div class="branch-info">
+                                        <div class="title">
+                                            <div>협회장<br/><span>전복연</span></div>
+                                            <div>
+                                                <img src="resources/branches/pyeongtaek.jfif" alt="">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="contents">
-                                        <div class="phone">063-445-4077,7334</div>
-                                        <div class="fax">063-445-4070</div>
-                                        <div class="address">[54002]전북 군산시 요죽길 76,<br>(구) 202호 (오식도동, 한성필하우스 상가)</div>
-                                    </div>
-                                </div>
-                                <div class="hide">
-                                    <div class="title">
-                                        <div>목포항 도선사회<br/><span>협회장 박재화</span></div>
-                                        <div>
-                                            <img src="resources/branches/mokpo.jfif" alt="">
+                                        <div class="contents">
+                                            <div class="phone">031-683-2691~2</div>
+                                            <div class="fax">031-683-2183</div>
+                                            <div class="address">[17952]경기도 평택시 포승읍<br>포승공단순환로 466-5번지</div>
+                                            <div class="site"><a>www.ptpilot.co.kr</a></div>
                                         </div>
+                                        <button class="btn btn-close" onclick="closeBranchModal()">닫기</button>
                                     </div>
-                                    <div class="contents">
-                                        <div class="phone">061-242-3721</div>
-                                        <div class="fax">061-242-4721</div>
-                                        <div class="address">[58759]전남 목포시 해안로 182<br>목포연안여객터미널 309호</div>
-                                    </div>
-                                </div>
-                                <div class="hide">
-                                    <div class="title">
-                                        <div>동해항 도선사회<br/><span>협회장 정춘호</span></div>
-                                        <div>
-                                            <img src="resources/branches/donghae.jfif" alt="">
+                                    <div class="branch-info">
+                                        <div class="title">
+                                            <div>협회장<br/><span>조영균</span></div>
+                                            <div>
+                                                <img src="resources/branches/masan.jfif" alt="">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="contents">
-                                        <div class="phone">033-535-0172</div>
-                                        <div class="fax">033-535-0173</div>
-                                        <div class="address">[25759]강원도 동해시 천곡로 71<br>흥국생명빌딩 8층</div>
-                                    </div>
-                                </div>
-                                <div class="hide">
-                                    <div class="title">
-                                        <div>제주항 도선사회<br/><span>협회장 박윤영</span></div>
-                                        <div>
-                                            <img src="resources/branches/jeju.jfif" alt="">
+                                        <div class="contents">
+                                            <div class="phone">055-222-8122~5</div>
+                                            <div class="fax">055-222-8126</div>
+                                            <div class="address">[51716]경남 창원시 마산합포구<br>제2부두로 32(신포동1가)</div>
+                                            <div class="site"><a>www.mspilot.co.kr</a></div>
                                         </div>
+                                        <button class="btn btn-close" onclick="closeBranchModal()">닫기</button>
                                     </div>
-                                    <div class="contents">
-                                        <div class="phone">064-722-8586</div>
-                                        <div class="fax">064-722-8587</div>
-                                        <div class="address">[63281]제주도 제주시 임항로111<br>2층(건입동, 제주항연안여객터미널)</div>
+                                    <div class="branch-info">
+                                        <div class="title">
+                                            <div>협회장<br/><span>정준권</span></div>
+                                            <div>
+                                                <img src="resources/branches/daesan.jfif" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="contents">
+                                            <div class="phone">041-664-5684</div>
+                                            <div class="fax">041-681-4968</div>
+                                            <div class="address">[31909]충남 서산시 대산읍 대산1로 81<br>2층 201호</div>
+                                            <div class="site"><a>www.ds-pilot.co.kr</a></div>
+                                        </div>
+                                        <button class="btn btn-close" onclick="closeBranchModal()">닫기</button>
                                     </div>
+                                    <div class="branch-info">
+                                        <div class="title">
+                                            <div>협회장<br/><span>최만택</span></div>
+                                            <div>
+                                                <img src="resources/branches/pohang.jfif" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="contents">
+                                            <div class="phone">054-242-5221~2</div>
+                                            <div class="fax">054-242-5223</div>
+                                            <div class="address">[37703]경북 포항시 북구 용당로 175,<br>3층</div>
+                                        </div>
+                                        <button class="btn btn-close" onclick="closeBranchModal()">닫기</button>
+                                    </div>
+                                    <div class="branch-info">
+                                        <div class="title">
+                                            <div>협회장<br/><span>승병준</span></div>
+                                            <div>
+                                                <img src="resources/branches/gunsan.jfif" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="contents">
+                                            <div class="phone">063-445-4077,7334</div>
+                                            <div class="fax">063-445-4070</div>
+                                            <div class="address">[54002]전북 군산시 요죽길 76,<br>(구) 202호 (오식도동, 한성필하우스 상가)</div>
+                                        </div>
+                                        <button class="btn btn-close" onclick="closeBranchModal()">닫기</button>
+                                    </div>
+                                    <div class="branch-info">
+                                        <div class="title">
+                                            <div>협회장<br/><span>박재화</span></div>
+                                            <div>
+                                                <img src="resources/branches/mokpo.jfif" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="contents">
+                                            <div class="phone">061-242-3721</div>
+                                            <div class="fax">061-242-4721</div>
+                                            <div class="address">[58759]전남 목포시 해안로 182<br>목포연안여객터미널 309호</div>
+                                        </div>
+                                        <button class="btn btn-close" onclick="closeBranchModal()">닫기</button>
+                                    </div>
+                                    <div class="branch-info">
+                                        <div class="title">
+                                            <div>협회장<br/><span>정춘호</span></div>
+                                            <div>
+                                                <img src="resources/branches/donghae.jfif" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="contents">
+                                            <div class="phone">033-535-0172</div>
+                                            <div class="fax">033-535-0173</div>
+                                            <div class="address">[25759]강원도 동해시 천곡로 71<br>흥국생명빌딩 8층</div>
+                                        </div>
+                                        <button class="btn btn-close" onclick="closeBranchModal()">닫기</button>
+                                    </div>
+                                    <div class="branch-info">
+                                        <div class="title">
+                                            <div>협회장<br/><span>박윤영</span></div>
+                                            <div>
+                                                <img src="resources/branches/jeju.jfif" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="contents">
+                                            <div class="phone">064-722-8586</div>
+                                            <div class="fax">064-722-8587</div>
+                                            <div class="address">[63281]제주도 제주시 임항로111<br>2층(건입동, 제주항연안여객터미널)</div>
+                                        </div>
+                                        <button class="btn btn-close" onclick="closeBranchModal()">닫기</button>
+                                    </div>
+                                    <script>
+                                        if(window.innerWidth > 1024) {
+                                            //pc버전 첫 브랜치 항목 표시
+                                            document.querySelector(".introduce .contents .box-contents .select select").value = "0";
+                                            showBranch(0);
+                                        }
+                                    </script>
                                 </div>
                                 <div class="map">
                                     <!-- 마커 클릭 시 해당 지회 정보 표시 -->
-                                    <div class="marker busan active" onclick="showBranch(0)"></div>
-                                    <div class="marker yeosu" onclick="showBranch(1)"></div>
-                                    <div class="marker incheon" onclick="showBranch(2)"></div>
-                                    <div class="marker ulsan" onclick="showBranch(3)"></div>
-                                    <div class="marker pyeongtaek" onclick="showBranch(4)"></div>
-                                    <div class="marker masan" onclick="showBranch(5)"></div>
-                                    <div class="marker daesan" onclick="showBranch(6)"></div>
-                                    <div class="marker pohang" onclick="showBranch(7)"></div>
-                                    <div class="marker gunsan" onclick="showBranch(8)"></div>
-                                    <div class="marker mokpo" onclick="showBranch(9)"></div>
-                                    <div class="marker donghae" onclick="showBranch(10)"></div>
-                                    <div class="marker jeju" onclick="showBranch(11)"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="box-title">
-                                <select onchange="selectBranchOption(event.target.value)">
-                                    <option value="">지역을 선택하세요</option>
-                                    <option value="0">부산</option>
-                                    <option value="1">여수</option>
-                                    <option value="2">인천</option>
-                                    <option value="3">울산</option>
-                                    <option value="4">평택</option>
-                                    <option value="5">마산</option>
-                                    <option value="6">대산</option>
-                                    <option value="7">포항</option>
-                                    <option value="8">군산</option>
-                                    <option value="9">목포</option>
-                                    <option value="10">동해</option>
-                                    <option value="11">제주</option>
-                                </select>
-                            </div>
-                            <div class="box-contents">
-                                <div class="branchModal">
-                                    <div class="title">
-                                        <div>부산항 도선사회<br/><span>협회장 최상문</span></div>
-                                        <div>
-                                            <img src="resources/branches/busan.jfif" alt="">
-                                        </div>
-                                        <button class="btn btn-close" onclick="closeBranchModal()">닫기</button>
-                                    </div>
-                                    <div class="contents">
-                                        <div class="phone">051-465-1651~4</div>
-                                        <div class="fax">051-463-1652</div>
-                                        <div class="address">[48943] 부산시 중구 충장대로 24,<br>201호 (구) 국제여객터미널</div>
-                                        <div class="site"><a>www.busanpilot.co.kr</a></div>
-                                    </div>
-                                </div>
-                                <div class="branchModal">
-                                    <div class="title">
-                                        <div>여수항 도선사회<br/><span>협회장 임형도</span></div>
-                                        <div>
-                                            <img src="resources/branches/yeosu.jfif" alt="">
-                                        </div>
-                                        <button class="btn btn-close" onclick="closeBranchModal()">닫기</button>
-                                    </div>
-                                    <div class="contents">
-                                        <div class="phone">061-660-1383</div>
-                                        <div class="fax">061-666-0322</div>
-                                        <div class="address">[59744]전남 여수시 공화북6길 37(덕충동)</div>
-                                        <div class="site"><a>www.yspilot.co.kr</a></div>
-                                    </div>
-                                </div>
-                                <div class="branchModal">
-                                    <div class="title">
-                                        <div>인천항 도선사회<br/><span>협회장 하용구</span></div>
-                                        <div>
-                                            <img src="resources/branches/incheon.jfif" alt="">
-                                        </div>
-                                        <button class="btn btn-close" onclick="closeBranchModal()">닫기</button>
-                                    </div>
-                                    <div class="contents">
-                                        <div class="phone">032-883-8111∼4</div>
-                                        <div class="fax">032-884-7091</div>
-                                        <div class="address">[22332]인천시 중구 서해대로366, 정석빌딩<br> 신관 812호</div>
-                                        <div class="site"><a>www.incheonpilot.com</a></div>
-                                    </div>
-                                </div>
-                                <div class="branchModal">
-                                    <div class="title">
-                                        <div>울산항 도선사회<br/><span>협회장 전필호</span></div>
-                                        <div>
-                                            <img src="resources/branches/ulsan.jfif" alt="">
-                                        </div>
-                                        <button class="btn btn-close" onclick="closeBranchModal()">닫기</button>
-                                    </div>
-                                    <div class="contents">
-                                        <div class="phone">052-261-7703</div>
-                                        <div class="fax">052-266-4256</div>
-                                        <div class="address">[44780]울산시 남구 장생포고래로 205</div>
-                                        <div class="site"><a>www.ulsanpilot.co.kr</a></div>
-                                    </div>
-                                </div>
-                                <div class="branchModal">
-                                    <div class="title">
-                                        <div>평택항 도선사회<br/><span>협회장 전복연</span></div>
-                                        <div>
-                                            <img src="resources/branches/pyeongtaek.jfif" alt="">
-                                        </div>
-                                        <button class="btn btn-close" onclick="closeBranchModal()">닫기</button>
-                                    </div>
-                                    <div class="contents">
-                                        <div class="phone">031-683-2691~2</div>
-                                        <div class="fax">031-683-2183</div>
-                                        <div class="address">[17952]경기도 평택시 포승읍<br>포승공단순환로 466-5번지</div>
-                                        <div class="site"><a>www.ptpilot.co.kr</a></div>
-                                    </div>
-                                </div>
-                                <div class="branchModal">
-                                    <div class="title">
-                                        <div>마산항 도선사회<br/><span>협회장 조영균</span></div>
-                                        <div>
-                                            <img src="resources/branches/masan.jfif" alt="">
-                                        </div>
-                                        <button class="btn btn-close" onclick="closeBranchModal()">닫기</button>
-                                    </div>
-                                    <div class="contents">
-                                        <div class="phone">055-222-8122~5</div>
-                                        <div class="fax">055-222-8126</div>
-                                        <div class="address">[51716]경남 창원시 마산합포구<br>제2부두로 32(신포동1가)</div>
-                                        <div class="site"><a>www.mspilot.co.kr</a></div>
-                                    </div>
-                                </div>
-                                <div class="branchModal">
-                                    <div class="title">
-                                        <div>대산항 도선사회<br/><span>협회장 정준권</span></div>
-                                        <div>
-                                            <img src="resources/branches/daesan.jfif" alt="">
-                                        </div>
-                                        <button class="btn btn-close" onclick="closeBranchModal()">닫기</button>
-                                    </div>
-                                    <div class="contents">
-                                        <div class="phone">041-664-5684</div>
-                                        <div class="fax">041-681-4968</div>
-                                        <div class="address">[31909]충남 서산시 대산읍 대산1로 81<br>2층 201호</div>
-                                        <div class="site"><a>www.ds-pilot.co.kr</a></div>
-                                    </div>
-                                </div>
-                                <div class="branchModal">
-                                    <div class="title">
-                                        <div>포항항 도선사회<br/><span>협회장 최만택</span></div>
-                                        <div>
-                                            <img src="resources/branches/pohang.jfif" alt="">
-                                        </div>
-                                        <button class="btn btn-close" onclick="closeBranchModal()">닫기</button>
-                                    </div>
-                                    <div class="contents">
-                                        <div class="phone">054-242-5221~2</div>
-                                        <div class="fax">054-242-5223</div>
-                                        <div class="address">[37703]경북 포항시 북구 용당로 175,<br>3층</div>
-                                    </div>
-                                </div>
-                                <div class="branchModal">
-                                    <div class="title">
-                                        <div>군산항 도선사회<br/><span>협회장 승병준</span></div>
-                                        <div>
-                                            <img src="resources/branches/gunsan.jfif" alt="">
-                                        </div>
-                                        <button class="btn btn-close" onclick="closeBranchModal()">닫기</button>
-                                    </div>
-                                    <div class="contents">
-                                        <div class="phone">063-445-4077,7334</div>
-                                        <div class="fax">063-445-4070</div>
-                                        <div class="address">[54002]전북 군산시 요죽길 76,<br>(구) 202호 (오식도동, 한성필하우스 상가)</div>
-                                    </div>
-                                </div>
-                                <div class="branchModal">
-                                    <div class="title">
-                                        <div>목포항 도선사회<br/><span>협회장 박재화</span></div>
-                                        <div>
-                                            <img src="resources/branches/mokpo.jfif" alt="">
-                                        </div>
-                                        <button class="btn btn-close" onclick="closeBranchModal()">닫기</button>
-                                    </div>
-                                    <div class="contents">
-                                        <div class="phone">061-242-3721</div>
-                                        <div class="fax">061-242-4721</div>
-                                        <div class="address">[58759]전남 목포시 해안로 182<br>목포연안여객터미널 309호</div>
-                                    </div>
-                                </div>
-                                <div class="branchModal">
-                                    <div class="title">
-                                        <div>동해항 도선사회<br/><span>협회장 정춘호</span></div>
-                                        <div>
-                                            <img src="resources/branches/donghae.jfif" alt="">
-                                        </div>
-                                        <button class="btn btn-close" onclick="closeBranchModal()">닫기</button>
-                                    </div>
-                                    <div class="contents">
-                                        <div class="phone">033-535-0172</div>
-                                        <div class="fax">033-535-0173</div>
-                                        <div class="address">[25759]강원도 동해시 천곡로 71<br>흥국생명빌딩 8층</div>
-                                    </div>
-                                </div>
-                                <div class="branchModal">
-                                    <div class="title">
-                                        <div>제주항 도선사회<br/><span>협회장 박윤영</span></div>
-                                        <div>
-                                            <img src="resources/branches/jeju.jfif" alt="">
-                                        </div>
-                                        <button class="btn btn-close" onclick="closeBranchModal()">닫기</button>
-                                    </div>
-                                    <div class="contents">
-                                        <div class="phone">064-722-8586</div>
-                                        <div class="fax">064-722-8587</div>
-                                        <div class="address">[63281]제주도 제주시 임항로111<br>2층(건입동, 제주항연안여객터미널)</div>
-                                    </div>
-                                </div>
-                                <div class="map">
-                                    <!-- 마커 클릭 시 해당 지회 정보 표시 -->
-                                    <div class="marker busan" onclick="selectBranchOption(0)"></div>
-                                    <div class="marker yeosu" onclick="selectBranchOption(1)"></div>
-                                    <div class="marker incheon" onclick="selectBranchOption(2)"></div>
-                                    <div class="marker ulsan" onclick="selectBranchOption(3)"></div>
-                                    <div class="marker pyeongtaek" onclick="selectBranchOption(4)"></div>
-                                    <div class="marker masan" onclick="selectBranchOption(5)"></div>
-                                    <div class="marker daesan" onclick="selectBranchOption(6)"></div>
-                                    <div class="marker pohang" onclick="selectBranchOption(7)"></div>
-                                    <div class="marker gunsan" onclick="selectBranchOption(8)"></div>
-                                    <div class="marker mokpo" onclick="selectBranchOption(9)"></div>
-                                    <div class="marker donghae" onclick="selectBranchOption(10)"></div>
-                                    <div class="marker jeju" onclick="selectBranchOption(11)"></div>
+                                    <div class="marker busan active" title="부산" onclick="showBranch(0)"></div>
+                                    <div class="marker yeosu" title="여수" onclick="showBranch(1)"></div>
+                                    <div class="marker incheon" title="인천" onclick="showBranch(2)"></div>
+                                    <div class="marker ulsan" title="울산" onclick="showBranch(3)"></div>
+                                    <div class="marker pyeongtaek" title="평택" onclick="showBranch(4)"></div>
+                                    <div class="marker masan" title="마산" onclick="showBranch(5)"></div>
+                                    <div class="marker daesan" title="대산" onclick="showBranch(6)"></div>
+                                    <div class="marker pohang" title="포항" onclick="showBranch(7)"></div>
+                                    <div class="marker gunsan" title="군산" onclick="showBranch(8)"></div>
+                                    <div class="marker mokpo" title="목포" onclick="showBranch(9)"></div>
+                                    <div class="marker donghae" title="동해" onclick="showBranch(10)"></div>
+                                    <div class="marker jeju" title="제주" onclick="showBranch(11)"></div>
                                 </div>
                             </div>
                         </div>
