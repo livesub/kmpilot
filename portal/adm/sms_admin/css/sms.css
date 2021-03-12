@@ -1,5 +1,25 @@
+#cont .contents {
+    min-height: auto;
+    border-top: 0px;
+    padding: 10px 0;
+    margin-left: 0;
+    position: relative;
+}
+.blind {
+    background: 0px;
+    border: 0px currentColor;
+    left: 0px;
+    top: 0px;
+    width: 0px;
+    height: 0px;
+    line-height: 0;
+    overflow: hidden;
+    font-size: 0px;
+    display: block;
+}
+
 /* Visualphone */
-.visualphone {z-index:100;position:relative; width:230px; height:550px;}
+.visualphone {z-index:100;position:relative;width: 312px;height: 652px;}
 
 
 
