@@ -352,7 +352,7 @@ input[type='radio']:checked:before {
 }
 
 .main-container .introduce {
-    min-height: 900px;
+    height: 900px;
     background: url("../resources/background-sample/main_thumb3.png") no-repeat center;
     background-size: cover;
 }
@@ -635,7 +635,15 @@ input[type='radio']:checked:before {
     margin-right: 0;
 }
 .main-container .links > div.passage-plan {
-    background: url("../resources/background-sample/main_thumb1.png") center;
+    background: url("../resources/background-sample/img-main-btnbg-1.png") center;
+    background-size: cover;
+}
+.main-container .links > div.passage-plan:nth-child(2) {
+    background: url("../resources/background-sample/img-main-btnbg-2.png") center;
+    background-size: cover;
+}
+.main-container .links > div.passage-plan:nth-child(3) {
+    background: url("../resources/background-sample/img-main-btnbg-3.png") center;
     background-size: cover;
 }
 .main-container .links > div > a {

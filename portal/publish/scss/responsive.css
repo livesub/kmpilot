@@ -331,6 +331,8 @@
     .main-container .notice-news .contents > div .box-title a:after {
         width: 16px;
         height: 16px;
+        background-image: url("../resources/icons/icon-16-more.png");
+        background-size: cover;
     }
     .main-container .notice-news .contents > div .box-contents {
         font-size: 16px;
@@ -340,6 +342,7 @@
     }
     .main-container .notice-news .contents > div .box-contents li > div:first-child {
         max-width: initial;
+        width: 100%;
         margin-right: 0;
     }
     .main-container .notice-news .contents > div .box-contents li > div:last-child {
