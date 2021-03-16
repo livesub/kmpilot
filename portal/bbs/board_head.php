@@ -26,3 +26,4 @@ if (G5_IS_MOBILE) {
 ?>
         <div class="contents">
             <div class="contents-title"><?=$lang['menu_notice']?></div>
+
