@@ -187,7 +187,6 @@ if ($is_search_bbs) {
 // 페이지의 공지개수가 목록수 보다 작을 때만 실행
 if($page_rows > 0) {
     $result = sql_query($sql);
-echo "sql======> ".$sql;
     $k = 0;
 
     while ($row = sql_fetch_array($result))
@@ -214,7 +213,12 @@ echo "sql======> ".$sql;
 
 g5_latest_cache_data($board['bo_table'], $list);
 
-$write_pages = get_paging_front(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, get_pretty_url($bo_table, '', $qstr.'&amp;page='));
+/*
+window 사이즈에 의해 pageing 갯수 변하게 하기 위해 list.skin.php에 ajax 로 변경
+//모바일 5개 PC 10개 뿌리기
+if(is_mobile()) $write_pages = get_paging_front($config['cf_mobile_pages'], $page, $total_page, get_pretty_url($bo_table, '', $qstr.'&amp;page='));
+else $write_pages = get_paging_front($config['cf_write_pages'], $page, $total_page, get_pretty_url($bo_table, '', $qstr.'&amp;page='));
+//$write_pages = get_paging_front(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, get_pretty_url($bo_table, '', $qstr.'&amp;page='));
 
 $list_href = '';
 $prev_part_href = '';
@@ -239,7 +243,7 @@ if ($is_search_bbs) {
         $write_pages = page_insertafter($write_pages, '<a href="'.$next_part_href.'" class="pg_page pg_end">다음검색</a>');
     }
 }
-
+*/
 
 $write_href = '';
 if ($member['mb_level'] >= $board['bo_write_level']) {

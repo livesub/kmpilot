@@ -287,7 +287,8 @@ if (isset($_REQUEST['sfl']))  {
     $sfl = trim($_REQUEST['sfl']);
     $sfl = preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\/\^\*\s]/", "", $sfl);
     if ($sfl)
-        $qstr .= '&amp;sfl=' . urlencode($sfl); // search field (검색 필드)
+        //$qstr .= '&amp;sfl=' . urlencode($sfl); // search field (검색 필드)
+        $qstr .= '&sfl=' . urlencode($sfl); // search field (검색 필드)
 } else {
     $sfl = '';
 }
@@ -296,7 +297,8 @@ if (isset($_REQUEST['sfl']))  {
 if (isset($_REQUEST['stx']))  { // search text (검색어)
     $stx = get_search_string(trim($_REQUEST['stx']));
     if ($stx || $stx === '0')
-        $qstr .= '&amp;stx=' . urlencode(cut_str($stx, 20, ''));
+        //$qstr .= '&amp;stx=' . urlencode(cut_str($stx, 20, ''));
+        $qstr .= '&stx=' . urlencode(cut_str($stx, 20, ''));
 } else {
     $stx = '';
 }
@@ -305,7 +307,8 @@ if (isset($_REQUEST['sst']))  {
     $sst = trim($_REQUEST['sst']);
     $sst = preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\/\^\*\s]/", "", $sst);
     if ($sst)
-        $qstr .= '&amp;sst=' . urlencode($sst); // search sort (검색 정렬 필드)
+        //$qstr .= '&amp;sst=' . urlencode($sst); // search sort (검색 정렬 필드)
+        $qstr .= '&sst=' . urlencode($sst); // search sort (검색 정렬 필드)
 } else {
     $sst = '';
 }
@@ -313,7 +316,8 @@ if (isset($_REQUEST['sst']))  {
 if (isset($_REQUEST['sod']))  { // search order (검색 오름, 내림차순)
     $sod = preg_match("/^(asc|desc)$/i", $sod) ? $sod : '';
     if ($sod)
-        $qstr .= '&amp;sod=' . urlencode($sod);
+        //$qstr .= '&amp;sod=' . urlencode($sod);
+        $qstr .= '&sod=' . urlencode($sod);
 } else {
     $sod = '';
 }
@@ -321,7 +325,8 @@ if (isset($_REQUEST['sod']))  { // search order (검색 오름, 내림차순)
 if (isset($_REQUEST['sop']))  { // search operator (검색 or, and 오퍼레이터)
     $sop = preg_match("/^(or|and)$/i", $sop) ? $sop : '';
     if ($sop)
-        $qstr .= '&amp;sop=' . urlencode($sop);
+       // $qstr .= '&amp;sop=' . urlencode($sop);
+       $qstr .= '&sop=' . urlencode($sop);
 } else {
     $sop = '';
 }
@@ -329,7 +334,8 @@ if (isset($_REQUEST['sop']))  { // search operator (검색 or, and 오퍼레이�
 if (isset($_REQUEST['spt']))  { // search part (검색 파트[구간])
     $spt = (int)$spt;
     if ($spt)
-        $qstr .= '&amp;spt=' . urlencode($spt);
+        //$qstr .= '&amp;spt=' . urlencode($spt);
+        $qstr .= '&spt=' . urlencode($spt);
 } else {
     $spt = '';
 }
@@ -337,7 +343,8 @@ if (isset($_REQUEST['spt']))  { // search part (검색 파트[구간])
 if (isset($_REQUEST['page'])) { // 리스트 페이지지
     $page = (int)$_REQUEST['page'];
     if ($page)
-        $qstr .= '&amp;page=' . urlencode($page);
+        //$qstr .= '&amp;page=' . urlencode($page);
+        $qstr .= '&page=' . urlencode($page);
 } else {
     $page = '';
 }

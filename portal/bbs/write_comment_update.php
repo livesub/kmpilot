@@ -77,8 +77,11 @@ $post_wr_password = '';
 if ($is_member)
 {
     $mb_id = $member['mb_id'];
+
     // 4.00.13 - 실명 사용일때 댓글에 닉네임으로 입력되던 오류를 수정
-    $wr_name = addslashes(clean_xss_tags($board['bo_use_name'] ? $member['mb_name'] : $member['mb_nick']));
+    //$wr_name = addslashes(clean_xss_tags($board['bo_use_name'] ? $member['mb_name'] : $member['mb_nick']));
+    $wr_name = addslashes($member['mb_name']);
+
     $wr_password = '';
     $wr_email = addslashes($member['mb_email']);
     $wr_homepage = addslashes(clean_xss_tags($member['mb_homepage']));
@@ -271,6 +274,7 @@ if ($w == 'c') // 댓글 입력
                     where wr_id = '$comment_id' ";
         sql_query($sql);
     }
+    alert("등록 되었습니다.");
 }
 else if ($w == 'cu') // 댓글 수정
 {

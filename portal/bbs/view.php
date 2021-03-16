@@ -13,11 +13,14 @@ $sql_search = "";
 if ($sca || $stx || $stx === '0') {
     // where 문을 얻음
     $sql_search = get_sql_search($sca, $sfl, $stx, $sop);
-    $search_href = get_pretty_url($bo_table,'','&amp;page='.$page.$qstr);
-    $list_href = get_pretty_url($bo_table);
+//    $search_href = get_pretty_url($bo_table,'','&amp;page='.$page.$qstr);
+//    $list_href = get_pretty_url($bo_table,'','&amp;page='.$page.$qstr);
+    $search_href = get_pretty_url($bo_table,'','&page='.$page.$qstr);
+    $list_href = get_pretty_url($bo_table,'','&page='.$page.$qstr);
 } else {
     $search_href = '';
-    $list_href = get_pretty_url($bo_table,'',$qstr);
+    //$list_href = get_pretty_url($bo_table,'',$qstr);
+    $list_href = get_pretty_url($bo_table,'','&page='.$page);
 }
 
 if (!$board['bo_use_list_view']) {
@@ -80,6 +83,10 @@ if (($member['mb_id'] && ($member['mb_id'] === $write['mb_id'])) || $is_admin) {
     $delete_href = G5_BBS_URL.'/delete.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'&amp;token='.$token.'&amp;page='.$page.urldecode($qstr);
 }
 else if (!$write['mb_id']) { // 회원이 쓴 글이 아니라면
+    $update_href = G5_BBS_URL.'/password.php?w=u&amp;bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'&amp;page='.$page.$qstr;
+    $delete_href = G5_BBS_URL.'/password.php?w=d&amp;bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'&amp;page='.$page.$qstr;
+}else if($member['mb_id'] == ""){
+    //비회원일때
     $update_href = G5_BBS_URL.'/password.php?w=u&amp;bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'&amp;page='.$page.$qstr;
     $delete_href = G5_BBS_URL.'/password.php?w=d&amp;bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'&amp;page='.$page.$qstr;
 }

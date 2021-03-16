@@ -1,7 +1,7 @@
-
 <?php
     if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
+            <div class="notice board">
             <form name="fsearch" method="get">
                 <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
                 <input type="hidden" name="sca" value="<?php echo $sca ?>">
@@ -50,10 +50,13 @@
                             <div class="col"><a class="text-overflow" href="<?php echo $list[$i]['href']?>"><?php echo $list[$i]['subject'] ?>
 
 <?php
-        if ($list[$i]['comment_cnt']) {
+        if($board['bo_10_subj'] == 1){
+
+            if ($list[$i]['comment_cnt']) {
 ?>
                                 <span class="reply">[<?=$list[$i]['wr_comment']?>]</span>
 <?php
+            }
         }
 ?>
                             </a></div>
@@ -88,7 +91,31 @@
     }
 ?>
                 <div class="list-pagination">
-                    <div>
-                        <?php echo $write_pages; ?>
+                    <div id="page_control">
                     </div>
                 </div>
+            </div>
+
+<script>
+window_width_datermine();
+function page_call(page_type){
+    $.ajax({
+        type		: "POST",
+        dataType    : 'html',
+        url			: "<?=G5_BBS_URL?>/ajax_pageing.php",
+        data		: {
+            "page_type"         : page_type,
+            "page"              : "<?=$page?>",
+            "total_page"        : "<?=$total_page?>",
+            "bo_table"          : "<?=$bo_table?>",
+            "qstr"              : "<?=$qstr?>"
+        },
+        success: function(html){
+            $("#page_control").html(html);
+        },
+        error: function () {
+            console.log('error');
+        }
+    });
+}
+</script>

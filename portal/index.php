@@ -61,18 +61,19 @@ if($lang_type == "kr"){
         <div>
             <div class="box-title">
                 <?=$lang['main_notice_bbs']?>
-                <a class="more" href="bbs/board.php?bo_table=notice_<?=$lang_type?>"><?=$lang['main_notice_more']?></a>
+                <a class="more" href="<?=G5_BBS_URL?>/board.php?bo_table=notice_<?=$lang_type?>"><?=$lang['main_notice_more']?></a>
             </div>
             <div class="box-contents">
                 <ul>
 <?php
     //공지사항
-    $sql_notice = " select wr_id,wr_subject,wr_datetime from kmp_write_notice_{$lang_type} order by wr_id DESC limit 0,4 ";
+
+    $sql_notice = " select wr_id,wr_subject,wr_datetime from kmp_write_notice_{$lang_type} where wr_is_comment = 0  and wr_id not in (5) order by wr_num, wr_reply limit 0,4 ";
     $result_notice = sql_query($sql_notice);
     for ($j=0; $row_notice=sql_fetch_array($result_notice); $j++) {
         $wr_datetime_cut = explode(" ",$row_notice['wr_datetime']);
 ?>
-                    <li><div><a href="bbs/board.php?bo_table=notice_<?=$lang_type?>&wr_id=<?=$row_notice['wr_id']?>"><?=$row_notice['wr_subject']?></a></div><div><?=date_point_change($wr_datetime_cut[0])?></div></li>
+                    <li><div><a href="<?=G5_BBS_URL?>/board.php?bo_table=notice_<?=$lang_type?>&wr_id=<?=$row_notice['wr_id']?>"><?=$row_notice['wr_subject']?></a></div><div><?=date_point_change($wr_datetime_cut[0])?></div></li>
 <?php
     }
 ?>
@@ -83,18 +84,18 @@ if($lang_type == "kr"){
         <div>
             <div class="box-title">
                 <?=$lang['main_news_bbs']?>
-                <a class="more" href="bbs/board.php?bo_table=<?=$table_link?>"><?=$lang['main_news_more']?></a>
+                <a class="more" href="<?=G5_BBS_URL?>/board.php?bo_table=<?=$table_link?>"><?=$lang['main_news_more']?></a>
             </div>
             <div class="box-contents">
                 <ul>
 <?php
     //뉴스
-    $sql_news = " select wr_id,wr_subject,wr_datetime from {$table_chk} order by wr_id DESC limit 0,4 ";
+    $sql_notice = " select wr_id,wr_subject,wr_datetime from {$table_chk} where wr_is_comment = 0  and wr_id not in (5) order by wr_num, wr_reply limit 0,4 ";
     $result_news = sql_query($sql_news);
     for ($j=0; $row_news=sql_fetch_array($result_news); $j++) {
         $news_wr_datetime_cut = explode(" ",$row_news['wr_datetime']);
 ?>
-                    <li><div><a href="bbs/board.php?bo_table=<?=$table_link?>&wr_id=<?=$row_news['wr_id']?>"><?=$row_news['wr_subject']?></a></div><div><?=date_point_change($news_wr_datetime_cut[0])?></div></li>
+                    <li><div><a href="<?=G5_BBS_URL?>/board.php?bo_table=<?=$table_link?>&wr_id=<?=$row_news['wr_id']?>"><?=$row_news['wr_subject']?></a></div><div><?=date_point_change($news_wr_datetime_cut[0])?></div></li>
 <?php
     }
 ?>

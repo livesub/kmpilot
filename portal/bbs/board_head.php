@@ -14,6 +14,9 @@ if (G5_IS_MOBILE) {
     }
     echo html_purifier(stripslashes($board['bo_content_head']));
 }
+
+//if($wr_id == "") $class_type = "board write";
+//else $class_type = "detail-content ";
 ?>
 
 <div class="sub-container news-container">
@@ -23,4 +26,3 @@ if (G5_IS_MOBILE) {
 ?>
         <div class="contents">
             <div class="contents-title"><?=$lang['menu_notice']?></div>
-            <div class="notice board">

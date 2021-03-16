@@ -812,3 +812,21 @@ function inNumber(){
     }
 
 }
+
+
+
+//window 사이즈에 의해 pageing 갯수 변하게 하기 위해
+function window_width_datermine(){
+    var windowWidth = $( window ).width();
+    if(windowWidth < 480) {
+        //창 가로 크기가 480 미만일 경우
+        page_call("small_size");
+    } else {
+        //창 가로 크기가 480 이상일 경우
+        page_call("large_size");
+    }
+}
+
+$( window ).resize(function() {
+    window_width_datermine();
+});
