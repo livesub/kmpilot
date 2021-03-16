@@ -99,8 +99,9 @@ function goto_url($url)
     $url = str_replace("&amp;", "&", $url);
     //echo "<script> location.replace('$url'); </script>";
 
-    if (!headers_sent())
+    if (!headers_sent()){
         header('Location: '.$url);
+    }
     else {
         echo '<script>';
         echo 'location.replace("'.$url.'");';
@@ -439,6 +440,11 @@ function get_list($write_row, $board, $skin_url, $subject_len=40,$BBS_PATH = G5_
 
     //$list['href'] = get_pretty_url($board['bo_table'], $list['wr_id'], $qstr);
     $list['href'] = $BBS_PATH.'/board.php?bo_table='.$board['bo_table'].'&amp;wr_id='.$list['wr_id'].$qstr;
+    //다운로드 경로 추가
+    $list['down_href'] = $BBS_PATH.'/download.php?bo_table='.$board['bo_table'].'&amp;wr_id='.$list['wr_id'];
+    //.'&amp;'.$qstr
+    //수정 창 경로 추가
+    $list['write_href'] = G5_ADMIN_BBS_URL.'/write.php?w=u&bo_table='.$board['bo_table'].'&amp;wr_id='.$list['wr_id'];
     $list['comment_href'] = $list['href'];
 
     $list['icon_new'] = '';
@@ -4029,7 +4035,7 @@ function get_doseongu_select($name, $start_id=0, $end_id=12, $selected="", $even
     for ($i=$start_id; $i<=$end_id; $i++) {
         $value = null;
         switch ($i){
-            case 0: $value = "해당사항없음"; break;
+            case 0: $value = "지역을 선택하세요"; break;
             case 1: $value = "부산항"; break;
             case 2: $value = "여수항"; break;
             case 3: $value = "인천항"; break;
@@ -4483,3 +4489,42 @@ function get_grade_status_value($num){
 
 
 
+// 메타태그를 이용한 URL 이동인데 끝나고 alert 창을 주는 경우 이용
+// header("location:URL") 을 대체
+function goto_url_msg($url, $msg='')
+{
+    $url = str_replace("&amp;", "&", $url);
+    if($msg != ''){
+        echo "<script> alert('$msg'); </script>";
+    }
+    //echo "<script> location.replace('$url'); </script>";
+
+    // if (!headers_sent()){
+    //     if($msg != ''){
+    //         echo "<script> alert('$msg'); </script>";
+    //     }
+    //     header('Location: '.$url);
+    // }
+    // else {
+        echo '<script>';
+        echo 'location.replace("'.$url.'");';
+        echo '</script>';
+        echo '<noscript>';
+        echo '<meta http-equiv="refresh" content="0;url='.$url.'" />';
+        echo '</noscript>';
+    // }
+    exit;
+}
+
+//명예도선사 POSITION변화 함수
+function get_honor_position($num){
+    $vaule = '';
+    switch($num){
+        case 0 : $value = "해당없음"; break;
+        case 1 : $value = "감사"; break;
+        case 2 : $value = "부회장"; break;
+        case 3 : $value = "회장"; break;
+        case 4 : $value = "고문"; break;
+    }
+    return $value;
+}

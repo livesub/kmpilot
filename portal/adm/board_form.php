@@ -394,6 +394,13 @@ $pg_anchor = '<ul class="anchor">
             </td>
         </tr>
         <tr>
+            <th scope="row"><label for="bo_comment_level">댓글기능 사용 여부</label></th>
+            <td>
+                <?php echo help('0은 사용안함, 1은 사용함. 둘 중 에 하나로만 입력해주세요(미입력 시 사용안함으로 처리)') ?>
+                <input type="text" name="bo_10_subj" id="bo_10_subj" value="<?php echo get_text($board['bo_10_subj']) ?>" maxlength="1" class="frm_input">
+            </td>
+        </tr>
+        <tr>
             <th scope="row"><label for="bo_comment_level">댓글쓰기 권한</label></th>
             <td>
                 <?php echo get_member_level_select('bo_comment_level', 1, 10, $board['bo_comment_level']) ?>
@@ -1302,9 +1309,9 @@ $pg_anchor = '<ul class="anchor">
 <!--    </div>-->
 <!--</section>-->
 
-<!--<section id="anc_bo_extra">-->
-<!--    <h2 class="h2_frm">게시판 여분필드 설정</h2>-->
-<!--    --><?php //echo $pg_anchor ?>
+<!-- <section id="anc_bo_extra">
+   <h2 class="h2_frm">게시판 여분필드 설정</h2>
+  <?php echo $pg_anchor ?> -->
 
 <!--    <div class="tbl_frm01 tbl_wrap">-->
 <!--        <table>-->
@@ -1320,7 +1327,7 @@ $pg_anchor = '<ul class="anchor">
 <!--            <th scope="row">여분필드--><?php //echo $i ?><!--</th>-->
 <!--            <td class="td_extra">-->
 <!--                <label for="bo_--><?php //echo $i ?><!--_subj">여분필드 --><?php //echo $i ?><!-- 제목</label>-->
-<!--                <input type="text" name="bo_--><?php //echo $i ?><!--_subj" id="bo_--><?php //echo $i ?><!--_subj" value="--><?php //echo get_text($board['bo_'.$i.'_subj']) ?><!--" class="frm_input">-->
+               <!-- <input type="text" name="bo_<?php echo $i ?>_subj" id="bo_<?php echo $i ?>_subj" value="<?php echo get_text($board['bo_'.$i.'_subj']) ?>" class="frm_input"> -->
 <!--                <label for="bo_--><?php //echo $i ?><!--">여분필드 --><?php //echo $i ?><!-- 값</label>-->
 <!--                <input type="text" name="bo_--><?php //echo $i ?><!--" value="--><?php //echo get_text($board['bo_'.$i]) ?><!--" id="bo_--><?php //echo $i ?><!--" class="frm_input extra-value-input">-->
 <!--            </td>-->
@@ -1335,7 +1342,7 @@ $pg_anchor = '<ul class="anchor">
 <!--        </tbody>-->
 <!--        </table>-->
 <!--    </div>-->
-<!--</section>-->
+<!--</section> -->
 
 
 <div class="btn_fixed_top">

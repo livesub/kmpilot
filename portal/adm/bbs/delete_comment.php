@@ -87,5 +87,10 @@ sql_query(" delete from {$g5['board_new_table']} where bo_table = '{$bo_table}' 
 delete_cache_latest($bo_table);
 
 run_event('bbs_delete_comment', $comment_id, $board);
+//관리자일 경우 관리자 페이지로 이동
 
-goto_url(short_url_clean(G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$write['wr_parent'].'&amp;page='.$page. $qstr));
+if(strpos($_SERVER['SCRIPT_NAME'],'adm')){
+    goto_url(short_url_clean(G5_ADMIN_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$write['wr_parent'].'&amp;page='.$page. $qstr));
+}else{
+    goto_url(short_url_clean(G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$write['wr_parent'].'&amp;page='.$page. $qstr));
+}

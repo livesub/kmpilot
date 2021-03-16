@@ -44,7 +44,7 @@ if (isset($_POST['wr_content'])) {
     $wr_content = substr(trim($_POST['wr_content']),0,65536);
     $wr_content = preg_replace("#[\\\]+$#", "", $wr_content);
 }
-if ($wr_content == '') {
+if ($wr_content == '' && $_POST['bo_table'] != 'Passage_plan') {
     $msg[] = '<strong>내용</strong>을 입력하세요.';
 }
 
@@ -350,7 +350,7 @@ if ($w == '' || $w == 'r') {
         // 자신의 글이라면
         if ($member['mb_id'] === $wr['mb_id']) {
             $mb_id = $member['mb_id'];
-            $wr_name = addslashes(clean_xss_tags($board['bo_use_name'] ? $member['mb_name'] : $member['mb_nick']));
+            $wr_name = addslashes(clean_xss_tags($board['bo_use_name'] ? $member['mb_name'] : $member['mb_name']));
             $wr_email = addslashes($member['mb_email']);
             $wr_homepage = addslashes(clean_xss_tags($member['mb_homepage']));
         } else {
@@ -755,9 +755,23 @@ run_event('write_update_after', $board, $wr_id, $w, $qstr, $redirect_url);
 if ($file_upload_msg)
 {
     //alert($file_upload_msg, $redirect_url);
-    alert($file_upload_msg, G5_ADMIN_BBS_URL.'/board.php?bo_table='.$bo_table.'&wr_id='.$wr_id.'&page='.$page.$qstr);
+    if($bo_table == 'Passage_plan'){
+        alert($file_upload_msg, G5_ADMIN_BBS_URL.'/board.php?bo_table='.$bo_table.'&page='.$page.$qstr);
+    }else{
+        alert($file_upload_msg, G5_ADMIN_BBS_URL.'/board.php?bo_table='.$bo_table.'&wr_id='.$wr_id.'&page='.$page.$qstr);
+    }
 }else{
     //goto_url($redirect_url);
-
-    goto_url(G5_ADMIN_BBS_URL.'/board.php?bo_table='.$bo_table.'&wr_id='.$wr_id.$qstr);
+    $mode = '';
+    if($w == ''){
+        $mode = "등록되었습니다.";
+    }else{
+        $mode = "수정되었습니다.";
+    }
+    
+    if($bo_table == 'Passage_plan'){
+        goto_url(G5_ADMIN_BBS_URL.'/board.php?bo_table='.$bo_table.'&'.$qstr, $mode);
+    }else{    
+        goto_url(G5_ADMIN_BBS_URL.'/board.php?bo_table='.$bo_table.'&wr_id='.$wr_id.$qstr, $mode);
+    }    
 }

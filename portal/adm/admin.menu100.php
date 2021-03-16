@@ -1,5 +1,5 @@
 <?php
-if($member['mb_id'] != 'yongsanzip'){
+if($member['mb_level'] != 10){
     $menu['menu100'] = array (
         array('100000', '환경설정', G5_ADMIN_URL.'/config_form.php',   'config'),
         array('100050', '메인페이지이미지설정', G5_ADMIN_URL.'/main_image_list.php',   'main_image'),
@@ -17,7 +17,7 @@ if($member['mb_id'] != 'yongsanzip'){
         //array('100500', 'phpinfo()',        G5_ADMIN_URL.'/phpinfo.php',       'cf_phpinfo')
     );
 }
-if($member['mb_id'] == 'yongsanzip'){
+if($member['mb_level'] == 10){
     $menu['menu100'] = array (
         array('100000', '환경설정', G5_ADMIN_URL.'/config_form.php',   'config'),
         array('100050', '메인페이지이미지설정', G5_ADMIN_URL.'/main_image_list.php',   'main_image'),

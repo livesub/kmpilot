@@ -201,7 +201,7 @@ if($magazine_del == "수정" || $magazine_del == "저장"){
                     echo $message;
                     exit;
                 }
-                //있을 경우 추가
+                //없을 경우 추가
                 if (!is_dir($magazine_img_dir)) {
                     @mkdir($magazine_img_dir, G5_DIR_PERMISSION);
                     @chmod($magazine_img_dir, G5_DIR_PERMISSION);
@@ -321,6 +321,13 @@ if($magazine_del == "수정" || $magazine_del == "저장"){
 //                echo "메인 이미지 삭제 들어오나?";
 //                exit;
                 unlink($magazine_img_dir.$result_del_sel['M_IMG']);
+                //썸네일 (메인,상세보기 페이지) 삭제
+                $del_ex = explode('.',$result_del_sel['M_IMG']);
+                if($del_ex[1] == "jpeg"){
+                    $del_ex[1] = "jpg";
+                }
+                unlink($magazine_img_dir."thumb/thumb-".$del_ex[0]."_295x396.".$del_ex[1]);
+                unlink($magazine_img_dir."thumb/thumb-".$del_ex[0]."_250x335.".$del_ex[1]);
             }
             //밑에 내용들 첨부파일 삭제를 위해 이름찾기
             $sql_del_sel_content = " select * from CMS_MAGAZINE_NEW_TEST where PARENTIDX = {$_POST['M_IDX']}";

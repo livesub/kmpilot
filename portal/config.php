@@ -70,7 +70,8 @@ define('G5_THEME_DIR',      'theme');
 
 define('G5_GROUP_DIR',      'group');
 define('G5_CONTENT_DIR',    'content');
-
+//어드민의 bbs
+define('G5_ADMIN_BBS_DIR',      G5_ADMIN_DIR.'/'.G5_BBS_DIR);
 // URL 은 브라우저상에서의 경로 (도메인으로 부터의)
 if (G5_DOMAIN) {
     define('G5_URL', G5_DOMAIN);
@@ -107,7 +108,8 @@ define('G5_LGXPAY_URL',     G5_PLUGIN_URL.'/'.G5_LGXPAY_DIR);
 define('G5_SNS_URL',        G5_PLUGIN_URL.'/'.G5_SNS_DIR);
 define('G5_SYNDI_URL',      G5_PLUGIN_URL.'/'.G5_SYNDI_DIR);
 define('G5_MOBILE_URL',     G5_URL.'/'.G5_MOBILE_DIR);
-
+//추가 필요
+define('G5_ADMIN_BBS_URL',     G5_URL.'/'.G5_ADMIN_DIR.'/'.G5_BBS_DIR);
 // PATH 는 서버상에서의 절대경로
 define('G5_ADMIN_PATH',     G5_PATH.'/'.G5_ADMIN_DIR);
 define('G5_BBS_PATH',       G5_PATH.'/'.G5_BBS_DIR);

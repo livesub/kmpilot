@@ -24,7 +24,25 @@ $listall = '<a href="'.G5_BBS_URL.'/content.php?co_id=doseonge_list" class="ov_l
 <h2><?=$listall?></h2>
 <div style="display: flex; justify-content: space-around;">
     <div>
-        <img src="<?=G5_DATA_URL?>/magazine_test/<?=$result_list_sel['M_IMG']?>" width="150" height="150">
+        <?php if($result_list_sel['M_IMG']){
+                $thumb = '';
+                //있을 경우 썸네일 생성
+                if(file_exists(G5_DATA_PATH.'/magazine_test/'.$result_list_sel['M_IMG'])){
+                    //alert('들어는 왔나?');
+                    $img = $result_list_sel['M_IMG'];
+                    $source_path = G5_DATA_PATH."/magazine_test/";
+                    $target_path = $source_path."thumb/";
+                    //폴더 없을 경우 만들기
+                    //없을 경우 추가
+                    if (!is_dir($target_path)) {
+                        @mkdir($target_path, G5_DIR_PERMISSION);
+                        @chmod($target_path, G5_DIR_PERMISSION);
+                    }
+                    $thumb = thumbnail($img,$source_path,$target_path,250,335,false);
+                    }
+                    ?>
+                    <img src="<?=G5_DATA_URL?>/magazine_test/thumb/<?=$thumb?>" alt="">
+        <?php }?>
         <br>
         <b><?=$result_list_sel['M_TITLE']?></b>
         <p>저자 : <?=$result_list_sel['M_AUTHOR']?></p>

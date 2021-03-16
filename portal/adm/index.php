@@ -13,7 +13,7 @@ if($is_admin != 'super'){
 }
 
 goto_url(G5_ADMIN_URL."/member_list.php");
-
+exit;
 $g5['title'] = '관리자메인';
 include_once ('./admin.head.php');
 

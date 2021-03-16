@@ -1,14 +1,20 @@
 <?php
+
+//영어로 들어와도 무조건 한글표시되게 변경
+if(isset($_COOKIE['lang_change_portal']) && $_COOKIE['lang_change_portal'] != ''){
+    setcookie("lang_change_portal", "kr", time() + 60 * 60 * 8);
+}
+
 $sub_menu = "200100";
 include_once('./_common.php');
 
 auth_check_menu($auth, $sub_menu, 'r');
 
 $sql_common = " from {$g5['member_table']} ";
-$sql_del_mem = " and mb_memo = '' and mb_id != 'yongsanzip' ";
+$sql_del_mem = " and mb_memo = '' and mb_level != 10 ";
 // 최고 관리자 일 경우 쿼리문
 if($member['mb_level'] == 9){
-    $sql_del_mem = " and mb_id != 'yongsanzip' ";
+    $sql_del_mem = " and mb_level != 10 ";
 }
 
 // 용산집 계정일 경우 쿼리문
@@ -20,7 +26,7 @@ $g5['title'] = '회원관리';
 
 if(get_auth_member_exits($member['mb_id'], 200100) && !$is_admin){
    $doseongu =  get_user_doseongu($member['mb_id']);
-   $sql_del_mem = " and mb_memo = '' and mb_id != 'yongsanzip' and mb_doseongu = '".$doseongu."'";
+   $sql_del_mem = " and mb_memo = '' and mb_level != 10 and mb_doseongu = '".$doseongu."'";
    $g5['title'] = get_doseongu_name($member['mb_doseongu'])." 회원관리";
 }
 

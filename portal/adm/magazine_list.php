@@ -74,7 +74,7 @@ $colspan = 16;
         <input type="submit" class="btn_submit" value="검색">
 
     </form> -->
-    <form name="fmemberlist" id="fmemberlist" action="./member_list_update.php" onsubmit="return fmemberlist_submit(this);" method="post">
+    <form name="fmemberlist" id="fmemberlist" action="./magazine_list_update.php" onsubmit="return fmemberlist_submit(this);" method="post">
         <input type="hidden" name="sst" value="<?php echo $sst ?>">
         <input type="hidden" name="sod" value="<?php echo $sod ?>">
         <input type="hidden" name="sfl" value="<?php echo $sfl ?>">
@@ -104,7 +104,7 @@ $colspan = 16;
 
                     <tr class="<?php echo $bg; ?>">
                         <td headers="mb_list_chk" class="td_chk" rowspan="">
-                            <input type="hidden" name="mb_id[<?php echo $i ?>]" value="<?php echo $row['mb_id'] ?>" id="mb_id_<?php echo $i ?>">
+                            <input type="hidden" name="IDX_<?php echo $i ?>" value="<?php echo $row['IDX'] ?>" id="IDX_<?php echo $i ?>">
                             <label for="chk_<?php echo $i; ?>" class="sound_only"></label>
                             <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>">
                         </td>

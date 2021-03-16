@@ -427,3 +427,101 @@ function update_rewrite_rules(){
     return false;
 
 }
+
+// 짧은 주소 형식으로 만들어서 가져온다. 어드민 페이지에서 만 이용
+function get_pretty_url_admin($folder, $no='', $query_string='', $action='')
+{
+    global $g5, $config;
+
+    $boards = get_board_names();
+    $segments = array();
+    $url = $add_query = '';
+
+    if( $url = run_replace('get_pretty_url_admin', $url, $folder, $no, $query_string, $action) ){
+        return $url;
+    }
+
+    // use shortten url
+    if($config['cf_bbs_rewrite']) {
+
+        $segments[0] = G5_URL;
+
+        if( $folder === 'content' && $no ){     // 내용관리
+
+            $segments[1] = $folder;
+
+            if( $config['cf_bbs_rewrite'] > 1 ){
+
+                $get_content = get_content_db( $no , true);
+                $segments[2] = (isset($get_content['co_seo_title']) && $get_content['co_seo_title']) ? urlencode($get_content['co_seo_title']).'/' : urlencode($no);
+
+            } else {
+                $segments[2] = urlencode($no);
+            }
+
+        } else if(in_array($folder, $boards)) {     // 게시판
+
+            $segments[1] = $folder;
+
+            if($no) {
+
+                if( $config['cf_bbs_rewrite'] > 1 ){
+
+                $get_write = get_write( $g5['write_prefix'].$folder, $no , true);
+
+                $segments[2] = (isset($get_write['wr_seo_title']) && $get_write['wr_seo_title']) ? urlencode($get_write['wr_seo_title']).'/' : urlencode($no);
+
+                } else {
+                    $segments[2] = urlencode($no);
+                }
+
+            } else if($action) {
+                $segments[2] = urlencode($action);
+            }
+
+        } else {
+            $segments[1] = $folder;
+            if($no) {
+                $no_array = explode("=", $no);
+                $no_value = end($no_array);
+                $segments[2] = urlencode($no_value);
+            }
+        }
+
+        if($query_string) {
+            // If the first character of the query string is '&', replace it with '?'.
+            if(substr($query_string, 0, 1) == '&') {
+                $add_query = preg_replace("/\&amp;/", "?", $query_string, 1);
+            } else {
+                $add_query = '?'. $query_string;
+            }
+        }
+
+    } else { // don't use shortten url
+        if(in_array($folder, $boards)) {
+            $url = G5_ADMIN_BBS_URL. '/board.php?bo_table='. $folder;
+            if($no) {
+                $url .= '&amp;wr_id='. $no;
+            }
+            if($query_string) {
+                if(substr($query_string, 0, 1) !== '&') {
+                    $url .= '&amp;';
+                }
+
+                $url .= $query_string;
+            }
+        } else {
+            $url = G5_ADMIN_BBS_URL. '/'.$folder.'.php';
+            if($no) {
+                $url .= ($folder === 'content') ? '?co_id='. $no : '?'. $no;
+            }
+            if($query_string) {
+                $url .= ($no ? '?' : '&amp;'). $query_string;
+            }
+        }
+
+        $segments[0] = $url;
+    }
+
+    return implode('/', $segments).$add_query;
+}

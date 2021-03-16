@@ -359,7 +359,7 @@ $m_idx = '';
                         alert("삭제 되었습니다.");
                         //location.reload(true);
                     }else{
-                        alert("문제가 발생 하였습니다. 개발자에게 문의 하세요.");
+                        alert(trim(data));
                         //alert("data");
                     }
                 },

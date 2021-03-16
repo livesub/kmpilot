@@ -42,7 +42,7 @@ $total_count = $row['cnt'];
 
 $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'?co_id=doseonge_list" class="ov_listall">전체목록</a>';
 
-$rows = 5;
+$rows = 3;
 $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if ($page < 1) $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
@@ -95,7 +95,25 @@ $result_list = sql_query($sql_sel_list);
                 }else{
                 ?>
                 <div>
-                    <img src="<?=G5_DATA_URL?>/magazine_test/<?=$row['M_IMG']?>" width="150" height="150" alt="">
+                <?php if($row['M_IMG']){
+                    $thumb = '';
+                    //있을 경우 썸네일 생성
+                    if(file_exists(G5_DATA_PATH.'/magazine_test/'.$row['M_IMG'])){
+                        //alert('들어는 왔나?');
+                        $img = $row['M_IMG'];
+                        $source_path = G5_DATA_PATH."/magazine_test/";
+                        $target_path = $source_path."thumb/";
+                        //폴더 없을 경우 만들기
+                        //없을 경우 추가
+                        if (!is_dir($target_path)) {
+                            @mkdir($target_path, G5_DIR_PERMISSION);
+                            @chmod($target_path, G5_DIR_PERMISSION);
+                        }
+                        $thumb = thumbnail($img,$source_path,$target_path,295,396,false);
+                    }
+                    ?>
+                    <img src="<?=G5_DATA_URL?>/magazine_test/thumb/<?=$thumb?>" alt="">
+                <?php }?>
                     <br>
                     <a href="<?=G5_BBS_URL?>/content.php?co_id=doseonge_info&amp;idx=<?=$row['IDX']?>"><b><?=$row['M_TITLE']?></b></a>
                     <p>저자 : <?=$row['M_AUTHOR']?></p>

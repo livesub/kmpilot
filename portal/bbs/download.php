@@ -10,8 +10,8 @@ $no = isset($_REQUEST['no']) ? (int) $_REQUEST['no'] : 0;
 
 // 쿠키에 저장된 ID값과 넘어온 ID값을 비교하여 같지 않을 경우 오류 발생
 // 다른곳에서 링크 거는것을 방지하기 위한 코드
-if (!get_session('ss_view_'.$bo_table.'_'.$wr_id))
-    alert('잘못된 접근입니다.');
+//if (!get_session('ss_view_'.$bo_table.'_'.$wr_id))
+//    alert('잘못된 접근입니다.');
 
 // 다운로드 차감일 때 비회원은 다운로드 불가
 if($board['bo_download_point'] < 0 && $is_guest)

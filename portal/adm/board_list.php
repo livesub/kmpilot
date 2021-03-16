@@ -105,7 +105,7 @@ $colspan = 15;
         <th scope="col"><?php echo subject_sort_link('bo_use_search') ?>검색<br>사용</a></th>
 <!--        <th scope="col">--><?php //echo subject_sort_link('bo_order') ?><!--출력<br>순서</a></th>
             <th scope="col">접속기기</th>-->
-<?php if($is_admin == 'super' && $member['mb_id'] == 'yongsanzip' && $member['mb_level'] == 10){?>
+<?php if($is_admin == 'super' &&  $member['mb_level'] == 10){?>
         <th scope="col">관리</th>
 <?php } ?>
     </tr>
@@ -184,7 +184,7 @@ $colspan = 15;
 <!--                <option value="mobile"--><?php //echo get_selected($row['bo_device'], 'mobile'); ?><!-- >모바일</option>
             </select>-->
 <!--        </td>-->
-<?php if($is_admin == 'super' && $member['mb_id'] == 'yongsanzip' && $member['mb_level'] == 10){?>
+<?php if($is_admin == 'super' && $member['mb_level'] == 10){?>
         <td class="td_mng td_mng_m">
             <?php echo $one_update ?>
             <?php echo $one_copy ?>
@@ -205,7 +205,7 @@ $colspan = 15;
     <?php if ($is_admin == 'super') { ?>
     <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value" class="btn_02 btn">
     <?php } ?>
-    <?php if ($is_admin == 'super' && $member['mb_id'] == 'yongsanzip' && $member['mb_level'] == 10) { ?>
+    <?php if ($is_admin == 'super' && $member['mb_level'] == 10) { ?>
     <a href="./board_form.php" id="bo_add" class="btn_01 btn">게시판 추가</a>
     <?php } ?>
 </div>

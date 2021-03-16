@@ -13,7 +13,7 @@ $row_member = '';
 
 if($is_member) {
     $sql_common = " from {$g5['member_table']} ";
-    $sql_del_mem = " and mb_memo = '' and {$g5['member_table']}.mb_id != 'yongsanzip' ";
+    $sql_del_mem = " and mb_memo = '' and {$g5['member_table']}.mb_level != 10 ";
 
     if ($member['mb_level'] == 10) {
         $sql_del_mem = null;

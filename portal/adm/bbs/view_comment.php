@@ -2,6 +2,7 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
 
+if($member['mb_level'] == 10 || $_GET['bo_table'] == 'free'){
 $captcha_html = "";
 if ($is_guest && $board['bo_comment_level'] < 2) {
     $captcha_html = captcha_html('_comment');
@@ -77,7 +78,11 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
             if ($row['mb_id'] === $member['mb_id'] || $is_admin)
             {
                 set_session('ss_delete_comment_'.$row['wr_id'].'_token', $token = uniqid(time()));
-                $list[$i]['del_link']  = G5_BBS_URL.'/delete_comment.php?bo_table='.$bo_table.'&amp;comment_id='.$row['wr_id'].'&amp;token='.$token.'&amp;page='.$page.$qstr;
+                if(strpos($_SERVER['SCRIPT_NAME'],'adm')){
+                    $list[$i]['del_link']  = G5_ADMIN_BBS_URL.'/delete_comment.php?bo_table='.$bo_table.'&amp;comment_id='.$row['wr_id'].'&amp;token='.$token.'&amp;page='.$page.$qstr;
+                }else{
+                    $list[$i]['del_link']  = G5_BBS_URL.'/delete_comment.php?bo_table='.$bo_table.'&amp;comment_id='.$row['wr_id'].'&amp;token='.$token.'&amp;page='.$page.$qstr;
+                }
                 $list[$i]['is_edit']   = true;
                 $list[$i]['is_del']    = true;
             }
@@ -124,12 +129,22 @@ else
 
 //$comment_action_url = https_url(G5_BBS_DIR)."/write_comment_update.php";
 //$comment_common_url = short_url_clean(G5_BBS_URL.'/board.php?'.clean_query_string($_SERVER['QUERY_STRING']));
-$comment_action_url = G5_ADMIN_URL."/bbs/write_comment_update.php";
-$comment_common_url = G5_ADMIN_URL.'/bbs/board.php?'.clean_query_string($_SERVER['QUERY_STRING']);
 
+// if(strpos($_SERVER['SCRIPT_NAME'],'adm')){
+    $comment_action_url = https_url(G5_ADMIN_BBS_DIR)."/write_comment_update.php";
+    $comment_common_url = short_url_clean(G5_ADMIN_BBS_URL.'/board.php?'.clean_query_string($_SERVER['QUERY_STRING']));
+// }else{
+//     $comment_action_url = https_url(G5_BBS_DIR)."/write_comment_update.php";
+//     $comment_common_url = short_url_clean(G5_BBS_URL.'/board.php?'.clean_query_string($_SERVER['QUERY_STRING']));
+// }
+
+
+    
 include_once($board_skin_path.'/view_comment.skin.php');
 
 if (!$member['mb_id']) // 비회원일 경우에만
     echo '<script src="'.G5_JS_URL.'/md5.js"></script>'."\n";
 
 @include_once($board_skin_path.'/view_comment.tail.skin.php');
+
+}

@@ -50,6 +50,13 @@ if ($_POST['act_button'] == "선택수정") {
         //이름을 찾아 그 파일 삭제
         $del_name = $honor_img_dir.$result_sel_honor['H_USER_PHOTO'];
         unlink($del_name);
+
+        //썸네일도 삭제
+        $del_ex = explode('.',$result_sel_honor['H_USER_PHOTO']);
+        if($del_ex[1] == "jpeg"){
+            $del_ex[1] = "jpg";
+        }
+        unlink($honor_img_dir."thumb/thumb-".$del_ex[0]."_300x394.".$del_ex[1]);
        }
 
 
