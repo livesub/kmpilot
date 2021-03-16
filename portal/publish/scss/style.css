@@ -96,11 +96,11 @@ div.inlineBlock {
     padding-top: 90px;
     display: none;
 }
-.tab-panel .tab-content > div {
+.tab-panel .tab-content > * {
     display: none;
     padding-top: 90px;
 }
-.tab-panel .tab-content > div.active {
+.tab-panel .tab-content > *.active {
     display: block;
 }
 
@@ -2336,9 +2336,42 @@ input[type='radio']:checked:before {
 .modal .modal-dialog .modal-dialog-description .urgent {
     color: #d11e14;
 }
+.modal.pwdChange .modal-dialog {
+    width: 800px;
+    height: 725px;
+    max-height: unset;
+    margin-top: 100px;
+}
 .modal.pwdCheck .modal-dialog .modal-dialog-contents {
     margin-top: 30px;
 }
 .modal.pwdCheck .modal-dialog .modal-dialog-footer {
     margin-top: 35px;
+}
+.modal.pwdChange .modal-dialog .modal-dialog-contents {
+    padding-top: 50px;
+    padding-bottom: 30px;
+}
+.modal.pwdChange .modal-dialog .modal-dialog-contents > div {
+    position: relative;
+}
+.modal.pwdChange .modal-dialog .modal-dialog-contents > div:first-child {
+    margin-bottom: 70px;
+}
+.modal.pwdChange .modal-dialog .modal-dialog-contents > div:not(:first-child) {
+    margin-bottom: 40px;
+}
+.modal.pwdChange .modal-dialog .modal-dialog-contents > div > input {
+    margin: 0;
+}
+.modal.pwdChange .modal-dialog .modal-dialog-contents > div > input + div {
+    display: none;
+    position: absolute;
+    top: 75px;
+    left: 0;
+    font-size: 18px;
+    color: #d11e14;
+}
+.modal.pwdChange .modal-dialog .modal-dialog-contents > div > input + div.show {
+    display: block;
 }
