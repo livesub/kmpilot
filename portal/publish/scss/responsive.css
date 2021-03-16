@@ -6,9 +6,11 @@
 
     body::-webkit-scrollbar { display:none; }
 
-    .thead .th {
-        height: 40px;
+    .thead {
+        min-height: 40px;
         line-height: 40px;
+    }
+    .thead .th {
         font-size: 14px;
     }
     .row:last-child {
@@ -27,7 +29,7 @@
         font-size: 18px;
         letter-spacing: -0.56px;
     }
-    .tab-panel .tab-content > div {
+    .tab-panel .tab-content > * {
         padding-top: 35px;
     }
     .tab-panel .tab-content .history > div {
@@ -331,6 +333,8 @@
     .main-container .notice-news .contents > div .box-title a:after {
         width: 16px;
         height: 16px;
+        background-image: url("../resources/icons/icon-16-more.png");
+        background-size: cover;
     }
     .main-container .notice-news .contents > div .box-contents {
         font-size: 16px;
@@ -340,6 +344,7 @@
     }
     .main-container .notice-news .contents > div .box-contents li > div:first-child {
         max-width: initial;
+        width: 100%;
         margin-right: 0;
     }
     .main-container .notice-news .contents > div .box-contents li > div:last-child {
@@ -1418,6 +1423,12 @@
     .member-container .contents .board.search-member .list .row .col:nth-child(5) > a {
         font-size: inherit;
     }
+    .member-container .contents .member-info .tab-content .box-title:not(:first-child) {
+        font-size: 20px;
+        font-weight: 900;
+        letter-spacing: -1px;
+        padding: 50px 0 20px;
+    }
     .member-container .contents .member-info .tab-content .box-contents .row .col {
         font-size: 16px;
         padding: 8px 10px;
@@ -1425,7 +1436,7 @@
     }
     .member-container .contents .member-info .tab-content .box-contents .row .col:first-child {
         width: 90px;
-        padding: 0;
+        padding: 10px 0;
     }
     .member-container .contents .member-info .tab-content .box-contents .row .col:first-child br {
         display: block;
@@ -1483,6 +1494,29 @@
     .member-container .contents .member-info .tab-content .box-contents .row .col.image div.file_uploader label {
         line-height: 30px;
         font-size: 14px;
+    }
+    .member-container .contents .member-info .tab-content .box-contents.list .row {
+        align-items: center;
+    }
+    .member-container .contents .member-info .tab-content .box-contents.list .row .col {
+        font-size: 14px;
+        line-height: 1.5;
+        letter-spacing: -1px;
+        color: #000000;
+        padding: 0 10px;
+    }
+    .member-container .contents .member-info .tab-content .box-contents.list .row .col:first-child {
+        justify-content: left;
+    }
+    .member-container .contents .member-info .tab-content .box-contents.list .thead .th:nth-child(2),
+    .member-container .contents .member-info .tab-content .box-contents.list .row .col:nth-child(2) {
+        width: 100px;
+    }
+    .member-container .contents .member-info .tab-content .box-contents.etc .row {
+        align-items: center;
+    }
+    .member-container .contents .member-info .tab-content .box-contents.etc .row .col:first-child {
+        padding: 12px 0;
     }
     .member-container .contents .member-info .tab-content .box-contents .btns {
         padding-top: 20px;
@@ -1705,6 +1739,25 @@
     }
     .modal.pwdCheck .modal-dialog .modal-dialog-footer {
         margin-top: 20px;
+    }
+    .modal.pwdChange .modal-dialog {
+        height: auto;
+        max-height: calc(100vh - 140px);
+    }
+    .modal.pwdChange .modal-dialog .modal-dialog-contents {
+        padding-top: 40px;
+        padding-bottom: 10px;
+    }
+    .modal.pwdChange .modal-dialog .modal-dialog-contents > div:first-child {
+        margin-bottom: 50px;
+    }
+    .modal.pwdChange .modal-dialog .modal-dialog-contents > div > input + div {
+        top: 50px;
+        font-size: 12px;
+        letter-spacing: -0.67px;
+    }
+    .modal.pwdChange .modal-dialog .modal-dialog-contents > div:not(:first-child) {
+        margin-bottom: 30px;
     }
 
 }

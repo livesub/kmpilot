@@ -43,6 +43,10 @@ if($lang_type == "kr"){
                 el : '.swiper-pagination',
                 clickable : true, // 페이징을 클릭하면 해당 영역으로 이동, 필요시 지정해 줘야 기능 작동
             },
+            autoplay : {  // 자동 슬라이드 설정 , 비 활성화 시 false
+                delay : 3000,   // 시간 설정
+                disableOnInteraction : false,  // false로 설정하면 스와이프 후 자동 재생이 비활성화 되지 않음
+            }
         });
     </script>
 </div>
@@ -335,11 +339,11 @@ if($lang_type == "kr"){
                                     <div class="marker jeju" title="제주" onclick="showBranch(11)"></div>
                                 </div>
                                 <script>
-                                        if(window.innerWidth > 1024) {
-                                            //pc버전 첫 브랜치 항목 표시
-                                            document.querySelector(".introduce .contents .box-contents .select select").value = "0";
-                                            showBranch(0);
-                                        }
+                                    if(window.innerWidth > 1024) {
+                                        //pc버전 첫 브랜치 항목 표시
+                                        document.querySelector(".introduce .contents .box-contents .select select").value = "0";
+                                        showBranch(0);
+                                    }
                                 </script>
                             </div>
                         </div>

@@ -402,51 +402,6 @@
                     <div class="next"><a href="#">도선사 협회 공지사항</a></div>
                 </div>
             </div>
-
-            <script>
-                let doCallback = null;
-                let board_id = null;
-                function openPwdCheckModal(callback, id){
-                    doCallback = callback;
-                    board_id = id;
-                    document.querySelector('body').classList.add('modal-open');
-                    document.querySelector('.modal.pwdCheck').classList.add('in');
-                }
-                function closeBoardModal() {
-                    document.querySelector('body').classList.remove('modal-open');
-                    document.querySelector('.modal.pwdCheck').classList.remove('in');
-                }
-                function checkPassword() {
-                    closeBoardModal();
-
-                    //if the password correct
-                    if(doCallback != null && board_id != null) doCallback(board_id);
-                    //or not
-                    return;
-                }
-                function modifyBoard(id) {
-                    location.href = "./board_write.html?board_id="+id;
-                }
-                function removeBoard(id) {
-                    //removeBoard
-                    alert("remove this board "+id);
-                }
-            </script>
-            <div class="pwdCheck modal fade">
-                <div class="modal-background" onclick="closeBoardModal()"></div>
-                <div class="modal-dialog">
-                    <div class="modal-dialog-title">비밀번호 확인<div class="btn-close" onclick="closeBoardModal()"></div></div>
-                    <div class="modal-dialog-description">본 게시물의 비밀번호를 확인합니다.<br><span class="urgent">* 글 작성시 사용한 패스워드를 입력해 주세요</span></div>
-                    <div class="modal-dialog-contents">
-                        <div>
-                            <input type="password" placeholder="패스워드">
-                        </div>
-                    </div>
-                    <div class="modal-dialog-footer">
-                        <button class="btn normal" onclick="checkPassword()">확인</button>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 
