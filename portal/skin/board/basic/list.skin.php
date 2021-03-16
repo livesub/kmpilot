@@ -40,9 +40,9 @@
                         <div class="row">
 <?php
         if ($list[$i]['is_notice']) // 공지사항
-            $is_notice = '<strong class="col" style="color:#0070BF">'.$lang["bbs_list_notice"].'</strong>';
+            $is_notice = '<div class="notice">'.$lang["bbs_list_notice"].'</div>';
         else if ($wr_id == $list[$i]['wr_id'])
-            $is_notice =  '<span class="col">열람중</span>';
+            $is_notice =  '<span>열람중</span>';
         else
             $is_notice = $list[$i]['num'];
 ?>

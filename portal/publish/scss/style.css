@@ -1277,6 +1277,15 @@ input[type='radio']:checked:before {
     width: 100px;
     text-align: center;
 }
+.board .list .row .col .notice {
+    display: inline-block;
+    width: 60px;
+    font-size: 20px;
+    line-height: 1.5;
+    text-align: center;
+    color: #ffffff;
+    background-color: #0070bf;
+}
 .board .list .row .col .reply {
     color: #0070bf;
     vertical-align: baseline;
