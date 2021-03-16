@@ -3344,6 +3344,7 @@ function get_encrypt_string($str)
 function check_password($pass, $hash)
 {
     if(defined('G5_STRING_ENCRYPT_FUNCTION') && G5_STRING_ENCRYPT_FUNCTION === 'create_hash') {
+
         return validate_password($pass, $hash);
     }
 

@@ -127,7 +127,7 @@
                     <div class="row">
                         <div class="col">비밀번호</div>
                         <div class="col">
-                            <input type="password"  ame="wr_password" id="wr_password" <?php echo $password_required ?> placeholder="비밀번호를 입력해 주세요" />
+                            <input type="password" name="wr_password" id="wr_password" <?php echo $password_required ?> placeholder="비밀번호를 입력해 주세요" />
                         </div>
                     </div>
 <?php
