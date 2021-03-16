@@ -639,13 +639,16 @@
         padding-top: 50px;
         padding-bottom: 150px;
     }
-    .sub-container .contents > div {
+    .sub-container .contents > * {
         width: 100vw;
         padding: 0 20px;
     }
     .sub-container .contents .contents-title {
         font-size: 30px;
         margin-bottom: 30px;
+    }
+    .sub-container.member-container .contents .contents-title {
+        margin-bottom: 20px;
     }
     .introduce-container .contents .greet {
         display: block;
@@ -848,7 +851,10 @@
     .contents .search-bar {
         margin-bottom: 35px;
     }
-    .contents .search-bar > *:nth-child(2) > *:first-child {
+    .member-container .contents .search-bar > * {
+        margin-top: 10px;
+    }
+    .contents .search-bar > *:last-child > *:first-child {
         width: calc(100% - 90px);
     }
     .contents .search-bar > * .select:after {
@@ -877,6 +883,10 @@
         font-size: 20px;
         letter-spacing: -0.91px;
         margin-left: 0;
+    }
+    .board .list .thead {
+        height: 0;
+        min-height: unset;
     }
     .board .list .thead .th {
         display: none;
@@ -907,12 +917,14 @@
         width: auto;
         font-size: 14px;
         color: #999999;
+        margin-top: 10px;
         margin-right: 10px;
     }
     .board .list .row .col:nth-child(4) {
         width: auto;
         font-size: 14px;
         color: #999999;
+        margin-top: 10px;
     }
     .board .list .row .col:nth-child(5) {
         position: absolute;
@@ -921,6 +933,7 @@
         width: 15px;
         height: 20px;
         padding: 0;
+        line-height: unset;
     }
     .board .list .row .col:nth-child(5) > a {
         font-size: 0;
@@ -1295,20 +1308,20 @@
     .community-container .contents .board.write .privacy-policy {
         margin-top: 30px;
     }
-    .community-container .contents .board.write .privacy-policy > div:first-child {
+    .sub-container .contents .privacy-policy > div:first-child {
         font-size: 16px;
         letter-spacing: -1px;
     }
-    .community-container .contents .board.write .privacy-policy > div:nth-child(2) {
+    .sub-container .contents .privacy-policy > div:nth-child(2) {
         height: 210px;
         margin-top: 10px;
         padding: 10px;
         font-size: 14px;
     }
-    .community-container .contents .board.write .privacy-policy > div:last-child {
+    .sub-container .contents .privacy-policy > div:last-child {
         margin-top: 10px;
     }
-    .community-container .contents .board.write .privacy-policy > div:last-child label+span {
+    .sub-container .contents .privacy-policy > div:last-child label+span {
         font-size: 16px;
         margin-left: 10px;
     }
@@ -1373,6 +1386,114 @@
     }
     .member-container .contents .read-list li > div > div:first-child:after {
         display: none;
+    }
+    .member-container .contents .board.search-member .list .row .col {
+        flex: unset !important;
+        display: inline-block;
+        width: auto !important;
+        margin-right: 10px;
+        font-size: 16px;
+        line-height: 1.31;
+        color: #000000;
+        text-align: left !important;
+    }
+    .member-container .contents .board.search-member .list .row .col:first-child {
+        font-weight: bold;
+    }
+    .member-container .contents .board.search-member .list .row .col:nth-child(3) {
+        display: block;
+        float: right;
+        width: auto;
+        margin: 0;
+    }
+    .member-container .contents .board.search-member .list .row .col:nth-child(4) {
+        display: block;
+        margin: 10px 0 0 0;
+    }
+    .member-container .contents .board.search-member .list .row .col:nth-child(5) {
+        position: absolute;
+        top: 43px;
+        right: 0;
+    }
+    .member-container .contents .board.search-member .list .row .col:nth-child(5) > a {
+        font-size: inherit;
+    }
+    .member-container .contents .member-info .tab-content .box-contents .row .col {
+        font-size: 16px;
+        padding: 8px 10px;
+        line-height: unset;
+    }
+    .member-container .contents .member-info .tab-content .box-contents .row .col:first-child {
+        width: 90px;
+        padding: 0;
+    }
+    .member-container .contents .member-info .tab-content .box-contents .row .col:first-child br {
+        display: block;
+    }
+    .member-container .contents .member-info .tab-content .box-contents .row .col button.btn {
+        width: 95px;
+        height: 30px;
+        font-size: 14px;
+    }
+    .member-container .contents .member-info .tab-content .box-contents .row .col.addr > div:not(:last-child) {
+        margin-bottom: 7px;
+    }
+    .member-container .contents .member-info .tab-content .box-contents .row .col.addr input[type=number] {
+        width: 95px;
+    }
+    .member-container .contents .member-info .tab-content .box-contents .row .col.addr input[type=text] {
+        width: 100%;
+    }
+    .member-container .contents .member-info .tab-content .box-contents .row .col.addr button.btn {
+        width: 70px;
+        height: 30px;
+    }
+    .member-container .contents .member-info .tab-content .box-contents .row .col.school > div:not(:first-child) {
+        margin: 15px 0 15px;
+    }
+    .member-container .contents .member-info .tab-content .box-contents .row .col.school > div > div:first-child {
+        font-size: 16px;
+        line-height: normal;
+        margin-bottom: 8px;
+    }
+    .member-container .contents .member-info .tab-content .box-contents .row .col.school > div > div:last-child > *:first-child,
+    .member-container .contents .member-info .tab-content .box-contents .row .col.school > div > div:last-child > *:nth-child(2),
+    .member-container .contents .member-info .tab-content .box-contents .row .col.school > div > div:last-child > *.select {
+        display: block;
+        width: 100%;
+        margin-bottom: 5px;
+    }
+    .member-container .contents .member-info .tab-content .box-contents .row .col.school > div > div:last-child > *.select:after {
+        top: 3px;
+        right: 6px;
+    }
+    .member-container .contents .member-info .tab-content .box-contents .row .col textarea {
+        height: 135px;
+        font-size: 14px;
+        padding: 10px;
+    }
+    .member-container .contents .member-info .tab-content .box-contents .row .col.image img {
+        width: 82px;
+        margin-right: 10px;
+    }
+    .member-container .contents .member-info .tab-content .box-contents .row .col.image div.file_uploader {
+        width: 80px;
+        height: 30px;
+    }
+    .member-container .contents .member-info .tab-content .box-contents .row .col.image div.file_uploader label {
+        line-height: 30px;
+        font-size: 14px;
+    }
+    .member-container .contents .member-info .tab-content .box-contents .btns {
+        padding-top: 20px;
+    }
+    .member-container .contents .member-info .tab-content .box-contents .btns button {
+        width: 80px;
+        height: 40px;
+        font-size: 18px;
+    }
+    .member-container .contents .member-info .tab-content .box-contents .btns button:not(:last-child) {
+        margin-right: 5px;
     }
     .passage-container .contents  .passage-plan .ports-list .select {
         display: block;
@@ -1595,11 +1716,18 @@
     .contents .search-bar > *:not(:first-child) {
         margin-top: 10px;
     }
-    .contents .search-bar > *:first-child > * {
+    .contents .search-bar > * > * {
         width: 100%;
         margin-right: 0;
     }
     .contents .search-bar > * > *:last-child {
+        margin-right: 0;
+    }
+    .contents .search-bar > *:last-child > * {
+        margin-right: 10px;
+    }
+    .contents .search-bar > *:last-child > *:last-child {
+        width: auto;
         margin-right: 0;
     }
     .contents .search-bar > * select {

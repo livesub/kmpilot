@@ -115,6 +115,7 @@ input[type=text], input[type=number], input[type=password] {
     padding: 0 14px;
 }
 select {
+    width: 100%;
     height: 48px;
     border: solid 1px #999999;
     background-color: #ffffff;
@@ -777,7 +778,7 @@ input[type='radio']:checked:before {
     padding-top: 130px;
     padding-bottom: 250px;
 }
-.sub-container .contents > div {
+.sub-container .contents > * {
     width: 1280px;
     margin: 0 auto;
 }
@@ -1291,7 +1292,13 @@ input[type='radio']:checked:before {
 .community-container .contents .board.write .write-form .col {
     line-height: unset;
 }
+.community-container .contents .board.write .write-form .row {
+    align-items: stretch;
+}
 .community-container .contents .board.write .write-form .col:first-child {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 200px;
     font-size: 22px;
     font-weight: bold;
@@ -1369,16 +1376,16 @@ input[type='radio']:checked:before {
     background-repeat: no-repeat;
     background-size: cover;
 }
-.community-container .contents .board.write .privacy-policy {
+.sub-container .contents .privacy-policy {
     margin-top: 40px;
 }
-.community-container .contents .board.write .privacy-policy > div:first-child {
+.sub-container .contents .privacy-policy > div:first-child {
     font-size: 22px;
     font-weight: bold;
     letter-spacing: -1.1px;
     color: #0070bf;
 }
-.community-container .contents .board.write .privacy-policy > div:nth-child(2) {
+.sub-container .contents .privacy-policy > div:nth-child(2) {
     height: 260px;
     overflow-y: auto;
     border: solid 1px #bbbbbb;
@@ -1388,15 +1395,15 @@ input[type='radio']:checked:before {
     color: #999999;
     margin-top: 25px;
 }
-.community-container .contents .board.write .privacy-policy > div:last-child {
+.sub-container .contents .privacy-policy > div:last-child {
     margin-top: 30px;
 }
 
-.community-container .contents .board.write .privacy-policy > div:last-child > label > *:not(input) {
+.sub-container .contents .privacy-policy > div:last-child > label > *:not(input) {
     display: inline-block;
     vertical-align: middle;
 }
-.community-container .contents .board.write .privacy-policy > div:last-child label+span {
+.sub-container .contents .privacy-policy > div:last-child label+span {
     display: inline;
     font-size: 22px;
     color: #000000;
@@ -1443,6 +1450,188 @@ input[type='radio']:checked:before {
 .community-container .contents .reference .references-link .desc > p {
     font-size: 22px;
     color: #555555;
+}
+.member-container .contents .board.search-member .list .thead .th:first-child,
+.member-container .contents .board.search-member .list .row .col:first-child,
+.member-container .contents .board.search-member .list .thead .th:nth-child(2),
+.member-container .contents .board.search-member .list .row .col:nth-child(2) {
+    flex: unset;
+    width: 150px;
+    text-align: center;
+    overflow: hidden;
+    line-height: unset;
+    padding: 0;
+    max-width: unset;
+}
+.member-container .contents .board.search-member .list .thead .th:nth-child(3),
+.member-container .contents .board.search-member .list .row .col:nth-child(3) {
+    flex: unset;
+    width: 200px;
+    text-align: center;
+    overflow: hidden;
+    line-height: unset;
+    padding: 0;
+    max-width: unset;
+}
+.member-container .contents .board.search-member .list .thead .th:nth-child(4),
+.member-container .contents .board.search-member .list .row .col:nth-child(4),
+.member-container .contents .board.search-member .list .thead .th:nth-child(5),
+.member-container .contents .board.search-member .list .row .col:nth-child(5) {
+    flex: 1;
+    text-align: center;
+}
+.member-container .contents .member-info .tab-content .box-title {
+    font-size: 32px;
+    font-weight: bold;
+    letter-spacing: -0.76px;
+    color: #000000;
+    padding: 15px 0 50px;
+}
+.member-container .contents .member-info .tab-content .box-title:not(:first-child) {
+    padding-top: 100px;
+}
+.member-container .contents .member-info .tab-content .box-contents:not(.list) .thead {
+    min-height: unset;
+}
+.member-container .contents .member-info .tab-content .box-contents .row .col {
+    font-size: 22px;
+    color: #000000;
+    padding: 15px 30px;
+    line-height: unset;
+}
+.member-container .contents .member-info .tab-content .box-contents .row {
+    align-items: stretch;
+}
+.member-container .contents .member-info .tab-content .box-contents .row .col:first-child {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 250px;
+    font-weight: bold;
+    background-color: #f7f7f7;
+    text-align: center;
+}
+.member-container .contents .member-info .tab-content .box-contents .row .col:first-child br {
+    display: none;
+}
+.member-container .contents .member-info .tab-content .box-contents .row .col:last-child {
+    flex: 1;
+}
+.member-container .contents .member-info .tab-content .box-contents .row .col > div:not(:last-child) {
+    margin-bottom: 10px;
+    font-size: 0;
+}
+.member-container .contents .member-info .tab-content .box-contents .row .col.addr > div:first-child > * {
+    display: inline-block;
+    margin-right: 10px;
+}
+.member-container .contents .member-info .tab-content .box-contents .row .col.addr input[type=number] {
+    width: 150px;
+}
+.member-container .contents .member-info .tab-content .box-contents .row .col.addr input[type=text] {
+    width: 500px;
+}
+.member-container .contents .member-info .tab-content .box-contents .row .col.school > div > div:first-child {
+    font-size: 22px;
+    line-height: 1.36;
+    color: #000000;
+    margin-bottom: 10px;
+}
+.member-container .contents .member-info .tab-content .box-contents .row .col.school > div > div:last-child {
+    font-size: 0;
+}
+.member-container .contents .member-info .tab-content .box-contents .row .col.school > div > div:last-child > * {
+    display: inline-block;
+    margin-right: 10px;
+}
+.member-container .contents .member-info .tab-content .box-contents .row .col.school > div > div:last-child > *:first-child {
+    width: 180px;
+}
+.member-container .contents .member-info .tab-content .box-contents .row .col.school > div > div:last-child > *:nth-child(2) {
+    width: 150px;
+}
+.member-container .contents .member-info .tab-content .box-contents .row .col.school > div > div:last-child > *.select {
+    width: 150px;
+}
+.member-container .contents .member-info .tab-content .box-contents .row .col.school > div > div:last-child > *.select:after {
+    top: 12px;
+    right: 16px;
+}
+.member-container .contents .member-info .tab-content .box-contents .row .col.image {
+    font-size: 0;
+}
+.member-container .contents .member-info .tab-content .box-contents .row .col.image img {
+    display: inline-block;
+    width: 150px;
+    height: auto;
+    margin-right: 30px;
+}
+.member-container .contents .member-info .tab-content .box-contents .row .col.image div.file_uploader {
+    display: inline-block;
+    vertical-align: bottom;
+    width: 135px;
+    height: 48px;
+    background-color: #000000;
+    text-align: center;
+}
+.member-container .contents .member-info .tab-content .box-contents .row .col.image div.file_uploader label {
+    line-height: 48px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #ffffff;
+}
+.member-container .contents .member-info .tab-content .box-contents .row .col.image div.file_uploader input {
+    display: none;
+}
+.member-container .contents .member-info .tab-content .box-contents .row .col.licenseCopy img {
+    width: 285px;
+    height: auto;
+}
+.member-container .contents .member-info .tab-content .box-contents .row .col textarea {
+    width: 100%;
+    height: 200px;
+    padding: 19px 20px;
+    border: solid 1px #999999;
+    background-color: #ffffff;
+    resize: none;
+}
+.member-container .contents .member-info .tab-content .box-contents .row .col button.btn {
+    width: 135px;
+    height: 48px;
+    font-size: 18px;
+    font-weight: 500;
+}
+.member-container .contents .member-info .tab-content .box-contents.list .row .col {
+    font-size: 20px;
+    font-weight: normal;
+}
+.member-container .contents .member-info .tab-content .box-contents.list .thead .th:first-child,
+.member-container .contents .member-info .tab-content .box-contents.list .row .col:first-child {
+    flex: 1;
+}
+.member-container .contents .member-info .tab-content .box-contents.list .row .col:first-child {
+    text-align: left;
+    background: #FFFFFF;
+}
+.member-container .contents .member-info .tab-content .box-contents.list .thead .th:nth-child(2),
+.member-container .contents .member-info .tab-content .box-contents.list .row .col:nth-child(2) {
+    flex: unset;
+    width: 300px;
+    text-align: center;
+}
+.member-container .contents .member-info .tab-content .box-contents .privacy-policy {
+    margin-top: 50px;
+}
+.member-container .contents .member-info .tab-content .box-contents .btns {
+    text-align: right;
+    padding-top: 50px;
+}
+.member-container .contents .member-info .tab-content .box-contents .btns button {
+    width: 240px;
+    height: 64px;
+}
+.member-container .contents .member-info .tab-content .box-contents .btns button:not(:last-child) {
+    margin-right: 10px;
 }
 .passage-container .contents .passage-plan .ports-list .select {
     display: none;
@@ -1707,19 +1896,22 @@ input[type='radio']:checked:before {
     color: #999999;
     margin-top: 15px;
 }
+.detail-content .reply li > div > div.content > div:last-child {
+    text-align: right;
+}
 .detail-content .reply li > div > div.content > div:last-child > button {
     font-size: 18px;
     color: #999999;
-    float: right;
+    /*float: right;*/
     margin-top: 15px;
     padding: 0;
     border: 0;
     background: #ffffff;
 }
-.detail-content .reply li > div > div.content > div:last-child > button:first-child {
-    float: left;
-    text-decoration: underline;
-}
+/*.detail-content .reply li > div > div.content > div:last-child > button:first-child {*/
+/*    float: left;*/
+/*    text-decoration: underline;*/
+/*}*/
 .detail-content .reply li > div > div.content > div:last-child > button:not(:nth-child(2)) {
     margin-right: 20px;
 }
