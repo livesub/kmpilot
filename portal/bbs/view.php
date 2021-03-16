@@ -84,8 +84,10 @@ if (($member['mb_id'] && ($member['mb_id'] === $write['mb_id'])) || $is_admin) {
 }
 else if (!$write['mb_id']) { // 회원이 쓴 글이 아니라면
     //$update_href = G5_BBS_URL.'/password.php?w=u&amp;bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'&amp;page='.$page.$qstr;
+    //$delete_href = G5_BBS_URL.'/password.php?w=d&amp;bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'&amp;page='.$page.$qstr;
     $update_href = "onclick='openPwdCheckModal(modifyBoard, 1,\"u\")'";
-    $delete_href = G5_BBS_URL.'/password.php?w=d&amp;bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'&amp;page='.$page.$qstr;
+    $delete_href = "onclick='openPwdCheckModal(removeBoard, 1,\"d\")'";
+
 }
 
 // 최고, 그룹관리자라면 글 복사, 이동 가능
