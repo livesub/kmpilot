@@ -52,7 +52,6 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
                                     <div class="createdAt">
                                         <?=date("Y.m.d H:i", strtotime($list[$i]['datetime'])) ?></div>
                                     <div>
-                                        <button></button>
                                         <!-- 로그인한 사용자 계정과 작성자 계정이 같은 경우에 표시 -->
 <?php
         if ($list[$i]['is_edit']) {

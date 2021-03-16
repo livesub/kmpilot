@@ -318,17 +318,10 @@ if($lang_type == "kr"){
                                         </div>
                                         <button class="btn btn-close" onclick="closeBranchModal()">닫기</button>
                                     </div>
-                                    <script>
-                                        if(window.innerWidth > 1024) {
-                                            //pc버전 첫 브랜치 항목 표시
-                                            document.querySelector(".introduce .contents .box-contents .select select").value = "0";
-                                            showBranch(0);
-                                        }
-                                    </script>
                                 </div>
                                 <div class="map">
                                     <!-- 마커 클릭 시 해당 지회 정보 표시 -->
-                                    <div class="marker busan active" title="부산" onclick="showBranch(0)"></div>
+                                    <div class="marker busan" title="부산" onclick="showBranch(0)"></div>
                                     <div class="marker yeosu" title="여수" onclick="showBranch(1)"></div>
                                     <div class="marker incheon" title="인천" onclick="showBranch(2)"></div>
                                     <div class="marker ulsan" title="울산" onclick="showBranch(3)"></div>
@@ -341,6 +334,13 @@ if($lang_type == "kr"){
                                     <div class="marker donghae" title="동해" onclick="showBranch(10)"></div>
                                     <div class="marker jeju" title="제주" onclick="showBranch(11)"></div>
                                 </div>
+                                <script>
+                                        if(window.innerWidth > 1024) {
+                                            //pc버전 첫 브랜치 항목 표시
+                                            document.querySelector(".introduce .contents .box-contents .select select").value = "0";
+                                            showBranch(0);
+                                        }
+                                </script>
                             </div>
                         </div>
                     </div>
