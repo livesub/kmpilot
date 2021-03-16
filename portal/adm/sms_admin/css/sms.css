@@ -219,7 +219,7 @@
 #visualphone-wrap .phone-area::after{clear:both;display:block;content:''}
 #visualphone-wrap .phone-area .btn-phone-controll{*zoom:1;position:relative; display:block; width:100%;}
 #visualphone-wrap .phone-area .btn-phone-controll:after{clear:both;display:block;content:''}
-#visualphone-wrap .phone-area .btn-phone-controll .input_text{display:inline-block;width:calc(100% - 86px);height:30px;padding:0;letter-spacing:-0.01em;border:1px solid #f0f0f0}
+#visualphone-wrap .phone-area .btn-phone-controll .input_text{display:inline-block;width:calc(100% - 88px);height:30px;padding:0;letter-spacing:-0.01em;border:1px solid #f0f0f0}
 #visualphone-wrap .phone-area .btn-phone-controll a{float:left;margin-left:2px}
 #visualphone-wrap .phone-area .btn-phone-controll a.last{float:right; display:block ;margin-left:-4px}
 #visualphone-wrap .phone-area .btn-phone-controll img{vertical-align:top;margin-top:2px}
