@@ -57,3 +57,7 @@ button.btn-white {
     color: #000000;
     border: solid 1px #999999;
 }
+button.btn-black {
+    color: #ffffff;
+    background-color: #000000;
+}
