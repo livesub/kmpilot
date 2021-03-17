@@ -1,0 +1,63 @@
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video, input, select, textarea {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: inherit;
+    vertical-align: top;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    position: relative;
+    line-height: normal;
+    font-family: 'Noto Sans KR', sans-serif;
+    /*font-family: 'NotoSansCJKkr', sans-serif;*/
+    letter-spacing: -1px;
+}
+body {
+    font-size: 0;
+    max-width: 100%;
+}
+ul, li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+a {
+    text-decoration: none;
+    color: inherit;
+    font-size: inherit;
+    display: inline-block;
+    cursor: pointer;
+    line-height: inherit;
+}
+button {
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: -1px;
+    cursor: pointer;
+}
+button.btn {
+    font-size: 28px;
+    text-align: center;
+    color: #ffffff;
+    background-color: #0070bf;
+    border: 0;
+}
+button.btn-full {
+    width: 100%;
+}
+button.btn-180 {
+    width: 180px;
+}
+button.btn-white {
+    background: #ffffff;
+    color: #000000;
+    border: solid 1px #999999;
+}
+button.btn-black {
+    color: #ffffff;
+    background-color: #000000;
+}

@@ -1,0 +1,35 @@
+#visualphone-wrap {
+    background-image: url(../img/phone_kakao_bg.png);
+    background-repeat: no-repeat;
+}
+#visualphone-wrap .message-area {
+    background-color: #ffe300;
+}
+#visualphone-wrap .btn-phone-area button:first-child {
+    background-color: #413630;
+}
+#visualphone-wrap .btn-phone-area button:last-child {
+    color: #413630;
+    border: solid 1px #413630;
+    background-color: #ffffff;
+}
+#visualphone-wrap .btn-send-area button {
+    background-color: #656565;
+}
+#visualphone-wrap .btn-send-area button:first-child {
+    color: #413630;
+    background-color: #ffe300;
+}
+#visualphone-wrap .msg-type {
+    color: #413630;
+}
+#visualphone-wrap .msg-type::before {
+    background-image: url("../img/combined-shape-kakao.png");
+}
+.ly-div {
+    border: solid 1px #bbbbbb;
+}
+.ly-mms-file .input-area .image_uploader {
+    background-color: #fce000;
+    color: #413630;
+}
