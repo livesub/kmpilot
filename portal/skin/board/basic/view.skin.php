@@ -64,10 +64,11 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     if ($update_href) {
 ?>
                     <button class="btn btn-white" <?=$update_href?>>수정</button>
+                    <button class="btn btn-white" <?=$delete_href?>>삭제</button>
 <?php
     }
 ?>
-                    <button class="btn btn-white" onclick="openPwdCheckModal(removeBoard, 1)">삭제</button>
+
                 </div>
 
 
@@ -111,7 +112,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                 }
                 function removeBoard(id) {
                     //removeBoard
-                    alert("remove this board "+id);
+                    //alert("remove this board "+id);
                 }
             </script>
 
@@ -120,13 +121,13 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                 <div class="modal-dialog">
 
                 <form name="fboardpassword" action="<?=G5_HTTP_BBS_URL?>/write.php" method="post">
-    <input type="hidden" name="w" id="act_type" value="">
-    <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
-    <input type="hidden" name="wr_id" value="<?php echo $wr_id ?>">
-    <input type="hidden" name="comment_id" value="<?php echo $comment_id ?>">
-    <input type="hidden" name="sfl" value="<?php echo $sfl ?>">
-    <input type="hidden" name="stx" value="<?php echo $stx ?>">
-    <input type="hidden" name="page" value="<?php echo $page ?>">
+                <input type="hidden" name="w" id="act_type" value="">
+                <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
+                <input type="hidden" name="wr_id" value="<?php echo $wr_id ?>">
+                <input type="hidden" name="comment_id" value="<?php echo $comment_id ?>">
+                <input type="hidden" name="sfl" value="<?php echo $sfl ?>">
+                <input type="hidden" name="stx" value="<?php echo $stx ?>">
+                <input type="hidden" name="page" value="<?php echo $page ?>">
 
 
 
